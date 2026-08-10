@@ -10,11 +10,11 @@ export const DEFAULT_LOCALE: Locale = 'ar';
 
 export const SITE = {
   /** Placeholder domain — replace with the real domain before launch. */
-  url: 'https://hasebha.example.com',
+  url: 'https://klar.io',
   /** Brand name (display). */
   brandName: {
-    ar: 'حاسبها',
-    en: 'Hasebha',
+    ar: 'كلار',
+    en: 'Klar',
   },
   /** Short brand tagline. */
   tagline: {
@@ -39,20 +39,20 @@ export const SITE = {
   /** Contact route handling: mailto-based (no server backend). */
   contact: {
     useMailto: true,
-    mailtoSubject: { ar: 'رسالة من موقع حاسبها', en: 'Message from Hasebha' },
+    mailtoSubject: { ar: 'رسالة من موقع كلار', en: 'Message from Klar' },
   },
 } as const;
 
 export const LOGO = {
   /** Rendered as text (no image assets). */
   text: {
-    ar: 'حاسبها',
-    en: 'Hasebha',
+    ar: 'كلار',
+    en: 'Klar',
   },
   /** Arabic-English combined lockup used in footer. */
   lockup: {
-    ar: 'حاسبها — Hasebha',
-    en: 'Hasebha — حاسبها',
+    ar: 'كلار — Klar',
+    en: 'Klar — كلار',
   },
 } as const;
 
