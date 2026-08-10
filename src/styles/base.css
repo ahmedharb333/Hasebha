@@ -151,6 +151,9 @@ hr {
   font-size: 1.2rem;
   margin-top: var(--space-6);
 }
+.prose a {
+  color: var(--color-primary);
+}
 .prose ul,
 .prose ol {
   margin-block: var(--space-3);
@@ -162,7 +165,7 @@ hr {
   margin-inline: 0;
   padding: var(--space-3) var(--space-5);
   background: var(--color-bg-alt);
-  border-inline-start: 4px solid var(--color-accent);
+  border-inline-start: 4px solid var(--color-accent-strong);
   border-radius: var(--radius-sm);
   color: var(--color-text-secondary);
 }
