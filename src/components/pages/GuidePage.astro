@@ -71,7 +71,8 @@ const t = {
           <h2>{t.related}</h2>
           <div class="tool-grid">
             {relatedEntries.map((c) => (
-              <a class="tool-card" href={localizedPath(locale, `/calculators/${c.slug}/`)}>
+              <a class="tool-card" data-category={c.category} href={localizedPath(locale, `/calculators/${c.slug}/`)}>
+                <span class="tool-card__icon" aria-hidden="true"></span>
                 <h3>{c.title[locale]}</h3>
                 <p>{c.description[locale]}</p>
                 <span class="tool-card__meta">{t.try}</span>

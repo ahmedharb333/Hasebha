@@ -57,7 +57,8 @@ const t = {
       <h2>{t.featuredLabel}</h2>
       <div class="tool-grid">
         {featured.map((c) => (
-          <a class="tool-card" href={localizedPath(locale, `/calculators/${c.slug}/`)}>
+          <a class="tool-card" data-category={c.category} href={localizedPath(locale, `/calculators/${c.slug}/`)}>
+            <span class="tool-card__icon" aria-hidden="true"></span>
             <h3>{c.title[locale]}</h3>
             <p>{c.description[locale]}</p>
             <span class="tool-card__meta">{t.category[c.category]}</span>
@@ -76,7 +77,8 @@ const t = {
       <p>{t.guidesSub}</p>
       <div class="tool-grid">
         {guideList.map((g) => (
-          <a class="tool-card" href={localizedPath(locale, `/guides/${g.slug}/`)}>
+          <a class="tool-card" data-kind="guide" href={localizedPath(locale, `/guides/${g.slug}/`)}>
+            <span class="tool-card__icon" aria-hidden="true"></span>
             <h3>{g.title}</h3>
             <p>{g.intro}</p>
             <span class="tool-card__meta">{t.readGuide}</span>

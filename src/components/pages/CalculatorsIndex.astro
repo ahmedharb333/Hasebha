@@ -32,7 +32,8 @@ for (const c of CALCULATORS.filter((c) => c.active)) {
       <h2>{group.label}</h2>
       <div class="tool-grid">
         {group.items.map((c) => (
-          <a class="tool-card" href={localizedPath(locale, `/calculators/${c.slug}/`)}>
+          <a class="tool-card" data-category={c.category} href={localizedPath(locale, `/calculators/${c.slug}/`)}>
+            <span class="tool-card__icon" aria-hidden="true"></span>
             <h3>{c.title[locale]}</h3>
             <p>{c.description[locale]}</p>
             <span class="tool-card__meta">{group.label}</span>

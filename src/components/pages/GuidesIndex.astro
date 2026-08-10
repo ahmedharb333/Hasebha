@@ -22,7 +22,8 @@ const list = Object.values(guides)
 <PageLayout locale={locale} path={path} title={title} description={description}>
   <div class="tool-grid">
     {list.map((g) => (
-      <a class="tool-card" href={localizedPath(locale, `/guides/${g.slug}/`)}>
+      <a class="tool-card" data-kind="guide" href={localizedPath(locale, `/guides/${g.slug}/`)}>
+        <span class="tool-card__icon" aria-hidden="true"></span>
         <h3>{g.title}</h3>
         <p>{g.intro}</p>
         <span class="tool-card__meta">{locale === 'ar' ? 'اقرأ الدليل' : 'Read the guide'}</span>
