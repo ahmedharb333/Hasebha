@@ -13,13 +13,13 @@ const pages: Record<string, Record<Locale, StaticPageContent>> = {
       locale: 'ar',
       title: 'من نحن',
       metaDescription:
-        'موقع حاسبها يقدّم حاسبات مالية وحاسبات عمل واضحة وشفافة بالعربية والإنجليزية. تعرّف على رسالتنا ومبادئنا التحريرية وكيفية مراجعة المحتوى.',
+        'موقع كلار يقدّم حاسبات مالية وحاسبات عمل واضحة وشفافة بالعربية والإنجليزية. تعرّف على رسالتنا ومبادئنا التحريرية وكيفية مراجعة المحتوى.',
       sections: [
         {
-          heading: 'ما هو حاسبها',
-          body: `حاسبها موقع ثنائي اللغة (العربية افتراضياً مع توفر الإنجليزية) يقدّم حاسبات مالية وحاسبات عمل مجانية، واضحة وشفافة. ننشر المحتوى بهدف واحد: مساعدتك على فهم قراراتك المالية وقرارات العمل اليومية دون غموض أو تعقيد.
+          heading: 'ما هو كلار',
+          body: `كلار موقع ثنائي اللغة (العربية افتراضياً مع توفر الإنجليزية) يقدّم حاسبات مالية وحاسبات عمل مجانية، واضحة وشفافة. ننشر المحتوى بهدف واحد: مساعدتك على فهم قراراتك المالية وقرارات العمل اليومية دون غموض أو تعقيد.
 
-الاسم «حاسبها» يعكس نهجنا: لا صناديق سوداء ولا افتراضات خفية؛ الأرقام التي تراها أرقام يمكنك تتبّعها وفهمها.`,
+الاسم «Klar» يعني «واضح» في الألمانية واللغات الإسكندنافية، ويعكس نهجنا: لا صناديق سوداء ولا افتراضات خفية؛ الأرقام التي تراها أرقام يمكنك تتبّعها وفهمها.`,
         },
         {
           heading: 'ماذا ننشر',
@@ -35,11 +35,11 @@ const pages: Record<string, Record<Locale, StaticPageContent>> = {
         },
         {
           heading: 'الاستقلالية والشفافية',
-          body: `حاسبها مستقل في خياراته التحريرية. الإعلانات والروابط التابعة معطّلة افتراضياً، وإن فُعّلت في أي وقت فسيُعلن عنها بوضوح. نتائج الحسابات تقديرية لأغراض إرشادية فقط، ولا تُعد نصيحة مالية أو ضريبية أو استثمارية أو قانونية أو متعلقة بالتوظيف أو الرواتب.`,
+          body: `كلار مستقل في خياراته التحريرية. الإعلانات والروابط التابعة معطّلة افتراضياً، وإن فُعّلت في أي وقت فسيُعلن عنها بوضوح. نتائج الحسابات تقديرية لأغراض إرشادية فقط، ولا تُعد نصيحة مالية أو ضريبية أو استثمارية أو قانونية أو متعلقة بالتوظيف أو الرواتب.`,
         },
         {
-          heading: 'من يدير حاسبها',
-          body: `يدير حاسبها فريق صغير من المحرّرين والكُتّاب والمطوّرين. ستُنشر أسماء وبيانات تواصل المالك والمراجعين هنا فور توفّرها. لأي أسئلة أو اقتراحات أو تصحيحات، يرجى استخدام صفحة التواصل معنا.`,
+          heading: 'من يدير كلار',
+          body: `يدير كلار فريق صغير من المحرّرين والكُتّاب والمطوّرين. ستُنشر أسماء وبيانات تواصل المالك والمراجعين هنا فور توفّرها. لأي أسئلة أو اقتراحات أو تصحيحات، يرجى استخدام صفحة التواصل معنا.`,
         },
         {
           heading: 'آخر تحديث',
@@ -53,13 +53,13 @@ const pages: Record<string, Record<Locale, StaticPageContent>> = {
       locale: 'en',
       title: 'About us',
       metaDescription:
-        'Hasebha builds clear, transparent financial and employment calculators in Arabic and English. Read about our mission and editorial principles.',
+        'Klar builds clear, transparent financial and employment calculators in Arabic and English. Read about our mission and editorial principles.',
       sections: [
         {
-          heading: 'What is Hasebha',
-          body: `Hasebha (حاسبها) is a bilingual website — Arabic by default, with an English version — offering free, clear and transparent financial and employment calculators. Everything we publish serves one goal: to help you make sense of everyday money and work decisions without jargon or guesswork.
+          heading: 'What is Klar',
+          body: `Klar is a bilingual website — Arabic by default, with an English version — offering free, clear and transparent financial and employment calculators. Everything we publish serves one goal: to help you make sense of everyday money and work decisions without jargon or guesswork.
 
-The name means “count it” in Arabic, and it reflects our approach: no black boxes and no hidden assumptions — every number you see is one you can follow.`,
+The name means “clear” in German and the Scandinavian languages, and it reflects our approach: no black boxes and no hidden assumptions — every number you see is one you can follow.`,
         },
         {
           heading: 'What we publish',
@@ -75,11 +75,11 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
         },
         {
           heading: 'Independence and transparency',
-          body: `Hasebha is independent in its editorial choices. Advertising and affiliate recommendations are disabled by default and, if ever enabled, would always be clearly disclosed. Calculator results are estimates for informational purposes only and do not constitute financial, tax, investment, legal, payroll or employment advice.`,
+          body: `Klar is independent in its editorial choices. Advertising and affiliate recommendations are disabled by default and, if ever enabled, would always be clearly disclosed. Calculator results are estimates for informational purposes only and do not constitute financial, tax, investment, legal, payroll or employment advice.`,
         },
         {
-          heading: 'Who is behind Hasebha',
-          body: `Hasebha is maintained by a small team of editors, writers and developers. The names and contact details of the owner and reviewers will be published here as soon as they are available. For questions, suggestions or corrections, please use the contact page.`,
+          heading: 'Who is behind Klar',
+          body: `Klar is maintained by a small team of editors, writers and developers. The names and contact details of the owner and reviewers will be published here as soon as they are available. For questions, suggestions or corrections, please use the contact page.`,
         },
         {
           heading: 'Last updated',
@@ -96,7 +96,7 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'ar',
       title: 'تواصل معنا',
       metaDescription:
-        'تواصل مع فريق حاسبها لطرح الأسئلة أو إبداء الملاحظات أو الإبلاغ عن الأخطاء في الحاسبات والأدلة، وتعرّف على طريقة الرد المتوقعة من الفريق.',
+        'تواصل مع فريق كلار لطرح الأسئلة أو إبداء الملاحظات أو الإبلاغ عن الأخطاء في الحاسبات والأدلة، وتعرّف على طريقة الرد المتوقعة من الفريق.',
       sections: [
         {
           heading: 'يسعدنا تواصلك معنا',
@@ -126,7 +126,7 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'en',
       title: 'Contact us',
       metaDescription:
-        'Contact the Hasebha team with questions, feedback, or correction requests about our calculators and guides. Learn what to expect and how we reply.',
+        'Contact the Klar team with questions, feedback, or correction requests about our calculators and guides. Learn what to expect and how we reply.',
       sections: [
         {
           heading: 'We would love to hear from you',
@@ -159,7 +159,7 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'ar',
       title: 'منهجية الحساب',
       metaDescription:
-        'كيف نُبني حاسبات حاسبها ونراجعها: محركات حساب مستقلة عن اللغة، افتراضات واضحة، تواريخ مراجعة محدّثة، ومتى يجب التحقق من المصادر الرسمية.',
+        'كيف نُبني حاسبات كلار ونراجعها: محركات حساب مستقلة عن اللغة، افتراضات واضحة، تواريخ مراجعة محدّثة، ومتى يجب التحقق من المصادر الرسمية.',
       sections: [
         {
           heading: 'كيف تُبنى الحاسبات',
@@ -193,7 +193,7 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'en',
       title: 'Methodology',
       metaDescription:
-        'How Hasebha calculators are built and reviewed: language-neutral engines, clearly stated assumptions, review dates, and when to verify with official sources.',
+        'How Klar calculators are built and reviewed: language-neutral engines, clearly stated assumptions, review dates, and when to verify with official sources.',
       sections: [
         {
           heading: 'How calculators are built',
@@ -309,7 +309,7 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'ar',
       title: 'سياسة المصادر',
       metaDescription:
-        'كيف يختار حاسبها المصادر: الاعتماد على مصادر رسمية وما يقاربها، وعرض تواريخ المراجعة، وإجراء التصحيحات، وعدم اختلاق أي مراجع مطلقاً.',
+        'كيف يختار كلار المصادر: الاعتماد على مصادر رسمية وما يقاربها، وعرض تواريخ المراجعة، وإجراء التصحيحات، وعدم اختلاق أي مراجع مطلقاً.',
       sections: [
         {
           heading: 'مبدأنا في اختيار المصادر',
@@ -343,7 +343,7 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'en',
       title: 'Sources policy',
       metaDescription:
-        'How Hasebha chooses sources: official and official-adjacent references, visible review dates, corrections, and a strict rule against fabricated references.',
+        'How Klar chooses sources: official and official-adjacent references, visible review dates, corrections, and a strict rule against fabricated references.',
       sections: [
         {
           heading: 'Our sourcing principle',
@@ -380,7 +380,7 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'ar',
       title: 'سياسة الخصوصية',
       metaDescription:
-        'سياسة خصوصية حاسبها: جمع بيانات محدود، تحليلات معطّلة افتراضياً ولا تُفعّل إلا بموافقتك، عدم تتبّع أي قيم مالية، وحقوقك في بياناتك.',
+        'سياسة خصوصية كلار: جمع بيانات محدود، تحليلات معطّلة افتراضياً ولا تُفعّل إلا بموافقتك، عدم تتبّع أي قيم مالية، وحقوقك في بياناتك.',
       sections: [
         {
           heading: 'نطاق هذه السياسة',
@@ -422,7 +422,7 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'en',
       title: 'Privacy policy',
       metaDescription:
-        "Hasebha's privacy policy: minimal data collection, analytics off by default and consent-gated, financial values never tracked, and your rights.",
+        "Klar's privacy policy: minimal data collection, analytics off by default and consent-gated, financial values never tracked, and your rights.",
       sections: [
         {
           heading: 'Scope of this policy',
@@ -467,7 +467,7 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'ar',
       title: 'سياسة الكوكيز',
       metaDescription:
-        'الكوكيز التي يستخدمها حاسبها: كوكيز أساسية فقط افتراضياً، وتحليلات وإعلانات لا تُفعّل إلا بموافقتك، وكيفية إدارة الموافقة وسحبها في أي وقت.',
+        'الكوكيز التي يستخدمها كلار: كوكيز أساسية فقط افتراضياً، وتحليلات وإعلانات لا تُفعّل إلا بموافقتك، وكيفية إدارة الموافقة وسحبها في أي وقت.',
       sections: [
         {
           heading: 'ما هي الكوكيز',
@@ -505,7 +505,7 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'en',
       title: 'Cookies policy',
       metaDescription:
-        'What cookies Hasebha uses: essential cookies only by default, analytics and advertising loaded only with your consent, and how to manage or withdraw consent.',
+        'What cookies Klar uses: essential cookies only by default, analytics and advertising loaded only with your consent, and how to manage or withdraw consent.',
       sections: [
         {
           heading: 'What cookies are',
@@ -546,7 +546,7 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'ar',
       title: 'شروط الاستخدام',
       metaDescription:
-        'شروط استخدام حاسبها: الاستخدام المسموح للحاسبات، النتائج تقديرية وليست نصيحة مهنية أو مالية، حدود المسؤولية، وعدم ضمان دقة النتائج.',
+        'شروط استخدام كلار: الاستخدام المسموح للحاسبات، النتائج تقديرية وليست نصيحة مهنية أو مالية، حدود المسؤولية، وعدم ضمان دقة النتائج.',
       sections: [
         {
           heading: 'قبول الشروط',
@@ -588,7 +588,7 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'en',
       title: 'Terms of use',
       metaDescription:
-        "Hasebha's terms of use: acceptable use of our calculators, results are estimates and not professional advice, limits of liability, and no guarantee of results.",
+        "Klar's terms of use: acceptable use of our calculators, results are estimates and not professional advice, limits of liability, and no guarantee of results.",
       sections: [
         {
           heading: 'Acceptance of terms',
@@ -633,11 +633,11 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'ar',
       title: 'إخلاء المسؤولية',
       metaDescription:
-        'إخلاء مسؤولية حاسبها: النتائج تقديرية لأغراض إرشادية فقط، وليست نصيحة مالية أو ضريبية أو قانونية أو متعلقة بالتوظيف. تحقق مع المختصين.',
+        'إخلاء مسؤولية كلار: النتائج تقديرية لأغراض إرشادية فقط، وليست نصيحة مالية أو ضريبية أو قانونية أو متعلقة بالتوظيف. تحقق مع المختصين.',
       sections: [
         {
           heading: 'تنويه عام',
-          body: `نتائج الحاسبات في حاسبها تقديرية لأغراض إرشادية فقط، ولا تُعد نصيحة مالية أو ضريبية أو استثمارية أو قانونية أو متعلقة بالتوظيف أو الرواتب. يبقى التحقق من أي معلومة قبل الاعتماد عليها مسؤولية المستخدم.`,
+          body: `نتائج الحاسبات في كلار تقديرية لأغراض إرشادية فقط، ولا تُعد نصيحة مالية أو ضريبية أو استثمارية أو قانونية أو متعلقة بالتوظيف أو الرواتب. يبقى التحقق من أي معلومة قبل الاعتماد عليها مسؤولية المستخدم.`,
         },
         {
           heading: 'ليست نصيحة مهنية',
@@ -671,11 +671,11 @@ The name means “count it” in Arabic, and it reflects our approach: no black 
       locale: 'en',
       title: 'Disclaimer',
       metaDescription:
-        "Hasebha's disclaimer: calculator results are estimates for informational purposes and not financial, tax, legal or payroll advice. Verify with professionals.",
+        "Klar's disclaimer: calculator results are estimates for informational purposes and not financial, tax, legal or payroll advice. Verify with professionals.",
       sections: [
         {
           heading: 'General notice',
-          body: `The results produced by Hasebha calculators are estimates provided for informational purposes only and do not constitute financial, tax, investment, legal, payroll or employment advice. You are responsible for verifying any information before relying on it.`,
+          body: `The results produced by Klar calculators are estimates provided for informational purposes only and do not constitute financial, tax, investment, legal, payroll or employment advice. You are responsible for verifying any information before relying on it.`,
         },
         {
           heading: 'Not professional advice',
