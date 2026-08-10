@@ -253,7 +253,7 @@ git commit -m "feat(brand): rebrand static page content to Klar"
 ### Task 4: Guide content + calculators index rebrand
 
 **Files:**
-- Modify: `src/content/guides.ts` (5 brand references)
+- Modify: `src/content/guides.ts` (7 brand references: 3 AR + 4 EN)
 - Modify: `src/components/pages/CalculatorsIndex.astro:16-17`
 
 **Interfaces:**

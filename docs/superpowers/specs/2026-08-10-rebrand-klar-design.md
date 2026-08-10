@@ -36,7 +36,7 @@ This is a **rename-only** change. No features, no CSS, no math, no route changes
 Replace all references to حاسبها / Hasebha with كلار / Klar (~28 strings across about, contact, methodology, sources policy, privacy, cookies, terms, disclaimer). Watch grammar: Arabic construct-state phrases like «حاسبات حاسبها» become «حاسبات كلار» (a foreign proper noun, so no construct-state elision — append as-is). English possessives `Hasebha's` → `Klar's`.
 
 ### Content strings — `src/content/guides.ts`
-Replace the 5 occurrences of «حاسبها» / `Hasebha` in guide bodies with كلار / Klar.
+Replace the 7 occurrences of «حاسبها» / `Hasebha` (3 AR + 4 EN) in guide bodies with كلار / Klar.
 
 ### Content strings — `src/components/pages/CalculatorsIndex.astro`
 Replace the two strings (ar `كل الحاسبات... في حاسبها`, en `All of Hasebha's...`) with كلار / Klar.
