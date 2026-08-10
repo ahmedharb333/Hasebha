@@ -6,7 +6,7 @@
 
 export type ConsentCategory = 'necessary' | 'analytics' | 'advertising';
 
-const STORAGE_KEY = 'hasebha-consent-v1';
+const STORAGE_KEY = 'klar-consent-v1';
 
 export interface ConsentState {
   necessary: boolean;

@@ -1,6 +1,6 @@
 export type Theme = 'light' | 'dark';
 
-export const THEME_STORAGE_KEY = 'hasebha-theme';
+export const THEME_STORAGE_KEY = 'klar-theme';
 
 /** Pure: pick a theme from the stored value (explicit) or the OS preference. */
 export function resolveTheme(stored: string | null, systemDark: boolean): Theme {

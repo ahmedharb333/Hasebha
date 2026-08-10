@@ -21,7 +21,7 @@ const enPath = localizedPath('en', path);
 <header class="site-header">
   <div class="container site-header__inner">
     <a class="brand" href={localizedPath(locale, '/')} aria-label={LOGO.text[locale]}>
-      <span class="brand__mark" aria-hidden="true">{locale === 'ar' ? 'ح' : 'H'}</span>
+      <span class="brand__mark" aria-hidden="true">{locale === 'ar' ? 'ك' : 'K'}</span>
       <span>{LOGO.text[locale]}</span>
     </a>
 
@@ -91,7 +91,7 @@ const enPath = localizedPath('en', path);
   btn?.addEventListener('click', () => {
     const next = currentTheme() === 'dark' ? 'light' : 'dark';
     try {
-      window.localStorage.setItem('hasebha-theme', next);
+      window.localStorage.setItem('klar-theme', next);
     } catch { /* ignore */ }
     applyTheme(next);
     syncPressed();
