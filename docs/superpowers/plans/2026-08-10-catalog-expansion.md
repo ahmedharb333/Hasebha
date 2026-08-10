@@ -17,7 +17,7 @@
 - **Percent results** are stored as the raw percent number (e.g. `20` for 20%) — `formatPercent` appends the sign only, it does not multiply by 100.
 - **Currencies** are display-only (never conversion). `currencyDefault` is `'JOD'` for financial tools.
 - **Example numbers must match.** The `math.example` values, the content `exampleHtml` numbers, the guide worked examples, and the test assertions must all agree. Where the plan gives "≈N", tests assert with a small tolerance (typically `±0.05` or `±0.02`) and prose says "about N".
-- **Shared helpers, no new duplication.** `src/lib/calculators/utils.ts` (created in Task 1) exports `err`, `toNumber`, `numeric`, `optionalNumeric`, `checkNumber`, `monthlyPayment`, `daysBetween`, `calendarDiff`. New modules import from it. Existing modules are left untouched.
+- **Shared helpers, no new duplication.** `src/lib/calculators/utils.ts` (created in Task 1) exports `err`, `toNumber`, `numeric`, `optionalNumeric`, `checkNumber`, `monthlyPayment`, `daysBetween`, `calendarDiff`, `parseIso`, `todayIso`. New modules import from it. Existing modules are left untouched.
 - **Content prose is delegated, structure and numbers are not.** For each tool the plan specifies: title, metaDescription, h1, every field label (ar/en), every result label (ar/en), hero, currency presence, example input, worked-example numbers, and required prose topics. The implementer writes the localized prose (intro, field hints, formula text, exampleHtml, assumptions, mistakes, whenUseful, faqs, methodologyNote, and the guide's sections/body) following the `loan-payment.ts` content template and the guide structure in `guides.ts` — using exactly the specified labels, numbers and topics. `buttons`, `ui`, `errorMessages`, `requiredNote` are copied verbatim from `src/content/calculators/loan-payment.ts` (same strings every tool uses), plus the extra `mismatch` error key where a tool's `validate` returns it.
 - **Arabic**: field labels, results and prose are written in Arabic for `ar`. Numbers in prose use Latin digits (site-wide convention). كلار brand name in prose where the site refers to itself.
 - **Category integrity test** (`tests/catalog.test.ts`, created in Task 1) asserts that every `active` calculator has all six artifacts. It must keep passing as tools land; never skip it.
@@ -44,7 +44,7 @@
 - Create: `tests/catalog.test.ts`
 
 **Interfaces:**
-- Produces: `type Category = 'finance' | 'employment' | 'health' | 'education' | 'everyday' | 'business'`; `interface CategoryMeta { id: Category; label: { ar; en }; tagline: { ar; en }; icon: Category }`; `const CATEGORIES: Record<Category, CategoryMeta>`; `const DEFAULT_CURRENCY = 'JOD'` re-exported from `currencies.ts` usage (see Step 4); `utils.ts` exports `err`, `toNumber`, `numeric`, `optionalNumeric`, `checkNumber`, `monthlyPayment`, `daysBetween`, `calendarDiff`.
+- Produces: `type Category = 'finance' | 'employment' | 'health' | 'education' | 'everyday' | 'business'`; `interface CategoryMeta { id: Category; label: { ar; en }; tagline: { ar; en }; icon: Category }`; `const CATEGORIES: Record<Category, CategoryMeta>`; `const DEFAULT_CURRENCY = 'JOD'` re-exported from `currencies.ts` usage (see Step 4); `utils.ts` exports `err`, `toNumber`, `numeric`, `optionalNumeric`, `checkNumber`, `monthlyPayment`, `daysBetween`, `calendarDiff`, `parseIso`, `todayIso` (a strict `yyyy-mm-dd` local-time parser and the current-date ISO string — both used by the date tools in Task 6).
 - Consumes: nothing from later tasks.
 
 - [ ] **Step 1: Widen `Category` and add `CATEGORIES` in `src/config/calculators.ts`**
@@ -254,24 +254,41 @@ export function monthlyPayment(principal: number, monthlyRate: number, months: n
   return Number.isFinite(payment) ? payment : principal / months;
 }
 
-/** Whole days between two dates (UTC-normalized; end - start). Negative if end < start. */
-export function daysBetween(start: string, end: string): number {
-  const s = new Date(start + 'T00:00:00Z').getTime();
-  const e = new Date(end + 'T00:00:00Z').getTime();
-  return Math.round((e - s) / 86400000);
+/** Strict local-time parser for `yyyy-mm-dd`. Returns null for malformed or rollover input (e.g. 2020-13-01, 2020-02-31). */
+export function parseIso(raw: string | undefined): Date | null {
+  if (!raw) return null;
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(raw);
+  if (!m) return null;
+  const y = Number(m[1]);
+  const mo = Number(m[2]);
+  const d = Number(m[3]);
+  const date = new Date(y, mo - 1, d);
+  if (date.getFullYear() !== y || date.getMonth() !== mo - 1 || date.getDate() !== d) return null;
+  return date;
+}
+
+/** Current date as `yyyy-mm-dd` (local time). */
+export function todayIso(): string {
+  const d = new Date();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${d.getFullYear()}-${mm}-${dd}`;
+}
+
+/** Whole days between two local-midnight dates (end - start). Negative if end < start. */
+export function daysBetween(start: Date, end: Date): number {
+  return Math.round((end.getTime() - start.getTime()) / 86400000);
 }
 
 /** Full calendar difference (end - start) as { years, months, days }, end >= start required. */
-export function calendarDiff(start: string, end: string): { years: number; months: number; days: number } {
-  const [sy, sm, sd] = start.split('-').map(Number);
-  const [ey, em, ed] = end.split('-').map(Number);
-  let years = ey - sy;
-  let months = em - sm;
-  let days = ed - sd;
+export function calendarDiff(start: Date, end: Date): { years: number; months: number; days: number } {
+  let years = end.getFullYear() - start.getFullYear();
+  let months = end.getMonth() - start.getMonth();
+  let days = end.getDate() - start.getDate();
   if (days < 0) {
     months -= 1;
-    const prev = new Date(Date.UTC(ey, em - 1, 0)).getDate();
-    days += prev;
+    const prevMonthDays = new Date(end.getFullYear(), end.getMonth(), 0).getDate();
+    days += prevMonthDays;
   }
   if (months < 0) {
     years -= 1;
@@ -281,7 +298,7 @@ export function calendarDiff(start: string, end: string): { years: number; month
 }
 ```
 
-Note: `calendarDiff` treats months as ending at month boundaries using the day count of the previous month — acceptable approximation, documented in content assumptions.
+Note: `calendarDiff` counts a full month only when the end date's day-of-month reaches the start's day. When the start's day exceeds the end month's length (e.g. 2021-01-31 → 2021-02-28), the full month is not reached and the residue lands in `days` (result: 0 years, 0 months, 28 days). Document this carry-over behavior in the date-difference content assumptions.
 
 - [ ] **Step 4: Make currency optional in `types.ts` + `calculator-payload.ts`**
 
@@ -2127,31 +2144,7 @@ git commit -m "feat(calc): education calculators - GPA, grade average, final gra
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
-import { err, checkNumber } from './utils';
-
-const MS_PER_DAY = 86_400_000;
-
-function parseIso(raw: string): Date | null {
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(raw);
-  if (!m) return null;
-  const y = Number(m[1]);
-  const mo = Number(m[2]);
-  const d = Number(m[3]);
-  const date = new Date(y, mo - 1, d);
-  if (date.getFullYear() !== y || date.getMonth() !== mo - 1 || date.getDate() !== d) return null;
-  return date;
-}
-
-function todayIso(): string {
-  const d = new Date();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  return `${d.getFullYear()}-${mm}-${dd}`;
-}
-
-function daysBetween(a: Date, b: Date): number {
-  return Math.round((b.getTime() - a.getTime()) / MS_PER_DAY);
-}
+import { checkNumber, parseIso, todayIso, daysBetween, calendarDiff } from './utils';
 
 function nextBirthday(birth: Date, asOf: Date): Date {
   let next = new Date(asOf.getFullYear(), birth.getMonth(), birth.getDate());
@@ -2169,7 +2162,7 @@ export const age: CalculatorMath = {
 
   validate(input: CalcInput): Record<string, string> {
     const errors: Record<string, string> = {};
-    const birth = parseIso(input.birthDate ?? '');
+    const birth = parseIso(input.birthDate);
     if (!birth) {
       errors.birthDate = input.birthDate ? 'invalid' : 'required';
       return errors;
@@ -2188,17 +2181,12 @@ export const age: CalculatorMath = {
     const birth = parseIso(input.birthDate)!;
     const asOf = parseIso((input.asOfDate ?? '').trim() || todayIso())!;
     const totalDays = daysBetween(birth, asOf);
-    let years = asOf.getFullYear() - birth.getFullYear();
-    if (asOf.getMonth() < birth.getMonth() || (asOf.getMonth() === birth.getMonth() && asOf.getDate() < birth.getDate())) {
-      years--;
-    }
-    const anniversary = new Date(birth.getFullYear() + years, birth.getMonth(), birth.getDate());
-    const totalMonths = years * 12 + (asOf.getMonth() - anniversary.getMonth()) + (asOf.getDate() < anniversary.getDate() ? -1 : 0);
+    const { years, months } = calendarDiff(birth, asOf);
     const next = nextBirthday(birth, asOf);
     return {
       results: [
         { key: 'ageYears', value: years, kind: 'number', hero: true },
-        { key: 'totalMonths', value: totalMonths, kind: 'number' },
+        { key: 'totalMonths', value: years * 12 + months, kind: 'number' },
         { key: 'totalDays', value: totalDays, kind: 'number' },
         { key: 'totalWeeks', value: Math.floor(totalDays / 7), kind: 'number' },
         { key: 'daysUntilNextBirthday', value: daysBetween(asOf, next), kind: 'number' },
@@ -2220,29 +2208,11 @@ export default age;
 
 - [ ] **Step 3: Create `src/lib/calculators/date-difference.ts`**
 
-Same `parseIso`/`daysBetween` helpers (duplicated locally; do not export from `age.ts`).
+Uses `parseIso`, `daysBetween` and `calendarDiff` from `utils.ts` (same helpers age.ts uses).
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
-import { err, checkNumber } from './utils';
-
-// parseIso + daysBetween as in age.ts (duplicated locally)
-
-function diffYmd(a: Date, b: Date): { years: number; months: number; days: number } {
-  let years = b.getFullYear() - a.getFullYear();
-  let months = b.getMonth() - a.getMonth();
-  let days = b.getDate() - a.getDate();
-  if (days < 0) {
-    months--;
-    const prevMonth = new Date(b.getFullYear(), b.getMonth(), 0);
-    days += prevMonth.getDate();
-  }
-  if (months < 0) {
-    years--;
-    months += 12;
-  }
-  return { years, months, days };
-}
+import { checkNumber, parseIso, daysBetween, calendarDiff } from './utils';
 
 export const dateDifference: CalculatorMath = {
   slug: 'date-difference',
@@ -2254,12 +2224,12 @@ export const dateDifference: CalculatorMath = {
 
   validate(input: CalcInput): Record<string, string> {
     const errors: Record<string, string> = {};
-    const start = parseIso(input.startDate ?? '');
+    const start = parseIso(input.startDate);
     if (!start) {
       errors.startDate = input.startDate ? 'invalid' : 'required';
       return errors;
     }
-    const end = parseIso(input.endDate ?? '');
+    const end = parseIso(input.endDate);
     if (!end) {
       errors.endDate = input.endDate ? 'invalid' : 'required';
       return errors;
@@ -2272,7 +2242,7 @@ export const dateDifference: CalculatorMath = {
     const start = parseIso(input.startDate)!;
     const end = parseIso(input.endDate)!;
     const totalDays = daysBetween(start, end);
-    const { years, months, days } = diffYmd(start, end);
+    const { years, months, days } = calendarDiff(start, end);
     return {
       results: [
         { key: 'years', value: years, kind: 'number', hero: true },
