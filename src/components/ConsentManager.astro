@@ -117,8 +117,8 @@ const cookiesPath = localizedPath(locale, '/cookies/');
   declare global {
     interface Window {
       dataLayer?: unknown[];
-      __HASEBHA_GA4__?: { enabled: boolean; id: string };
-      __HASEBHA_TRACK_ENABLED__?: boolean;
+      __KLAR_GA4__?: { enabled: boolean; id: string };
+      __KLAR_TRACK_ENABLED__?: boolean;
     }
   }
 
@@ -136,8 +136,8 @@ const cookiesPath = localizedPath(locale, '/cookies/');
   const clarityId = root.dataset.clarityId || '';
 
   // Bootstrap globals used by the analytics helper (track()).
-  window.__HASEBHA_GA4__ = { enabled: ga4Enabled, id: ga4Id };
-  window.__HASEBHA_TRACK_ENABLED__ = root.dataset.trackEnabled === 'true';
+  window.__KLAR_GA4__ = { enabled: ga4Enabled, id: ga4Id };
+  window.__KLAR_TRACK_ENABLED__ = root.dataset.trackEnabled === 'true';
 
   function loadAnalyticsTags(): void {
     if (!hasConsent('analytics')) return;

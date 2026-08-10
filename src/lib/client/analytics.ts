@@ -9,8 +9,8 @@ import type { AnalyticsEventName } from '../../config/analytics';
 declare global {
   interface Window {
     dataLayer?: unknown[];
-    __HASEBHA_GA4__?: { enabled: boolean; id: string };
-    __HASEBHA_TRACK_ENABLED__?: boolean;
+    __KLAR_GA4__?: { enabled: boolean; id: string };
+    __KLAR_TRACK_ENABLED__?: boolean;
   }
 }
 
@@ -24,12 +24,12 @@ export interface TrackParams {
 }
 
 function configEnabled(): boolean {
-  return window.__HASEBHA_GA4__?.enabled === true && Boolean(window.__HASEBHA_GA4__?.id);
+  return window.__KLAR_GA4__?.enabled === true && Boolean(window.__KLAR_GA4__?.id);
 }
 
 export function track(event: AnalyticsEventName, params: TrackParams = {}): void {
   try {
-    if (window.__HASEBHA_TRACK_ENABLED__ === false) return;
+    if (window.__KLAR_TRACK_ENABLED__ === false) return;
     if (!configEnabled()) return;
     if (!hasConsent('analytics')) return;
     const payload = { event, ...params };
