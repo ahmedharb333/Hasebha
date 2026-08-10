@@ -6,6 +6,7 @@
  */
 import { getCurrency } from '../../config/currencies';
 import { parseNumber, formatNumber, formatCurrency, formatPercent } from '../number';
+import { debounce } from './debounce';
 import type { CalcInput, CalcOutput, CalculatorMath } from '../calculators/types';
 import type { Locale } from '../../config/site';
 import {
@@ -332,15 +333,15 @@ export function initCalculator(
     lastOutput = null;
   }
 
-  function run(): void {
+  function run(opts?: { silent?: boolean }): void {
     const input = currentInput();
-    trackCalculationStarted(payload.slug);
+    if (!opts?.silent) trackCalculationStarted(payload.slug);
     clearErrors();
     const errors = math.validate(input);
     if (Object.keys(errors).length > 0) {
       clearResult();
-      showErrors(errors);
-      trackCalculationError(payload.slug);
+      if (!opts?.silent) showErrors(errors);
+      if (!opts?.silent) trackCalculationError(payload.slug);
       return;
     }
     let output: CalcOutput;
@@ -348,13 +349,13 @@ export function initCalculator(
       output = math.calculate(input);
     } catch {
       clearResult();
-      showErrors({ __generic: payload.errors.invalid ?? payload.errors.required ?? 'error' });
-      trackCalculationError(payload.slug);
+      if (!opts?.silent) showErrors({ __generic: payload.errors.invalid ?? payload.errors.required ?? 'error' });
+      if (!opts?.silent) trackCalculationError(payload.slug);
       return;
     }
     lastOutput = output;
     render(output);
-    trackCalculationCompleted(payload.slug, currentCurrency);
+    if (!opts?.silent) trackCalculationCompleted(payload.slug, currentCurrency);
   }
 
   function fillExample(): void {
@@ -405,6 +406,8 @@ export function initCalculator(
     run();
   };
   form.addEventListener('submit', submitHandler);
+  const liveRun = debounce(() => run({ silent: true }), 200);
+  form.addEventListener('input', liveRun);
 
   const exampleBtn = root.querySelector<HTMLButtonElement>('[data-action="example"]');
   exampleBtn?.addEventListener('click', () => {
@@ -439,6 +442,8 @@ export function initCalculator(
   return {
     destroy() {
       form.removeEventListener('submit', submitHandler);
+      form.removeEventListener('input', liveRun);
+      liveRun.cancel();
     },
   };
 }
