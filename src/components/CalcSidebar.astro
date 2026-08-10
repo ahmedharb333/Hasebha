@@ -26,6 +26,7 @@ const t = {
 ---
 
 <aside class="card card--padded calc-sidebar">
+  <div class="calc-sidebar__summary card card--padded" data-sidebar-summary hidden aria-live="polite"></div>
   <h2 style="font-size: 1rem">{t.guideLabel}</h2>
   <p style="font-size: var(--font-size-sm)">{guideTitle}</p>
   <a href={localizedPath(locale, `/guides/${entry.guide}/`)} class="btn btn--outline btn--block">

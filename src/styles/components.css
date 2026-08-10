@@ -895,3 +895,22 @@
 .field__actions .btn--primary {
   flex: 1 1 200px;
 }
+
+/* ---------- Sidebar current-result summary ---------- */
+.calc-sidebar__summary {
+  margin-block-end: var(--space-5);
+  background: var(--color-bg-alt);
+  border-color: var(--color-border);
+}
+.calc-sidebar__summary-label {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+.calc-sidebar__summary-value {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-accent-dark);
+  font-variant-numeric: tabular-nums;
+  margin-block-start: var(--space-1);
+}

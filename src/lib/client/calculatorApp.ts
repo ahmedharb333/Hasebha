@@ -323,14 +323,37 @@ export function initCalculator(
     }
   }
 
+  function updateSidebarSummary(output: CalcOutput | null): void {
+    const box = document.querySelector<HTMLElement>('[data-sidebar-summary]');
+    if (!box) return;
+    box.hidden = true;
+    box.innerHTML = '';
+    if (!output) return;
+    const hero = output.results.find((r) => r.hero) ?? output.results[0];
+    if (!hero) return;
+    const label = payload.results[hero.key]?.label ?? hero.key;
+    const value = formatValue(hero.kind, hero.value, currentCurrency, payload.locale);
+    box.hidden = false;
+    const labelEl = document.createElement('span');
+    labelEl.className = 'calc-sidebar__summary-label';
+    labelEl.textContent = label;
+    const valueEl = document.createElement('div');
+    valueEl.className = 'calc-sidebar__summary-value';
+    valueEl.textContent = value;
+    box.appendChild(labelEl);
+    box.appendChild(valueEl);
+  }
+
   function render(output: CalcOutput): void {
     resultRegionEl.innerHTML = '';
     resultRegionEl.appendChild(buildResultPanel(output));
+    updateSidebarSummary(output);
   }
 
   function clearResult(): void {
     resultRegionEl.innerHTML = '';
     lastOutput = null;
+    updateSidebarSummary(null);
   }
 
   function run(opts?: { silent?: boolean }): void {
