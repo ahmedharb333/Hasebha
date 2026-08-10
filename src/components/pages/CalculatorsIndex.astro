@@ -13,8 +13,8 @@ const { locale } = Astro.props;
 const path = '/calculators/';
 const title = locale === 'ar' ? 'الحاسبات' : 'Calculators';
 const description = locale === 'ar'
-  ? 'كل الحاسبات المالية وحاسبات العمل في حاسبها: قروض، فائدة مركبة، ادخار، ضريبة، رواتب، عمل إضافي وأكثر.'
-  : 'All of Hasebha’s finance and employment calculators: loans, compound interest, savings, VAT, salary, overtime and more.';
+  ? 'كل الحاسبات المالية وحاسبات العمل في كلار: قروض، فائدة مركبة، ادخار، ضريبة، رواتب، عمل إضافي وأكثر.'
+  : 'All of Klar’s finance and employment calculators: loans, compound interest, savings, VAT, salary, overtime and more.';
 
 const groups: { category: Category; label: string; items: CalculatorEntry[] }[] = [
   { category: 'finance', label: locale === 'ar' ? 'مالية' : 'Finance', items: [] },

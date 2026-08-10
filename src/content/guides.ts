@@ -16,7 +16,7 @@ const guides: Record<string, Record<Locale, GuideContent>> = {
       metaDescription:
         'دليل عملي لحساب القسط الشهري وإجمالي الفائدة والتكلفة الكلية للقرض خطوة بخطوة، مع مثال عددي مطابق للحاسبة وافتراضات واضحة وتنبيهات حول الفائدة المتغيرة.',
       intro:
-        'قبل أن تقترض، من الحكمة أن تعرف مسبقاً كم ستدفع كل شهر وما التكلفة الكلية للقرض. يشرح هذا الدليل كيف تُحسب الأقساط الشهرية للقروض بسعر فائدة ثابت، وما الفرق بين المبلغ المقترض والتكلفة الفعلية الكاملة. يتبع المثال الوارد هنا نفس القيم التي تستخدمها حاسبة القسط الشهري في حاسبها، حتى تتمكن من مقارنة النتائج مباشرة.',
+        'قبل أن تقترض، من الحكمة أن تعرف مسبقاً كم ستدفع كل شهر وما التكلفة الكلية للقرض. يشرح هذا الدليل كيف تُحسب الأقساط الشهرية للقروض بسعر فائدة ثابت، وما الفرق بين المبلغ المقترض والتكلفة الفعلية الكاملة. يتبع المثال الوارد هنا نفس القيم التي تستخدمها حاسبة القسط الشهري في كلار، حتى تتمكن من مقارنة النتائج مباشرة.',
       sections: [
         {
           heading: 'المعلومات التي تحتاجها',
@@ -92,7 +92,7 @@ const guides: Record<string, Record<Locale, GuideContent>> = {
       metaDescription:
         'Learn how to calculate a loan’s monthly payment, total interest and full cost step by step, with a worked example and clear assumptions.',
       intro:
-        'Before you borrow, it pays to know what your monthly payment will be and what the loan really costs. This guide explains how monthly payments work for fixed-rate loans, and why the amount you borrow is not the same as the total you end up paying. The worked example mirrors the values used by Hasebha’s loan payment calculator, so you can compare results directly.',
+        'Before you borrow, it pays to know what your monthly payment will be and what the loan really costs. This guide explains how monthly payments work for fixed-rate loans, and why the amount you borrow is not the same as the total you end up paying. The worked example mirrors the values used by Klar’s loan payment calculator, so you can compare results directly.',
       sections: [
         {
           heading: 'What you need',
@@ -171,7 +171,7 @@ Treat the result as a planning estimate and always compare it with the lender’
       metaDescription:
         'شرح مبسط للفائدة المركبة وكيف تنمو مدخراتك واستثماراتك بمرور الوقت، مع مثال عددي من حاسبة الفائدة المركبة والفرق عن الفائدة البسيطة.',
       intro:
-        'الفائدة المركبة هي الفائدة التي تُحسب على المبلغ الأصلي وعلى الفائدة المتراكمة نفسها، فتكون فائدة على فائدة. هذه الآلية تجعل المدخرات تنمو بشكل أسرع مع مرور الوقت، وكلما طالت المدة زاد أثرها. يشرح هذا الدليل كيف تعمل الفائدة المركبة، وكيف تُحسب باستخدام حاسبة الفائدة المركبة في حاسبها.',
+        'الفائدة المركبة هي الفائدة التي تُحسب على المبلغ الأصلي وعلى الفائدة المتراكمة نفسها، فتكون فائدة على فائدة. هذه الآلية تجعل المدخرات تنمو بشكل أسرع مع مرور الوقت، وكلما طالت المدة زاد أثرها. يشرح هذا الدليل كيف تعمل الفائدة المركبة، وكيف تُحسب باستخدام حاسبة الفائدة المركبة في كلار.',
       sections: [
         {
           heading: 'الفائدة البسيطة مقابل الفائدة المركبة',
@@ -247,7 +247,7 @@ Treat the result as a planning estimate and always compare it with the lender’
       metaDescription:
         'A simple explanation of compound interest and how your savings and investments grow over time, with a worked example from the calculator.',
       intro:
-        'Compound interest is interest calculated on your original amount and on the interest that has already built up — interest on interest. This mechanism makes savings grow faster over time, and the longer the horizon, the greater its effect. This guide explains how compound interest works and how Hasebha’s compound interest calculator models it.',
+        'Compound interest is interest calculated on your original amount and on the interest that has already built up — interest on interest. This mechanism makes savings grow faster over time, and the longer the horizon, the greater its effect. This guide explains how compound interest works and how Klar’s compound interest calculator models it.',
       sections: [
         {
           heading: 'Simple vs compound interest',
@@ -491,7 +491,7 @@ Treat the output as a planning estimate, not a guarantee. If your goal involves 
         },
         {
           heading: 'النسبة المعمول بها',
-          body: `نسبة الضريبة المضافة تختلف بين البلدان، وقد تختلف أيضاً بين سلعة وأخرى داخل البلد نفسه، مع نسب مخفضة لبعض السلع الأساسية وإعفاءات من أخرى. لذلك تستخدم حاسبة حاسبها نسبة **مخصصة** تدخلها بنفسك.
+          body: `نسبة الضريبة المضافة تختلف بين البلدان، وقد تختلف أيضاً بين سلعة وأخرى داخل البلد نفسه، مع نسب مخفضة لبعض السلع الأساسية وإعفاءات من أخرى. لذلك تستخدم حاسبة كلار نسبة **مخصصة** تدخلها بنفسك.
 
 لا تفترض نسبة معينة دون تحقق؛ تحقق من النسبة السارية في بلدك ومن السلع المشمولة من الجهات الرسمية المختصة بالضرائب، وتأكد أنها حديثة قبل استخدامها في حساباتك. وحتى مع النسب الشائعة فقد تتغير القواعد، فالمصدر الرسمي هو الفيصل.`,
         },
@@ -567,7 +567,7 @@ The relationship is simple: gross = net × (1 + rate ÷ 100). This single relati
         },
         {
           heading: 'The rate to use',
-          body: `VAT rates differ from country to country and can vary within a country between categories of goods and services, with reduced rates and exemptions. That is why Hasebha’s calculator lets you enter a **custom rate** yourself.
+          body: `VAT rates differ from country to country and can vary within a country between categories of goods and services, with reduced rates and exemptions. That is why Klar’s calculator lets you enter a **custom rate** yourself.
 
 Do not assume a rate. Check the current rate in your country and which goods and services are covered, using official tax authorities, and make sure it is up to date before using it in your calculations.`,
         },
@@ -1181,7 +1181,7 @@ If you are starting out seriously, consult a licensed accountant or tax adviser 
       metaDescription:
         'Understand the real cost of hiring an employee, including contributions, insurance, benefits and one-time costs, with a worked example.',
       intro:
-        'When planning a hire, it is easy to focus on the monthly salary, but the real cost of an employee goes well beyond it. That cost includes employer contributions, insurance, benefits and software, plus one-time costs such as recruiting, training and equipment. This guide breaks down the components and shows how Hasebha’s employee total-cost calculator adds them up.',
+        'When planning a hire, it is easy to focus on the monthly salary, but the real cost of an employee goes well beyond it. That cost includes employer contributions, insurance, benefits and software, plus one-time costs such as recruiting, training and equipment. This guide breaks down the components and shows how Klar’s employee total-cost calculator adds them up.',
       sections: [
         {
           heading: 'Why the full cost matters',
