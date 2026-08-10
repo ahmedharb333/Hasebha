@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import pages from '../../content/pages';
+import { proseHtml } from '../../lib/prose';
+import { SITE } from '../../config/site';
+import type { StaticPageContent } from '../../content/types';
+import type { Locale } from '../../config/site';
+
+interface Props {
+  locale: Locale;
+  slug: string;
+}
+
+const { locale, slug } = Astro.props;
+const page: StaticPageContent | undefined = pages[slug]?.[locale];
+if (!page) throw new Error(`Unknown page slug: ${slug}`);
+const path = `/${slug}/`;
+const showMailto = slug === 'contact' && Boolean(SITE.owner.email);
+const t = {
+  updated: locale === 'ar' ? 'آخر تحديث' : 'Last updated',
+};
+---
+
+<BaseLayout locale={locale} path={path} title={page.title} description={page.metaDescription}>
+  <div class="container page">
+    <Breadcrumbs locale={locale} items={[{ name: page.title, path }]} />
+    <header class="page-hero page-hero--compact">
+      <h1>{page.title}</h1>
+    </header>
+    <div class="prose page-body">
+      {showMailto && (
+        <div class="alert alert--info">
+          <a href={`mailto:${SITE.owner.email}?subject=${encodeURIComponent(SITE.contact.mailtoSubject[locale])}`}>
+            {locale === 'ar' ? 'أرسل رسالة مباشرة' : 'Send a direct message'}
+          </a>
+        </div>
+      )}
+      {page.sections.map((section) => (
+        <div>
+          {section.heading && <h2>{section.heading}</h2>}
+          <div set:html={proseHtml(section.body)}></div>
+        </div>
+      ))}
+      <p style="font-size: var(--font-size-xs); color: var(--color-text-muted)">
+        {t.updated}: {page.lastUpdated}
+      </p>
+    </div>
+  </div>
+</BaseLayout>

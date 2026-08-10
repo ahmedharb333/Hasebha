@@ -1,0 +1,53 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import CalculatorShell from '../CalculatorShell.astro';
+import CalcContentSections from '../CalcContentSections.astro';
+import CalcSidebar from '../CalcSidebar.astro';
+import { getCalcContent } from '../../content/calculators';
+import { getCalculator } from '../../config/calculators';
+import { getMath } from '../../lib/calculators';
+import { articleJsonLd, faqJsonLd } from '../../lib/seo';
+import type { Locale } from '../../config/site';
+
+interface Props {
+  locale: Locale;
+  slug: string;
+}
+
+const { locale, slug } = Astro.props;
+const entry = getCalculator(slug);
+if (!entry) throw new Error(`Unknown calculator slug: ${slug}`);
+const content = getCalcContent(slug, locale);
+const math = getMath(slug);
+const path = `/calculators/${slug}/`;
+const meta: Parameters<typeof articleJsonLd>[1] = {
+  title: content.title,
+  description: content.metaDescription,
+  path,
+  locale,
+  lastReviewed: content.lastReviewed,
+};
+const jsonLd = [
+  articleJsonLd(locale, meta, content.intro + content.formula, null),
+  ...(content.faqs.length ? [faqJsonLd(locale, content.faqs)] : []),
+];
+---
+
+<CalculatorLayout
+  locale={locale}
+  path={path}
+  title={content.title}
+  description={content.metaDescription}
+  webAppName={content.title}
+  jsonLd={jsonLd}
+>
+  <div class="calc-layout">
+    <div class="calc-layout__main">
+      <CalculatorShell math={math} content={content} category={entry.category} />
+      <CalcContentSections content={content} locale={locale} />
+    </div>
+    <aside class="calc-layout__side">
+      <CalcSidebar entry={entry} locale={locale} />
+    </aside>
+  </div>
+</CalculatorLayout>

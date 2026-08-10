@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CALCULATORS } from '../../config/calculators';
+import { localizedPath } from '../../lib/i18n';
+import { websiteJsonLd, organizationJsonLd } from '../../lib/seo';
+import { SITE } from '../../config/site';
+import guides from '../../content/guides';
+import type { Locale } from '../../config/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const path = '/';
+const title = SITE.brandName[locale];
+const description = SITE.tagline[locale];
+const calculators = CALCULATORS.filter((c) => c.active);
+const featured = calculators.slice(0, 6);
+const guideSlugs = ['how-to-calculate-loan-payment', 'compound-interest-explained', 'hourly-vs-monthly-salary'];
+const guideList = guideSlugs.map((s) => guides[s]?.[locale]).filter(Boolean);
+const jsonLd = [websiteJsonLd(locale), organizationJsonLd(locale)];
+const t = {
+  heroSub: locale === 'ar'
+    ? 'أدوات حسابية واضحة وشفافة للتمويل الشخصي والعمل، مبنية على قواعد عامة قابلة للمراجعة مع ذكر الافتراضات بوضوح.'
+    : 'Clear and transparent tools for personal finance and employment, built on reviewable formulas with assumptions stated up front.',
+  ctaCalc: locale === 'ar' ? 'استكشف الحاسبات' : 'Explore the calculators',
+  ctaGuides: locale === 'ar' ? 'اقرأ الأدلة' : 'Read the guides',
+  featuredLabel: locale === 'ar' ? 'حاسبات مختارة' : 'Featured calculators',
+  allLabel: locale === 'ar' ? 'كل الحاسبات' : 'All calculators',
+  guidesLabel: locale === 'ar' ? 'أدلة تعليمية' : 'Educational guides',
+  guidesSub: locale === 'ar' ? 'اشرح المفاهيم قبل أن تحسب، وافهم كيف نصل إلى النتيجة.' : 'Understand the concepts before you calculate — and how we reach the result.',
+  readGuide: locale === 'ar' ? 'اقرأ الدليل' : 'Read the guide',
+  trustTitle: locale === 'ar' ? 'شفافية تبدأ من الصيغة' : 'Transparency starts at the formula',
+  trustText: locale === 'ar'
+    ? 'كل حاسبة تعرض صيغتها وافتراضاتها وقيودها، ولا تُقدَّم النتائج كنصيحة مالية. الأسعار والقواعد قد تختلف حسب بلدك؛ تحقق دائماً مع الجهات المختصة.'
+    : 'Every calculator shows its formula, assumptions and limits, and results are never presented as financial advice. Rates and rules vary by country — always verify with official authorities.',
+  trustMore: locale === 'ar' ? 'اقرأ عن المنهجية' : 'Read about our methodology',
+  category: { finance: locale === 'ar' ? 'مالية' : 'Finance', employment: locale === 'ar' ? 'عمل وتوظيف' : 'Employment' },
+};
+---
+
+<BaseLayout locale={locale} path={path} title={title} description={description} jsonLd={jsonLd}>
+  <section class="home-hero">
+    <div class="container">
+      <h1>{title}</h1>
+      <p class="home-hero__sub">{t.heroSub}</p>
+      <div class="result-actions">
+        <a class="btn btn--primary" href={localizedPath(locale, '/calculators/')}>{t.ctaCalc}</a>
+        <a class="btn btn--outline" href={localizedPath(locale, '/guides/')}>{t.ctaGuides}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>{t.featuredLabel}</h2>
+      <div class="tool-grid">
+        {featured.map((c) => (
+          <a class="tool-card" href={localizedPath(locale, `/calculators/${c.slug}/`)}>
+            <h3>{c.title[locale]}</h3>
+            <p>{c.description[locale]}</p>
+            <span class="tool-card__meta">{t.category[c.category]}</span>
+          </a>
+        ))}
+      </div>
+      <p style="margin-block-start: var(--space-4)">
+        <a href={localizedPath(locale, '/calculators/')}>{t.allLabel} ←</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <h2>{t.guidesLabel}</h2>
+      <p>{t.guidesSub}</p>
+      <div class="tool-grid">
+        {guideList.map((g) => (
+          <a class="tool-card" href={localizedPath(locale, `/guides/${g.slug}/`)}>
+            <h3>{g.title}</h3>
+            <p>{g.intro}</p>
+            <span class="tool-card__meta">{t.readGuide}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>{t.trustTitle}</h2>
+      <p style="max-width: 60ch">{t.trustText}</p>
+      <p><a href={localizedPath(locale, '/methodology/')}>{t.trustMore}</a></p>
+    </div>
+  </section>
+</BaseLayout>

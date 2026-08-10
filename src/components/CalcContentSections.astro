@@ -1,0 +1,59 @@
+---
+import type { CalcContent } from '../lib/calculators/types';
+import type { Locale } from '../config/site';
+
+interface Props {
+  content: CalcContent;
+  locale: Locale;
+}
+
+const { content, locale } = Astro.props;
+const t = {
+  formula: locale === 'ar' ? 'الصيغة' : 'Formula',
+  example: locale === 'ar' ? 'مثال تطبيقي' : 'Worked example',
+  assumptions: locale === 'ar' ? 'الافتراضات' : 'Assumptions',
+  whenUseful: locale === 'ar' ? 'متى تفيدك هذه الحاسبة؟' : 'When is this useful?',
+  mistakes: locale === 'ar' ? 'أخطاء شائعة' : 'Common mistakes',
+  faq: locale === 'ar' ? 'الأسئلة الشائعة' : 'Frequently asked questions',
+  methodology: locale === 'ar' ? 'المنهجية والمراجعة' : 'Methodology and review',
+};
+---
+
+<div class="prose">
+  <p style="font-size: 1.05rem">{content.intro}</p>
+
+  <h2>{t.formula}</h2>
+  <p>{content.formula}</p>
+
+  <h2>{t.whenUseful}</h2>
+  <p>{content.whenUseful}</p>
+
+  <h2>{t.example}</h2>
+  <div set:html={content.exampleHtml}></div>
+
+  <h2>{t.assumptions}</h2>
+  <ul>
+    {content.assumptions.map((item) => <li>{item}</li>)}
+  </ul>
+
+  <h2>{t.mistakes}</h2>
+  <ul>
+    {content.mistakes.map((item) => <li>{item}</li>)}
+  </ul>
+
+  <h2>{t.faq}</h2>
+  <div class="faq">
+    {content.faqs.map((item) => (
+      <details>
+        <summary>{item.q}</summary>
+        <p>{item.a}</p>
+      </details>
+    ))}
+  </div>
+
+  <h2>{t.methodology}</h2>
+  <div class="alert alert--info">
+    {content.methodologyNote}
+    {content.disclaimerNote && <p style="margin-block-start: var(--space-2); margin-block-end: 0">{content.disclaimerNote}</p>}
+  </div>
+</div>

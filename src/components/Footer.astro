@@ -1,0 +1,60 @@
+---
+import { NAV, LOGO, SITE } from '../config/site';
+import { LEGAL } from '../config/legal';
+import { localizedPath } from '../lib/i18n';
+import type { Locale } from '../config/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const footerNav = NAV.footer.map((item) => ({
+  label: item.label[locale],
+  href: localizedPath(locale, item.href),
+}));
+const mainNav = NAV.main.map((item) => ({
+  label: item.label[locale],
+  href: localizedPath(locale, item.href),
+}));
+const cookiesLabel = locale === 'ar' ? 'إدارة خيارات الكوكيز' : 'Cookie settings';
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div>
+        <a class="brand" href={localizedPath(locale, '/')}>{LOGO.lockup[locale]}</a>
+        <p style="margin-block-start: var(--space-3); font-size: var(--font-size-sm)">{SITE.tagline[locale]}</p>
+      </div>
+      <nav aria-label={locale === 'ar' ? 'روابط الموقع' : 'Site links'}>
+        <h2>{locale === 'ar' ? 'الموقع' : 'Site'}</h2>
+        <ul>
+          {mainNav.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <nav aria-label={locale === 'ar' ? 'روابط قانونية' : 'Legal links'}>
+        <h2>{locale === 'ar' ? 'السياسات' : 'Policies'}</h2>
+        <ul>
+          {footerNav.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <div>
+        <h2>{locale === 'ar' ? 'التواصل' : 'Contact'}</h2>
+        <ul>
+          <li><button type="button" class="btn btn--ghost btn--sm" data-consent-open>{cookiesLabel}</button></li>
+          <li><a href={localizedPath(locale, '/contact/')}>{locale === 'ar' ? 'صفحة التواصل' : 'Contact page'}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <span>&copy; {new Date().getFullYear()} {LOGO.lockup[locale]}. {locale === 'ar' ? 'جميع الحقوق محفوظة.' : 'All rights reserved.'}</span>
+      <span>{LEGAL.disclaimer[locale]}</span>
+    </div>
+  </div>
+</footer>

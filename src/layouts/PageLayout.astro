@@ -1,0 +1,27 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { Locale } from '../config/site';
+
+interface Props {
+  locale: Locale;
+  path: string;
+  title: string;
+  description: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>[];
+}
+
+const { locale, path, title, description } = Astro.props;
+---
+
+<BaseLayout locale={locale} path={path} title={title} description={description} noindex={Astro.props.noindex} jsonLd={Astro.props.jsonLd}>
+  <div class="container page">
+    <header class="page-hero">
+      <h1>{title}</h1>
+      {Astro.slots.hideSubtitle !== true && Astro.slots.subtitle ? <p>{Astro.slots.subtitle}</p> : null}
+    </header>
+    <div class="page-body">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,25 @@
+---
+import { FEATURES } from '../config/features';
+import type { Locale } from '../config/site';
+
+interface Props {
+  id: string;
+  locale: Locale;
+}
+
+const { id, locale } = Astro.props;
+const program = FEATURES.affiliates.programs.find((p) => p.id === id);
+const enabled = FEATURES.affiliates.enabled && program;
+const disclosure = locale === 'ar'
+  ? 'هذه توصية شريكة: قد نحصل على عمولة عند الشراء عبر هذا الرابط دون تكلفة إضافية عليك.'
+  : 'This is an affiliate recommendation: we may earn a commission if you purchase through this link, at no extra cost to you.';
+---
+
+{enabled && program && (
+  <aside class="affiliate-card" aria-label={locale === 'ar' ? 'توصية شريكة' : 'Affiliate recommendation'}>
+    <p class="affiliate-card__disclosure">{disclosure}</p>
+    <a href={program.url} rel="sponsored nofollow" target="_blank" class="btn btn--outline">
+      {program.label[locale]}
+    </a>
+  </aside>
+)}

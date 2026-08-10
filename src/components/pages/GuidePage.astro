@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import guides from '../../content/guides';
+import { localizedPath } from '../../lib/i18n';
+import { articleJsonLd, faqJsonLd } from '../../lib/seo';
+import { proseHtml } from '../../lib/prose';
+import { getCalculator } from '../../config/calculators';
+import type { GuideContent } from '../../content/types';
+import type { Locale } from '../../config/site';
+
+interface Props {
+  locale: Locale;
+  slug: string;
+}
+
+const { locale, slug } = Astro.props;
+const guide: GuideContent | undefined = guides[slug]?.[locale];
+if (!guide) throw new Error(`Unknown guide slug: ${slug}`);
+const path = `/guides/${slug}/`;
+const jsonLd = [
+  articleJsonLd(locale, { title: guide.title, description: guide.metaDescription, path, locale, lastReviewed: guide.lastReviewed }, guide.intro, null),
+  ...(guide.faqs.length ? [faqJsonLd(locale, guide.faqs)] : []),
+];
+const relatedEntries = guide.relatedCalculators
+  .map((s) => getCalculator(s))
+  .filter((c): c is NonNullable<typeof c> => c !== undefined && c.active);
+const t = {
+  takeaways: locale === 'ar' ? 'الخلاصة' : 'Key takeaways',
+  faq: locale === 'ar' ? 'الأسئلة الشائعة' : 'Frequently asked questions',
+  related: locale === 'ar' ? 'حاسبات ذات صلة' : 'Related calculators',
+  back: locale === 'ar' ? 'كل الأدلة' : 'All guides',
+  try: locale === 'ar' ? 'جرّب الحاسبة' : 'Try the calculator',
+};
+---
+
+<BaseLayout locale={locale} path={path} title={guide.title} description={guide.metaDescription} ogType="article" jsonLd={jsonLd}>
+  <div class="container page">
+    <Breadcrumbs locale={locale} items={[{ name: locale === 'ar' ? 'الأدلة' : 'Guides', path: '/guides/' }, { name: guide.title, path }]} />
+    <header class="page-hero">
+      <h1>{guide.title}</h1>
+    </header>
+    <div class="prose page-body">
+      <p style="font-size: 1.05rem">{guide.intro}</p>
+      {guide.sections.map((section) => (
+        <div>
+          {section.heading && <h2>{section.heading}</h2>}
+          <div set:html={proseHtml(section.body)}></div>
+        </div>
+      ))}
+
+      <h2>{t.takeaways}</h2>
+      <div class="alert alert--info">
+        <ul style="margin-block: 0">
+          {guide.keyTakeaways.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+
+      <h2>{t.faq}</h2>
+      <div class="faq">
+        {guide.faqs.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+
+      {relatedEntries.length > 0 && (
+        <>
+          <h2>{t.related}</h2>
+          <div class="tool-grid">
+            {relatedEntries.map((c) => (
+              <a class="tool-card" href={localizedPath(locale, `/calculators/${c.slug}/`)}>
+                <h3>{c.title[locale]}</h3>
+                <p>{c.description[locale]}</p>
+                <span class="tool-card__meta">{t.try}</span>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
+
+      <p><a href={localizedPath(locale, '/guides/')}>← {t.back}</a></p>
+    </div>
+  </div>
+</BaseLayout>

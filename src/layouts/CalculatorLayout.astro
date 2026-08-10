@@ -1,0 +1,51 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import AdSlot from '../components/AdSlot.astro';
+import { localizedPath } from '../lib/i18n';
+import { webApplicationJsonLd } from '../lib/seo';
+import type { Locale } from '../config/site';
+
+interface Props {
+  locale: Locale;
+  path: string;
+  title: string;
+  description: string;
+  /** Single-word name for the JSON-LD WebApplication type. */
+  webAppName?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>[];
+}
+
+const { locale, path, title, description } = Astro.props;
+const webAppName = Astro.props.webAppName;
+const crumbs = [{ name: title, path }];
+const jsonLd = [
+  ...(webAppName ? [webApplicationJsonLd(locale, { title: webAppName, description, path, locale })] : []),
+  ...(Astro.props.jsonLd ?? []),
+];
+---
+
+<BaseLayout
+  locale={locale}
+  path={path}
+  title={title}
+  description={description}
+  noindex={Astro.props.noindex}
+  jsonLd={jsonLd}
+>
+  <div class="container page page--calculator">
+    <Breadcrumbs locale={locale} items={crumbs} />
+    <header class="page-hero page-hero--compact">
+      <h1>{title}</h1>
+      <p>{description}</p>
+    </header>
+    <slot />
+    <div class="result-actions">
+      <a href={localizedPath(locale, '/')} class="btn btn--ghost">
+        {locale === 'ar' ? 'العودة إلى الرئيسية' : 'Back to home'}
+      </a>
+    </div>
+    <AdSlot location="afterResult" locale={locale} reserved />
+  </div>
+</BaseLayout>

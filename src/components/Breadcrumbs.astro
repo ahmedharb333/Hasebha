@@ -1,0 +1,40 @@
+---
+import { localizedPath } from '../lib/i18n';
+import { breadcrumbJsonLd } from '../lib/seo';
+import type { Locale } from '../config/site';
+
+interface Crumb {
+  name: string;
+  path: string;
+}
+
+interface Props {
+  locale: Locale;
+  items: Crumb[];
+}
+
+const { locale, items } = Astro.props;
+const crumbs: Crumb[] = [
+  { name: locale === 'ar' ? 'الرئيسية' : 'Home', path: '/' },
+  ...items,
+];
+const jsonLd = breadcrumbJsonLd(locale, crumbs);
+---
+
+<nav class="breadcrumbs" aria-label={locale === 'ar' ? 'مسار التنقل' : 'Breadcrumb'}>
+  <ol>
+    {crumbs.map((crumb, index) => {
+      const isLast = index === crumbs.length - 1;
+      return (
+        <li>
+          {isLast ? (
+            <span aria-current="page">{crumb.name}</span>
+          ) : (
+            <a href={localizedPath(locale, crumb.path)}>{crumb.name}</a>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+</nav>
+<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

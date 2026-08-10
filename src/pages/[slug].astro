@@ -1,0 +1,14 @@
+---
+import StaticPage from '@/components/pages/StaticPage.astro';
+import { STATIC_PAGE_SLUGS } from '@/lib/pages';
+
+export function getStaticPaths() {
+  return STATIC_PAGE_SLUGS.map((slug) => ({
+    params: { slug },
+    props: { slug, locale: 'ar' as const },
+  }));
+}
+
+const { slug, locale } = Astro.props;
+---
+<StaticPage slug={slug} locale={locale} />

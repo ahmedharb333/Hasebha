@@ -1,0 +1,51 @@
+---
+import guides from '../content/guides';
+import { localizedPath } from '../lib/i18n';
+import { getCalculator } from '../config/calculators';
+import AdSlot from './AdSlot.astro';
+import type { CalculatorEntry } from '../config/calculators';
+import type { Locale } from '../config/site';
+
+interface Props {
+  entry: CalculatorEntry;
+  locale: Locale;
+}
+
+const { entry, locale } = Astro.props;
+const guide = guides[entry.guide]?.[locale];
+const guideTitle = guide?.title ?? (locale === 'ar' ? 'دليل مرتبط' : 'Related guide');
+const relatedEntries = entry.related
+  .map((slug) => getCalculator(slug))
+  .filter((c): c is NonNullable<typeof c> => c !== undefined && c.active);
+const t = {
+  guideLabel: locale === 'ar' ? 'الدليل المرتبط' : 'Related guide',
+  relatedLabel: locale === 'ar' ? 'حاسبات ذات صلة' : 'Related calculators',
+  open: locale === 'ar' ? 'اقرأ الدليل' : 'Read the guide',
+  try: locale === 'ar' ? 'جرّب الحاسبة' : 'Try the calculator',
+};
+---
+
+<aside class="card card--padded calc-sidebar">
+  <h2 style="font-size: 1rem">{t.guideLabel}</h2>
+  <p style="font-size: var(--font-size-sm)">{guideTitle}</p>
+  <a href={localizedPath(locale, `/guides/${entry.guide}/`)} class="btn btn--outline btn--block">
+    {t.open}
+  </a>
+
+  {relatedEntries.length > 0 && (
+    <>
+      <h2 style="font-size: 1rem; margin-block-start: var(--space-5)">{t.relatedLabel}</h2>
+      <ul class="link-list">
+        {relatedEntries.map((c) => (
+          <li>
+            <a href={localizedPath(locale, `/calculators/${c.slug}/`)}>{c.title[locale]}</a>
+          </li>
+        ))}
+      </ul>
+    </>
+  )}
+
+  <div style="margin-block-start: var(--space-5)">
+    <AdSlot location="sidebar" locale={locale} reserved />
+  </div>
+</aside>

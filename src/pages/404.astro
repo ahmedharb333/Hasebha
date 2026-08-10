@@ -1,0 +1,18 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { localizedPath } from '@/lib/i18n';
+
+const description = 'Page not found — الصفحة غير موجودة';
+---
+
+<BaseLayout locale="ar" path="/" title="الصفحة غير موجودة" description={description} noindex>
+  <div class="container page" style="text-align: center; padding-block: var(--space-8)">
+    <h1 style="font-size: 3rem; margin-block-end: var(--space-2)">404</h1>
+    <p style="font-size: 1.1rem">الصفحة التي تبحث عنها غير موجودة.</p>
+    <p>The page you are looking for does not exist.</p>
+    <div class="result-actions" style="justify-content: center">
+      <a href={localizedPath('ar', '/')} class="btn btn--primary">العودة إلى الرئيسية</a>
+      <a href={localizedPath('en', '/')} class="btn btn--outline">Go to home (EN)</a>
+    </div>
+  </div>
+</BaseLayout>

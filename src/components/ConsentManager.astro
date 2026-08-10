@@ -1,0 +1,243 @@
+---
+import { localizedPath } from '../lib/i18n';
+import type { Locale } from '../config/site';
+
+interface Props {
+  locale: Locale;
+  consentEnabled: boolean;
+  trackEnabled: boolean;
+  ga4: { enabled: boolean; id: string };
+  clarity: { enabled: boolean; projectId: string };
+}
+
+const { locale, consentEnabled, trackEnabled, ga4, clarity } = Astro.props;
+const t = {
+  bannerTitle: locale === 'ar' ? 'خصوصيتك تهمنا' : 'Your privacy matters',
+  bannerText: locale === 'ar'
+    ? 'نستخدم ملفات تعريف الارتباط لتحسين تجربتك وتحليل حركة المرور وعرض الإعلانات المناسبة. يمكنك اختيار ما تسمح به.'
+    : 'We use cookies to improve your experience, analyse traffic and show relevant ads. Choose what you allow.',
+  acceptAll: locale === 'ar' ? 'قبول الكل' : 'Accept all',
+  rejectAll: locale === 'ar' ? 'رفض غير الضروري' : 'Reject non-essential',
+  manage: locale === 'ar' ? 'إدارة الخيارات' : 'Manage preferences',
+  dialogTitle: locale === 'ar' ? 'إدارة إعدادات الخصوصية' : 'Privacy settings',
+  necessaryLabel: locale === 'ar' ? 'الضرورية' : 'Necessary',
+  necessaryText: locale === 'ar' ? 'مطلوبة لعمل الموقع بشكل أساسي ولا يمكن تعطيلها.' : 'Required for the site to function and cannot be disabled.',
+  analyticsLabel: locale === 'ar' ? 'التحليلات' : 'Analytics',
+  analyticsText: locale === 'ar' ? 'تساعدنا على فهم كيفية استخدام الموقع دون إرسال قيمك المالية.' : 'Help us understand site usage without sending your financial values.',
+  advertisingLabel: locale === 'ar' ? 'الإعلانات' : 'Advertising',
+  advertisingText: locale === 'ar' ? 'تستخدم لعرض الإعلانات غير الشخصية أو الشخصية حسب ما يسمح به القانون.' : 'Used to show non-personalised or personalised ads where permitted.',
+  save: locale === 'ar' ? 'حفظ الخيارات' : 'Save preferences',
+  close: locale === 'ar' ? 'إغلاق' : 'Close',
+  cookiesPage: locale === 'ar' ? 'اقرأ سياسة الكوكيز' : 'Read the cookies policy',
+};
+const cookiesPath = localizedPath(locale, '/cookies/');
+---
+
+<div
+  class="consent-root"
+  data-consent-enabled={consentEnabled ? 'true' : 'false'}
+  data-ga4-enabled={ga4.enabled ? 'true' : 'false'}
+  data-ga4-id={ga4.id}
+  data-clarity-enabled={clarity.enabled ? 'true' : 'false'}
+  data-clarity-id={clarity.projectId}
+  data-track-enabled={trackEnabled ? 'true' : 'false'}
+></div>
+
+<div class="consent-banner" data-consent-banner role="dialog" aria-live="polite" aria-label={t.bannerTitle} hidden>
+  <div class="consent-banner__inner">
+    <div>
+      <strong>{t.bannerTitle}</strong>
+      <p style="margin: var(--space-1) 0 0; font-size: var(--font-size-sm)">{t.bannerText}</p>
+    </div>
+    <div class="consent-banner__actions">
+      <button type="button" class="btn btn--primary btn--sm" data-consent-accept-all>{t.acceptAll}</button>
+      <button type="button" class="btn btn--outline btn--sm" data-consent-reject>{t.rejectAll}</button>
+      <button type="button" class="btn btn--ghost btn--sm" data-consent-open-manage>{t.manage}</button>
+    </div>
+  </div>
+</div>
+
+<div class="consent-dialog" data-consent-dialog hidden>
+  <div class="consent-dialog__panel" role="dialog" aria-modal="true" aria-labelledby="consent-title">
+    <h2 id="consent-title">{t.dialogTitle}</h2>
+
+    <div class="consent-category">
+      <div class="consent-category__row">
+        <div>
+          <h3>{t.necessaryLabel}</h3>
+          <p>{t.necessaryText}</p>
+        </div>
+        <div class="consent-toggle">
+          <input type="checkbox" id="consent-necessary" checked disabled />
+          <span aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="consent-category">
+      <div class="consent-category__row">
+        <div>
+          <h3>{t.analyticsLabel}</h3>
+          <p>{t.analyticsText}</p>
+        </div>
+        <div class="consent-toggle">
+          <input type="checkbox" id="consent-analytics" data-consent-cat="analytics" />
+          <span aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="consent-category">
+      <div class="consent-category__row">
+        <div>
+          <h3>{t.advertisingLabel}</h3>
+          <p>{t.advertisingText}</p>
+        </div>
+        <div class="consent-toggle">
+          <input type="checkbox" id="consent-advertising" data-consent-cat="advertising" />
+          <span aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size: var(--font-size-sm)">
+      <a href={cookiesPath}>{t.cookiesPage}</a>
+    </p>
+
+    <div class="result-actions">
+      <button type="button" class="btn btn--primary" data-consent-save>{t.save}</button>
+      <button type="button" class="btn btn--ghost" data-consent-close>{t.close}</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { getConsent, setConsent, isConsentDecided, hasConsent } from '../lib/client/consent';
+
+  declare global {
+    interface Window {
+      dataLayer?: unknown[];
+      __HASEBHA_GA4__?: { enabled: boolean; id: string };
+      __HASEBHA_TRACK_ENABLED__?: boolean;
+    }
+  }
+
+  const root = document.querySelector<HTMLElement>('.consent-root');
+  const banner = document.querySelector<HTMLElement>('[data-consent-banner]');
+  const dialog = document.querySelector<HTMLElement>('[data-consent-dialog]');
+  if (!root || !banner || !dialog) throw new Error('consent markup missing');
+  const bannerEl: HTMLElement = banner;
+  const dialogEl: HTMLElement = dialog;
+
+  const consentEnabled = root.dataset.consentEnabled === 'true';
+  const ga4Enabled = root.dataset.ga4Enabled === 'true';
+  const ga4Id = root.dataset.ga4Id || '';
+  const clarityEnabled = root.dataset.clarityEnabled === 'true';
+  const clarityId = root.dataset.clarityId || '';
+
+  // Bootstrap globals used by the analytics helper (track()).
+  window.__HASEBHA_GA4__ = { enabled: ga4Enabled, id: ga4Id };
+  window.__HASEBHA_TRACK_ENABLED__ = root.dataset.trackEnabled === 'true';
+
+  function loadAnalyticsTags(): void {
+    if (!hasConsent('analytics')) return;
+    if (ga4Enabled && ga4Id) {
+      if (document.querySelector('script[data-ga4]')) return;
+      window.dataLayer = window.dataLayer || [];
+      const gtag = document.createElement('script');
+      gtag.setAttribute('data-ga4', 'true');
+      gtag.async = true;
+      gtag.src = `https://www.googletagmanager.com/gtag/js?id=${ga4Id}`;
+      document.head.appendChild(gtag);
+      const inline = document.createElement('script');
+      inline.textContent = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${ga4Id}');`;
+      document.head.appendChild(inline);
+    }
+    if (clarityEnabled && clarityId) {
+      if (document.querySelector('script[data-clarity]')) return;
+      const clarity = document.createElement('script');
+      clarity.setAttribute('data-clarity', 'true');
+      clarity.textContent = `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${clarityId}");`;
+      document.head.appendChild(clarity);
+    }
+  }
+
+  function openDialog(): void {
+    if (!consentEnabled) return;
+    const state = getConsent();
+    const analyticsInput = document.querySelector<HTMLInputElement>('[data-consent-cat="analytics"]');
+    const advInput = document.querySelector<HTMLInputElement>('[data-consent-cat="advertising"]');
+    if (analyticsInput) analyticsInput.checked = state.analytics;
+    if (advInput) advInput.checked = state.advertising;
+    dialogEl.hidden = false;
+    dialogEl.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    const focusable = dialogEl.querySelector<HTMLElement>('button');
+    focusable?.focus();
+  }
+
+  function closeDialog(): void {
+    dialogEl.hidden = true;
+    dialogEl.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  function hideBanner(): void {
+    bannerEl.hidden = true;
+    bannerEl.classList.remove('is-visible');
+  }
+
+  document.querySelector('[data-consent-accept-all]')?.addEventListener('click', () => {
+    if (!consentEnabled) return;
+    setConsent({ analytics: true, advertising: true });
+    loadAnalyticsTags();
+    hideBanner();
+    closeDialog();
+  });
+
+  document.querySelector('[data-consent-reject]')?.addEventListener('click', () => {
+    if (!consentEnabled) return;
+    setConsent({ analytics: false, advertising: false });
+    hideBanner();
+    closeDialog();
+  });
+
+  document.querySelector('[data-consent-open-manage]')?.addEventListener('click', () => {
+    openDialog();
+  });
+
+  document.querySelector('[data-consent-save]')?.addEventListener('click', () => {
+    const analyticsInput = document.querySelector<HTMLInputElement>('[data-consent-cat="analytics"]');
+    const advInput = document.querySelector<HTMLInputElement>('[data-consent-cat="advertising"]');
+    setConsent({ analytics: analyticsInput?.checked ?? false, advertising: advInput?.checked ?? false });
+    loadAnalyticsTags();
+    hideBanner();
+    closeDialog();
+  });
+
+  document.querySelector('[data-consent-close]')?.addEventListener('click', () => {
+    closeDialog();
+  });
+
+  dialogEl.addEventListener('click', (e) => {
+    if (e.target === dialogEl) closeDialog();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !dialogEl.hidden) closeDialog();
+  });
+
+  document.querySelectorAll('[data-consent-open]').forEach((btn) => {
+    btn.addEventListener('click', () => openDialog());
+  });
+
+  // Initial state
+  if (consentEnabled) {
+    if (!isConsentDecided()) {
+      bannerEl.hidden = false;
+      bannerEl.classList.add('is-visible');
+    } else {
+      loadAnalyticsTags();
+    }
+  }
+</script>

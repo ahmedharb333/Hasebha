@@ -1,0 +1,29 @@
+---
+import { ADS } from '../config/ads';
+import type { Locale } from '../config/site';
+
+interface Props {
+  location: keyof typeof ADS.slots;
+  locale: Locale;
+  /** Reserve stable dimensions even when no ad code is configured. */
+  reserved?: boolean;
+}
+
+const { location, locale, reserved = false } = Astro.props;
+const slotId = ADS.slots[location];
+const show = ADS.enabled && ADS.publisherId && slotId;
+const label = locale === 'ar' ? 'إعلان' : 'Ad';
+---
+
+{
+  show ? (
+    <aside class="ad-slot" data-visible="true" aria-label={label}>
+      <span>{label}</span>
+      {!ADS.testMode && <div data-ad-slot={slotId}></div>}
+    </aside>
+  ) : reserved ? (
+    <aside class="ad-slot" data-reserved="true" aria-hidden="true"></aside>
+  ) : (
+    <span />
+  )
+}

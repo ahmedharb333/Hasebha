@@ -1,0 +1,32 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import guides from '../../content/guides';
+import { localizedPath } from '../../lib/i18n';
+import type { Locale } from '../../config/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const path = '/guides/';
+const title = locale === 'ar' ? 'الأدلة التعليمية' : 'Educational guides';
+const description = locale === 'ar'
+  ? 'اشرحنا المفاهيم المالية والعملية خطوة بخطوة: كيف تُحسب الأقساط، الفائدة المركبة، الرواتب، أجر العمل الإضافي والمزيد.'
+  : 'Step-by-step explanations of finance and employment concepts: how loan payments, compound interest, salaries, overtime and more really work.';
+const list = Object.values(guides)
+  .map((g) => g[locale])
+  .filter(Boolean);
+---
+
+<PageLayout locale={locale} path={path} title={title} description={description}>
+  <div class="tool-grid">
+    {list.map((g) => (
+      <a class="tool-card" href={localizedPath(locale, `/guides/${g.slug}/`)}>
+        <h3>{g.title}</h3>
+        <p>{g.intro}</p>
+        <span class="tool-card__meta">{locale === 'ar' ? 'اقرأ الدليل' : 'Read the guide'}</span>
+      </a>
+    ))}
+  </div>
+</PageLayout>

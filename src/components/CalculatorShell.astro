@@ -1,0 +1,138 @@
+---
+import type { CalculatorMath, CalcContent } from '../lib/calculators/types';
+import { payloadJson } from '../lib/calculator-payload';
+import { CURRENCIES } from '../config/currencies';
+
+interface Props {
+  math: CalculatorMath;
+  content: CalcContent;
+  category: 'finance' | 'employment';
+}
+
+const { math, content, category } = Astro.props;
+
+function fieldVisible(fieldId: string): boolean {
+  const field = math.fields.find((f) => f.id === fieldId);
+  if (!field?.showIf) return true;
+  const controller = math.fields.find((f) => f.id === field.showIf!.field);
+  const current = controller?.defaultValue ?? controller?.options?.[0]?.value ?? '';
+  return field.showIf.values.includes(current);
+}
+
+const slug = content.slug;
+const json = payloadJson(math, content, category);
+const currencyLabel = (code: string) =>
+  content.locale === 'ar'
+    ? `${code} — ${CURRENCIES.find((c) => c.code === code)?.labelAr ?? code}`
+    : `${code} — ${CURRENCIES.find((c) => c.code === code)?.labelEn ?? code}`;
+---
+
+<section class="calc-tool card card--padded" data-calc data-calc-slug={slug} aria-label={content.h1}>
+  <p class="field__hint">{content.requiredNote}</p>
+  <form class="calc-form" novalidate>
+    {math.fields.map((field) => {
+      const fc = content.fields[field.id];
+      const visible = fieldVisible(field.id);
+      if (field.type === 'hidden') return;
+      return (
+        <div class="field" data-field={field.id} hidden={!visible}>
+          {field.type !== 'radio' && (
+            <label class="field__label" for={`${slug}-${field.id}`}>
+              {fc?.label}
+              {field.required && <span class="field__required" aria-hidden="true"> *</span>}
+            </label>
+          )}
+
+          {field.type === 'number' && (
+            <input
+              class="field__input"
+              id={`${slug}-${field.id}`}
+              name={field.id}
+              type="text"
+              inputmode="decimal"
+              autocomplete="off"
+              placeholder={fc?.placeholder}
+              aria-required={field.required ? 'true' : undefined}
+            />
+          )}
+
+          {field.type === 'date' && (
+            <input
+              class="field__input"
+              id={`${slug}-${field.id}`}
+              name={field.id}
+              type="date"
+              aria-required={field.required ? 'true' : undefined}
+            />
+          )}
+
+          {field.type === 'select' && (
+            <select class="field__select" id={`${slug}-${field.id}`} name={field.id}>
+              {field.options?.map((o) => (
+                <option value={o.value} selected={o.value === field.defaultValue}>
+                  {fc?.options?.[o.value] ?? o.label}
+                </option>
+              ))}
+            </select>
+          )}
+
+          {field.type === 'currency' && (
+            <select
+              class="field__select"
+              data-role="currency"
+              id={`${slug}-${field.id}`}
+              name={field.id}
+              aria-label={content.currencyLabel}
+            >
+              {CURRENCIES.map((c) => (
+                <option value={c.code} selected={c.code === content.currencyDefault}>
+                  {currencyLabel(c.code)}
+                </option>
+              ))}
+            </select>
+          )}
+
+          {field.type === 'radio' && (
+            <fieldset class="radio-group" style={{ border: 0, padding: 0, margin: 0 }}>
+              <legend class="field__label" style={{ float: 'none', padding: 0 }}>{fc?.label}</legend>
+              {field.options?.map((o) => (
+                <label>
+                  <input type="radio" name={field.id} value={o.value} checked={o.value === field.defaultValue} />
+                  <span>{fc?.options?.[o.value] ?? o.label}</span>
+                </label>
+              ))}
+            </fieldset>
+          )}
+
+          {fc?.hint && <span class="field__hint">{fc.hint}</span>}
+        </div>
+      );
+    })}
+
+    <div class="field__actions">
+      <button type="submit" class="btn btn--primary">{content.buttons.calculate}</button>
+      <button type="button" class="btn btn--outline" data-action="example">{content.buttons.example}</button>
+      <button type="button" class="btn btn--ghost" data-action="reset">{content.buttons.reset}</button>
+    </div>
+  </form>
+
+  <div class="calc-result"></div>
+</section>
+
+<script is:inline type="application/json" data-calc-payload={slug} set:html={json}></script>
+
+<script>
+  import { initCalculator } from '../lib/client/calculatorApp';
+  import { loadMath } from '../lib/client/registry';
+
+  (async function () {
+    const root = document.querySelector('[data-calc]');
+    if (!root) return;
+    const slug = root.getAttribute('data-calc-slug') || '';
+    const payloadScript = document.querySelector('script[data-calc-payload]');
+    if (!payloadScript?.textContent) return;
+    const payload = JSON.parse(payloadScript.textContent);
+    const math = await loadMath(slug);
+    initCalculator(root as HTMLElement, math, payload);
+  })();
+</script>

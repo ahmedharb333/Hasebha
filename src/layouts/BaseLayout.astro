@@ -1,0 +1,94 @@
+---
+import { SITE, THEME } from '../config/site';
+import { ANALYTICS } from '../config/analytics';
+import { FEATURES } from '../config/features';
+import { buildTitle, organizationJsonLd, metaRobots, absoluteUrl } from '../lib/seo';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ConsentManager from '../components/ConsentManager.astro';
+import '../styles/fonts.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/components.css';
+import type { Locale } from '../config/site';
+
+interface Props {
+  locale: Locale;
+  path: string;
+  title: string;
+  description: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+  canonicalPath?: string;
+  jsonLd?: Record<string, unknown>[];
+}
+
+const { locale, path, title, description, ogType = 'website', noindex = false } = Astro.props;
+const canonicalPath = Astro.props.canonicalPath ?? path;
+
+const canonicalUrl = absoluteUrl(locale, canonicalPath);
+const ogLocale = locale === 'ar' ? 'ar_AR' : 'en_US';
+const ogTitle = buildTitle(title, locale);
+const jsonLd = [
+  organizationJsonLd(locale),
+  ...(Astro.props.jsonLd ?? []),
+];
+
+const gscEnabled = Boolean(ANALYTICS.gscVerification);
+const themeColor = THEME.primary;
+const arabicFontHref = '/fonts/Amiri/amiri-regular.woff2';
+const latinFontHref = '/fonts/Inter/inter-400.woff2';
+---
+
+<!doctype html>
+<html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content={themeColor} />
+    <title>{ogTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="ar" href={absoluteUrl('ar', canonicalPath)} />
+    <link rel="alternate" hreflang="en" href={absoluteUrl('en', canonicalPath)} />
+    <link rel="alternate" hreflang="x-default" href={absoluteUrl('ar', canonicalPath)} />
+    <meta name="robots" content={metaRobots(noindex)} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE.brandName[locale]} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={locale === 'ar' ? 'en_US' : 'ar_AR'} />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={description} />
+
+    {gscEnabled && <meta name="google-site-verification" content={ANALYTICS.gscVerification} />}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={latinFontHref} />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={arabicFontHref} />
+
+    {jsonLd.map((data) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(data)} />
+    ))}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{locale === 'ar' ? 'تخطَّ إلى المحتوى' : 'Skip to content'}</a>
+    <Header locale={locale} path={path} />
+    <main id="main" class="page-main">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+    <ConsentManager
+      locale={locale}
+      consentEnabled={ANALYTICS.consentEnabled}
+      trackEnabled={FEATURES.analyticsEvents}
+      ga4={{ enabled: ANALYTICS.enabled && ANALYTICS.ga4.enabled, id: ANALYTICS.ga4.measurementId }}
+      clarity={{ enabled: ANALYTICS.clarity.enabled, projectId: ANALYTICS.clarity.projectId }}
+    />  </body>
+</html>

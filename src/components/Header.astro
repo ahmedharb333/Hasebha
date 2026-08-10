@@ -1,0 +1,70 @@
+---
+import { NAV, LOGO } from '../config/site';
+import { localizedPath } from '../lib/i18n';
+import type { Locale } from '../config/site';
+
+interface Props {
+  locale: Locale;
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const navItems = NAV.main.map((item) => ({
+  label: item.label[locale],
+  href: localizedPath(locale, item.href),
+}));
+const currentLocalized = localizedPath(locale, path);
+const arPath = localizedPath('ar', path);
+const enPath = localizedPath('en', path);
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href={localizedPath(locale, '/')} aria-label={LOGO.text[locale]}>
+      <span class="brand__mark" aria-hidden="true">{locale === 'ar' ? 'ح' : 'H'}</span>
+      <span>{LOGO.text[locale]}</span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" data-nav-toggle>
+      {locale === 'ar' ? 'القائمة' : 'Menu'}
+    </button>
+
+    <nav class="main-nav" id="main-nav" aria-label={locale === 'ar' ? 'التنقل الرئيسي' : 'Main navigation'} data-main-nav>
+      <ul>
+        {navItems.map((item) => (
+          <li>
+            <a href={item.href} aria-current={item.href === currentLocalized ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="lang-switch" role="group" aria-label={locale === 'ar' ? 'اختيار اللغة' : 'Language selection'}>
+      <a href={arPath} hreflang="ar" aria-current={locale === 'ar' ? 'true' : undefined} aria-label="العربية">
+        العربية
+      </a>
+      <a href={enPath} hreflang="en" aria-current={locale === 'en' ? 'true' : undefined} aria-label="English">
+        EN
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const nav = document.querySelector('[data-main-nav]');
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    nav.addEventListener('click', (e: Event) => {
+      if ((e.target as HTMLElement).closest('a')) {
+        nav.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+</script>
