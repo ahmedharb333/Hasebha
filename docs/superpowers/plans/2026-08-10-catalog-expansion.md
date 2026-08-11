@@ -1786,7 +1786,7 @@ git commit -m "feat(calc): health calculators - BMI, BMR, ideal weight, body fat
 
 No currency fields on any of these tools.
 
-- [ ] **Step 1: Add 3 config entries (education, `active: true`)**
+- [x] **Step 1: Add 3 config entries (education, `active: true`)**
 
 ```ts
   {
@@ -1830,7 +1830,7 @@ No currency fields on any of these tools.
   },
 ```
 
-- [ ] **Step 2: Create `src/lib/calculators/gpa.ts`**
+- [x] **Step 2: Create `src/lib/calculators/gpa.ts`**
 
 Six course slots. Each slot = `grade<i>` select + `credits<i>` number. All fields optional; at least one complete slot is required. `validate` returns errors against the offending slot's field ids.
 
@@ -1927,7 +1927,7 @@ export default gpa;
 
 **GPA test**: example → gpa within `3.25..3.27`; totalCredits == 12; totalPoints within `39.09..39.11`; scale 5 → A == 5.0; all-empty → validate returns `{ grade0: 'required' }`; credits beyond 20 → `max`; grade without credits → `credits<i>: 'required'`.
 
-- [ ] **Step 3: Create `src/lib/calculators/grade-average.ts`**
+- [x] **Step 3: Create `src/lib/calculators/grade-average.ts`**
 
 Six grade slots, each a number 0-100, all optional, at least one required.
 
@@ -1992,7 +1992,7 @@ export default gradeAverage;
 
 **Grade-average test**: example → average == 85.75, count == 4, highest == 92, lowest == 78; one grade only → average == that grade; all empty → `{ grade0: 'required' }`; 101 → `max`; -1 → `min`.
 
-- [ ] **Step 4: Create `src/lib/calculators/final-grade.ts`**
+- [x] **Step 4: Create `src/lib/calculators/final-grade.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -2051,14 +2051,14 @@ export default finalGradePlanner;
 
 **Final-grade test**: example → requiredFinal within `96.6..96.7`; currentContribution == 56; maxAchievable == 86; weight 100 → requiredFinal == target; unreachable target (target 100, weight 10, current 50) → requiredFinal == 100 (clamped); already achieved (target 60, weight 30, current 70) → requiredFinal == 0; missing finalWeight → `required`.
 
-- [ ] **Step 5: Register config, math, loaders, content; write guides**
+- [x] **Step 5: Register config, math, loaders, content; write guides**
 
 `src/lib/calculators/index.ts`: imports + `gpa, 'grade-average': gradeAverage, 'final-grade-planner': finalGradePlanner`.
 `src/lib/client/registry.ts`: `gpa: () => import('../calculators/gpa.ts'), 'grade-average': () => import('../calculators/grade-average.ts'), 'final-grade-planner': () => import('../calculators/final-grade.ts'),`.
 `src/content/calculators/index.ts`: imports + `gpa, 'grade-average': gradeAverage, 'final-grade-planner': finalGradePlanner`.
 Guides: `how-to-calculate-gpa` → `['gpa', 'grade-average', 'final-grade-planner']`; `how-to-calculate-grade-average` → `['grade-average', 'gpa', 'final-grade-planner']`; `how-to-plan-your-final-grade` → `['final-grade-planner', 'grade-average', 'gpa']`. Worked examples use each tool's content example numbers.
 
-- [ ] **Step 6: Verify + commit**
+- [x] **Step 6: Verify + commit**
 
 Run `npm test`, `npm run check`, `npm run build` — all clean. Education category shows 3 tools. Commit:
 

@@ -20,6 +20,9 @@ import bmr from './bmr.ts';
 import idealWeight from './ideal-weight.ts';
 import bodyFat from './body-fat.ts';
 import calorieIntake from './calorie.ts';
+import gpa from './gpa.ts';
+import gradeAverage from './grade-average.ts';
+import finalGradePlanner from './final-grade.ts';
 
 const registry: Record<string, CalculatorMath> = {
   'loan-payment': loanPayment,
@@ -43,6 +46,9 @@ const registry: Record<string, CalculatorMath> = {
   'ideal-weight': idealWeight,
   'body-fat': bodyFat,
   'calorie-intake': calorieIntake,
+  gpa,
+  'grade-average': gradeAverage,
+  'final-grade-planner': finalGradePlanner,
 };
 
 export function getMath(slug: string): CalculatorMath {

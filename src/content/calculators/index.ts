@@ -21,6 +21,9 @@ import bmr from './bmr.ts';
 import idealWeight from './ideal-weight.ts';
 import bodyFat from './body-fat.ts';
 import calorieIntake from './calorie-intake.ts';
+import gpa from './gpa.ts';
+import gradeAverage from './grade-average.ts';
+import finalGradePlanner from './final-grade-planner.ts';
 
 const registry: Record<string, Record<Locale, CalcContent>> = {
   'loan-payment': loanPayment,
@@ -44,6 +47,9 @@ const registry: Record<string, Record<Locale, CalcContent>> = {
   'ideal-weight': idealWeight,
   'body-fat': bodyFat,
   'calorie-intake': calorieIntake,
+  gpa,
+  'grade-average': gradeAverage,
+  'final-grade-planner': finalGradePlanner,
 };
 
 export function getCalcContent(slug: string, locale: Locale): CalcContent {

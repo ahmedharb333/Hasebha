@@ -2744,6 +2744,363 @@ Do not add your exercise burn twice: the right activity level already includes i
       lastReviewed: '2026-08-10',
     },
   },
+
+  'how-to-calculate-gpa': {
+    ar: {
+      slug: 'how-to-calculate-gpa',
+      locale: 'ar',
+      title: 'كيف تحسب المعدل التراكمي',
+      metaDescription:
+        'دليل عملي لحساب المعدل التراكمي GPA على سلم 4 أو 5 نقاط: الخريطة الحرفية للنقاط، الوزن بالساعات، ومثال عددي مطابق لحاسبة المعدل التراكمي.',
+      intro:
+        'المعدل التراكمي (GPA) متوسط مرجّح بساعات المواد، وليس عدّاً بسيطاً. يشرح هذا الدليل كيف تُقابل الدرجات الحرفية نقاطاً على سلم 4 و5، ولماذا تُوزَّن بالساعات، وكيف تتفادى الأخطاء الشائعة. يلتزم مثاله العددي بقيم حاسبة المعدل التراكمي في كلار.',
+      sections: [
+        {
+          heading: 'خريطة الدرجات إلى النقاط',
+          body: `على سلم **4 نقاط**: A وA+ = 4.0، وA- = 3.7، وB = 3.0، وC = 2.0، وD = 1.0، وF = 0.
+        
+على سلم **5 نقاط**: A وA+ = 5.0، وA- = 4.7، وB = 4.0، وC = 3.0، وD = 2.0، وF = 0.`,
+        },
+        {
+          heading: 'الوزن بالساعات المعتمدة',
+          body: `كل مادة تساهم بنقاطها مضروبة في ساعاتها: **النقاط = قيمة الدرجة × الساعات**. المعدل التراكمي = مجموع النقاط ÷ إجمالي الساعات.
+        
+هذا يعني أن مادة بثلاث ساعات تزن ثلاثة أضعاف مادة بساعة واحدة عند نفس الدرجة.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة على سلم **4**: A (3 ساعات)، B (4 ساعات)، A- (3 ساعات)، C (ساعتان).
+        
+النقاط = (4×3) + (3×4) + (3.7×3) + (2×2) = **39.1**، وإجمالي الساعات **12**، والمعدل = 39.1 ÷ 12 ≈ **3.26**.`,
+        },
+        {
+          heading: 'اختيار السلم الصحيح',
+          body: `اختر السلم الذي تعتمده جامعتك بالضبط. بعض الجامعات تمنح A+ قيمة أعلى من A، والبعض لا، وقد تستخدم سلم 5 نقاط بدل 4.
+        
+إدخال درجات مئوية مثل 85 مكان الدرجة الحرفية سيعطي نتائج خاطئة تماماً — استخدم حاسبة متوسط الدرجات للدرجات المئوية.`,
+        },
+        {
+          heading: 'أخطاء شائعة',
+          body: `من الأخطاء: الخلط بين سلم 4 وسلم 5، وإدراج مواد مسحوبة (Withdrawn)، وإدخال ساعات صفرية، ومعاملة المعدل كمتوسط غير موزون.
+        
+الصفوف الفارغة أو غير المكتملة تُتجاهل تلقائياً، فلا داعي لملء الخانات كلها.`,
+        },
+      ],
+      keyTakeaways: [
+        'النقاط تعتمد على السلم المختار: A = A+ على سلم 4، وعلى سلم 5 أيضاً.',
+        'المعدل موزون بالساعات: المواد الأكثر ساعات تزن أكثر.',
+        'المعدل = مجموع النقاط ÷ إجمالي الساعات.',
+        'اختر السلم المطابق لجامعتك، ولا تدخل الدرجات المئوية هنا.',
+        'الصفوف الفارغة تُتجاهل، واملأ صفاً واحداً مكتملاً على الأقل.',
+      ],
+      faqs: [
+        {
+          q: 'لماذا تساوي A+ درجة A على سلم 4؟',
+          a: 'لا تتجاوز A+ عادة قمة السلم في الأنظمة الأميركية، فتتساوى القيمتان. بعض الجامعات تمنح 4.33 لـ A+، فتحقق من سلمك.',
+        },
+        {
+          q: 'جامعتي تستخدم نظام المئة، ماذا أفعل؟',
+          a: 'استخدم حاسبة متوسط الدرجات للدرجات المئوية، فحاسبة المعدل التراكمي تعتمد على الدرجات الحرفية والساعات.',
+        },
+        {
+          q: 'هل تشمل الحاسبة مواد النجاح/الرسوب؟',
+          a: 'لا، مواد Pass/Fail ليست موزونة عادة ولا تحمل درجة حرفية، لذا تُستثنى من الحساب.',
+        },
+      ],
+      relatedCalculators: ['gpa', 'grade-average', 'final-grade-planner'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-calculate-gpa',
+      locale: 'en',
+      title: 'How to calculate your GPA',
+      metaDescription:
+        'A practical guide to calculating your GPA on the 4.0 or 5.0 scale: the letter-to-point map, credit weighting, and a worked example matching the GPA calculator.',
+      intro:
+        'Your GPA is a credit-weighted average, not a simple count. This guide explains how letter grades map to points on the 4 and 5 scales, why weighting by credits matters, and how to avoid common mistakes. Its worked example sticks to the values used by Klar\u2019s GPA calculator.',
+      sections: [
+        {
+          heading: 'Mapping grades to points',
+          body: `On the **4.0 scale**: A and A+ = 4.0, A- = 3.7, B = 3.0, C = 2.0, D = 1.0, and F = 0.
+        
+On the **5.0 scale**: A and A+ = 5.0, A- = 4.7, B = 4.0, C = 3.0, D = 2.0, and F = 0.`,
+        },
+        {
+          heading: 'Weighting by credit hours',
+          body: `Each course contributes its grade points multiplied by its credits: **points = grade value \u00d7 credits**. Your GPA is total points \u00f7 total credits.
+        
+So a three-credit course weighs three times a one-credit course at the same grade.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the calculator\u2019s values on the **4.0** scale: A (3 credits), B (4 credits), A- (3 credits), C (2 credits).
+        
+Points = (4\u00d73) + (3\u00d74) + (3.7\u00d73) + (2\u00d72) = **39.1**, total credits **12**, and GPA = 39.1 \u00f7 12 \u2248 **3.26**.`,
+        },
+        {
+          heading: 'Choosing the right scale',
+          body: `Pick exactly the scale your university uses. Some universities value A+ above A, some do not, and some use the 5-point scale instead of 4.
+        
+Entering percentage grades like 85 instead of letter grades gives completely wrong results — use the grade average calculator for percentages.`,
+        },
+        {
+          heading: 'Common mistakes',
+          body: `Among the mistakes: mixing the 4 and 5 scales, including withdrawn courses, entering zero credits, and treating the GPA as an unweighted average.
+        
+Empty or incomplete rows are skipped automatically, so there is no need to fill every field.`,
+        },
+      ],
+      keyTakeaways: [
+        'Points depend on the chosen scale: A = A+ on both the 4.0 and 5.0 scales.',
+        'The GPA is credit-weighted: higher-credit courses weigh more.',
+        'GPA = total points \u00f7 total credits.',
+        'Match the scale to your university and keep percentages out of this tool.',
+        'Empty rows are ignored; fill at least one complete row.',
+      ],
+      faqs: [
+        {
+          q: 'Why is A+ worth the same as A on the 4.0 scale?',
+          a: 'A+ usually does not exceed the top of the scale in American systems, so both map to 4.0. Some universities award 4.33 for A+, so check your own scale.',
+        },
+        {
+          q: 'My university uses a 100-point system, what do I do?',
+          a: 'Use the grade average calculator for percentage grades, since the GPA calculator relies on letter grades and credits.',
+        },
+        {
+          q: 'Does the calculator include pass/fail courses?',
+          a: 'No. Pass/fail courses are usually unweighted and carry no letter grade, so they are excluded from the calculation.',
+        },
+      ],
+      relatedCalculators: ['gpa', 'grade-average', 'final-grade-planner'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-to-calculate-grade-average': {
+    ar: {
+      slug: 'how-to-calculate-grade-average',
+      locale: 'ar',
+      title: 'كيف تحسب متوسط الدرجات',
+      metaDescription:
+        'دليل عملي لحساب متوسط الدرجات من مئة: تعريف المتوسط الحسابي، الفرق بين الموازن وغير الموازن، ومثال عددي مطابق لحاسبة متوسط الدرجات.',
+      intro:
+        'متوسط الدرجات أبسط أدوات قياس الأداء الأكاديمي: مجموع الدرجات مقسوم على عددها. يشرح هذا الدليل متى يكون المتوسط الحسابي كافياً، ومتى تحتاج متوسطاً موزوناً بالساعات، مع مثال عددي مطابق لحاسبة متوسط الدرجات في كلار.',
+      sections: [
+        {
+          heading: 'ما هو المتوسط الحسابي',
+          body: `المتوسط = مجموع الدرجات ÷ عدد الدرجات. هو رقم واحد يلخص أداءك عبر مواد أو تقييمات متعددة.
+        
+حاسبة متوسط الدرجات تعتبر كل درجة متساوية الأهمية، وتستخرج مع المتوسط أعلى وأدنى درجة.`,
+        },
+        {
+          heading: 'متوسط بسيط أم موزون؟',
+          body: `المتوسط الحسابي يعطي كل مادة الوزن نفسه. إذا كانت موادك موزونة بساعات معتمدة مختلفة، فالمتوسط الحسابي لن يعكس ذلك — استخدم حاسبة المعدل التراكمي للمواد الموزونة.
+        
+هنا تكون الخانات فارغة مقبولة: تُستخدم الدرجات المعبأة فقط.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: درجات **85، 92، 78، 88**.
+        
+المتوسط = (85 + 92 + 78 + 88) ÷ 4 = 343 ÷ 4 = **85.75**. الأعلى **92** والأدنى **78** وعدد الدرجات **4**.`,
+        },
+        {
+          heading: 'الدرجات من مئويات مختلفة',
+          body: `كل الدرجات يجب أن تكون على سلم واحد من 0 إلى 100. مزج درجة من 50 مع درجة من 100 يعطي متوسطاً بلا معنى.
+        
+إن أردت مزج مئويات مختلفة، حوّل الدرجات إلى سلم موحد أولاً.`,
+        },
+      ],
+      keyTakeaways: [
+        'المتوسط = مجموع الدرجات ÷ عددها.',
+        'المتوسط هنا غير موزون بالساعات — استخدم المعدل التراكمي للوزن.',
+        'تُستخدم الدرجات المعبأة فقط، وتُتجاهل الفارغة.',
+        'جميع الدرجات على سلم 0 إلى 100.',
+      ],
+      faqs: [
+        {
+          q: 'هل تراعي الحاسبة الساعات المعتمدة؟',
+          a: 'لا، المتوسط هنا غير موزون. للمواد الموزونة بالساعات استخدم حاسبة المعدل التراكمي.',
+        },
+        {
+          q: 'هل يمكنني متوسط درجات من مئويات مختلفة؟',
+          a: 'لا. يفترض المتوسط سلم 100 موحداً؛ حوّل المئويات المختلفة إلى سلم واحد قبل الجمع.',
+        },
+      ],
+      relatedCalculators: ['grade-average', 'gpa', 'final-grade-planner'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-calculate-grade-average',
+      locale: 'en',
+      title: 'How to calculate a grade average',
+      metaDescription:
+        'A practical guide to averaging your grades out of 100: what the arithmetic mean is, the difference between weighted and unweighted averages, and a worked example matching the grade average calculator.',
+      intro:
+        'A grade average is the simplest measure of academic performance: the sum of grades divided by their count. This guide explains when a plain arithmetic mean is enough, when you need a credit-weighted average, and includes a worked example matching the grade average calculator.',
+      sections: [
+        {
+          heading: 'What the arithmetic mean is',
+          body: `The average = sum of grades \u00f7 number of grades. It condenses your performance across several subjects or assessments into a single number.
+        
+The grade average calculator treats every grade equally and also reports the highest and lowest grades alongside the average.`,
+        },
+        {
+          heading: 'Simple or weighted?',
+          body: `An arithmetic mean gives every subject equal weight. If your courses have different credit hours, a plain average will not reflect that — use the GPA calculator for credit-weighted work.
+        
+Empty fields are fine here: only the filled grades are counted.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the calculator\u2019s values: grades **85, 92, 78, 88**.
+        
+The average = (85 + 92 + 78 + 88) \u00f7 4 = 343 \u00f7 4 = **85.75**. Highest **92**, lowest **78**, and grades counted **4**.`,
+        },
+        {
+          heading: 'Grades from different scales',
+          body: `All grades must be on a single 0 to 100 scale. Mixing a score out of 50 with one out of 100 produces a meaningless average.
+        
+If you want to combine different maximums, convert the grades to one scale first.`,
+        },
+      ],
+      keyTakeaways: [
+        'Average = sum of grades \u00f7 number of grades.',
+        'The average here is unweighted — use the GPA calculator for weighting.',
+        'Only filled grades are counted; empty fields are ignored.',
+        'All grades are on a 0 to 100 scale.',
+      ],
+      faqs: [
+        {
+          q: 'Does this calculator account for credit hours?',
+          a: 'No, the average here is unweighted. For credit-weighted courses use the GPA calculator.',
+        },
+        {
+          q: 'Can I average grades from different maximums?',
+          a: 'No. The mean assumes a uniform 100-point scale; convert different scales to one before averaging.',
+        },
+      ],
+      relatedCalculators: ['grade-average', 'gpa', 'final-grade-planner'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-to-plan-your-final-grade': {
+    ar: {
+      slug: 'how-to-plan-your-final-grade',
+      locale: 'ar',
+      title: 'كيف تخطط لدرجتك النهائية',
+      metaDescription:
+        'دليل عملي لحساب الدرجة المطلوبة في الامتحان النهائي: صيغة المتوسط الموزون، قراءة النتائج المستحيلة، ومثال عددي مطابق لحاسبة درجة النجاح النهائية.',
+      intro:
+        'قبل الامتحان النهائي تحتاج سؤالاً واحداً عملياً: كم يجب أن أحصد فيه؟ يشرح هذا الدليل معادلة المتوسط الموزون، وكيف تقرأ النتائج، ومتى يكون الهدف مستحيلاً. يلتزم مثاله العددي بقيم حاسبة درجة النجاح النهائية في كلار.',
+      sections: [
+        {
+          heading: 'المعادلة: متوسط موزون',
+          body: `درجتك النهائية = (معدلك الحالي × وزن غير النهائي) + (درجة النهائي × وزن النهائي).
+        
+بمعنى آخر: **مساهمة معدلك الحالي** تحدد أساسك، والنهائي يعوض ما ينقص نحو الهدف.`,
+        },
+        {
+          heading: 'حساب الدرجة المطلوبة',
+          body: `الدرجة المطلوبة في النهائي = (الهدف − مساهمة معدلك الحالي) ÷ وزن النهائي.
+        
+أدخل وزن النهائي **كنسبة مئوية**: 30% تعني 30، وليس 0.3. هذه من أكثر الأخطاء شيوعاً.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: معدل حالي **80**، وزن النهائي **30%**، هدف **85**.
+        
+المساهمة = 80 × (1 − 0.3) = **56**، وأعلى درجة يمكن تحقيقها = 56 + 100 × 0.3 = **86**، والمطلوب = (85 − 56) ÷ 0.3 ≈ **96.67**.`,
+        },
+        {
+          heading: 'متى يكون الهدف مستحيلاً',
+          body: `إذا تجاوزت الدرجة المطلوبة 100، فهدفك غير ممكن حتى بدرجة كاملة، وتُقيّد الحاسبة النتيجة عند 100.
+        
+على الجانب الآخر، إذا كانت الدرجة المطلوبة 0 أو أقل فهدفك محقق أصلاً بمعدلك الحالي.`,
+        },
+        {
+          heading: 'أخطاء شائعة',
+          body: `من الأخطاء: إدخال الوزن ككسر (0.3) بدل النسبة (30)، وتجاهل الوزن وحساب الفرق البسيط بين الهدف والحالي، وعدم الانتباه إلى أن النهائي قد يكون بأكثر من 100 درجة خام — المهم هو وزنه النسبي.`,
+        },
+      ],
+      keyTakeaways: [
+        'الدرجة النهائية متوسط موزون بين معدلك الحالي والامتحان النهائي.',
+        'المطلوب في النهائي = (الهدف − مساهمة المعدل الحالي) ÷ وزن النهائي.',
+        'أدخل الوزن كنسبة مئوية: 30% تعني 30 وليس 0.3.',
+        'المطلوب فوق 100 يعني هدفاً غير ممكن، ودون 0 يعني هدفاً محققاً.',
+      ],
+      faqs: [
+        {
+          q: 'ماذا لو كانت الدرجة المطلوبة أكثر من 100؟',
+          a: 'هدفك غير ممكن حتى بالدرجة الكاملة، لأن مساهمة معدلك الحالي لا تكفي. الحاسبة توقف النتيجة عند 100.',
+        },
+        {
+          q: 'النهائي بأكثر من 100 درجة، ماذا أفعل؟',
+          a: 'أدخل وزنه الحقيقي كنسبة من الدرجة الكلية؛ الحساب يعتمد على الوزن النسبي لا عدد الدرجات الخام.',
+        },
+      ],
+      relatedCalculators: ['final-grade-planner', 'grade-average', 'gpa'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-plan-your-final-grade',
+      locale: 'en',
+      title: 'How to plan your final grade',
+      metaDescription:
+        'A practical guide to the score you need on the final exam: the weighted-average formula, reading unreachable results, and a worked example matching the final grade planner.',
+      intro:
+        'Before a final exam you need one practical question answered: how much do I have to score? This guide explains the weighted-average formula, how to read the results, and when a target is out of reach. Its worked example sticks to the values used by Klar\u2019s final grade planner.',
+      sections: [
+        {
+          heading: 'The formula: a weighted average',
+          body: `Your final grade = (current grade \u00d7 non-final weight) + (final score \u00d7 final weight).
+        
+In other words, your **current contribution** sets your base, and the final closes whatever gap remains towards the target.`,
+        },
+        {
+          heading: 'Working out the score you need',
+          body: `Score needed on the final = (target \u2212 current contribution) \u00f7 final weight.
+        
+Enter the final\u2019s weight **as a percentage**: 30% means 30, not 0.3. This is one of the most common mistakes.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the calculator\u2019s values: current grade **80**, final weight **30%**, target **85**.
+        
+Contribution = 80 \u00d7 (1 \u2212 0.3) = **56**, maximum achievable = 56 + 100 \u00d7 0.3 = **86**, and the needed score = (85 \u2212 56) \u00f7 0.3 \u2248 **96.67**.`,
+        },
+        {
+          heading: 'When the target is unreachable',
+          body: `If the needed score exceeds 100, your target is unreachable even with a perfect score, and the calculator clamps the result to 100.
+        
+At the other end, if the needed score is 0 or below, your target is already secured by your current grade.`,
+        },
+        {
+          heading: 'Common mistakes',
+          body: `Among the mistakes: entering the weight as a fraction (0.3) instead of a percentage (30), ignoring the weight and using the simple gap between target and current grade, and missing that a final worth more than 100 raw points still works by its relative weight.`,
+        },
+      ],
+      keyTakeaways: [
+        'The final grade is a weighted average of your current grade and the final exam.',
+        'Score needed = (target \u2212 current contribution) \u00f7 final weight.',
+        'Enter the weight as a percentage: 30% means 30, not 0.3.',
+        'Above 100 means the target is unreachable; at or below 0 it is already secured.',
+      ],
+      faqs: [
+        {
+          q: 'What if the score I need is over 100?',
+          a: 'Your target is unreachable even with a perfect score, because your current contribution is not enough. The calculator clamps the result to 100.',
+        },
+        {
+          q: 'My final is worth more than 100 raw points, what do I do?',
+          a: 'Enter its true weight as a percentage of the total grade; the math uses the relative weight, not the raw point count.',
+        },
+      ],
+      relatedCalculators: ['final-grade-planner', 'grade-average', 'gpa'],
+      lastReviewed: '2026-08-10',
+    },
+  },
 };
 
 export default guides;
