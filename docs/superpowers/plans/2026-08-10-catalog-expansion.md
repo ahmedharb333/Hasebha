@@ -2701,7 +2701,7 @@ git commit -m "feat(calc): business calculators - markup/margin, break-even, who
 
 ### Task 8: Final verification, manual QA sweep, self-review
 
-- [ ] **Step 1: Full gate run**
+- [x] **Step 1: Full gate run**
 
 Run, in order:
 1. `npm test` — every test passes (existing + catalog integrity + all 21 new tool test files).
@@ -2709,7 +2709,7 @@ Run, in order:
 3. `npm run build` — clean. `dist/` regenerated.
 4. `npm run preview` (manual spot check) — no console errors on any new page.
 
-- [ ] **Step 2: Manual QA sweep (both locales)**
+- [x] **Step 2: Manual QA sweep (both locales)**
 
 Using `npm run dev`, verify on AR (`/`) and EN (`/en/`) for every category page and at least one tool per category:
 - Category pages: `/calculators/<category>/` and `/calculators/` index list exactly the 26 active tools (6 per finance/employment, 5 health, 3 education, 4 everyday, 3 business).
@@ -2720,11 +2720,11 @@ Using `npm run dev`, verify on AR (`/`) and EN (`/en/`) for every category page 
 - Empty-submit shows `required` messages; out-of-range shows `min`/`max`; reset restores defaults.
 - Tier B (`end-of-service`, `social-insurance`, `notice-period`, `maternity-leave`, `gross-to-net`, `income-tax`): confirm no pages exist at their slugs in either locale.
 
-- [ ] **Step 3: Self-review against the design spec**
+- [x] **Step 3: Self-review against the design spec**
 
 Re-read `docs/superpowers/specs/2026-08-09-hasebha-calculators-design.md`. Confirm the implementation honors its architecture and nothing in this plan contradicts it. Note divergences (like the education fixed-slot design and the non-currency default) in the final summary — the code remains the source of truth.
 
-- [ ] **Step 4: Final commit**
+- [x] **Step 4: Final commit**
 
 If any fixes were needed in Tasks 5–7 during the QA sweep, commit them now:
 
