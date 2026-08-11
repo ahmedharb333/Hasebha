@@ -2478,7 +2478,7 @@ git commit -m "feat(calc): everyday calculators - age, date difference, tip, uni
 
 No currency field on any of these (they are ratio/formula tools; currency output uses the page default).
 
-- [ ] **Step 1: Add 3 config entries (business, `active: true`)**
+- [x] **Step 1: Add 3 config entries (business, `active: true`)**
 
 ```ts
   {
@@ -2522,7 +2522,7 @@ No currency field on any of these (they are ratio/formula tools; currency output
   },
 ```
 
-- [ ] **Step 2: Create `src/lib/calculators/markup-margin.ts`**
+- [x] **Step 2: Create `src/lib/calculators/markup-margin.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -2572,7 +2572,7 @@ export default markupMargin;
 
 **Markup-margin test**: example → profit == 40, markupPct within `49.99..50.01`, marginPct within `33.32..33.34`; loss case cost 120 / price 80 → profit −40, markup ≈ −33.33, margin == −50; missing cost → `required`; cost 0 → `min`.
 
-- [ ] **Step 3: Create `src/lib/calculators/break-even.ts`**
+- [x] **Step 3: Create `src/lib/calculators/break-even.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -2634,7 +2634,7 @@ export default breakEven;
 
 **Break-even test**: example → breakEvenUnits == 500, breakEvenRevenue == 25000, contributionMargin == 20; price == vc → validate returns `unitPrice: 'invalid'` (do not call calculate); fixed 0 → units 0; missing unitPrice → `required`.
 
-- [ ] **Step 4: Create `src/lib/calculators/wholesale-retail.ts`**
+- [x] **Step 4: Create `src/lib/calculators/wholesale-retail.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -2681,14 +2681,14 @@ export default wholesaleRetail;
 
 **Wholesale-retail test**: example → sellingPrice == 24, profit == 9; markup 0 → selling == cost; markup 100 → selling == 2×cost; missing cost → `required`; markup 1500 → `max`.
 
-- [ ] **Step 5: Register config, math, loaders, content; write guides**
+- [x] **Step 5: Register config, math, loaders, content; write guides**
 
 `src/lib/calculators/index.ts`: imports + `'markup-margin': markupMargin, 'break-even': breakEven, 'wholesale-retail': wholesaleRetail`.
 `src/lib/client/registry.ts`: `'markup-margin': () => import('../calculators/markup-margin.ts'), 'break-even': () => import('../calculators/break-even.ts'), 'wholesale-retail': () => import('../calculators/wholesale-retail.ts'),`.
 `src/content/calculators/index.ts`: imports + `'markup-margin': markupMargin, 'break-even': breakEven, 'wholesale-retail': wholesaleRetail`.
 Guides: `how-to-calculate-markup-and-margin` → `['markup-margin', 'break-even', 'wholesale-retail']`; `how-to-calculate-break-even` → `['break-even', 'markup-margin', 'wholesale-retail']`; `how-to-price-wholesale-and-retail` → `['wholesale-retail', 'markup-margin', 'break-even']`. Worked examples use each tool's content example numbers.
 
-- [ ] **Step 6: Verify + commit**
+- [x] **Step 6: Verify + commit**
 
 Run `npm test`, `npm run check`, `npm run build` — all clean. Business category shows 3 tools. Commit:
 

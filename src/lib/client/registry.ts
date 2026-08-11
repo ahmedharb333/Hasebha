@@ -35,6 +35,9 @@ export const mathLoaders: Record<string, MathLoader> = {
   'date-difference': () => import('../calculators/date-difference.ts'),
   tip: () => import('../calculators/tip.ts'),
   'unit-converter': () => import('../calculators/unit-converter.ts'),
+  'markup-margin': () => import('../calculators/markup-margin.ts'),
+  'break-even': () => import('../calculators/break-even.ts'),
+  'wholesale-retail': () => import('../calculators/wholesale-retail.ts'),
 };
 
 export async function loadMath(slug: string): Promise<CalculatorMath> {

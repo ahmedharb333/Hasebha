@@ -3505,6 +3505,309 @@ The result: **1** km, and the table shows 1000 m = **1,000,000** mm, and so on f
       lastReviewed: '2026-08-10',
     },
   },
+
+  'how-to-calculate-markup-and-margin': {
+    ar: {
+      slug: 'how-to-calculate-markup-and-margin',
+      locale: 'ar',
+      title: 'كيف تحسب الترميز والهامش',
+      metaDescription:
+        'دليل عملي للفرق بين نسبة الترميز (markup) وهامش الربح (margin): القاعدتان المختلفتان، حالات الخسارة، ومثال عددي مطابق لحاسبة الربح والهامش.',
+      intro:
+        'نسبة الترميز وهامش الربح يصفان نفس الربح بقاعدتين مختلفتين، والخلط بينهما من أكثر أخطاء التسعير شيوعاً. يشرح هذا الدليل الفرق بينهما، ومتى تستخدم كلاً منهما، مع مثال عددي مطابق لحاسبة الربح والهامش في كلار.',
+      sections: [
+        {
+          heading: 'قاعدتان مختلفتان لنفس الربح',
+          body: `الترميز = الربح ÷ التكلفة × 100، والهامش = الربح ÷ سعر البيع × 100.
+          
+لأن المقامين مختلفان، يبدو الترميز دائماً أكبر من الهامش لنفس الربح. مثال: ربح 40 من تكلفة 80 وسعر بيع 120 يعطي ترميز **50%** وهامش **33.3%**.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: تكلفة **80** وسعر بيع **120**.
+          
+النتيجة: الربح **40**، الترميز **50%**، والهامش **33.3%**.`,
+        },
+        {
+          heading: 'متى أستخدم أيهما؟',
+          body: `استخدم الترميز عندما تبدأ من التكلفة وتضيف نسبة (تسعير البيع). استخدم الهامش عندما تريد ربحاً معيناً من سعر البيع أو تقارن أداءك مع منافسين يعبرون بالهامش. الأهم أن تعرف أي قاعدة تستخدمها أنت ومن تخاطب.`,
+        },
+        {
+          heading: 'حالات الخسارة',
+          body: `عندما يقل سعر البيع عن التكلفة يكون الربح سالباً وتظهر النسبتان سالبتين. هذه إشارة واضحة أن السعر لا يغطي التكلفة، ولا يكفي خفض السعر دون النظر للتكلفة.`,
+        },
+      ],
+      keyTakeaways: [
+        'الترميز = الربح ÷ التكلفة، والهامش = الربح ÷ سعر البيع.',
+        'الترميز أكبر من الهامش لنفس الربح.',
+        'استخدم الترميز من التكلفة، والهامش من سعر البيع.',
+        'الربح السالب يعطي نسبتين سالبتين (خسارة).',
+      ],
+      faqs: [
+        {
+          q: 'أي الرقمين أستخدم في التسعير؟',
+          a: 'استخدم الترميز عندما تضيف نسبة على التكلفة، والهامش عندما تحدد الربح من سعر البيع. اعرف القاعدة التي تعمل بها من تخاطبهم.',
+        },
+        {
+          q: 'هل يمكن أن تكون النسبتان سالبتين؟',
+          a: 'نعم، عندما يقل سعر البيع عن التكلفة يعرض الحساب ربحاً سالباً ونسباً سالبة تعني خسارة.',
+        },
+      ],
+      relatedCalculators: ['markup-margin', 'break-even', 'wholesale-retail'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-calculate-markup-and-margin',
+      locale: 'en',
+      title: 'How to calculate markup and margin',
+      metaDescription:
+        'A practical guide to the difference between markup and margin: the two different bases, loss cases, and a worked example matching the markup & margin calculator.',
+      intro:
+        'Markup and margin describe the same profit on two different bases, and mixing them up is one of the most common pricing mistakes. This guide explains the difference, when to use each, and gives a worked example matching Klar\u2019s markup & margin calculator.',
+      sections: [
+        {
+          heading: 'Two different bases for the same profit',
+          body: `Markup = profit \u00f7 cost \u00d7 100, and margin = profit \u00f7 selling price \u00d7 100.
+          
+Because the bases differ, markup always looks larger than margin for the same profit. For example a profit of 40 from a cost of 80 and a price of 120 gives a markup of **50%** and a margin of **33.3%**.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the calculator\u2019s values: cost **80**, selling price **120**.
+          
+The result: profit **40**, markup **50%**, and margin **33.3%**.`,
+        },
+        {
+          heading: 'When to use which',
+          body: `Use markup when you start from cost and add a percentage (pricing for sale). Use margin when you want a specific profit out of the selling price or when comparing yourself with competitors who quote margins. The key is to know which base you and your audience are using.`,
+        },
+        {
+          heading: 'Loss cases',
+          body: `When the selling price falls below cost, profit is negative and both percentages show as negative. This is a clear signal that the price does not cover the cost, and lowering the price without looking at cost is not enough.`,
+        },
+      ],
+      keyTakeaways: [
+        'Markup = profit \u00f7 cost, and margin = profit \u00f7 selling price.',
+        'Markup is larger than margin for the same profit.',
+        'Use markup from cost, and margin from selling price.',
+        'Negative profit yields two negative percentages (a loss).',
+      ],
+      faqs: [
+        {
+          q: 'Which number do I use when pricing?',
+          a: 'Use markup when you add a percentage on top of cost, and margin when you set the profit out of the selling price. Know which base you and the people you talk to are using.',
+        },
+        {
+          q: 'Can both percentages be negative?',
+          a: 'Yes. When the selling price is below cost, the calculation shows a negative profit and negative percentages meaning a loss.',
+        },
+      ],
+      relatedCalculators: ['markup-margin', 'break-even', 'wholesale-retail'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-to-calculate-break-even': {
+    ar: {
+      slug: 'how-to-calculate-break-even',
+      locale: 'ar',
+      title: 'كيف تحسب نقطة التعادل',
+      metaDescription:
+        'دليل عملي لنقطة التعادل: وحدات التعادل من التكاليف الثابتة وهامش المساهمة، وشرط السعر فوق التكلفة المتغيرة، ومثال عددي مطابق لحاسبة نقطة التعادل.',
+      intro:
+        'نقطة التعادل تخبرك كم وحدة يجب أن تبيع حتى يغطي إيرادك كل التكاليف. يشرح هذا الدليل معادلة وحدات التعادل، وشرط أن يتجاوز السعر التكلفة المتغيرة، وماذا تعني النتيجة عملياً، مع مثال عددي مطابق لحاسبة نقطة التعادل في كلار.',
+      sections: [
+        {
+          heading: 'المعادلة: التكاليف الثابتة ÷ هامش المساهمة',
+          body: `وحدات التعادل = التكاليف الثابتة ÷ (سعر الوحدة − التكلفة المتغيرة للوحدة).
+          
+فرق السعر والتكلفة المتغيرة يسمى **هامش المساهمة**، وهو ما يغطي التكاليف الثابتة ثم يتحول إلى ربح بعد نقطة التعادل.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: تكاليف ثابتة **10,000**، سعر الوحدة **50**، وتكلفة متغيرة **30**.
+          
+هامش المساهمة = 50 − 30 = **20**، ووحدات التعادل = 10,000 ÷ 20 = **500** وحدة، وإيراد التعادل = 500 × 50 = **25,000**.`,
+        },
+        {
+          heading: 'شرط السعر فوق التكلفة المتغيرة',
+          body: `إذا كان سعر الوحدة يساوي أو يقل عن تكلفتها المتغيرة فلا يوجد هامش مساهمة موجب، وبالتالي لا نقطة تعادل. تمنع الحاسبة هذه الحالة بعرض خطأ على سعر الوحدة.`,
+        },
+        {
+          heading: 'ماذا تعني النتيجة؟',
+          body: `أقل من 500 وحدة تعني خسارة، وأكثر منها تعني ربحاً. النتيجة قد تكون كسراً (مثل 500.5)، ويُستخدم العدد الصحيح المكافئ للتخطيط. بعد التعادل، كل وحدة إضافية تضيف هامش المساهمة كاملاً إلى الربح.`,
+        },
+      ],
+      keyTakeaways: [
+        'وحدات التعادل = التكاليف الثابتة ÷ (سعر الوحدة − التكلفة المتغيرة).',
+        'هامش المساهمة = سعر الوحدة − التكلفة المتغيرة.',
+        'إيراد التعادل = وحدات التعادل × سعر الوحدة.',
+        'السعر يجب أن يزيد عن التكلفة المتغيرة وإلا فلا نقطة تعادل.',
+      ],
+      faqs: [
+        {
+          q: 'ماذا لو لم أصل إلى نقطة التعادل؟',
+          a: 'أنت تخسر لأن الإيراد لا يغطي التكاليف. جرّب رفع السعر أو خفض التكاليف أو زيادة المبيعات وراقب أثر كل تغيير على وحدات التعادل.',
+        },
+        {
+          q: 'هل تشمل التكاليف الثابتة الرواتب؟',
+          a: 'نعم إذا كانت ثابتة لا تتغير مع المبيعات. العمولات والمدفوعات المتغيرة تُدخل ضمن التكلفة المتغيرة للوحدة.',
+        },
+      ],
+      relatedCalculators: ['break-even', 'markup-margin', 'wholesale-retail'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-calculate-break-even',
+      locale: 'en',
+      title: 'How to calculate break-even',
+      metaDescription:
+        'A practical guide to break-even: break-even units from fixed costs and contribution margin, the price-above-variable-cost condition, and a worked example matching the break-even calculator.',
+      intro:
+        'The break-even point tells you how many units you must sell until your revenue covers all costs. This guide explains the break-even formula, the condition that price must exceed variable cost, what the result means in practice, and gives a worked example matching Klar\u2019s break-even calculator.',
+      sections: [
+        {
+          heading: 'The formula: fixed costs \u00f7 contribution margin',
+          body: `Break-even units = fixed costs \u00f7 (price per unit \u2212 variable cost per unit).
+          
+The gap between price and variable cost is the **contribution margin**: it covers fixed costs, then turns into profit beyond the break-even point.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the calculator\u2019s values: fixed costs **10,000**, price **50**, variable cost **30**.
+          
+Contribution margin = 50 \u2212 30 = **20**, break-even units = 10,000 \u00f7 20 = **500** units, and break-even revenue = 500 \u00d7 50 = **25,000**.`,
+        },
+        {
+          heading: 'The price-above-variable-cost condition',
+          body: `If the price equals or falls below the variable cost, there is no positive contribution margin and therefore no break-even point. The calculator blocks this case with an error on the price per unit.`,
+        },
+        {
+          heading: 'What the result means',
+          body: `Below 500 units you lose money; above it you make a profit. The result can be fractional (like 500.5), and the equivalent whole number is used for planning. Beyond break-even, every extra unit adds the full contribution margin to profit.`,
+        },
+      ],
+      keyTakeaways: [
+        'Break-even units = fixed costs \u00f7 (price per unit \u2212 variable cost).',
+        'Contribution margin = price per unit \u2212 variable cost.',
+        'Break-even revenue = break-even units \u00d7 price per unit.',
+        'The price must exceed the variable cost, otherwise there is no break-even point.',
+      ],
+      faqs: [
+        {
+          q: 'What if I never reach break-even?',
+          a: 'You are losing money because revenue does not cover costs. Try raising the price, cutting costs or increasing sales, and watch how break-even units change with each move.',
+        },
+        {
+          q: 'Do fixed costs include salaries?',
+          a: 'Yes, if they are fixed and do not change with sales. Commissions and variable payments belong in the variable cost per unit.',
+        },
+      ],
+      relatedCalculators: ['break-even', 'markup-margin', 'wholesale-retail'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-to-price-wholesale-and-retail': {
+    ar: {
+      slug: 'how-to-price-wholesale-and-retail',
+      locale: 'ar',
+      title: 'كيف تسعّر الجملة والتجزئة',
+      metaDescription:
+        'دليل عملي لتحديد سعر التجزئة من تكلفة الجملة ونسبة الترميز على الوحدة، مع مثال عددي مطابق لحاسبة سعر الجملة والتجزئة.',
+      intro:
+        'عند شراء بضاعة جملة تحتاج سعر تجزئة يحقق الربح الذي تريده مع بقاء السعر مقبولاً للعميل. يشرح هذا الدليل معادلة سعر التجزئة من تكلفة الجملة ونسبة الترميز لكل وحدة، مع مثال عددي مطابق لحاسبة سعر الجملة والتجزئة في كلار.',
+      sections: [
+        {
+          heading: 'المعادلة: تكلفة الجملة × (1 + الترميز)',
+          body: `سعر التجزئة = تكلفة الجملة × (1 + نسبة الترميز ÷ 100)، والربح على الوحدة = سعر التجزئة − التكلفة.
+          
+النسبة تُحسب من التكلفة (ترميز) وليس من سعر البيع (هامش). ترميز 100% على تكلفة 15 يعني سعراً 30 وليس هامش 100%.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: تكلفة جملة **15** وترميز **60%**.
+          
+سعر التجزئة = 15 × 1.6 = **24**، والربح على الوحدة = 24 − 15 = **9**.`,
+        },
+        {
+          heading: 'لكل وحدة وليس للدفعة',
+          body: `المدخلات لكل وحدة واحدة. إذا اشتريت صندوقاً بـ 10 وحدات وبعت كل وحدة بسعر محسوب من تكلفتها وحدها، فاجعل التكلفة المدخلة هي تكلفة الوحدة الواحدة لا تكلفة الصندوق.`,
+        },
+        {
+          heading: 'اختيار نسبة الترميز',
+          body: `اختر نسبة تغطي تكاليفك التشغيلية (نقل، تخزين، تسويق) وربحك، مع مراعاة أسعار المنافسين. لا تنس إضافة ضريبة القيمة المضافة على السعر النهائي المعروض للعميل.`,
+        },
+      ],
+      keyTakeaways: [
+        'سعر التجزئة = تكلفة الجملة × (1 + نسبة الترميز ÷ 100).',
+        'الترميز نسبة من التكلفة وليس من سعر البيع.',
+        'المدخلات لكل وحدة واحدة، وليس للدفعة كاملة.',
+        'السعر الناتج قبل الضريبة؛ أضف الضريبة عند العرض.',
+      ],
+      faqs: [
+        {
+          q: 'كيف أختار نسبة الترميز؟',
+          a: 'أضف هامشاً يغطي تكاليفك التشغيلية ويربحك، مع مقارنة أسعار المنافسين وقيمة ما تقدمه. لا توجد نسبة واحدة صحيحة.',
+        },
+        {
+          q: 'هل يشمل السعر ضريبة القيمة المضافة؟',
+          a: 'لا. الحاسبة تعطي السعر قبل الضريبة، وعليك إضافة الضريبة المطبقة في بلدك.',
+        },
+      ],
+      relatedCalculators: ['wholesale-retail', 'markup-margin', 'break-even'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-price-wholesale-and-retail',
+      locale: 'en',
+      title: 'How to price wholesale and retail',
+      metaDescription:
+        'A practical guide to setting a retail price from wholesale cost and a per-unit markup, with a worked example matching the wholesale to retail calculator.',
+      intro:
+        'When you buy goods wholesale you need a retail price that earns your target profit while staying acceptable to the customer. This guide explains the retail formula from wholesale cost and per-unit markup, and gives a worked example matching Klar\u2019s wholesale to retail calculator.',
+      sections: [
+        {
+          heading: 'The formula: wholesale cost \u00d7 (1 + markup)',
+          body: `Retail price = wholesale cost \u00d7 (1 + markup percentage \u00f7 100), and profit per unit = retail price \u2212 cost.
+          
+The percentage is based on cost (markup), not on selling price (margin). A 100% markup on a cost of 15 means a price of 30, not a 100% margin.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the calculator\u2019s values: wholesale cost **15**, markup **60%**.
+          
+Retail price = 15 \u00d7 1.6 = **24**, and profit per unit = 24 \u2212 15 = **9**.`,
+        },
+        {
+          heading: 'Per unit, not per batch',
+          body: `The inputs are per single unit. If you bought a box of 10 units and sell each at a price derived from its own cost, enter the cost of one unit, not the box.`,
+        },
+        {
+          heading: 'Choosing the markup',
+          body: `Pick a percentage that covers your operating costs (shipping, storage, marketing) and your profit, while considering competitor prices. Do not forget to add VAT on the final price shown to the customer.`,
+        },
+      ],
+      keyTakeaways: [
+        'Retail price = wholesale cost \u00d7 (1 + markup percentage \u00f7 100).',
+        'Markup is a percentage of cost, not of selling price.',
+        'The inputs are per single unit, not for the whole batch.',
+        'The resulting price is pre-tax; add tax when pricing.',
+      ],
+      faqs: [
+        {
+          q: 'How do I choose the markup?',
+          a: 'Add enough margin to cover your operating costs and earn profit, while comparing competitor prices and the value you offer. There is no single right percentage.',
+        },
+        {
+          q: 'Does the price include VAT?',
+          a: 'No. The calculator gives the pre-tax price; add the tax applied in your country.',
+        },
+      ],
+      relatedCalculators: ['wholesale-retail', 'markup-margin', 'break-even'],
+      lastReviewed: '2026-08-10',
+    },
+  },
 };
 
 export default guides;

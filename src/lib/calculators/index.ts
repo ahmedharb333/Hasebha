@@ -27,6 +27,9 @@ import age from './age.ts';
 import dateDifference from './date-difference.ts';
 import tip from './tip.ts';
 import unitConverter from './unit-converter.ts';
+import markupMargin from './markup-margin.ts';
+import breakEven from './break-even.ts';
+import wholesaleRetail from './wholesale-retail.ts';
 
 const registry: Record<string, CalculatorMath> = {
   'loan-payment': loanPayment,
@@ -57,6 +60,9 @@ const registry: Record<string, CalculatorMath> = {
   'date-difference': dateDifference,
   tip,
   'unit-converter': unitConverter,
+  'markup-margin': markupMargin,
+  'break-even': breakEven,
+  'wholesale-retail': wholesaleRetail,
 };
 
 export function getMath(slug: string): CalculatorMath {
