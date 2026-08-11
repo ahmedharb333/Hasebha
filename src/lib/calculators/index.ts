@@ -15,6 +15,11 @@ import earlyPayoff from './early-payoff.ts';
 import zakat from './zakat.ts';
 import retirementSavings from './retirement.ts';
 import debtToIncome from './debt-to-income.ts';
+import bmi from './bmi.ts';
+import bmr from './bmr.ts';
+import idealWeight from './ideal-weight.ts';
+import bodyFat from './body-fat.ts';
+import calorieIntake from './calorie.ts';
 
 const registry: Record<string, CalculatorMath> = {
   'loan-payment': loanPayment,
@@ -33,6 +38,11 @@ const registry: Record<string, CalculatorMath> = {
   zakat,
   'retirement-savings': retirementSavings,
   'debt-to-income': debtToIncome,
+  bmi,
+  bmr,
+  'ideal-weight': idealWeight,
+  'body-fat': bodyFat,
+  'calorie-intake': calorieIntake,
 };
 
 export function getMath(slug: string): CalculatorMath {

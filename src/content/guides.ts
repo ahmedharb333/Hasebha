@@ -2089,6 +2089,661 @@ A good ratio does not guarantee approval, but it sets expectations and prepares 
       lastReviewed: '2026-08-10',
     },
   },
+
+  'how-to-understand-bmi': {
+    ar: {
+      slug: 'how-to-understand-bmi',
+      locale: 'ar',
+      title: 'كيف تفهم مؤشر كتلة الجسم',
+      metaDescription:
+        'دليل عملي لفهم مؤشر كتلة الجسم: طريقة الحساب، نطاقات المؤشر، وحدود استخدامه، مع مثال عددي مطابق لحاسبة المؤشر.',
+      intro:
+        'مؤشر كتلة الجسم (BMI) أشهر طريقة لفحص الوزن مقابل الطول، وهو مفيد وسريع لكن له حدود واضحة. يشرح هذا الدليل كيف يُحسب، وماذا تعني النطاقات، ومتى يضلل المؤشر. يلتزم مثاله العددي بنفس قيم حاسبة مؤشر كتلة الجسم في كلار.',
+      sections: [
+        {
+          heading: 'كيف يُحسب المؤشر',
+          body: `مؤشر كتلة الجسم = **الوزن بالكيلوغرام ÷ مربع الطول بالمتر**. الحاسبة تحول الوحدات تلقائياً: الباوند إلى كيلوغرام، والمتر إلى سنتمتر والعكس.
+        
+مثال سريع: وزن 75 كغ وطول 175 سم (1.75 م) يعطي مؤشراً ≈ **24.5**.`,
+        },
+        {
+          heading: 'ماذا تعني النطاقات',
+          body: `التصنيف الشائع للمؤشر: أقل من **18.5** نقص وزن، ومن **18.5 إلى 24.9** وزن صحي، ومن **25 إلى 29.9** زيادة وزن، و**30 فأكثر** سمنة.
+        
+نطاق الوزن الصحي لطولك هو الأوزان التي تعطيك مؤشراً بين 18.5 و24.9، وتُظهر الحاسبة حديه مباشرة.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: وزن **75 كغ** وطول **175 سم**.
+        
+المؤشر ≈ **24.5**، ونطاق الوزن الصحي لطولك ≈ **56.7 – 76.3 كغ** (الحد الأدنى بمؤشر 18.5 والأعلى بمؤشر 24.9).`,
+        },
+        {
+          heading: 'حدود المؤشر',
+          body: `المؤشر أداة **فحص لا تشخيص**: لا يميز بين العضلات والدهون، لذا قد يضع الرياضي ذا الكتلة العضلية العالية في خانة زيادة الوزن دون مبرر. تختلف المعايير أيضاً بين المجموعات السكانية.
+        
+لا تستخدم معايير البالغين للأطفال أو الحوامل، ولاتجاهات التركيب الجسمي الأفضل استخدم أدوات كتقدير نسبة الدهون.`,
+        },
+        {
+          heading: 'أخطاء شائعة',
+          body: `من الأخطاء: الخلط بين وحدات الوزن أو الطول عند الإدخال، وإدخال الطول بالسنتمتر مكان المتر فيحسب المؤشر هائلة، واستخدام وحدات غير مدعومة كالقوالب (الستون).
+        
+استخدم الحاسبة مع اختيار الوحدات الصحيح وستتحول تلقائياً، واقرأ النتيجة كمؤشر استرشادي لا حكماً نهائياً.`,
+        },
+      ],
+      keyTakeaways: [
+        'المؤشر = الوزن (كغ) ÷ مربع الطول (م).',
+        'النطاق الصحي بين 18.5 و24.9.',
+        'المؤشر فحص استرشادي وليس تشخيصاً طبياً.',
+        'لا يميز العضلات عن الدهون وقد يضلل للرياضيين.',
+        'الوحدات تُختار بعناية وتتحول تلقائياً في الحاسبة.',
+      ],
+      faqs: [
+        {
+          q: 'هل المؤشر دقيق للجميع؟',
+          a: 'لا. هو أداة فحص سريعة لا تميز بين العضلات والدهون، وقد يخطئ في تصنيف الرياضيين وبعض المجموعات السكانية.',
+        },
+        {
+          q: 'ماذا يعني نطاق الوزن الصحي؟',
+          a: 'هو مدى الأوزان التي تعطي مؤشراً بين 18.5 و24.9 لطولك، إطار استرشادي وليس هدفاً دقيقاً يفرض عليك.',
+        },
+        {
+          q: 'متى لا يناسبني المؤشر؟',
+          a: 'قد لا يناسب معايير البالغين الأطفال والحوامل، كما قد يضلل من يملكون كتلة عضلية عالية أو بنية جسمية غير نموذجية.',
+        },
+      ],
+      relatedCalculators: ['bmi', 'ideal-weight', 'bmr'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-understand-bmi',
+      locale: 'en',
+      title: 'How to understand BMI',
+      metaDescription:
+        'A practical guide to understanding body mass index: how it is computed, the index bands, and its limits, with a worked example matching the BMI calculator.',
+      intro:
+        'Body mass index (BMI) is the most popular way to screen weight against height — useful and quick, but with clear limits. This guide explains how it is computed, what the bands mean, and when it misleads. Its worked example sticks to the same values used by Klar’s BMI calculator.',
+      sections: [
+        {
+          heading: 'How the index is computed',
+          body: `BMI = **weight in kilograms \u00f7 height in metres squared**. The calculator converts units automatically: pounds to kilograms, and metres to centimetres and back.
+        
+A quick example: 75 kg and 175 cm (1.75 m) gives an index of about **24.5**.`,
+        },
+        {
+          heading: 'What the bands mean',
+          body: `The common classification: below **18.5** is underweight, **18.5 to 24.9** is healthy weight, **25 to 29.9** is overweight, and **30 and above** is obese.
+        
+The healthy weight range for your height is the weights that give an index between 18.5 and 24.9, and the calculator shows its two bounds directly.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the same values as the calculator: weight **75 kg** and height **175 cm**.
+        
+The index is about **24.5**, and the healthy weight range for your height is about **56.7 \u2013 76.3 kg** (the low bound at 18.5 and the high bound at 24.9).`,
+        },
+        {
+          heading: 'The limits of the index',
+          body: `The index is a **screening tool, not a diagnosis**: it does not distinguish muscle from fat, so it may place a muscular athlete in the overweight band without reason. Benchmarks also differ between populations.
+        
+Do not use adult benchmarks for children or pregnant women, and for a better picture of body composition use tools such as body fat estimation.`,
+        },
+        {
+          heading: 'Common mistakes',
+          body: `Among the mistakes: mixing weight or height units when entering them, entering height in centimetres where metres are expected, which miscalculates the index hugely, and using unsupported units like stone.
+        
+Use the calculator with the correct units chosen and they convert automatically, and read the result as a guiding index, not a final verdict.`,
+        },
+      ],
+      keyTakeaways: [
+        'The index = weight (kg) \u00f7 height (m) squared.',
+        'The healthy range is 18.5 to 24.9.',
+        'The index is a guiding screen, not a medical diagnosis.',
+        'It does not distinguish muscle from fat and can mislead for athletes.',
+        'Choose units carefully; the calculator converts automatically.',
+      ],
+      faqs: [
+        {
+          q: 'Is the index accurate for everyone?',
+          a: 'No. It is a quick screening tool that does not distinguish muscle from fat, so it can misclassify athletes and some populations.',
+        },
+        {
+          q: 'What does the healthy weight range mean?',
+          a: 'It is the span of weights giving an index between 18.5 and 24.9 for your height — a guiding frame, not an exact target imposed on you.',
+        },
+        {
+          q: 'When does the index not suit me?',
+          a: 'Adult benchmarks may not fit children and pregnant women, and it can mislead people with high muscle mass or a non-typical body frame.',
+        },
+      ],
+      relatedCalculators: ['bmi', 'ideal-weight', 'bmr'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-to-calculate-bmr-and-tdee': {
+    ar: {
+      slug: 'how-to-calculate-bmr-and-tdee',
+      locale: 'ar',
+      title: 'كيف تحسب معدل الأيض الأساسي وإجمالي إنفاق الطاقة',
+      metaDescription:
+        'دليل عملي لحساب معدل الأيض الأساسي (BMR) وإجمالي إنفاق الطاقة اليومي (TDEE) وفق معادلة ميفلين-سانت جيور، مع مثال عددي مطابق للحاسبة.',
+      intro:
+        'معرفة احتياج جسمك من الطاقة هو أساس أي خطة غذائية أو تدريبية. يشرح هذا الدليل معنى معدل الأيض الأساسي (BMR) وإجمالي إنفاق الطاقة اليومي (TDEE)، وكيف تحسبهما الحاسبة وفق معادلة ميفلين-سانت جيور وعامل النشاط. يلتزم مثاله العددي بنفس قيم حاسبة معدل الأيض الأساسي في كلار.',
+      sections: [
+        {
+          heading: 'ما هو BMR وما هو TDEE؟',
+          body: `معدل الأيض الأساسي (**BMR**) هو الطاقة التي يحرقها جسمك في حالة الراحة التامة ليبقى على قيد الحياة: التنفس ونبض القلب ووظائف الأعضاء. **إجمالي إنفاق الطاقة اليومي (TDEE)** يضيف إلى ذلك أثر نشاطك اليومي، وهو الرقم الأقرب لاحتياجك الفعلي.
+        
+الفرق بينهما حاسم: BMR للراحة، وTDEE لاحتياجك اليومي الكامل.`,
+        },
+        {
+          heading: 'معادلة ميفلين-سانت جيور',
+          body: `المعادلة تحسب BMR من الوزن والطول والعمر والجنس: **BMR = 10 × الوزن (كغ) + 6.25 × الطول (سم) − 5 × العمر + (5 للذكر أو −161 للأنثى)**.
+        
+الحاسبة تحول الوحدات تلقائياً: الباوند إلى كيلوغرام والمتر إلى سنتمتر، ثم تطبق المعادلة مباشرة.`,
+        },
+        {
+          heading: 'عامل النشاط و TDEE',
+          body: `يُضرب BMR في عامل نشاط حسب روتينك اليومي: **1.2** لخامل، **1.375** لنشاط خفيف، **1.55** لنشاط متوسط، **1.725** لنشيط، و**1.9** لنشاط عالٍ جداً.
+        
+اختيار مستوى واقعي مهم: اختيار أعلى من واقعك يبالغ في TDEE ويشوه أي هدف غذائي مبنياً عليه.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: ذكر، عمر **30**، وزن **80 كغ**، طول **180 سم**، نشاط متوسط.
+        
+BMR = 10×80 + 6.25×180 − 5×30 + 5 = **1,780 سعرة/يوم**، وTDEE = 1,780 × 1.55 ≈ **2,759 سعرة/يوم**.`,
+        },
+        {
+          heading: 'أخطاء شائعة',
+          body: `من الأخطاء: اختيار مستوى نشاط غير واقعي، وإدخال الوزن بالباوند دون مراعاة التحويل للكيلوغرام، والخلط بين BMR وTDEE، والاعتماد على الأرقام كحقيقة طبية بدل تقدير.
+        
+التقديرات مبنية على متوسطات سكانية، وقد يختلف احتياجك الفعلي حسب تكوين جسمك ومستوى نشاطك الحقيقي.`,
+        },
+      ],
+      keyTakeaways: [
+        'BMR هو احتياج الراحة التامة، وTDEE يضيف أثر النشاط اليومي.',
+        'المعادلة: 10 × الوزن + 6.25 × الطول − 5 × العمر + ثابت الجنس.',
+        'عوامل النشاط من 1.2 إلى 1.9 حسب المستوى.',
+        'اختيار مستوى نشاط واقعي ضروري لصحة النتيجة.',
+        'التقديرات عامة وليست نصيحة طبية.',
+      ],
+      faqs: [
+        {
+          q: 'ما الفرق بين BMR وTDEE؟',
+          a: 'BMR للراحة التامة، بينما يضيف TDEE أثر نشاطك اليومي، وهو الرقم الأقرب لاحتياجك الفعلي من الطاقة.',
+        },
+        {
+          q: 'لماذا تسأل الحاسبة عن الجنس؟',
+          a: 'لأن معادلة ميفلين-سانت جيور تستخدم ثابتاً مختلفاً بين الرجال والنساء يعكس فروقاً متوسطة في تكوين الجسم.',
+        },
+        {
+          q: 'هل الأرقام دقيقة لشخصي؟',
+          a: 'إنها تقديرات مبنية على متوسطات سكانية، وقد يختلف احتياجك الفعلي بحسب تكوين جسمك ونشاطك الحقيقي.',
+        },
+      ],
+      relatedCalculators: ['bmr', 'calorie-intake', 'bmi'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-calculate-bmr-and-tdee',
+      locale: 'en',
+      title: 'How to calculate BMR and TDEE',
+      metaDescription:
+        'A practical guide to calculating basal metabolic rate (BMR) and total daily energy expenditure (TDEE) with the Mifflin-St Jeor equation, with a worked example matching the calculator.',
+      intro:
+        'Knowing your body\u2019s energy needs is the foundation of any diet or training plan. This guide explains what basal metabolic rate (BMR) and total daily energy expenditure (TDEE) mean, and how the calculator works them out with the Mifflin-St Jeor equation and an activity factor. Its worked example sticks to the same values used by Klar’s BMR calculator.',
+      sections: [
+        {
+          heading: 'What are BMR and TDEE?',
+          body: `Basal metabolic rate (**BMR**) is the energy your body burns at complete rest just to stay alive: breathing, heartbeat and organ functions. **Total daily energy expenditure (TDEE)** adds the effect of your daily activity and is the figure closest to your actual needs.
+        
+The difference matters: BMR is for rest, TDEE is your full daily need.`,
+        },
+        {
+          heading: 'The Mifflin-St Jeor equation',
+          body: `The equation computes BMR from weight, height, age and sex: **BMR = 10 \u00d7 weight (kg) + 6.25 \u00d7 height (cm) \u2212 5 \u00d7 age + (5 for male or \u2212161 for female)**.
+        
+The calculator converts units automatically — pounds to kilograms and metres to centimetres — then applies the equation directly.`,
+        },
+        {
+          heading: 'The activity factor and TDEE',
+          body: `BMR is multiplied by an activity factor matching your routine: **1.2** for sedentary, **1.375** for light activity, **1.55** for moderate, **1.725** for active, and **1.9** for very active.
+        
+Choosing a realistic level matters: picking higher than your reality inflates TDEE and distorts any diet target built on it.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the same values as the calculator: male, age **30**, weight **80 kg**, height **180 cm**, moderate activity.
+        
+BMR = 10\u00d780 + 6.25\u00d7180 \u2212 5\u00d730 + 5 = **1,780 calories/day**, and TDEE = 1,780 \u00d7 1.55 \u2248 **2,759 calories/day**.`,
+        },
+        {
+          heading: 'Common mistakes',
+          body: `Among the mistakes: choosing an unrealistic activity level, entering weight in pounds without accounting for the conversion to kilograms, confusing BMR with TDEE, and relying on the figures as medical fact instead of an estimate.
+        
+The estimates are based on population averages, and your actual needs may differ depending on your body composition and true activity level.`,
+        },
+      ],
+      keyTakeaways: [
+        'BMR is the complete-rest need; TDEE adds the effect of daily activity.',
+        'The equation: 10 \u00d7 weight + 6.25 \u00d7 height \u2212 5 \u00d7 age + sex constant.',
+        'Activity factors range from 1.2 to 1.9 by level.',
+        'A realistic activity level is essential for a sound result.',
+        'Estimates are general and are not medical advice.',
+      ],
+      faqs: [
+        {
+          q: 'What is the difference between BMR and TDEE?',
+          a: 'BMR is for complete rest, while TDEE adds the effect of your daily activity and is the figure closest to your actual energy needs.',
+        },
+        {
+          q: 'Why does the calculator ask for sex?',
+          a: 'Because the Mifflin-St Jeor equation uses a different constant for men and women, reflecting average differences in body composition.',
+        },
+        {
+          q: 'Are the figures accurate for me personally?',
+          a: 'They are estimates based on population averages, and your actual needs may differ depending on your body composition and activity level.',
+        },
+      ],
+      relatedCalculators: ['bmr', 'calorie-intake', 'bmi'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'healthy-weight-range-explained': {
+    ar: {
+      slug: 'healthy-weight-range-explained',
+      locale: 'ar',
+      title: 'شرح نطاق الوزن الصحي',
+      metaDescription:
+        'دليل عملي لفهم نطاق الوزن الصحي المناسب لطولك، المحسوب من مؤشر كتلة الجسم بين 18.5 و24.9، مع مثال عددي مطابق للحاسبة.',
+      intro:
+        'بدل السعي لوزن "مثالي" مفرد، يقدم العلم نطاقاً صحياً من الأوزان يناسب طولك. يشرح هذا الدليل من أين يأتي النطاق، ولماذا هو مدى وليس نقطة، ومتى تختلف الحدود بين الناس. يلتزم مثاله العددي بنفس قيم حاسبة الوزن المثالي في كلار.',
+      sections: [
+        {
+          heading: 'من أين يأتي النطاق؟',
+          body: `نطاق الوزن الصحي مشتق من **مؤشر كتلة الجسم** بين **18.5 و24.9**: الحد الأدنى = طولك (م)² × 18.5، والحد الأعلى = طولك (م)² × 24.9.
+        
+كل وزن داخل هذا المدى يعطي مؤشراً ضمن التصنيف الصحي، لذا يُعرض على شكل نطاق وليس رقماً واحداً.`,
+        },
+        {
+          heading: 'لماذا نطاق وليس رقماً؟',
+          body: `لأن الجسم الصحي لا يحدده رقم واحد دقيق: البنية الجسمية والكتلة العضلية والتركيب تختلف بين الناس، والأوزان الواقعة داخل النطاق كلها مقبولة صحياً.
+        
+منتصف النطاق مجرد مرجع عملي عند وضع هدف، وليس أفضل نقطة إلزامية.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: طول **175 سم**.
+        
+نطاق الوزن الصحي ≈ **56.7 – 76.3 كغ**، ووزن منتصف النطاق ≈ **66.5 كغ**.`,
+        },
+        {
+          heading: 'متى تختلف الحدود؟',
+          body: `النطاق مبنٍ على مؤشر كتلة الجسم الذي لا يميز **العضلات عن الدهون**، لذا قد يصنف الرياضي ذا الكتلة العضلية العالية خطأً خارج الحدود. تختلف نطاقات المؤشر أيضاً بين المجموعات السكانية.
+        
+المعايير للبالغين: الأطفال والحوامل لهم تقييمات خاصة تحتاج مختصاً.`,
+        },
+        {
+          heading: 'أخطاء شائعة',
+          body: `من الأخطاء: معاملة النطاق كهدف يجب الوصول إلى حدوده بالضبط، وتجاهل اختلاف النطاقات بين المجموعات، والافتراض أن النطاق ينطبق على الرياضيين أو على الأطفال.
+        
+استخدم النطاق كإطار استرشادي تتحرك داخله بمرونة، لا كحكم صارم.`,
+        },
+      ],
+      keyTakeaways: [
+        'النطاق مشتق من مؤشر 18.5 إلى 24.9 فقط.',
+        'الوزن الصحي نطاق وليس رقماً واحداً.',
+        'الحد الأدنى والأعلى يحسبان بضرب مربع الطول في 18.5 و24.9.',
+        'البنية والكتلة العضلية تغيران صحة الحدود لشخصك.',
+        'المعايير للبالغين ولا تشمل الأطفال أو الحمل.',
+      ],
+      faqs: [
+        {
+          q: 'لماذا نطاق بدل رقم واحد؟',
+          a: 'لأن الوزن الصحي لطولك يشمل مدى من الأوزان، والجسم الصحي لا يحدد برقم واحد يهمل البنية والتركيب.',
+        },
+        {
+          q: 'هل النطاق صالح للرياضيين؟',
+          a: 'النطاق مبني على مؤشر كتلة الجسم الذي لا يميز العضلات عن الدهون، لذا قد يصنف الرياضي خطأً خارج الحدود.',
+        },
+        {
+          q: 'هل يشمل الأطفال والحوامل؟',
+          a: 'لا. المعايير للبالغين، وللأطفال والحوامل نطاقات وتقييمات خاصة تحتاج مختصاً.',
+        },
+      ],
+      relatedCalculators: ['ideal-weight', 'bmi', 'body-fat'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'healthy-weight-range-explained',
+      locale: 'en',
+      title: 'Healthy weight range explained',
+      metaDescription:
+        'A practical guide to the healthy weight range for your height, derived from a body mass index between 18.5 and 24.9, with a worked example matching the calculator.',
+      intro:
+        'Instead of chasing a single "ideal" weight, science offers a healthy range of weights that fits your height. This guide explains where the range comes from, why it is a span rather than a point, and when the bounds differ between people. Its worked example sticks to the same values used by Klar’s ideal weight calculator.',
+      sections: [
+        {
+          heading: 'Where the range comes from',
+          body: `The healthy weight range is derived from a **body mass index** between **18.5 and 24.9**: the low bound = your height (m)\u00b2 \u00d7 18.5, and the high bound = your height (m)\u00b2 \u00d7 24.9.
+        
+Every weight inside this span gives an index within the healthy band, so it is shown as a range rather than a single number.`,
+        },
+        {
+          heading: 'Why a range instead of one number',
+          body: `Because a healthy body is not defined by a single precise number: body frame, muscle mass and composition differ between people, and every weight inside the range is healthy.
+        
+The mid-range is just a practical reference for setting a target, not a mandatory best point.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the same values as the calculator: height **175 cm**.
+        
+The healthy weight range is about **56.7 \u2013 76.3 kg**, and the mid-range weight is about **66.5 kg**.`,
+        },
+        {
+          heading: 'When the bounds differ',
+          body: `The range is based on BMI, which does not distinguish **muscle from fat**, so an athlete with high muscle mass can be misclassified outside the bounds. BMI bands also differ between populations.
+        
+The benchmarks are for adults: children and pregnant women have their own assessments that need a professional.`,
+        },
+        {
+          heading: 'Common mistakes',
+          body: `Among the mistakes: treating the range as a target to hit its exact bounds, ignoring that bands vary between populations, and assuming the range applies to athletes or to children.
+        
+Use the range as a guiding frame to move within flexibly, not as a rigid verdict.`,
+        },
+      ],
+      keyTakeaways: [
+        'The range is derived from an index of 18.5 to 24.9 only.',
+        'Healthy weight is a range, not a single number.',
+        'The low and high bounds are your height squared times 18.5 and 24.9.',
+        'Frame and muscle mass change what suits you within the bounds.',
+        'Benchmarks are for adults and do not cover children or pregnancy.',
+      ],
+      faqs: [
+        {
+          q: 'Why a range instead of one number?',
+          a: 'Because the healthy weight for your height spans many values, and a healthy body is not defined by a single number that ignores frame and composition.',
+        },
+        {
+          q: 'Does the range apply to athletes?',
+          a: 'The range is based on BMI, which does not distinguish muscle from fat, so an athlete may be misclassified outside the bounds.',
+        },
+        {
+          q: 'Does it cover children and pregnant women?',
+          a: 'No. The benchmarks are for adults, and children and pregnant women have their own ranges and assessments that need a professional.',
+        },
+      ],
+      relatedCalculators: ['ideal-weight', 'bmi', 'body-fat'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-to-estimate-body-fat': {
+    ar: {
+      slug: 'how-to-estimate-body-fat',
+      locale: 'ar',
+      title: 'كيف تقدر نسبة الدهون في الجسم',
+      metaDescription:
+        'دليل عملي لتقدير نسبة الدهون بطريقة القياسات البحرية الأمريكية: القياس الصحيح للمحيطات، وفهم النطاقات، مع مثال عددي مطابق للحاسبة.',
+      intro:
+        'نسبة الدهون في الجسم أكثر دلالة من الوزن وحده على تكوين جسمك. يشرح هذا الدليل طريقة القياسات البحرية الأمريكية (US Navy)، وكيف تقيس المحيطات بدقة، وماذا تعني النطاقات الناتجة. يلتزم مثاله العددي بنفس قيم حاسبة نسبة الدهون في كلار.',
+      sections: [
+        {
+          heading: 'طريقة القياسات البحرية',
+          body: `تعتمد الطريقة على **محيطات الجسم** فقط: الطول ومحيط الخصر والرقبة، مع محيط الورك للإناث. من هذه الأرقام تُقدر كثافة الجسم ثم تُحول إلى نسبة دهون.
+        
+الطريقة تقديرية، ودقتها في حدود بضع نقاط مئوية، وتختلف عن طرق أدق كالوزن المائي أو التصوير.`,
+        },
+        {
+          heading: 'كيف تقيس المحيطات بدقة',
+          body: `اجعل القياسات **دقيقة وثابتة** كل مرة: قِس صباحاً، بشريط ملامس غير مشدود، أفقي على الجلد مباشرة، دون نفخ البطن. الخصر عند مستوى السرة تقريباً، والرقبة أسفل تفاحة الحنجرة، والورك عند أوسع نقطة.
+        
+النتيجة حساسة للقياس: شريط مشدود أو قياس فوق الملابس يشوه التقدير.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: ذكر، طول **180 سم**، محيط خصر **90 سم**، ومحيط رقبة **40 سم**.
+        
+نسبة الدهون في الجسم ≈ **18.4%**. للمقارنة، أنثى بطول 165 سم وخصر 70 سم ورقبة 32 سم وورك 95 سم تعطي ≈ **24.9%**.`,
+        },
+        {
+          heading: 'ماذا تعني النطاقات',
+          body: `نطاقات استرشادية عامة: **أساسية** (نسبة دنيا ضرورية للصحة)، **رياضية**، **لياقة**، **متوسطة**، ثم **مرتفعة** تصنف سمنة. تختلف الحدود بين الذكور والإناث.
+        
+افهم مكانك داخل هذه النطاقات كإشارة عامة، وراقب **الاتجاه** عبر الزمن بنفس أسلوب القياس.`,
+        },
+        {
+          heading: 'أخطاء شائعة',
+          body: `من الأخطاء: القياس فوق الملابس أو بشريط مشدود، وإدخال القياسات بالبوصة مكان السنتمتر، ونسيان محيط الورك للإناث، والقياس في أوقات مختلفة من اليوم فيتباين الرقم دون تغير حقيقي.
+        
+قِس دائماً بنفس الطريقة والوقت لتحصل على اتجاه صادق لتغيرك.`,
+        },
+      ],
+      keyTakeaways: [
+        'الطريقة تعتمد على محيطات الجسم: الطول والخصر والرقبة، والورك للإناث.',
+        'القياس الدقيق: شريط ملامس غير مشدود، أفقي، على الجلد مباشرة.',
+        'التقدير في حدود بضع نقاط مئوية وليس تشخيصاً.',
+        'النطاقات استرشادية وتختلف بين الذكور والإناث.',
+        'راقب الاتجاه عبر الزمن بنفس أسلوب القياس.',
+      ],
+      faqs: [
+        {
+          q: 'ما مدى دقة طريقة القياسات البحرية؟',
+          a: 'إنها تقدير مقبول لكثير من الناس ضمن بضع نقاط مئوية، بينما طرق أدق مثل الوزن المائي أو التصوير تعطي نتائج أدق.',
+        },
+        {
+          q: 'لماذا محيط الورك للإناث فقط؟',
+          a: 'لأن توزيع الدهون يختلف بين الجنسين، وتضيف المعادلة الأنثوية محيط الورك لتعكس تراكم الدهون في تلك المنطقة.',
+        },
+        {
+          q: 'كيف أحصل على قياس صحيح؟',
+          a: 'قِس صباحاً وبنفس الطريقة كل مرة: شريط ملامس غير مشدود، أفقي على الجلد مباشرة، ولا تنفخ بطنك.',
+        },
+      ],
+      relatedCalculators: ['body-fat', 'bmi', 'ideal-weight'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-estimate-body-fat',
+      locale: 'en',
+      title: 'How to estimate body fat',
+      metaDescription:
+        'A practical guide to estimating body fat with the US Navy method: measuring circumferences correctly and reading the bands, with a worked example matching the calculator.',
+      intro:
+        'Body fat percentage tells you more about your body composition than weight alone. This guide explains the US Navy circumference method, how to measure accurately, and what the resulting bands mean. Its worked example sticks to the same values used by Klar’s body fat calculator.',
+      sections: [
+        {
+          heading: 'The Navy circumference method',
+          body: `The method uses **body circumferences only**: height, waist and neck, plus hip for women. From these figures body density is estimated and converted to a body fat percentage.
+        
+The method is an estimate, accurate to within a few percentage points, and differs from more precise techniques such as hydrostatic weighing or imaging.`,
+        },
+        {
+          heading: 'How to measure accurately',
+          body: `Make your measurements **accurate and consistent** every time: measure in the morning, with a touching, not tight, level tape directly on the skin, without sucking in your stomach. The waist is around navel level, the neck just below the larynx, and the hip at its widest point.
+        
+The result is sensitive to the measurement: a tight tape or measuring over clothing distorts the estimate.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the same values as the calculator: male, height **180 cm**, waist **90 cm** and neck **40 cm**.
+        
+The body fat percentage is about **18.4%**. For comparison, a woman of 165 cm with a 70 cm waist, 32 cm neck and 95 cm hip gives about **24.9%**.`,
+        },
+        {
+          heading: 'What the bands mean',
+          body: `General indicative bands: **essential** (the minimum fat needed for health), **athletic**, **fitness**, **average**, then **high**, classed as obese. The thresholds differ between men and women.
+        
+Read where you fall as a general signal, and track the **direction** over time using the same measurement technique.`,
+        },
+        {
+          heading: 'Common mistakes',
+          body: `Among the mistakes: measuring over clothing or with a tight tape, entering measurements in inches where centimetres are expected, forgetting the hip for women, and measuring at different times of day so the figure varies without any real change.
+        
+Always measure the same way and at the same time to get an honest picture of your change.`,
+        },
+      ],
+      keyTakeaways: [
+        'The method uses body circumferences: height, waist and neck, plus hip for women.',
+        'Accurate measuring: a touching, not tight, level tape directly on the skin.',
+        'The estimate is within a few percentage points, not a diagnosis.',
+        'The bands are indicative and differ between men and women.',
+        'Track the direction over time with the same measurement technique.',
+      ],
+      faqs: [
+        {
+          q: 'How accurate is the Navy method?',
+          a: 'It is a reasonable estimate for many people within a few percentage points, while more precise methods such as hydrostatic weighing or imaging give more accurate results.',
+        },
+        {
+          q: 'Why is the hip measured only for women?',
+          a: 'Because fat distribution differs between sexes, and the female equation includes the hip circumference to reflect fat accumulation in that area.',
+        },
+        {
+          q: 'How do I take a correct measurement?',
+          a: 'Measure in the morning and the same way each time: a touching, not tight, level tape directly on the skin, without sucking in your stomach.',
+        },
+      ],
+      relatedCalculators: ['body-fat', 'bmi', 'ideal-weight'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-to-set-a-calorie-target': {
+    ar: {
+      slug: 'how-to-set-a-calorie-target',
+      locale: 'ar',
+      title: 'كيف تحدد هدف السعرات اليومي',
+      metaDescription:
+        'دليل عملي لتحديد هدفك اليومي من السعرات حسب الهدف والنشاط: من احتياج الجسم إلى التعديل، مع مثال عددي مطابق لحاسبة السعرات اليومية.',
+      intro:
+        'هدف السعرات اليومي ليس رقماً عشوائياً: يبدأ من احتياج جسمك للطاقة ثم يُعدَّل حسب هدفك وسرعة الوصول إليه. يشرح هذا الدليل خطوات الوصول إلى الهدف، وماذا تعني تعديلات السرعة، ومتى تحذر. يلتزم مثاله العددي بنفس قيم حاسبة السعرات اليومية في كلار.',
+      sections: [
+        {
+          heading: 'من احتياج الجسم إلى الهدف',
+          body: `الخطوة الأولى: احسب **معدل الأيض الأساسي (BMR)** من وزنك وطولك وعمرك وجنسك، ثم اضربه في عامل نشاطك لتحصل على **إجمالي إنفاق الطاقة اليومي (TDEE)** — احتياجك قبل أي تعديل.
+        
+الخطوة الثانية: عدّل الهدف حسب هدفك: الخسارة تنقص من TDEE، والزيادة تضيف إليه، والثبات يتركه كما هو.`,
+        },
+        {
+          heading: 'تعديلات السرعة',
+          body: `تعديلات السعرات اليومية: **بطيء** ±250، **متوسط** ±500، **سريع** ±750 سعرة. تقابل هذه التقريباً تغيراً أسبوعياً قدره **0.25 / 0.5 / 0.75 كغ** للخسارة أو الزيادة.
+        
+السرعات السريعة أصعب استمراراً وقد تفقد عضلات مع الدهون، لذا يفضل أغلب المختصين الخسارة المعتدلة.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: أنثى، عمر **25**، وزن **60 كغ**، طول **165 سم**، نشاط متوسط، هدف خسارة بسرعة متوسطة.
+        
+BMR ≈ **1,345 سعرة/يوم**، وTDEE ≈ **2,085 سعرة/يوم**، والهدف اليومي ≈ **1,585 سعرة/يوم** (TDEE − 500).`,
+        },
+        {
+          heading: 'متى تحذر',
+          body: `النتائج **تقديرية وليست نصيحة طبية**. لا تنزل عموماً دون نحو **1,200 سعرة يومياً** دون إشراف مختص، واحذر العجز السريع المطول.
+        
+استخدم الحاسبة أثناء الحمل أو الرضاعة: أهداف خسارة الوزن غير مناسبة في هذه المرحلة، واستشيري مختصاً.`,
+        },
+        {
+          heading: 'أخطاء شائعة',
+          body: `من الأخطاء: اختيار مستوى نشاط أعلى من الواقع، واختيار سرعة سريعة دون وعي بمخاطرها، ومعاملة الهدف كرقم جامد بدل مرجع يُعدَّل بتغير الوزن والنشاط.
+        
+لا تضيف تقدير حرق التمارين مرتين: مستوى النشاط الصحيح يتضمن أثرها في TDEE.`,
+        },
+      ],
+      keyTakeaways: [
+        'الهدف يبدأ من TDEE ثم يُعدَّل حسب الهدف والسرعة.',
+        'التعديلات 250/500/750 سعرة ≈ 0.25/0.5/0.75 كغ أسبوعياً.',
+        'الخسارة المعتدلة أسهل استمراراً وأأمن من السريعة.',
+        'لا تنزل عموماً دون نحو 1,200 سعرة يومياً دون إشراف.',
+        'الهدف مرجع يُعدَّل مع تغير الوزن والنشاط، لا رقم جامد.',
+      ],
+      faqs: [
+        {
+          q: 'ما السرعة الآمنة للخسارة؟',
+          a: 'الخسارة المعتدلة من 0.5 كغ أسبوعياً تقريباً (عجز 500 سعرة يومياً) شائعة وقابلة للاستمرار، أما العجز الأسرع فأصعب ويحتاج إشرافاً.',
+        },
+        {
+          q: 'هل أستطيع استخدامه أثناء الحمل؟',
+          a: 'لا. أهداف خسارة الوزن غير مناسبة أثناء الحمل أو الرضاعة، واستشيري مختصاً لأي تعديل غذائي في هذه المرحلة.',
+        },
+        {
+          q: 'ماذا لو أمارس الرياضة؟',
+          a: 'إن اخترت مستوى النشاط المناسب لتمارينك، فالحاسبة تتضمن أثرها في TDEE. لا تضيف تقدير الحرق مرتين.',
+        },
+      ],
+      relatedCalculators: ['calorie-intake', 'bmr', 'bmi'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-set-a-calorie-target',
+      locale: 'en',
+      title: 'How to set a calorie target',
+      metaDescription:
+        'A practical guide to setting your daily calorie target by goal and activity: from your body\u2019s needs to the adjustment, with a worked example matching the calorie intake calculator.',
+      intro:
+        'A daily calorie target is not a random number: it starts from your body\u2019s energy needs and is then adjusted for your goal and how fast you want to reach it. This guide explains the steps to the target, what the pace adjustments mean, and when to be careful. Its worked example sticks to the same values used by Klar’s calorie intake calculator.',
+      sections: [
+        {
+          heading: 'From your body\u2019s needs to the target',
+          body: `First, compute your **basal metabolic rate (BMR)** from your weight, height, age and sex, then multiply it by your activity factor for **total daily energy expenditure (TDEE)** — your needs before any adjustment.
+        
+Second, adjust the target to your goal: losing subtracts from TDEE, gaining adds to it, and maintaining leaves it as is.`,
+        },
+        {
+          heading: 'The pace adjustments',
+          body: `The daily calorie adjustments are: **slow** \u00b1250, **moderate** \u00b1500, **fast** \u00b1750 calories. These correspond roughly to a weekly change of **0.25 / 0.5 / 0.75 kg** for loss or gain.
+        
+Fast paces are harder to sustain and may lose muscle along with fat, so most professionals favour moderate loss.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the same values as the calculator: female, age **25**, weight **60 kg**, height **165 cm**, moderate activity, goal lose at a moderate pace.
+        
+BMR is about **1,345 calories/day**, TDEE about **2,085 calories/day**, and the daily target about **1,585 calories/day** (TDEE \u2212 500).`,
+        },
+        {
+          heading: 'When to be careful',
+          body: `The results are **estimates, not medical advice**. Generally do not go below about **1,200 calories a day** without professional supervision, and be wary of prolonged fast deficits.
+        
+Do not use this for weight loss during pregnancy or breastfeeding: loss targets are unsuitable in this stage — consult a professional.`,
+        },
+        {
+          heading: 'Common mistakes',
+          body: `Among the mistakes: choosing an activity level higher than reality, picking a fast pace without understanding its risks, and treating the target as a rigid number instead of a reference that adjusts as weight and activity change.
+        
+Do not add your exercise burn twice: the right activity level already includes its effect in TDEE.`,
+        },
+      ],
+      keyTakeaways: [
+        'The target starts from TDEE, then adjusts for goal and pace.',
+        'Adjustments of 250/500/750 calories \u2248 0.25/0.5/0.75 kg per week.',
+        'Moderate loss is easier to sustain and safer than fast loss.',
+        'Generally do not go below about 1,200 calories a day without supervision.',
+        'The target is a reference that adjusts with weight and activity, not a rigid number.',
+      ],
+      faqs: [
+        {
+          q: 'How fast is it safe to lose weight?',
+          a: 'A moderate loss of about 0.5 kg per week (a 500-calorie daily deficit) is common and sustainable, while a faster deficit is harder and needs supervision.',
+        },
+        {
+          q: 'Can I use this while pregnant?',
+          a: 'No. Weight-loss targets are unsuitable during pregnancy or breastfeeding; consult a professional for any dietary changes in this stage.',
+        },
+        {
+          q: 'What if I exercise?',
+          a: 'If you choose the activity level that matches your training, the calculator already includes its effect in TDEE. Do not add an estimated burn twice.',
+        },
+      ],
+      relatedCalculators: ['calorie-intake', 'bmr', 'bmi'],
+      lastReviewed: '2026-08-10',
+    },
+  },
 };
 
 export default guides;

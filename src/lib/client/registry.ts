@@ -23,6 +23,11 @@ export const mathLoaders: Record<string, MathLoader> = {
   zakat: () => import('../calculators/zakat.ts'),
   'retirement-savings': () => import('../calculators/retirement.ts'),
   'debt-to-income': () => import('../calculators/debt-to-income.ts'),
+  bmi: () => import('../calculators/bmi.ts'),
+  bmr: () => import('../calculators/bmr.ts'),
+  'ideal-weight': () => import('../calculators/ideal-weight.ts'),
+  'body-fat': () => import('../calculators/body-fat.ts'),
+  'calorie-intake': () => import('../calculators/calorie.ts'),
 };
 
 export async function loadMath(slug: string): Promise<CalculatorMath> {

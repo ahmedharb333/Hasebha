@@ -16,6 +16,11 @@ import earlyPayoff from './early-payoff.ts';
 import zakat from './zakat.ts';
 import retirementSavings from './retirement-savings.ts';
 import debtToIncome from './debt-to-income.ts';
+import bmi from './bmi.ts';
+import bmr from './bmr.ts';
+import idealWeight from './ideal-weight.ts';
+import bodyFat from './body-fat.ts';
+import calorieIntake from './calorie-intake.ts';
 
 const registry: Record<string, Record<Locale, CalcContent>> = {
   'loan-payment': loanPayment,
@@ -34,6 +39,11 @@ const registry: Record<string, Record<Locale, CalcContent>> = {
   zakat,
   'retirement-savings': retirementSavings,
   'debt-to-income': debtToIncome,
+  bmi,
+  bmr,
+  'ideal-weight': idealWeight,
+  'body-fat': bodyFat,
+  'calorie-intake': calorieIntake,
 };
 
 export function getCalcContent(slug: string, locale: Locale): CalcContent {

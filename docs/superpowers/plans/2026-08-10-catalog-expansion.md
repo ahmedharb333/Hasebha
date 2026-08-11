@@ -1322,7 +1322,7 @@ git commit -m "feat(calc): finance wave B - zakat, retirement savings, debt-to-i
 
 **Non-currency tools:** none of these have a currency field — omit it. `buildCalcPayload` falls back to `JOD` and the client hides the currency selector (already null-safe).
 
-- [ ] **Step 1: Add 5 config entries (health, `active: true`)**
+- [x] **Step 1: Add 5 config entries (health, `active: true`)**
 
 ```ts
   {
@@ -1392,7 +1392,7 @@ git commit -m "feat(calc): finance wave B - zakat, retirement savings, debt-to-i
   },
 ```
 
-- [ ] **Step 2: Create `src/lib/calculators/bmi.ts`**
+- [x] **Step 2: Create `src/lib/calculators/bmi.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -1452,7 +1452,7 @@ export default bmi;
 
 **BMI test**: example → bmi within `24.4..24.6`; healthyLow within `56.6..56.8`; healthyHigh within `76.2..76.4`; lb conversion: 165 lb → kg = 74.84; m height: 1.75 → m.
 
-- [ ] **Step 3: Create `src/lib/calculators/bmr.ts`**
+- [x] **Step 3: Create `src/lib/calculators/bmr.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -1535,7 +1535,7 @@ export default bmr;
 
 **BMR test**: example → bmr within `1775..1785`; tdee = bmr × 1.55; female variant: same inputs, female → bmr = male − 166; lb conversion path.
 
-- [ ] **Step 4: Create `src/lib/calculators/ideal-weight.ts`**
+- [x] **Step 4: Create `src/lib/calculators/ideal-weight.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -1585,7 +1585,7 @@ export default idealWeight;
 
 **Ideal-weight test**: example → healthyLow within `56.6..56.8`; healthyHigh within `76.2..76.4`; mid within `66.4..66.6`; m input 1.75 → same as cm 175.
 
-- [ ] **Step 5: Create `src/lib/calculators/body-fat.ts`**
+- [x] **Step 5: Create `src/lib/calculators/body-fat.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -1649,7 +1649,7 @@ export default bodyFat;
 
 **Body-fat test**: example (male) → bodyFatPct within `18.2..18.6`; female example: 165 cm, waist 70, neck 32, hip 95 → compute expected from formula (assert within `0.5` of the implementation's value derived independently in the test); missing neck → `required`; female without hip → validate returns `hip: 'required'`.
 
-- [ ] **Step 6: Create `src/lib/calculators/calorie.ts`**
+- [x] **Step 6: Create `src/lib/calculators/calorie.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -1752,14 +1752,14 @@ export default calorieIntake;
 
 **Calorie test**: example → targetCalories within `1580..1590`; bmr within `1340..1350`; tdee = bmr × 1.55; maintain goal → target == tdee; lose aggressive → tdee − 750; gain slow → tdee + 250.
 
-- [ ] **Step 7: Register config, math, loaders, content; write guides**
+- [x] **Step 7: Register config, math, loaders, content; write guides**
 
 `src/lib/calculators/index.ts`: imports + `bmi, bmr, 'ideal-weight': idealWeight, 'body-fat': bodyFat, 'calorie-intake': calorieIntake`.
 `src/lib/client/registry.ts`: `bmi: () => import('../calculators/bmi.ts'), bmr: () => import('../calculators/bmr.ts'), 'ideal-weight': () => import('../calculators/ideal-weight.ts'), 'body-fat': () => import('../calculators/body-fat.ts'), 'calorie-intake': () => import('../calculators/calorie.ts'),`.
 `src/content/calculators/index.ts`: imports + `bmi, bmr, 'ideal-weight': idealWeight, 'body-fat': bodyFat, 'calorie-intake': calorieIntake`.
 Guides (`relatedCalculators`): `how-to-understand-bmi` → `['bmi', 'ideal-weight', 'bmr']`; `how-to-calculate-bmr-and-tdee` → `['bmr', 'calorie-intake', 'bmi']`; `healthy-weight-range-explained` → `['ideal-weight', 'bmi', 'body-fat']`; `how-to-estimate-body-fat` → `['body-fat', 'bmi', 'ideal-weight']`; `how-to-set-a-calorie-target` → `['calorie-intake', 'bmr', 'bmi']`. Worked examples use the exact numbers from each tool's content spec.
 
-- [ ] **Step 8: Verify + commit**
+- [x] **Step 8: Verify + commit**
 
 Run `npm test`, `npm run check`, `npm run build` — all clean. The finance category page must now show 11 finance tools; health shows 5; the index lists 6 sections. Commit:
 
