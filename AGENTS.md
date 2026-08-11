@@ -39,14 +39,14 @@ Every calculator requires all of these (a missing one breaks build or the tool):
 
 - CSS custom properties in `src/styles/tokens.css` (navy primary `#12305C`, teal accent `#0E8A6D`, `--color-*`, `--space-*`, `--radius-*`). Components in `components.css`, resets/base in `base.css`.
 - **RTL**: styles use logical properties (`inset-inline-*`, `padding-inline-*`). RTL-specific overrides exist (e.g. consent toggle `translateX` flip in `components.css`). Check both locales after layout changes.
-- **Dark mode does not exist yet** — tokens are light-only. Any dark-mode work needs a `[data-theme]` system built from scratch.
-- **Known gap**: `.tool-grid`, `.home-hero`, `.section--alt` are used in page markup but not defined in any stylesheet (home/guide/card grids render unstyled). Define them as part of any UI work.
+- **Dark mode**: exists via a `[data-theme='light'|'dark']` token swap in `tokens.css` (role tokens `--color-*-strong`, `--color-on-*` keep button AA in both themes). Theme logic in `src/lib/theme.ts`; anti-flash bootstrap in `BaseLayout.astro`; toggle in `Header.astro` (`data-theme-toggle`); storage key `klar-theme`. Always verify both themes after token changes.
+- Layout primitives `.tool-grid`, `.home-hero`, `.section--alt`, `.page-hero`, `.page-body`, `.tool-card__icon`, `.calc-sidebar__summary` are defined in `components.css` under `/* Layout primitives */`.
 
 ## Gotchas
 
 - Numbers: `parseNumber`/`normalizeDigits` in `src/lib/number.ts` accept Arabic/Persian digits + Arabic separators; output uses Latin digits even in AR (`ar-u-nu-latn`) — deliberate, don't "fix".
 - Currency selection is display-only formatting, never conversion.
 - **Ads**: `AdSlot` renders nothing until a real publisher ID is set. Only `afterResult` (CalculatorLayout) and `sidebar` (CalcSidebar) are mounted; `belowIntro`, `inContent`, `betweenGuideSections` are declared in `src/config/ads.ts` but intentionally unmounted — keep them that way.
-- Font preloads in `BaseLayout.astro` point at `/fonts/Amiri/...` and `/fonts/Inter/...` which don't exist; the real self-hosted font is IBM Plex Sans Arabic in `public/fonts/`. The stale preloads are harmless but wrong.
+- Font preloads in `BaseLayout.astro` point at `/fonts/ibmplexsansarabic-{arabic,latin}-400.woff2`, matching the real self-hosted IBM Plex Sans Arabic files in `public/fonts/` (declared in `fonts.css` with unicode-range subsets). If you swap fonts, update the preloads in lockstep.
 - `@/*` alias maps to `src/*` (tsconfig + astro.config.mjs).
-- Git repo exists but has no commits yet; `dist/` and `.astro/` are gitignored.
+- `dist/` and `.astro/` are gitignored.

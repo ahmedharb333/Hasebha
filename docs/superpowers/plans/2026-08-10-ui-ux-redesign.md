@@ -1,6 +1,6 @@
 # UI/UX Redesign (Option B) Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Elevate the Hasebha Astro site to a clean, professional "fintech" standard — dark mode with a toggle, mobile-first polish, restyled calculator UX with live results, and consistent trust/credibility styling across the whole site.
 
@@ -35,7 +35,7 @@
 - Produces: `resolveTheme(stored: string | null, systemDark: boolean): 'light' | 'dark'` (pure), `applyTheme(theme: 'light' | 'dark'): void` (sets `document.documentElement.dataset.theme`), `getStoredTheme(): string | null` (localStorage key `hasebha-theme`), `systemPrefersDark(): boolean`.
 - Consumes: nothing.
 
-- [ ] **Step 1: Write the failing test** (`tests/theme.test.ts`)
+- [x] **Step 1: Write the failing test** (`tests/theme.test.ts`)
 
 ```ts
 import { test } from 'node:test';
@@ -58,12 +58,12 @@ test('theme: default is light when system is light', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npm test`
 Expected: FAIL — module `../src/lib/theme.ts` not found.
 
-- [ ] **Step 3: Create `src/lib/theme.ts`**
+- [x] **Step 3: Create `src/lib/theme.ts`**
 
 ```ts
 export type Theme = 'light' | 'dark';
@@ -98,12 +98,12 @@ export function currentTheme(): Theme {
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `npm test`
 Expected: PASS (3 new tests).
 
-- [ ] **Step 5: Refactor `src/styles/tokens.css` into light/dark tokens**
+- [x] **Step 5: Refactor `src/styles/tokens.css` into light/dark tokens**
 
 Keep the light values exactly as they are today, but add the background/text role tokens and move everything under an explicit `:root[data-theme='light']` default + a `[data-theme='dark']` block. The full file becomes:
 
@@ -243,7 +243,7 @@ Keep the light values exactly as they are today, but add the background/text rol
 }
 ```
 
-- [ ] **Step 6: Add anti-flash bootstrap to `BaseLayout.astro`**
+- [x] **Step 6: Add anti-flash bootstrap to `BaseLayout.astro`**
 
 Insert this inline script as the first child of `<head>` (before the stylesheets that load later; `is:inline` keeps it synchronous):
 
@@ -262,7 +262,7 @@ Insert this inline script as the first child of `<head>` (before the stylesheets
 </script>
 ```
 
-- [ ] **Step 7: Add the theme toggle to `Header.astro`**
+- [x] **Step 7: Add the theme toggle to `Header.astro`**
 
 Add the button between the `<nav>` and the `.lang-switch` div:
 
@@ -309,13 +309,13 @@ Append a second `<script>` block (the existing nav script stays):
 </script>
 ```
 
-- [ ] **Step 8: Verify**
+- [x] **Step 8: Verify**
 
 Run: `npm test` → 55 pass (52 + 3 new).
 Run: `npm run check` → 0 errors.
 Run: `npm run build` → clean.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add src/styles/tokens.css src/lib/theme.ts src/layouts/BaseLayout.astro src/components/Header.astro tests/theme.test.ts
@@ -339,7 +339,7 @@ git commit -m "feat(ui): dark mode token system with theme toggle"
 - Consumes: tokens from Task 1 (`--color-*`, `--shadow-*`).
 - Produces: definitions for `.tool-grid`, `.home-hero`, `.home-hero__sub`, `.section--alt`, `.page-hero`, `.page-hero--compact`, `.page-body`, `.page-main`, `.calc-tool`, `.calc-sidebar`, `.link-list`, `.table-block`, `.field__actions`, `.tool-card__icon`.
 
-- [ ] **Step 1: Add `data-category` / `data-kind` attributes**
+- [x] **Step 1: Add `data-category` / `data-kind` attributes**
 
 In `HomePage.astro`, `CalculatorsIndex.astro`, `GuidePage.astro`, `GuidesIndex.astro`, add the attribute to the `<a class="tool-card" …>` opening tag:
 
@@ -353,7 +353,7 @@ and for guide cards:
 <a class="tool-card" data-kind="guide" href={localizedPath(locale, `/guides/${g.slug}/`)}>
 ```
 
-- [ ] **Step 2: Define the missing primitives in `src/styles/base.css`**
+- [x] **Step 2: Define the missing primitives in `src/styles/base.css`**
 
 Append to `base.css` (inside the existing `/* Layout primitives */` area):
 
@@ -363,7 +363,7 @@ Append to `base.css` (inside the existing `/* Layout primitives */` area):
 }
 ```
 
-- [ ] **Step 3: Add the new sections to `src/styles/components.css`**
+- [x] **Step 3: Add the new sections to `src/styles/components.css`**
 
 Append a new section at the end of `components.css`:
 
@@ -490,7 +490,7 @@ Append a new section at the end of `components.css`:
 }
 ```
 
-- [ ] **Step 4: Update button text colors to use `-strong` role tokens**
+- [x] **Step 4: Update button text colors to use `-strong` role tokens**
 
 In the existing `/* ---------- Buttons ---------- */` section of `components.css`, change background usages from the base color to the `-strong` role token so dark mode keeps AA:
 
@@ -522,7 +522,7 @@ Also update these existing rules to theme-aware tokens:
 - `.site-footer { background: var(--footer-bg); }`
 - `.consent-toggle input:checked + span { background: var(--color-accent-strong); }`
 
-- [ ] **Step 5: Fix alert borders + result value colors to be theme-aware**
+- [x] **Step 5: Fix alert borders + result value colors to be theme-aware**
 
 In the `/* ---------- Alerts ---------- */` section, replace the hardcoded border hexes with the new tokens:
 
@@ -545,7 +545,7 @@ In `/* ---------- Result panel ---------- */`, make values legible on dark surfa
 }
 ```
 
-- [ ] **Step 6: HomePage hero + card icons**
+- [x] **Step 6: HomePage hero + card icons**
 
 In `HomePage.astro`, insert the icon span as the first child inside each calculator card anchor, above the `<h3>`:
 
@@ -560,14 +560,14 @@ In `HomePage.astro`, insert the icon span as the first child inside each calcula
 
 Do the same in `CalculatorsIndex.astro` (calculator cards), and in `GuidesIndex.astro` + `GuidePage.astro` (guide cards with `data-kind="guide"`).
 
-- [ ] **Step 7: Verify**
+- [x] **Step 7: Verify**
 
 Run: `npm test` → 55 pass.
 Run: `npm run check` → 0 errors.
 Run: `npm run build` → clean.
 Manual: home, calculators index, guides index, one guide, one calculator page — in light + dark, ar + en, 360px wide. Confirm card grids have 2+ columns on desktop, 1 column on mobile, and the icon shows per card.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add src/styles/base.css src/styles/components.css src/components/pages/
@@ -585,7 +585,7 @@ git commit -m "feat(ui): layout primitives, hero, and icon tool cards"
 - Consumes: tokens from Task 1.
 - Produces: polished `.field`, `.radio-group`, `.result-panel`, `.result-primary`, `.result-table`, `.result-actions`, `.faq` styles that work in both themes.
 
-- [ ] **Step 1: Polish form fields**
+- [x] **Step 1: Polish form fields**
 
 In the existing `/* ---------- Forms ---------- */` section, upgrade the input styles (replace the current `.field__input, .field__select, .field__textarea` block):
 
@@ -668,7 +668,7 @@ Upgrade the radio group (keep `:has` pattern, add theme-safe focus):
 }
 ```
 
-- [ ] **Step 2: Polish the result panel**
+- [x] **Step 2: Polish the result panel**
 
 Replace the current `/* ---------- Result panel ---------- */` block with:
 
@@ -752,7 +752,7 @@ Replace the current `/* ---------- Result panel ---------- */` block with:
 }
 ```
 
-- [ ] **Step 3: Polish FAQ**
+- [x] **Step 3: Polish FAQ**
 
 ```css
 .faq details {
@@ -780,18 +780,18 @@ Replace the current `/* ---------- Result panel ---------- */` block with:
 }
 ```
 
-- [ ] **Step 4: Update `table-block` and `.prose table` borders to theme tokens**
+- [x] **Step 4: Update `table-block` and `.prose table` borders to theme tokens**
 
 In `base.css`, `.prose th, .prose td { border: 1px solid var(--color-border); … }` already uses `--color-border` — verify. Also give `.prose th` `background: var(--color-bg-alt)` (already present) — no change needed.
 
-- [ ] **Step 5: Verify**
+- [x] **Step 5: Verify**
 
 Run: `npm test` → 55 pass.
 Run: `npm run check` → 0 errors.
 Run: `npm run build` → clean.
 Manual: loan-payment + salary-converter in both themes × both locales. Fill example → result panel renders hero number, grid of secondary results, table (loan), copy/share/reset buttons. Invalid input (e.g. `principal: abc`) shows red border + message; no errors in console.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add src/styles/components.css src/styles/base.css
@@ -811,7 +811,7 @@ git commit -m "feat(ui): restyle calculator forms, result panel, and FAQ"
 - Consumes: existing `run()`, `currentInput()`, `validate()`, `calculate()`, `render()` inside `initCalculator`.
 - Produces: `debounce<T extends (...args: unknown[]) => void>(fn: T, waitMs: number): Debounced<T>` with `.cancel()` — used for the live input path. `run(opts?: { silent?: boolean })` — `silent` skips analytics tracking calls (used by live typing so every keystroke doesn't emit events).
 
-- [ ] **Step 1: Write the failing debounce test** (`tests/debounce.test.ts`)
+- [x] **Step 1: Write the failing debounce test** (`tests/debounce.test.ts`)
 
 ```ts
 import { test, mock } from 'node:test';
@@ -852,12 +852,12 @@ test('debounce: cancel() prevents the trailing call', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npm test`
 Expected: FAIL — `../src/lib/client/debounce.ts` not found.
 
-- [ ] **Step 3: Create `src/lib/client/debounce.ts`**
+- [x] **Step 3: Create `src/lib/client/debounce.ts`**
 
 ```ts
 export interface Debounced<A extends unknown[]> {
@@ -883,12 +883,12 @@ export function debounce<A extends unknown[]>(fn: (...args: A) => void, waitMs: 
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `npm test`
 Expected: PASS (2 new tests → 57 total).
 
-- [ ] **Step 5: Add the silent option to `run()` in `calculatorApp.ts`**
+- [x] **Step 5: Add the silent option to `run()` in `calculatorApp.ts`**
 
 Change the `run` signature and analytics calls (lines ~335-358). The tracking calls become conditional:
 
@@ -921,7 +921,7 @@ function run(opts?: { silent?: boolean }): void {
 
 Note: on silent runs, validation failures clear the result but do **not** flash inline errors — the explicit Calculate/Enter path still surfaces them.
 
-- [ ] **Step 6: Wire the debounced live input**
+- [x] **Step 6: Wire the debounced live input**
 
 Import at the top of `calculatorApp.ts`:
 
@@ -936,7 +936,7 @@ const liveRun = debounce(() => run({ silent: true }), 200);
 form.addEventListener('input', liveRun);
 ```
 
-- [ ] **Step 7: Wire `destroy()` to clean up**
+- [x] **Step 7: Wire `destroy()` to clean up**
 
 Replace the `destroy` method (lines ~439-443) with:
 
@@ -950,14 +950,14 @@ return {
 };
 ```
 
-- [ ] **Step 8: Verify**
+- [x] **Step 8: Verify**
 
 Run: `npm test` → 57 pass.
 Run: `npm run check` → 0 errors.
 Run: `npm run build` → clean.
 Manual: open loan-payment, click "ملء مثال"/fill example, then change `principal` — result updates as you type (no button click). Type `abc` in principal → result clears, no red error while typing; click Calculate → red error shows. Verify only the explicit calculate fires analytics (check no `trackCalculationStarted` spam — inspect Network tab for any analytics calls; tracking is disabled so no calls expected).
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add src/lib/client/calculatorApp.ts src/lib/client/debounce.ts tests/debounce.test.ts
@@ -977,7 +977,7 @@ git commit -m "feat(calc): live results while typing (debounced, silent)"
 - Consumes: `render(output)` in `initCalculator`; `payload.results` labels; `formatValue` already available in the closure.
 - Produces: `[data-sidebar-summary]` element; `updateSidebarSummary(output: CalcOutput | null)` internal helper.
 
-- [ ] **Step 1: Add the summary card to `CalcSidebar.astro`**
+- [x] **Step 1: Add the summary card to `CalcSidebar.astro`**
 
 Insert as the first child inside the `<aside>`, above the guide card:
 
@@ -985,7 +985,7 @@ Insert as the first child inside the `<aside>`, above the guide card:
 <div class="calc-sidebar__summary card card--padded" data-sidebar-summary hidden aria-live="polite"></div>
 ```
 
-- [ ] **Step 2: Render the summary from the client**
+- [x] **Step 2: Render the summary from the client**
 
 In `calculatorApp.ts`, add a helper after `render()` (line ~328):
 
@@ -1028,7 +1028,7 @@ function clearResult(): void {
 }
 ```
 
-- [ ] **Step 3: Style the summary card**
+- [x] **Step 3: Style the summary card**
 
 Append to `components.css`:
 
@@ -1052,14 +1052,14 @@ Append to `components.css`:
 }
 ```
 
-- [ ] **Step 4: Verify**
+- [x] **Step 4: Verify**
 
 Run: `npm test` → 57 pass.
 Run: `npm run check` → 0 errors.
 Run: `npm run build` → clean.
 Manual: loan-payment on desktop (≥1024px): the sidebar shows a summary card above the guide card with the hero result; it updates live and on submit; clears on reset. On mobile the sidebar stacks below the calculator (existing grid behavior) — summary still appears. Confirm the sidebar ad slot remains below the summary.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/components/CalcSidebar.astro src/lib/client/calculatorApp.ts src/styles/components.css
@@ -1078,7 +1078,7 @@ git commit -m "feat(calc): sidebar live-result summary card"
 - Consumes: tokens from Task 1.
 - Produces: theme-aware footer, breadcrumbs, consent banner/dialog, ad-slot reserved collapse, 404, `.prose`.
 
-- [ ] **Step 1: Footer dark-awareness + layout polish**
+- [x] **Step 1: Footer dark-awareness + layout polish**
 
 Update the existing `/* ---------- Footer ---------- */` rules:
 
@@ -1099,7 +1099,7 @@ Update the existing `/* ---------- Footer ---------- */` rules:
 
 No other footer change needed (footer text is already light on dark navy).
 
-- [ ] **Step 2: Breadcrumbs polish**
+- [x] **Step 2: Breadcrumbs polish**
 
 Replace the `/* ---------- Breadcrumbs ---------- */` block:
 
@@ -1143,7 +1143,7 @@ Replace the `/* ---------- Breadcrumbs ---------- */` block:
 }
 ```
 
-- [ ] **Step 3: Consent banner/dialog dark-awareness**
+- [x] **Step 3: Consent banner/dialog dark-awareness**
 
 Update the existing consent rules to use tokens (backgrounds, borders, overlay):
 
@@ -1173,7 +1173,7 @@ Update the existing consent rules to use tokens (backgrounds, borders, overlay):
 
 (Keep the existing `.consent-toggle` RTL `translateX` flip for `:lang(ar)` exactly as-is.)
 
-- [ ] **Step 4: Ad-slot reserved collapse**
+- [x] **Step 4: Ad-slot reserved collapse**
 
 Update the `/* ---------- Ad slot ---------- */` section so an unconfigured (reserved-only) slot takes no visible space — no placeholder boxes until a real ad is configured:
 
@@ -1200,7 +1200,7 @@ Update the `/* ---------- Ad slot ---------- */` section so an unconfigured (res
 }
 ```
 
-- [ ] **Step 5: 404 + affiliate card polish**
+- [x] **Step 5: 404 + affiliate card polish**
 
 ```css
 .error-page {
@@ -1221,7 +1221,7 @@ Update the `/* ---------- Ad slot ---------- */` section so an unconfigured (res
 }
 ```
 
-- [ ] **Step 6: Prose polish in `base.css`**
+- [x] **Step 6: Prose polish in `base.css`**
 
 Update the `.prose` block for theme-awareness and readability:
 
@@ -1261,14 +1261,14 @@ Update the `.prose` block for theme-awareness and readability:
 }
 ```
 
-- [ ] **Step 7: Verify**
+- [x] **Step 7: Verify**
 
 Run: `npm test` → 57 pass.
 Run: `npm run check` → 0 errors.
 Run: `npm run build` → clean.
 Manual sweep: one guide page, about/methodology, 404, cookies page, footer, consent banner + dialog — both themes × both locales. Confirm: reserved ad slots render nothing (no dashed boxes) on calculator pages; consent RTL toggle flip still correct; footer legible.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add src/styles/components.css src/styles/base.css
@@ -1283,13 +1283,13 @@ git commit -m "feat(ui): theme-aware footer, prose, consent, 404, ad slots"
 
 **Interfaces:** consumes the finished product of Tasks 1–6.
 
-- [ ] **Step 1: Full test + check + build**
+- [x] **Step 1: Full test + check + build**
 
 Run: `npm test` → expect 57 pass.
 Run: `npm run check` → expect 0 errors.
 Run: `npm run build` → expect clean build in `dist/`.
 
-- [ ] **Step 2: Manual matrix sweep**
+- [x] **Step 2: Manual matrix sweep**
 
 Check each of these in **all 4 combos** (ar/en × light/dark) at ≥360px:
 1. Home (hero, featured cards, guides section, trust section)
@@ -1308,11 +1308,11 @@ Confirm:
 - Focus rings visible on keyboard navigation.
 - Reserved ad slots invisible; no layout shift.
 
-- [ ] **Step 3: Fix any issues found and re-verify**
+- [x] **Step 3: Fix any issues found and re-verify**
 
 If anything fails, fix in the relevant file and re-run `npm test && npm run check && npm run build`.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add -A

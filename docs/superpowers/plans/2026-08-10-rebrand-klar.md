@@ -1,6 +1,6 @@
 # Rebrand Hasebha → Klar Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Rename the site brand from حاسبها / Hasebha to كلار / Klar across all source files, config, content, storage keys, favicon and package manifests — with zero behavioral change.
 
@@ -33,7 +33,7 @@
 **Interfaces:**
 - Produces: `SITE.brandName = { ar: 'كلار', en: 'Klar' }`, `SITE.url = 'https://klar.io'`, `SITE.contact.mailtoSubject = { ar: 'رسالة من موقع كلار', en: 'Message from Klar' }`, `LOGO.text = { ar: 'كلار', en: 'Klar' }`, `LOGO.lockup = { ar: 'كلار — Klar', en: 'Klar — كلار' }`. `SITE.tagline` unchanged.
 
-- [ ] **Step 1: Update `src/config/site.ts`**
+- [x] **Step 1: Update `src/config/site.ts`**
 
 Replace the `SITE` block (lines 11–44) and the `LOGO` block (lines 46–57). Keep every existing comment; change only the values. The resulting blocks:
 
@@ -87,7 +87,7 @@ export const LOGO = {
 } as const;
 ```
 
-- [ ] **Step 2: Update `public/favicon.svg`**
+- [x] **Step 2: Update `public/favicon.svg`**
 
 Replace the whole file:
 
@@ -98,16 +98,16 @@ Replace the whole file:
 </svg>
 ```
 
-- [ ] **Step 3: Update `package.json` and `package-lock.json`**
+- [x] **Step 3: Update `package.json` and `package-lock.json`**
 
 In `package.json` line 2 and `package-lock.json` lines 2 and 8, change `"name": "hasebha"` → `"name": "klar"`. (Do not change the `version` or `dependencies`.)
 
-- [ ] **Step 4: Verify**
+- [x] **Step 4: Verify**
 
 Run: `npm run check`
 Expected: 0 errors.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/config/site.ts public/favicon.svg package.json package-lock.json
@@ -128,7 +128,7 @@ git commit -m "feat(brand): rename brand to Klar in config, favicon, package"
 - Consumes: nothing.
 - Produces: `THEME_STORAGE_KEY = 'klar-theme'` in `theme.ts`; consent `STORAGE_KEY = 'klar-consent-v1'` in `consent.ts`; header brand mark letter becomes `ك` / `K`; all theme localStorage reads/writes use `klar-theme`.
 
-- [ ] **Step 1: Update the theme storage key**
+- [x] **Step 1: Update the theme storage key**
 
 `src/lib/theme.ts` line 3:
 
@@ -136,7 +136,7 @@ git commit -m "feat(brand): rename brand to Klar in config, favicon, package"
 export const THEME_STORAGE_KEY = 'klar-theme';
 ```
 
-- [ ] **Step 2: Update the anti-flash bootstrap**
+- [x] **Step 2: Update the anti-flash bootstrap**
 
 `src/layouts/BaseLayout.astro` line 49 — change the inline script's `localStorage.getItem('hasebha-theme')` to `localStorage.getItem('klar-theme')`. The line becomes:
 
@@ -144,11 +144,11 @@ export const THEME_STORAGE_KEY = 'klar-theme';
           var stored = localStorage.getItem('klar-theme');
 ```
 
-- [ ] **Step 3: Update the header theme toggle write**
+- [x] **Step 3: Update the header theme toggle write**
 
 `src/components/Header.astro` line 94 — change `window.localStorage.setItem('hasebha-theme', next)` to `window.localStorage.setItem('klar-theme', next)`.
 
-- [ ] **Step 4: Update the header brand mark letter**
+- [x] **Step 4: Update the header brand mark letter**
 
 `src/components/Header.astro` line 24 — change `{locale === 'ar' ? 'ح' : 'H'}` to `{locale === 'ar' ? 'ك' : 'K'}`. The line becomes:
 
@@ -156,7 +156,7 @@ export const THEME_STORAGE_KEY = 'klar-theme';
       <span class="brand__mark" aria-hidden="true">{locale === 'ar' ? 'ك' : 'K'}</span>
 ```
 
-- [ ] **Step 5: Update the consent storage key**
+- [x] **Step 5: Update the consent storage key**
 
 `src/lib/client/consent.ts` line 9:
 
@@ -164,12 +164,12 @@ export const THEME_STORAGE_KEY = 'klar-theme';
 const STORAGE_KEY = 'klar-consent-v1';
 ```
 
-- [ ] **Step 6: Verify**
+- [x] **Step 6: Verify**
 
 Run: `npm test` → all pass.
 Run: `npm run check` → 0 errors.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add src/lib/theme.ts src/layouts/BaseLayout.astro src/components/Header.astro src/lib/client/consent.ts
@@ -187,7 +187,7 @@ git commit -m "feat(brand): use klar storage keys and brand mark"
 - Consumes: brand word كلار / Klar.
 - Produces: every static page string uses كلار (ar) / Klar (en); the about page name-etymology paragraph is rewritten for the new meaning.
 
-- [ ] **Step 1: Arabic replacements (`pages.ts` ar blocks)**
+- [x] **Step 1: Arabic replacements (`pages.ts` ar blocks)**
 
 Apply these exact string changes:
 
@@ -209,7 +209,7 @@ Apply these exact string changes:
 14. Disclaimer `metaDescription` (line 636): `إخلاء مسؤولية حاسبها` → `إخلاء مسؤولية كلار`
 15. Disclaimer body (line 640): `نتائج الحاسبات في حاسبها تقديرية` → `نتائج الحاسبات في كلار تقديرية`
 
-- [ ] **Step 2: English replacements (`pages.ts` en blocks)**
+- [x] **Step 2: English replacements (`pages.ts` en blocks)**
 
 Apply these exact string changes:
 
@@ -231,17 +231,17 @@ Apply these exact string changes:
 14. Disclaimer `metaDescription` (line 674): `"Hasebha's disclaimer` → `"Klar's disclaimer`
 15. Disclaimer body (line 678): `The results produced by Hasebha calculators` → `The results produced by Klar calculators`
 
-- [ ] **Step 3: Verify no leftover brand strings in this file**
+- [x] **Step 3: Verify no leftover brand strings in this file**
 
 Run: `rg "Hasebha|حاسبها" src/content/pages.ts`
 Expected: no matches.
 
-- [ ] **Step 4: Verify build**
+- [x] **Step 4: Verify build**
 
 Run: `npm run check`
 Expected: 0 errors.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/content/pages.ts
@@ -260,20 +260,20 @@ git commit -m "feat(brand): rebrand static page content to Klar"
 - Consumes: brand word كلار / Klar.
 - Produces: guide bodies reference كلار (ar) / Klar (en); calculators index description references كلار (ar) / Klar (en).
 
-- [ ] **Step 1: Arabic guide replacements (`guides.ts`)**
+- [x] **Step 1: Arabic guide replacements (`guides.ts`)**
 
 1. Loan guide body (line 19): `تستخدمها حاسبة القسط الشهري في حاسبها` → `تستخدمها حاسبة القسط الشهري في كلار`
 2. Compound-interest guide body (line 174): `باستخدام حاسبة الفائدة المركبة في حاسبها` → `باستخدام حاسبة الفائدة المركبة في كلار`
 3. VAT guide body (line 494): `تستخدم حاسبة حاسبها نسبة **مخصصة**` → `تستخدم حاسبة كلار نسبة **مخصصة**`
 
-- [ ] **Step 2: English guide replacements (`guides.ts`)**
+- [x] **Step 2: English guide replacements (`guides.ts`)**
 
 1. Loan guide body (line 95): `used by Hasebha’s loan payment calculator` → `used by Klar’s loan payment calculator`
 2. Compound-interest guide body (line 250): `how Hasebha’s compound interest calculator models it` → `how Klar’s compound interest calculator models it`
 3. VAT guide body (line 570): `That is why Hasebha’s calculator lets you enter` → `That is why Klar’s calculator lets you enter`
 4. Employee-cost guide body (line 1184): `shows how Hasebha’s employee total-cost calculator adds them up` → `shows how Klar’s employee total-cost calculator adds them up`
 
-- [ ] **Step 3: Update `CalculatorsIndex.astro` description strings**
+- [x] **Step 3: Update `CalculatorsIndex.astro` description strings**
 
 Line 16:
 Old: `'كل الحاسبات المالية وحاسبات العمل في حاسبها: قروض، فائدة مركبة، ادخار، ضريبة، رواتب، عمل إضافي وأكثر.'`
@@ -283,17 +283,17 @@ Line 17:
 Old: `'All of Hasebha’s finance and employment calculators: loans, compound interest, savings, VAT, salary, overtime and more.'`
 New: `'All of Klar’s finance and employment calculators: loans, compound interest, savings, VAT, salary, overtime and more.'`
 
-- [ ] **Step 4: Verify no leftover brand strings in these files**
+- [x] **Step 4: Verify no leftover brand strings in these files**
 
 Run: `rg "Hasebha|حاسبها" src/content/guides.ts src/components/pages/CalculatorsIndex.astro`
 Expected: no matches.
 
-- [ ] **Step 5: Verify**
+- [x] **Step 5: Verify**
 
 Run: `npm run check`
 Expected: 0 errors.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add src/content/guides.ts src/components/pages/CalculatorsIndex.astro
@@ -308,18 +308,18 @@ git commit -m "feat(brand): rebrand guide content and index to Klar"
 
 **Interfaces:** consumes the finished product of Tasks 1–4.
 
-- [ ] **Step 1: Full test + check + build**
+- [x] **Step 1: Full test + check + build**
 
 Run: `npm test` → all pass (unchanged test count).
 Run: `npm run check` → 0 errors.
 Run: `npm run build` → clean build in `dist/`.
 
-- [ ] **Step 2: Grep sweep for leftover brand strings**
+- [x] **Step 2: Grep sweep for leftover brand strings**
 
 Run: `rg -i "hasebha|حاسبها" src/ public/ package.json`
 Expected: no matches.
 
-- [ ] **Step 3: Manual sanity sweep**
+- [x] **Step 3: Manual sanity sweep**
 
 Check both locales (ar at `/`, en at `/en/`):
 1. Header brand mark shows `ك` (ar) / `K` (en); header word shows كلار / Klar.
@@ -329,11 +329,11 @@ Check both locales (ar at `/`, en at `/en/`):
 5. Favicon shows `ك`.
 6. Contact mailto opens with subject "رسالة من موقع كلار" / "Message from Klar".
 
-- [ ] **Step 4: Fix any issues found and re-verify**
+- [x] **Step 4: Fix any issues found and re-verify**
 
 If anything fails, fix in the relevant file and re-run `npm test && npm run check && npm run build` and the grep sweep.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
