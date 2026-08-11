@@ -13,6 +13,9 @@ import leaveBalance from './leave-balance.ts';
 import mortgage from './mortgage.ts';
 import loanComparison from './loan-comparison.ts';
 import earlyPayoff from './early-payoff.ts';
+import zakat from './zakat.ts';
+import retirementSavings from './retirement-savings.ts';
+import debtToIncome from './debt-to-income.ts';
 
 const registry: Record<string, Record<Locale, CalcContent>> = {
   'loan-payment': loanPayment,
@@ -28,6 +31,9 @@ const registry: Record<string, Record<Locale, CalcContent>> = {
   mortgage,
   'loan-comparison': loanComparison,
   'early-payoff': earlyPayoff,
+  zakat,
+  'retirement-savings': retirementSavings,
+  'debt-to-income': debtToIncome,
 };
 
 export function getCalcContent(slug: string, locale: Locale): CalcContent {

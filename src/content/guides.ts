@@ -1660,6 +1660,435 @@ Use the result as a planning estimate and check the actual terms of your contrac
       lastReviewed: '2026-08-10',
     },
   },
+
+  'how-to-calculate-zakat': {
+    ar: {
+      slug: 'how-to-calculate-zakat',
+      locale: 'ar',
+      title: 'كيف تحسب الزكاة',
+      metaDescription:
+        'دليل عملي لحساب زكاتك: جمع النقود والذهب والاستثمارات، خصم الالتزامات، واحتساب 2.5%، مع مثال عددي مطابق لحاسبة الزكاة.',
+      intro:
+        'حساب الزكاة أسهل مما يبدو: اجمع مصادر مالك الخاضع للزكاة، اخصم الالتزامات المستحقة، وطبّق نسبة 2.5% على الناتج. يشرح هذا الدليل الخطوات بدقة، وأين تتدخل مسؤوليتك في النصاب والحول، ويلتزم في مثاله العددي بنفس قيم حاسبة الزكاة في كلار.',
+      sections: [
+        {
+          heading: 'ما الذي يدخل في وعاء الزكاة؟',
+          body: `وعاء الزكاة هو مجموع المال الذي بلغ النصاب وحال عليه الحول الهجري. تشمل الحاسبة ثلاث فئات رئيسية: **النقود والمدخرات** النقدية والبنكية، **قيمة الذهب** المدخر بسعر السوق الحالي، و**الاستثمارات** كالأسهم والصكوك.
+        
+أضف أي فئة أخرى تسعى لها الزكاة ضمن الفئات المناسبة، وتأكد من إدخال كل مصدر بقيمته الحالية لا بتاريخ الشراء.`,
+        },
+        {
+          heading: 'خصم الالتزامات',
+          body: `تُخصم **الالتزامات المستحقة** من إجمالي المال قبل احتساب الزكاة، لأن الزكاة تُدفع عما يزيد على ما عليك. الالتزام المستحق هو الدين الواجب سداده الآن، لا القروض طويلة الأجل بمددها الممتدة.
+        
+إذا تجاوزت الالتزامات مجموع المال، يصبح الوعاء صفراً ولا تستحق زكاة في هذا الحساب.`,
+        },
+        {
+          heading: 'تطبيق النسبة',
+          body: `النسبة المعتمدة عن النقود والذهب والاستثمارات هي **2.5%** من وعاء الزكاة، أي ربع العشر. تُحسب الحاسبة الناتج مباشرة: وعاء الزكاة × 2.5%.
+        
+حقل **النصاب** في الحاسبة إعلامي فقط ولا يؤثر في النتيجة: أدخل فيه المال الذي تجاوز النصاب، لكن المبلغ المحسوب يعتمد على الوعاء المدخل أعلاه.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: نقود ومدخرات **10,000 دينار**، وقيمة ذهب **5,000 دينار**، واستثمارات **2,000 دينار**، والتزامات مستحقة **1,000 دينار**.
+        
+الوعاء = 10,000 + 5,000 + 2,000 − 1,000 = **16,000 دينار**، والزكاة المستحقة = 16,000 × 2.5% = **400 دينار**.`,
+        },
+        {
+          heading: 'مسؤولية النصاب والحول',
+          body: `الحاسبة لا تتحقق من شرطين يقعان على عاتقك: **بلوغ النصاب** (حد أدنى يقدر غالباً بقيمة 85 غراماً من الذهب) و**مرور الحول الهجري** كاملاً على المال. النصاب المعاصر يُحدد بسعر الذهب السائد في يوم إخراج الزكاة.
+        
+تحقق من هذين الشرطين قبل اعتبار النتيجة واجبة الإخراج، فالحاسبة تعطي المبلغ المستحق عن الوعاء المدخل فقط.`,
+        },
+        {
+          heading: 'مستجدات وأسئلة شائعة',
+          body: `قيمة الذهب تُحتسب **بسعر السوق الحالي**، ولزكاة الأصول التجارية وعروض البيع أصولها ونسبها الخاصة خارج نطاق هذه الحاسبة. أخطاء شائعة: حساب الزكاة على إجمالي المدخرات دون خصم الالتزامات، ونسيان إدخال الذهب أو الاستثمارات ضمن الوعاء.
+        
+هذه أداة إرشادية عامة، وعند الاختلاف في التفاصيل الشرعية استشر من تثق بعلمه.`,
+        },
+      ],
+      keyTakeaways: [
+        'وعاء الزكاة = النقود + الذهب + الاستثمارات − الالتزامات المستحقة.',
+        'النسبة المعتمدة عن الأموال هي 2.5% من الوعاء.',
+        'الالتزامات تُخصم قبل الاحتساب، وقد يجعلها تجاوز المال وعاءً صفرياً.',
+        'النصاب والحول الهجري مسؤوليتك ولا تتحقق منهما الحاسبة.',
+        'الذهب يُقوَّم بسعر السوق الحالي.',
+      ],
+      faqs: [
+        {
+          q: 'ما هو النصاب؟',
+          a: 'حد أدنى من المال تجب عنده الزكاة، يقدر غالباً بقيمة 85 غراماً من الذهب. حقل النصاب في الحاسبة إعلامي، وتتحقق من الشرط بنفسك.',
+        },
+        {
+          q: 'هل تتابع الحاسبة مرور الحول؟',
+          a: 'لا. تحسب المبلغ عن الوعاء المدخل فقط، ويبقى التحقق من الحول والنصاب مسؤوليتك.',
+        },
+        {
+          q: 'هل تشمل الأصول التجارية؟',
+          a: 'لا. الحاسبة معنية بالنقود والذهب والاستثمارات، ولزكاة التجارة أصولها الخاصة.',
+        },
+      ],
+      relatedCalculators: ['zakat', 'retirement-savings', 'savings-goal'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-calculate-zakat',
+      locale: 'en',
+      title: 'How to calculate zakat',
+      metaDescription:
+        'A practical guide to calculating your zakat: add cash, gold and investments, subtract liabilities, and apply 2.5%, with a worked example matching the zakat calculator.',
+      intro:
+        'Calculating zakat is simpler than it looks: add your zakatable wealth, subtract outstanding liabilities, and apply the 2.5% rate to the result. This guide walks through each step, where your responsibility for nisab and the lunar year begins, and sticks to the same numbers used by Klar’s zakat calculator.',
+      sections: [
+        {
+          heading: 'What goes into the zakat base?',
+          body: `The zakat base is the wealth that reaches the nisab and completes a lunar (Hijri) year. The calculator covers three main categories: **cash and savings**, gold held as savings at the current market price, and **investments** such as shares and sukuk.
+        
+Add any other zakatable category in the appropriate field, and always enter current values rather than purchase prices.`,
+        },
+        {
+          heading: 'Subtracting liabilities',
+          body: `**Outstanding liabilities** are subtracted from total wealth before zakat is computed, because zakat is paid on what exceeds what you owe. A due liability is a debt payable now, not a long-term loan spread over its full term.
+        
+If liabilities exceed the total wealth, the base becomes zero and no zakat is due in this calculation.`,
+        },
+        {
+          heading: 'Applying the rate',
+          body: `The standard rate on cash, gold and investments is **2.5%** of the zakat base — one fortieth. The calculator works it out directly: zakat base × 2.5%.
+        
+The **nisab** field is informational only and does not affect the result: enter the wealth above nisab there, but the computed amount depends on the base entered above.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the same values as the calculator: cash and savings of **10,000 dinars**, gold worth **5,000 dinars**, investments of **2,000 dinars**, and outstanding liabilities of **1,000 dinars**.
+        
+The base is 10,000 + 5,000 + 2,000 \u2212 1,000 = **16,000 dinars**, and the zakat due is 16,000 \u00d7 2.5% = **400 dinars**.`,
+        },
+        {
+          heading: 'Nisab and the lunar year are your call',
+          body: `The calculator does not check two conditions that rest on you: **reaching the nisab** (a threshold often estimated at the value of 85 grams of gold) and the **passing of a full lunar year** over the wealth. The contemporary nisab is set by the prevailing gold price on the day zakat is paid.
+        
+Verify both conditions before treating the result as due; the calculator only gives the amount owed on the base you entered.`,
+        },
+        {
+          heading: 'Practical notes',
+          body: `Gold is valued **at the current market price**, and zakat on trade assets and inventory has its own basis and rates outside this calculator. Common mistakes: computing zakat on total savings without subtracting liabilities, and forgetting to include gold or investments in the base.
+        
+This is a general reference tool; where details differ, consult someone whose knowledge you trust.`,
+        },
+      ],
+      keyTakeaways: [
+        'Zakat base = cash + gold + investments \u2212 outstanding liabilities.',
+        'The standard rate on wealth is 2.5% of the base.',
+        'Liabilities are subtracted first, and can reduce the base to zero.',
+        'Nisab and the lunar year are your responsibility, not tracked by the calculator.',
+        'Gold is valued at the current market price.',
+      ],
+      faqs: [
+        {
+          q: 'What is the nisab?',
+          a: 'A minimum wealth threshold at which zakat becomes due, often estimated at the value of 85 grams of gold. The nisab field in the calculator is informational; you check the condition yourself.',
+        },
+        {
+          q: 'Does the calculator track the passing of a lunar year?',
+          a: 'No. It computes the amount on the base you entered only, and checking the lunar year and nisab remains your responsibility.',
+        },
+        {
+          q: 'Are business assets included?',
+          a: 'No. The calculator covers cash, gold and investments, and trade zakat has its own basis.',
+        },
+      ],
+      relatedCalculators: ['zakat', 'retirement-savings', 'savings-goal'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-to-plan-retirement-savings': {
+    ar: {
+      slug: 'how-to-plan-retirement-savings',
+      locale: 'ar',
+      title: 'كيف تخطط لمدخرات التقاعد',
+      metaDescription:
+        'دليل عملي لتقدير مدخرات التقاعد: المساهمة الشهرية والفائدة المركبة والعائد السنوي، مع مثال عددي مطابق لحاسبة مدخرات التقاعد.',
+      intro:
+        'سر مدخرات التقاعد هو الوقت والفائدة المركبة: مساهمة شهرية متواضعة تنمو بصمت على مدى عقود لتكوّن رصيداً كبيراً. يشرح هذا الدليل كيف تُبنى النتيجة، وكيف تُدخل العائد بشكل صحيح، ومتى تكون التقديرات مضللة. يلتزم مثاله العددي بنفس قيم حاسبة مدخرات التقاعد في كلار.',
+      sections: [
+        {
+          heading: 'الفائدة المركبة الشهرية',
+          body: `الفائدة تُركّب شهرياً: في نهاية كل شهر تُضاف مساهمتك، ثم يرتفع الرصيد بالعائد الشهري (العائد السنوي ÷ 12). العائد يعمل على الرصيد الكامل، فيشمل العائد نفسه الذي راكمته الأشهر السابقة.
+        
+هذا التراكم هو ما يحول المدخرات المتواضعة إلى رصيد كبير: نحو ثلثي الرصيد في المثال أدناه يأتي من العائد لا من مساهماتك.`,
+        },
+        {
+          heading: 'إدخال العائد السنوي',
+          body: `أدخل **العائد السنوي المتوقع كنسبة مئوية** في حقل العائد، مثل 6 للدلالة على 6%. الحاسبة تحوله إلى عائد شهري تلقائياً.
+        
+خطأ شائع يضخم النتيجة: إدخال العائد الشهري مباشرة في حقل العائد السنوي. تذكر أن الحقل سنوي، وضعه كما تفكر به على مدار العام.`,
+        },
+        {
+          heading: 'المساهمة الشهرية الثابتة',
+          body: `تفترض الحاسبة **مساهمة شهرية ثابتة** تُضاف في نهاية كل شهر، و**مدخرات حالية** تُترك دون سحب. إن كانت مساهماتك متغيرة، استخدم متوسطاً تقريبياً واعلم أن النتيجة تصبح تقديرية.
+        
+رفع المساهمة الشهرية في سنواتك الأولى أثر مضاعف أكبر من رفعها لاحقاً، لأن العائد يتفاعل معها لوقت أطول.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: مدخرات حالية **10,000 دينار**، ومساهمة شهرية **200 دينار**، وعائد سنوي **6%**، ولمدة **20 سنة**.
+        
+الرصيد المتوقع عند التقاعد ≈ **125,510 ديناراً**. إجمالي مساهماتك ≈ **58,000 دينار** (المدخرات الحالية + المساهمات)، والعائد المكتسب ≈ **67,510 ديناراً**.`,
+        },
+        {
+          heading: 'العائد غير مضمون والتضخم',
+          body: `العوائد **غير مضمونة**، وقد تختلف النتيجة كثيراً إذا تحقق العائد الفعلي دون المتوقع. الحاسبة تعرض رقماً **اسمياً** لا يخصم التضخم، فالقوة الشرائية عند التقاعد ستكون أقل مما يظهر إن بقي التضخم.
+        
+لتقدير بالقوة الشرائية اليوم، اطرح معدل التضخم المتوقع من العائد السنوي قبل إدخاله.`,
+        },
+        {
+          heading: 'أخطاء شائعة',
+          body: `من أكثر الأخطاء: استخدام العائد الشهري في حقل العائد السنوي، ونسيان خصم الرسوم الإدارية والضرائب من العائد الصافي، والاعتماد على عائد متفائل غير واقعي، وتجاهل التضخم عند تقييم الرصيد الاسمي.
+        
+هذه أداة تخطيط عامة: النتائج تقديرية ولا تُعد نصيحة استثمارية.`,
+        },
+      ],
+      keyTakeaways: [
+        'الفائدة تُركّب شهرياً على الرصيد المتنامي.',
+        'أدخل العائد السنوي كنسبة مئوية وتتحول الحاسبة إلى عائد شهري.',
+        'تفترض الحاسبة مساهمة شهرية ثابتة ومدخرات حالية دون سحب.',
+        'العائد غير مضمون والتضخم يقلل القوة الشرائية للرصيد.',
+        'لا تخلط العائد الشهري بالسنوي عند الإدخال.',
+      ],
+      faqs: [
+        {
+          q: 'هل العائد بعد التضخم أم قبله؟',
+          a: 'الحاسبة تستخدم عائداً اسمياً كما تدخله ولا تخصم التضخم. لرقم بالقوة الشرائية اليوم، اطرح معدل التضخم المتوقع من العائد السنوي.',
+        },
+        {
+          q: 'ماذا لو كانت مساهماتي غير منتظمة؟',
+          a: 'تفترض الحاسبة مساهمة ثابتة شهرياً. للمساهمات المتغيرة استخدم متوسطاً تقريبياً واعتبر النتيجة تقديرية.',
+        },
+        {
+          q: 'هل تشمل النتيجة أصولاً أخرى كالعقار؟',
+          a: 'لا. تحسب النقد فقط: مدخراتك الحالية ومساهمتك الشهرية دون أصول أخرى.',
+        },
+      ],
+      relatedCalculators: ['retirement-savings', 'compound-interest', 'savings-goal'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-plan-retirement-savings',
+      locale: 'en',
+      title: 'How to plan retirement savings',
+      metaDescription:
+        'A practical guide to projecting retirement savings: monthly contributions, compound interest and annual return, with a worked example matching the retirement savings calculator.',
+      intro:
+        'The secret of retirement savings is time and compound interest: a modest monthly contribution grows silently over decades into a large balance. This guide explains how the result is built, how to enter the return correctly, and when estimates mislead. Its worked example sticks to the same values used by Klar’s retirement savings calculator.',
+      sections: [
+        {
+          heading: 'Monthly compounding',
+          body: `Interest compounds monthly: at the end of each month your contribution is added, then the balance grows by the monthly rate (annual return \u00f7 12). The return applies to the whole balance, including the interest earned in earlier months.
+        
+This compounding is what turns modest savings into a large balance: about two thirds of the balance in the example below comes from the return, not from your contributions.`,
+        },
+        {
+          heading: 'Entering the annual return',
+          body: `Enter the **expected annual return as a percentage** in the return field — for example 6 to mean 6%. The calculator converts it to a monthly rate automatically.
+        
+A common mistake that inflates the result: entering the monthly rate directly into the annual field. Remember the field is annual; think in terms of a full year.`,
+        },
+        {
+          heading: 'A fixed monthly contribution',
+          body: `The calculator assumes a **fixed monthly contribution** added at the end of each month, and **current savings** left untouched. If your contributions vary, use a rough average and treat the result as an estimate.
+        
+Raising your contribution in your early years has a larger compounded effect than raising it later, because the return works on it for longer.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the same values as the calculator: current savings of **10,000 dinars**, a monthly contribution of **200 dinars**, an annual return of **6%**, over **20 years**.
+        
+The projected retirement balance is about **125,510 dinars**. Your total contributions are about **58,000 dinars** (current savings plus contributions), and the interest earned about **67,510 dinars**.`,
+        },
+        {
+          heading: 'Returns are not guaranteed, and inflation',
+          body: `Returns are **not guaranteed**, and the result shifts a lot if the actual return comes in below the expectation. The calculator shows a **nominal** figure that does not deduct inflation, so the purchasing power at retirement will be lower than shown if inflation persists.
+        
+For an estimate in today\u2019s purchasing power, subtract your expected inflation rate from the annual return before entering it.`,
+        },
+        {
+          heading: 'Common mistakes',
+          body: `Among the most common: using the monthly rate in the annual return field, forgetting to deduct management fees and taxes from the net return, relying on an unrealistic optimistic return, and ignoring inflation when judging the nominal balance.
+        
+This is a general planning tool: results are estimates and are not investment advice.`,
+        },
+      ],
+      keyTakeaways: [
+        'Interest compounds monthly on the growing balance.',
+        'Enter the annual return as a percentage; the calculator converts to monthly.',
+        'The calculator assumes a fixed monthly contribution and untouched current savings.',
+        'Returns are not guaranteed and inflation erodes purchasing power.',
+        'Do not confuse the monthly rate with the annual one when entering it.',
+      ],
+      faqs: [
+        {
+          q: 'Is the return after or before inflation?',
+          a: 'The calculator uses the nominal return as entered and does not deduct inflation. For a figure in today\u2019s purchasing power, subtract your expected inflation rate from the annual return.',
+        },
+        {
+          q: 'What if my contributions are irregular?',
+          a: 'The calculator assumes a fixed monthly contribution. For variable amounts, use a rough average and treat the result as an estimate.',
+        },
+        {
+          q: 'Does the result include other assets like property?',
+          a: 'No. It covers cash only: your current savings and monthly contribution, with no other assets.',
+        },
+      ],
+      relatedCalculators: ['retirement-savings', 'compound-interest', 'savings-goal'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-to-calculate-debt-to-income': {
+    ar: {
+      slug: 'how-to-calculate-debt-to-income',
+      locale: 'ar',
+      title: 'كيف تحسب نسبة الدين إلى الدخل',
+      metaDescription:
+        'دليل عملي لحساب نسبة الدين إلى الدخل: تقسيم أقساط الديون الشهرية على الدخل الإجمالي، مع مثال عددي مطابق للحاسبة ومعايير المقرضين.',
+      intro:
+        'نسبة الدين إلى الدخل (DTI) رقم واحد يلخص ضغط ديونك على دخلك، وهو معيار يستخدمه المقرضون لتقييم طلبات التمويل. يشرح هذا الدليل طريقة الحساب، وأي الأرقام تُدخل في النسبة وأيها خارجها، وماذا تعني النتيجة. يلتزم مثاله العددي بنفس قيم حاسبة نسبة الدين إلى الدخل في كلار.',
+      sections: [
+        {
+          heading: 'معادلة النسبة',
+          body: `نسبة الدين إلى الدخل = **أقساط الديون الشهرية ÷ الدخل الإجمالي الشهري × 100**. النتيجة تُعرض كنسبة مئوية، مع **الدخل المتبقي** وهو دخلك الإجمالي ناقص الأقساط.
+        
+مثال سريع: أقساط 400 دينار ودخل 2,000 دينار تعطي نسبة **20%** ودخلاً متبقياً **1,600 دينار**.`,
+        },
+        {
+          heading: 'أي الأرقام تدخل في الأقساط؟',
+          body: `ادخل **إجمالي التزاماتك الشهرية**: أقساط القروض، وحدود الائتمان، والحد الأدنى لدفعات البطاقات، وأي سداد مطلوب شهرياً. لا تُدخل تكاليف المعيشة كالإيجار والطعام والفواتير، فالنسبة معنية بالديون فقط.
+        
+احرص على تضمين الحد الأدنى للبطاقات حتى لو كان صغيراً، فالنسيان المشترك يخفي الضغط الحقيقي على دخلك.`,
+        },
+        {
+          heading: 'الدخل الإجمالي لا الصافي',
+          body: `قسمة النسبة تكون على **الدخل الإجمالي قبل الضرائب والخصومات**، وهو ما يستخدمه المقرضون عادة. استخدام الدخل الصافي بعد الخصومات يرفع النسبة الظاهرة ويجعلها غير قابلة للمقارنة مع معاييرهم.
+        
+إذا كان دخلك متقلباً، استخدم متوسطاً شهرياً تقديرياً للفترة الأخيرة.`,
+        },
+        {
+          heading: 'ماذا تعني النتيجة؟',
+          body: `المعيار الشائع أن تكون النسبة **أقل من 36%** من الدخل الإجمالي، وأن يشير تجاوزها إلى ضغط دين مرتفع يقلص هامش تحمل قرض جديد. المقرضون يفضلون النسب المنخفضة التي تترك مرونة أكبر.
+        
+النسبة مؤشر واحد لا الحكم الكامل: ينظر المقرضون أيضاً إلى تاريخك الائتماني واستقرار دخلك.`,
+        },
+        {
+          heading: 'النتيجة وأخطاء شائعة',
+          body: `النتيجة تُعرض بنسبة مئوية على أنها **نسبة الدين إلى الدخل**، ويُعرض **الدخل المتبقي** بعد الأقساط. أخطاء شائعة: استخدام الدخل الصافي بدل الإجمالي، ونسيان الحد الأدنى لدفعات البطاقات، وإدخال تكاليف المعيشة ضمن الأقساط، وإدخال دخل صفري.
+        
+الحاسبة تتطلب دخلاً أكبر من صفر، ولا يمكن حساب النسبة بدونه.`,
+        },
+        {
+          heading: 'متى تستخدمها',
+          body: `استخدمها **قبل التقدم لأي قرض أو تمويل جديد** لتعرف نسبتك الحالية، ولتقدر أثر القرض الجديد على ضغط ديونك. أعد الحساب مع إضافة قسط القرض المقترح لتشاهد النسبة بعد الالتزام.
+        
+النسبة الأفضل لا تعني قبولاً مضموناً للتمويل، لكنها تنظم توقعاتك وتجهزك للمحادثة مع المُقرِض.`,
+        },
+      ],
+      keyTakeaways: [
+        'النسبة = أقساط الديون الشهرية ÷ الدخل الإجمالي × 100.',
+        'استخدم الدخل الإجمالي قبل الضرائب لا الصافي.',
+        'ضمّن الحد الأدنى لدفعات البطاقات والقروض الصغيرة.',
+        'لا تُدخل تكاليف المعيشة، فالنسبة معنية بالديون فقط.',
+        'المعيار الشائع: النسبة أقل من 36% صحية.',
+      ],
+      faqs: [
+        {
+          q: 'ما هي النسبة الصحية؟',
+          a: 'المعيار الشائع أن تكون أقل من 36% من الدخل الإجمالي، ويُفضّل المقرضون النسب المنخفضة التي تترك هامشاً لقرض جديد.',
+        },
+        {
+          q: 'هل تُدخل تكاليف المعيشة؟',
+          a: 'لا. النسبة معنية بأقساط الديون الشهرية فقط، ولا تشمل الإيجار والطعام والفواتير إلا إذا كانت قسماً من التزاماتك القرضية.',
+        },
+        {
+          q: 'هل النسبة وحدها تحدد قبول التمويل؟',
+          a: 'لا، هي معيار من عدة معايير. ينظر المقرضون أيضاً إلى تاريخك الائتماني واستقرار دخلك.',
+        },
+      ],
+      relatedCalculators: ['debt-to-income', 'loan-payment', 'loan-comparison'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-calculate-debt-to-income',
+      locale: 'en',
+      title: 'How to calculate debt-to-income ratio',
+      metaDescription:
+        'A practical guide to calculating your debt-to-income ratio: dividing monthly debt payments by gross income, with a worked example matching the calculator and lender guidelines.',
+      intro:
+        'The debt-to-income (DTI) ratio is one number that summarizes how much your debts press on your income, and it is a metric lenders use to assess financing applications. This guide explains how it is computed, which numbers belong in the ratio and which stay out, and what the result means. Its worked example sticks to the same values used by Klar’s debt-to-income calculator.',
+      sections: [
+        {
+          heading: 'The ratio formula',
+          body: `Debt-to-income ratio = **monthly debt payments \u00f7 gross monthly income \u00d7 100**. The result is shown as a percentage, along with the **remaining income** — your gross income minus the payments.
+        
+A quick example: 400 dinars of payments on 2,000 dinars of income gives a ratio of **20%** and **1,600 dinars** of remaining income.`,
+        },
+        {
+          heading: 'Which numbers go into the payments?',
+          body: `Enter your **total monthly obligations**: loan installments, credit lines, minimum card payments, and any required monthly repayment. Do not enter living costs such as rent, food and bills — the ratio covers debt only.
+        
+Make sure to include the minimum card payments even if small, since the common oversight of omitting them hides the real pressure on your income.`,
+        },
+        {
+          heading: 'Gross income, not net',
+          body: `The ratio divides by **gross income before taxes and deductions**, which is what lenders usually use. Using net income after deductions inflates the ratio and makes it incomparable with their benchmarks.
+        
+If your income fluctuates, use an estimated monthly average for the recent period.`,
+        },
+        {
+          heading: 'What the result means',
+          body: `A common guideline is a ratio **below 36%** of gross income, with higher values indicating high debt pressure that leaves less room for a new loan. Lenders prefer lower ratios that allow more flexibility.
+        
+The ratio is one indicator, not the full verdict: lenders also weigh your credit history and income stability.`,
+        },
+        {
+          heading: 'The result and common mistakes',
+          body: `The result shows the **debt-to-income ratio** as a percentage and the **remaining income** after payments. Common mistakes: using net income instead of gross, forgetting minimum card payments, entering living costs among the payments, and entering zero income.
+        
+The calculator requires income greater than zero, since the ratio cannot be computed without it.`,
+        },
+        {
+          heading: 'When to use it',
+          body: `Use it **before applying for any new loan or financing** to know your current ratio, and to estimate the effect of a new loan on your debt pressure. Re-run the calculation with the proposed loan payment added to see the ratio after the commitment.
+        
+A good ratio does not guarantee approval, but it sets expectations and prepares you for the conversation with the lender.`,
+        },
+      ],
+      keyTakeaways: [
+        'Ratio = monthly debt payments \u00f7 gross income \u00d7 100.',
+        'Use gross income before taxes, not net.',
+        'Include minimum card payments and small loans.',
+        'Do not enter living costs; the ratio covers debt only.',
+        'A common guideline: a healthy ratio is below 36%.',
+      ],
+      faqs: [
+        {
+          q: 'What is a healthy ratio?',
+          a: 'A common guideline is below 36% of gross income, with lenders preferring lower ratios that leave room for a new loan.',
+        },
+        {
+          q: 'Do living costs go into the calculation?',
+          a: 'No. The ratio covers monthly debt payments only, and does not include rent, food and bills unless they are part of your loan obligations.',
+        },
+        {
+          q: 'Does the ratio alone decide financing approval?',
+          a: 'No, it is one of several criteria. Lenders also look at your credit history and income stability.',
+        },
+      ],
+      relatedCalculators: ['debt-to-income', 'loan-payment', 'loan-comparison'],
+      lastReviewed: '2026-08-10',
+    },
+  },
 };
 
 export default guides;

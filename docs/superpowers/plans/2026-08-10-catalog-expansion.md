@@ -47,7 +47,7 @@
 - Produces: `type Category = 'finance' | 'employment' | 'health' | 'education' | 'everyday' | 'business'`; `interface CategoryMeta { id: Category; label: { ar; en }; tagline: { ar; en }; icon: Category }`; `const CATEGORIES: Record<Category, CategoryMeta>`; `const DEFAULT_CURRENCY = 'JOD'` re-exported from `currencies.ts` usage (see Step 4); `utils.ts` exports `err`, `toNumber`, `numeric`, `optionalNumeric`, `checkNumber`, `monthlyPayment`, `daysBetween`, `calendarDiff`, `parseIso`, `todayIso` (a strict `yyyy-mm-dd` local-time parser and the current-date ISO string — both used by the date tools in Task 6).
 - Consumes: nothing from later tasks.
 
-- [ ] **Step 1: Widen `Category` and add `CATEGORIES` in `src/config/calculators.ts`**
+- [x] **Step 1: Widen `Category` and add `CATEGORIES` in `src/config/calculators.ts`**
 
 Replace line 6:
 
@@ -123,7 +123,7 @@ export const CATEGORIES: Record<Category, CategoryMeta> = {
 };
 ```
 
-- [ ] **Step 2: Add the 6 reserved Tier B entries to `CALCULATORS`**
+- [x] **Step 2: Add the 6 reserved Tier B entries to `CALCULATORS`**
 
 Append to the `CALCULATORS` array (after the `leave-balance` entry). All have `category: 'employment'`, `active: false`, `guide: ''`, `related: []`:
 
@@ -208,7 +208,7 @@ Append to the `CALCULATORS` array (after the `leave-balance` entry). All have `c
   },
 ```
 
-- [ ] **Step 3: Create `src/lib/calculators/utils.ts`**
+- [x] **Step 3: Create `src/lib/calculators/utils.ts`**
 
 ```ts
 /** Shared pure helpers for calculator math modules. */
@@ -300,7 +300,7 @@ export function calendarDiff(start: Date, end: Date): { years: number; months: n
 
 Note: `calendarDiff` counts a full month only when the end date's day-of-month reaches the start's day. When the start's day exceeds the end month's length (e.g. 2021-01-31 → 2021-02-28), the full month is not reached and the residue lands in `days` (result: 0 years, 0 months, 28 days). Document this carry-over behavior in the date-difference content assumptions.
 
-- [ ] **Step 4: Make currency optional in `types.ts` + `calculator-payload.ts`**
+- [x] **Step 4: Make currency optional in `types.ts` + `calculator-payload.ts`**
 
 In `src/lib/calculators/types.ts`, change lines 111 and 112 to optional:
 
@@ -319,7 +319,7 @@ In `src/lib/calculator-payload.ts`, replace the `currencyDefault` and `currencyL
     currencyLabel: content.currencyLabel ?? (content.locale === 'ar' ? 'العملة' : 'Currency'),
 ```
 
-- [ ] **Step 5: Widen `CalculatorShell.astro` category prop**
+- [x] **Step 5: Widen `CalculatorShell.astro` category prop**
 
 Replace line 9:
 
@@ -329,7 +329,7 @@ Replace line 9:
 
 and add the import `import type { Category } from '../config/calculators';` at the top of the frontmatter. (`payloadJson` already takes `category: string`, so no change there.)
 
-- [ ] **Step 6: Update `HomePage.astro` to use `CATEGORIES`**
+- [x] **Step 6: Update `HomePage.astro` to use `CATEGORIES`**
 
 Replace line 39 (`const t = { … category: { finance: …, employment: … } … }`): remove the `category:` key from `t`, and replace lines 60-64 so the meta label comes from `CATEGORIES`:
 
@@ -344,7 +344,7 @@ Replace line 39 (`const t = { … category: { finance: …, employment: … } �
 
 Add `CATEGORIES` to the existing import from `'../../config/calculators'`.
 
-- [ ] **Step 7: Make `CalculatorsIndex.astro` data-driven**
+- [x] **Step 7: Make `CalculatorsIndex.astro` data-driven**
 
 Replace the `groups` block (lines 19-26) with:
 
@@ -388,7 +388,7 @@ const description = locale === 'ar'
 
 Update the import on line 5 to `import type { Category } from '../../config/calculators';` and add `CATEGORIES` to the line 3 import.
 
-- [ ] **Step 8: Create `src/components/pages/CategoryPage.astro`**
+- [x] **Step 8: Create `src/components/pages/CategoryPage.astro`**
 
 ```astro
 ---
@@ -433,7 +433,7 @@ const items = getCalculatorsByCategory(category);
 
 (Add `.page-hero` and `.section-lead` minimal styles in `components.css` only if they are not already defined; if absent, add `.section-lead { color: var(--color-text-secondary); }`.)
 
-- [ ] **Step 9: Rename `[slug].astro` → `[segment].astro` and dispatch by segment**
+- [x] **Step 9: Rename `[slug].astro` → `[segment].astro` and dispatch by segment**
 
 Rename `src/pages/calculators/[slug].astro` to `src/pages/calculators/[segment].astro` and replace its content:
 
@@ -469,7 +469,7 @@ const isCategory = segment in CATEGORIES;
 
 Do the same rename/replace for `src/pages/en/calculators/[slug].astro` → `[segment].astro`, with `locale: 'en' as const` and `<CategoryPage category={segment as Category} locale={locale} />`.
 
-- [ ] **Step 10: Add the 4 new category icons to `src/styles/components.css`**
+- [x] **Step 10: Add the 4 new category icons to `src/styles/components.css`**
 
 After the existing `.tool-card[data-category='employment'] …` rule (line 888), add:
 
@@ -488,7 +488,7 @@ After the existing `.tool-card[data-category='employment'] …` rule (line 888),
 }
 ```
 
-- [ ] **Step 11: Create `tests/catalog.test.ts`**
+- [x] **Step 11: Create `tests/catalog.test.ts`**
 
 ```ts
 import { test } from 'node:test';
@@ -535,13 +535,13 @@ test('catalog: tier-B entries are reserved and inactive', () => {
 });
 ```
 
-- [ ] **Step 12: Verify**
+- [x] **Step 12: Verify**
 
 Run: `npm test` → all pass (original tests + catalog tests).
 Run: `npm run check` → 0 errors.
 Run: `npm run build` → clean (61 existing pages + 6 new category pages per locale).
 
-- [ ] **Step 13: Commit**
+- [x] **Step 13: Commit**
 
 ```bash
 git add src/config/calculators.ts src/lib/calculators/utils.ts src/lib/calculators/types.ts src/lib/calculator-payload.ts src/components/CalculatorShell.astro src/components/pages/HomePage.astro src/components/pages/CalculatorsIndex.astro src/components/pages/CategoryPage.astro src/pages/calculators/[segment].astro src/pages/en/calculators/[segment].astro src/styles/components.css tests/catalog.test.ts
@@ -568,7 +568,7 @@ git commit -m "feat(catalog): category system, category pages, and reserved tier
 
 **Guide slugs:** `how-to-calculate-a-mortgage`, `how-to-compare-loan-offers`, `how-early-loan-payoff-works`.
 
-- [ ] **Step 1: Add 3 config entries to `CALCULATORS` (finance, `active: true`)**
+- [x] **Step 1: Add 3 config entries to `CALCULATORS` (finance, `active: true`)**
 
 ```ts
   {
@@ -612,7 +612,7 @@ git commit -m "feat(catalog): category system, category pages, and reserved tier
   },
 ```
 
-- [ ] **Step 2: Create `src/lib/calculators/mortgage.ts`**
+- [x] **Step 2: Create `src/lib/calculators/mortgage.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -748,7 +748,7 @@ export default mortgage;
 - negative rate → `min`
 - amortization last balance < 0.01 and row count == 20
 
-- [ ] **Step 3: Create `src/lib/calculators/loan-comparison.ts`**
+- [x] **Step 3: Create `src/lib/calculators/loan-comparison.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -851,7 +851,7 @@ export default loanComparison;
 - missing principal → `required`
 - negative rateA → `min`
 
-- [ ] **Step 4: Create `src/lib/calculators/early-payoff.ts`**
+- [x] **Step 4: Create `src/lib/calculators/early-payoff.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -972,7 +972,7 @@ export default earlyPayoff;
 - extraMonthly == 0 → newMonths == baselineMonths == 60 and interestSaved == 0
 - missing principal → `required`; negative extra → `min`
 
-- [ ] **Step 5: Register all three in `src/lib/calculators/index.ts` and `src/lib/client/registry.ts`**
+- [x] **Step 5: Register all three in `src/lib/calculators/index.ts` and `src/lib/client/registry.ts`**
 
 `src/lib/calculators/index.ts` — add imports + registry lines:
 
@@ -996,7 +996,7 @@ import earlyPayoff from './early-payoff';
   'early-payoff': () => import('../calculators/early-payoff.ts'),
 ```
 
-- [ ] **Step 6: Register content**
+- [x] **Step 6: Register content**
 
 `src/content/calculators/index.ts` — add imports + registry lines:
 
@@ -1014,20 +1014,20 @@ import earlyPayoff from './early-payoff';
 
 Create the three content files with the content specs above (full `CalcContent` per the `loan-payment.ts` template: `locale`, `slug`, title/h1/meta, `intro`, `fields` (labels + hints), `errorMessages`, `results`, optional `table` (mortgage and early-payoff have the annual schedule table with the same column keys as loan-payment), `resultTitle`, `formula`, `exampleHtml`, `assumptions`, `whenUseful`, `mistakes`, `faqs`, `methodologyNote`, `disclaimerNote`, `lastReviewed: '2026-08-10'`, `currencyDefault: 'JOD'`, `currencyLabel`, `requiredNote`, `buttons`, `ui`, `guideTitle`, `relatedTitle`).
 
-- [ ] **Step 7: Add the three guides to `src/content/guides.ts`**
+- [x] **Step 7: Add the three guides to `src/content/guides.ts`**
 
 Each guide: slug, `ar` + `en` `GuideContent` (title, metaDescription, intro, `sections` (4-6 sections with heading+body), `keyTakeaways` (4-5 bullets), `faqs` (2-3), `relatedCalculators`, `lastReviewed: '2026-08-10'`). Worked examples use the numbers from each tool's content spec. `relatedCalculators`:
 - `how-to-calculate-a-mortgage` → `['mortgage', 'loan-payment', 'early-payoff']`
 - `how-to-compare-loan-offers` → `['loan-comparison', 'loan-payment', 'early-payoff']`
 - `how-early-loan-payoff-works` → `['early-payoff', 'loan-payment', 'mortgage']`
 
-- [ ] **Step 8: Verify**
+- [x] **Step 8: Verify**
 
 Run: `npm test` → all pass (existing + catalog + 3 new tool tests).
 Run: `npm run check` → 0 errors.
 Run: `npm run build` → clean. New pages appear at `/calculators/mortgage/`, `/calculators/loan-comparison/`, `/calculators/early-payoff/` (both locales); category page `/calculators/finance/` now lists 8 finance tools.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add src/config/calculators.ts src/lib/calculators/mortgage.ts src/lib/calculators/loan-comparison.ts src/lib/calculators/early-payoff.ts src/lib/calculators/index.ts src/lib/client/registry.ts src/content/calculators/mortgage.ts src/content/calculators/loan-comparison.ts src/content/calculators/early-payoff.ts src/content/calculators/index.ts src/content/guides.ts tests/mortgage.test.ts tests/loan-comparison.test.ts tests/early-payoff.test.ts
@@ -1048,7 +1048,7 @@ git commit -m "feat(calc): finance wave A - mortgage, loan comparison, early pay
 
 **Guide slugs:** `how-to-calculate-zakat`, `how-to-plan-retirement-savings`, `how-to-calculate-debt-to-income`.
 
-- [ ] **Step 1: Add 3 config entries (finance, `active: true`)**
+- [x] **Step 1: Add 3 config entries (finance, `active: true`)**
 
 ```ts
   {
@@ -1092,7 +1092,7 @@ git commit -m "feat(calc): finance wave A - mortgage, loan comparison, early pay
   },
 ```
 
-- [ ] **Step 2: Create `src/lib/calculators/zakat.ts`**
+- [x] **Step 2: Create `src/lib/calculators/zakat.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -1162,7 +1162,7 @@ export default zakat;
 
 **Zakat test**: example → zakatBase == 16000, zakatDue == 400; zero everything → 0; debts > assets → base 0, due 0; missing cash → `required`; negative debts → `min`.
 
-- [ ] **Step 3: Create `src/lib/calculators/retirement.ts`**
+- [x] **Step 3: Create `src/lib/calculators/retirement.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -1236,7 +1236,7 @@ export default retirementSavings;
 
 **Retirement test**: example → finalBalance within `125400..125600`; totalContributions == 58000; interestEarned = final − 58000; zero return → final == current + monthly*240; missing years → `required`; years 0 → `min`.
 
-- [ ] **Step 4: Create `src/lib/calculators/debt-to-income.ts`**
+- [x] **Step 4: Create `src/lib/calculators/debt-to-income.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -1290,14 +1290,14 @@ export default debtToIncome;
 
 **Debt-to-income test**: example → dtiRatio == 20; remainingIncome == 1600; income 0 → validate returns `grossIncome: 'min'` (calculate throws — do not call it); missing debt → `required`.
 
-- [ ] **Step 5: Register config, math, loaders, content; write guides** (same pattern as Task 2 Steps 5-7)
+- [x] **Step 5: Register config, math, loaders, content; write guides** (same pattern as Task 2 Steps 5-7)
 
 `src/lib/calculators/index.ts`: `import zakat from './zakat'; import retirementSavings from './retirement'; import debtToIncome from './debt-to-income';` + registry `zakat, 'retirement-savings': retirementSavings, 'debt-to-income': debtToIncome`.
 `src/lib/client/registry.ts`: `zakat: () => import('../calculators/zakat.ts'), 'retirement-savings': () => import('../calculators/retirement.ts'), 'debt-to-income': () => import('../calculators/debt-to-income.ts'),`.
 `src/content/calculators/index.ts`: imports + `zakat, 'retirement-savings': retirementSavings, 'debt-to-income': debtToIncome`.
 Guides: `how-to-calculate-zakat` → `['zakat', 'retirement-savings', 'savings-goal']`; `how-to-plan-retirement-savings` → `['retirement-savings', 'compound-interest', 'savings-goal']`; `how-to-calculate-debt-to-income` → `['debt-to-income', 'loan-payment', 'loan-comparison']`. Worked examples use the exact numbers from each tool's content spec.
 
-- [ ] **Step 6: Verify + commit**
+- [x] **Step 6: Verify + commit**
 
 Run `npm test`, `npm run check`, `npm run build` — all clean. Commit:
 

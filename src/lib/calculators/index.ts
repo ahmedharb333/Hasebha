@@ -12,6 +12,9 @@ import leaveBalance from './leave.ts';
 import mortgage from './mortgage.ts';
 import loanComparison from './loan-comparison.ts';
 import earlyPayoff from './early-payoff.ts';
+import zakat from './zakat.ts';
+import retirementSavings from './retirement.ts';
+import debtToIncome from './debt-to-income.ts';
 
 const registry: Record<string, CalculatorMath> = {
   'loan-payment': loanPayment,
@@ -27,6 +30,9 @@ const registry: Record<string, CalculatorMath> = {
   mortgage,
   'loan-comparison': loanComparison,
   'early-payoff': earlyPayoff,
+  zakat,
+  'retirement-savings': retirementSavings,
+  'debt-to-income': debtToIncome,
 };
 
 export function getMath(slug: string): CalculatorMath {

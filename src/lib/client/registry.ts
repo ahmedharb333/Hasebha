@@ -20,6 +20,9 @@ export const mathLoaders: Record<string, MathLoader> = {
   mortgage: () => import('../calculators/mortgage.ts'),
   'loan-comparison': () => import('../calculators/loan-comparison.ts'),
   'early-payoff': () => import('../calculators/early-payoff.ts'),
+  zakat: () => import('../calculators/zakat.ts'),
+  'retirement-savings': () => import('../calculators/retirement.ts'),
+  'debt-to-income': () => import('../calculators/debt-to-income.ts'),
 };
 
 export async function loadMath(slug: string): Promise<CalculatorMath> {
