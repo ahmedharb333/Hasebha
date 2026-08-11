@@ -1,0 +1,27 @@
+---
+import CalculatorPage from '@/components/pages/CalculatorPage.astro';
+import CategoryPage from '@/components/pages/CategoryPage.astro';
+import { CALCULATORS, CATEGORIES } from '@/config/calculators';
+import type { Category } from '@/config/calculators';
+
+export function getStaticPaths() {
+  const calculators = CALCULATORS.filter((c) => c.active).map((c) => ({
+    params: { segment: c.slug },
+    props: { segment: c.slug, locale: 'en' as const },
+  }));
+  const categories = (Object.keys(CATEGORIES) as Category[]).map((c) => ({
+    params: { segment: c },
+    props: { segment: c, locale: 'en' as const },
+  }));
+  return [...calculators, ...categories];
+}
+
+const { segment, locale } = Astro.props;
+const isCategory = segment in CATEGORIES;
+---
+
+{isCategory ? (
+  <CategoryPage category={segment as Category} locale={locale} />
+) : (
+  <CalculatorPage slug={segment} locale={locale} />
+)}

@@ -1,15 +1,15 @@
-import type { CalcContent } from '../../lib/calculators/types';
-import type { Locale } from '../../config/site';
-import loanPayment from './loan-payment';
-import compoundInterest from './compound-interest';
-import savingsGoal from './savings-goal';
-import vat from './vat';
-import discountPercentage from './discount-percentage';
-import salaryConverter from './salary-converter';
-import overtimePay from './overtime-pay';
-import freelanceRate from './freelance-rate';
-import employeeCost from './employee-cost';
-import leaveBalance from './leave-balance';
+import type { CalcContent } from '../../lib/calculators/types.ts';
+import type { Locale } from '../../config/site.ts';
+import loanPayment from './loan-payment.ts';
+import compoundInterest from './compound-interest.ts';
+import savingsGoal from './savings-goal.ts';
+import vat from './vat.ts';
+import discountPercentage from './discount-percentage.ts';
+import salaryConverter from './salary-converter.ts';
+import overtimePay from './overtime-pay.ts';
+import freelanceRate from './freelance-rate.ts';
+import employeeCost from './employee-cost.ts';
+import leaveBalance from './leave-balance.ts';
 
 const registry: Record<string, Record<Locale, CalcContent>> = {
   'loan-payment': loanPayment,

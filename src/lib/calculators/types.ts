@@ -108,8 +108,8 @@ export interface CalcContent {
   methodologyNote: string;
   disclaimerNote?: string;
   lastReviewed: string;
-  currencyDefault: CurrencyCode;
-  currencyLabel: string;
+  currencyDefault?: CurrencyCode;
+  currencyLabel?: string;
   requiredNote: string;
   buttons: {
     calculate: string;

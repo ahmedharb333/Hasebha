@@ -1,14 +1,14 @@
-import type { CalculatorMath } from './types';
-import loanPayment from './loan';
-import compoundInterest from './compound';
-import savingsGoal from './savings';
-import vat from './vat';
-import discountPercentage from './discount';
-import salaryConverter from './salary';
-import overtimePay from './overtime';
-import freelanceRate from './freelance';
-import employeeCost from './employee-cost';
-import leaveBalance from './leave';
+import type { CalculatorMath } from './types.ts';
+import loanPayment from './loan.ts';
+import compoundInterest from './compound.ts';
+import savingsGoal from './savings.ts';
+import vat from './vat.ts';
+import discountPercentage from './discount.ts';
+import salaryConverter from './salary.ts';
+import overtimePay from './overtime.ts';
+import freelanceRate from './freelance.ts';
+import employeeCost from './employee-cost.ts';
+import leaveBalance from './leave.ts';
 
 const registry: Record<string, CalculatorMath> = {
   'loan-payment': loanPayment,

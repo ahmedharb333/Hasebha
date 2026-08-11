@@ -2,11 +2,12 @@
 import type { CalculatorMath, CalcContent } from '../lib/calculators/types';
 import { payloadJson } from '../lib/calculator-payload';
 import { CURRENCIES } from '../config/currencies';
+import type { Category } from '../config/calculators';
 
 interface Props {
   math: CalculatorMath;
   content: CalcContent;
-  category: 'finance' | 'employment';
+  category: Category;
 }
 
 const { math, content, category } = Astro.props;

@@ -28,7 +28,7 @@ export function buildCalcPayload(math: CalculatorMath, content: CalcContent, cat
     slug: content.slug,
     category,
     locale: content.locale,
-    currencyDefault: content.currencyDefault,
+    currencyDefault: content.currencyDefault ?? 'JOD',
     currencies: CURRENCIES.map((c) => ({
       code: c.code,
       label: content.locale === 'ar' ? `${c.code} — ${c.labelAr}` : `${c.code} — ${c.labelEn}`,
@@ -41,7 +41,7 @@ export function buildCalcPayload(math: CalculatorMath, content: CalcContent, cat
       : undefined,
     ui: content.ui,
     buttons: content.buttons,
-    currencyLabel: content.currencyLabel,
+    currencyLabel: content.currencyLabel ?? (content.locale === 'ar' ? 'العملة' : 'Currency'),
   };
 }
 

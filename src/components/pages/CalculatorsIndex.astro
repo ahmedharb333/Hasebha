@@ -1,8 +1,8 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
-import { CALCULATORS } from '../../config/calculators';
+import { CALCULATORS, CATEGORIES } from '../../config/calculators';
 import { localizedPath } from '../../lib/i18n';
-import type { Category, CalculatorEntry } from '../../config/calculators';
+import type { Category } from '../../config/calculators';
 import type { Locale } from '../../config/site';
 
 interface Props {
@@ -13,30 +13,29 @@ const { locale } = Astro.props;
 const path = '/calculators/';
 const title = locale === 'ar' ? 'الحاسبات' : 'Calculators';
 const description = locale === 'ar'
-  ? 'كل الحاسبات المالية وحاسبات العمل في كلار: قروض، فائدة مركبة، ادخار، ضريبة، رواتب، عمل إضافي وأكثر.'
-  : 'All of Klar’s finance and employment calculators: loans, compound interest, savings, VAT, salary, overtime and more.';
+  ? 'كل حاسبات كلار: مالية، عمل وتوظيف، صحة، تعليم، أدوات يومية وأعمال.'
+  : 'All of Klar\u2019s calculators: finance, employment, health, education, everyday and business.';
 
-const groups: { category: Category; label: string; items: CalculatorEntry[] }[] = [
-  { category: 'finance', label: locale === 'ar' ? 'مالية' : 'Finance', items: [] },
-  { category: 'employment', label: locale === 'ar' ? 'عمل وتوظيف' : 'Employment', items: [] },
-];
-for (const c of CALCULATORS.filter((c) => c.active)) {
-  const g = groups.find((x) => x.category === c.category)!;
-  g.items.push(c);
-}
+const categoryIds = Object.keys(CATEGORIES) as Category[];
+const groups = categoryIds.map((id) => ({
+  category: id,
+  meta: CATEGORIES[id],
+  items: CALCULATORS.filter((c) => c.category === id && c.active),
+}));
 ---
 
 <PageLayout locale={locale} path={path} title={title} description={description}>
   {groups.map((group) => (
     <section>
-      <h2>{group.label}</h2>
+      <h2><a href={localizedPath(locale, `/calculators/${group.category}/`)}>{group.meta.label[locale]}</a></h2>
+      <p class="section-lead">{group.meta.tagline[locale]}</p>
       <div class="tool-grid">
         {group.items.map((c) => (
           <a class="tool-card" data-category={c.category} href={localizedPath(locale, `/calculators/${c.slug}/`)}>
             <span class="tool-card__icon" aria-hidden="true"></span>
             <h3>{c.title[locale]}</h3>
             <p>{c.description[locale]}</p>
-            <span class="tool-card__meta">{group.label}</span>
+            <span class="tool-card__meta">{group.meta.label[locale]}</span>
           </a>
         ))}
       </div>

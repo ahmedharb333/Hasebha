@@ -1,0 +1,38 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { CATEGORIES, getCalculatorsByCategory } from '../../config/calculators';
+import { localizedPath } from '../../lib/i18n';
+import type { Category } from '../../config/calculators';
+import type { Locale } from '../../config/site';
+
+interface Props {
+  locale: Locale;
+  category: Category;
+}
+
+const { locale, category } = Astro.props;
+const meta = CATEGORIES[category];
+const path = `/calculators/${category}/`;
+const title = meta.label[locale];
+const items = getCalculatorsByCategory(category);
+---
+
+<PageLayout locale={locale} path={path} title={title} description={meta.tagline[locale]}>
+  <section class="page-hero">
+    <h1>{meta.label[locale]}</h1>
+    <p class="section-lead">{meta.tagline[locale]}</p>
+  </section>
+  <div class="tool-grid">
+    {items.map((c) => (
+      <a class="tool-card" data-category={c.category} href={localizedPath(locale, `/calculators/${c.slug}/`)}>
+        <span class="tool-card__icon" aria-hidden="true"></span>
+        <h2>{c.title[locale]}</h2>
+        <p>{c.description[locale]}</p>
+        <span class="tool-card__meta">{meta.label[locale]}</span>
+      </a>
+    ))}
+  </div>
+  <p style="margin-block-start: var(--space-4)">
+    <a href={localizedPath(locale, '/calculators/')}>{locale === 'ar' ? 'كل الحاسبات ←' : 'All calculators ←'}</a>
+  </p>
+</PageLayout>

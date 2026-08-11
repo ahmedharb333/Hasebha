@@ -3,7 +3,7 @@
  * routes, categories, related tools, guide links and publish status.
  */
 
-export type Category = 'finance' | 'employment';
+export type Category = 'finance' | 'employment' | 'health' | 'education' | 'everyday' | 'business';
 
 export interface CalculatorEntry {
   /** Stable machine id (used in analytics events). */
@@ -22,6 +22,70 @@ export interface CalculatorEntry {
   /** Whether the calculator is published. */
   active: boolean;
 }
+
+export interface CategoryMeta {
+  id: Category;
+  label: { ar: string; en: string };
+  tagline: { ar: string; en: string };
+  icon: Category;
+}
+
+export const CATEGORIES: Record<Category, CategoryMeta> = {
+  finance: {
+    id: 'finance',
+    label: { ar: 'مالية', en: 'Finance' },
+    tagline: {
+      ar: 'حاسبات القروض والادخار والاستثمار والضرائب والتخطيط المالي.',
+      en: 'Loans, savings, investments, taxes and financial planning.',
+    },
+    icon: 'finance',
+  },
+  employment: {
+    id: 'employment',
+    label: { ar: 'عمل وتوظيف', en: 'Employment' },
+    tagline: {
+      ar: 'حاسبات الرواتب والأجور وتكاليف التوظيف والإجازات.',
+      en: 'Salary, wages, hiring costs and leave.',
+    },
+    icon: 'employment',
+  },
+  health: {
+    id: 'health',
+    label: { ar: 'صحة', en: 'Health' },
+    tagline: {
+      ar: 'مؤشرات وزن الجسم وحاجتك اليومية من السعرات.',
+      en: 'Body weight metrics and daily calorie needs.',
+    },
+    icon: 'health',
+  },
+  education: {
+    id: 'education',
+    label: { ar: 'تعليم', en: 'Education' },
+    tagline: {
+      ar: 'حساب المعدل التراكمي والدرجات والأهداف الدراسية.',
+      en: 'GPA, grades and study targets.',
+    },
+    icon: 'education',
+  },
+  everyday: {
+    id: 'everyday',
+    label: { ar: 'يومية', en: 'Everyday' },
+    tagline: {
+      ar: 'أدوات يومية سريعة: العمر، التواريخ، الإكرامية وتحويل الوحدات.',
+      en: 'Quick everyday tools: age, dates, tips and unit conversion.',
+    },
+    icon: 'everyday',
+  },
+  business: {
+    id: 'business',
+    label: { ar: 'أعمال', en: 'Business' },
+    tagline: {
+      ar: 'حاسبات التسعير والهامش ونقطة التعادل للمشاريع.',
+      en: 'Pricing, margin and break-even for businesses.',
+    },
+    icon: 'business',
+  },
+};
 
 export const CALCULATORS: CalculatorEntry[] = [
   {
@@ -153,6 +217,84 @@ export const CALCULATORS: CalculatorEntry[] = [
     related: ['employee-cost', 'overtime-pay'],
     guide: 'how-to-calculate-overtime',
     active: true,
+  },
+  {
+    id: 'end-of-service',
+    slug: 'end-of-service',
+    category: 'employment',
+    title: { ar: 'حاسبة مكافأة نهاية الخدمة', en: 'End-of-service gratuity calculator' },
+    description: {
+      ar: 'تقدر مكافأة نهاية الخدمة وفق قوانين العمل في بلدك.',
+      en: 'Estimates end-of-service gratuity under your country\u2019s labour law.',
+    },
+    related: [],
+    guide: '',
+    active: false,
+  },
+  {
+    id: 'social-insurance',
+    slug: 'social-insurance',
+    category: 'employment',
+    title: { ar: 'حاسبة التأمين الاجتماعي', en: 'Social insurance calculator' },
+    description: {
+      ar: 'تحسب اشتراكات التأمين الاجتماعي للموظف وصاحب العمل.',
+      en: 'Calculates social-insurance contributions for employee and employer.',
+    },
+    related: [],
+    guide: '',
+    active: false,
+  },
+  {
+    id: 'notice-period',
+    slug: 'notice-period',
+    category: 'employment',
+    title: { ar: 'حاسبة فترة الإشعار', en: 'Notice period calculator' },
+    description: {
+      ar: 'تحدد فترة الإشعار الواجبة عند إنهاء عقد العمل.',
+      en: 'Determines the notice period required to end an employment contract.',
+    },
+    related: [],
+    guide: '',
+    active: false,
+  },
+  {
+    id: 'maternity-leave',
+    slug: 'maternity-leave',
+    category: 'employment',
+    title: { ar: 'حاسبة إجازة الأمومة', en: 'Maternity leave calculator' },
+    description: {
+      ar: 'تحسب مدة إجازة الأمومة وأجرها حسب القانون.',
+      en: 'Calculates maternity-leave duration and pay under the law.',
+    },
+    related: [],
+    guide: '',
+    active: false,
+  },
+  {
+    id: 'gross-to-net',
+    slug: 'gross-to-net',
+    category: 'employment',
+    title: { ar: 'محوّل الراتب الإجمالي إلى الصافي', en: 'Gross-to-net salary converter' },
+    description: {
+      ar: 'تحويل الراتب الإجمالي إلى الصافي بعد الخصومات القانونية.',
+      en: 'Converts gross salary to net after statutory deductions.',
+    },
+    related: [],
+    guide: '',
+    active: false,
+  },
+  {
+    id: 'income-tax',
+    slug: 'income-tax',
+    category: 'employment',
+    title: { ar: 'حاسبة ضريبة الدخل', en: 'Income tax calculator' },
+    description: {
+      ar: 'تحسب ضريبة الدخل على الأجور حسب الشرائح في بلدك.',
+      en: 'Calculates income tax on wages using your country\u2019s brackets.',
+    },
+    related: [],
+    guide: '',
+    active: false,
   },
 ];
 
