@@ -10,6 +10,9 @@ import overtimePay from './overtime-pay.ts';
 import freelanceRate from './freelance-rate.ts';
 import employeeCost from './employee-cost.ts';
 import leaveBalance from './leave-balance.ts';
+import mortgage from './mortgage.ts';
+import loanComparison from './loan-comparison.ts';
+import earlyPayoff from './early-payoff.ts';
 
 const registry: Record<string, Record<Locale, CalcContent>> = {
   'loan-payment': loanPayment,
@@ -22,6 +25,9 @@ const registry: Record<string, Record<Locale, CalcContent>> = {
   'freelance-rate': freelanceRate,
   'employee-cost': employeeCost,
   'leave-balance': leaveBalance,
+  mortgage,
+  'loan-comparison': loanComparison,
+  'early-payoff': earlyPayoff,
 };
 
 export function getCalcContent(slug: string, locale: Locale): CalcContent {

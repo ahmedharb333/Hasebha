@@ -1255,6 +1255,411 @@ Before making your first hire or expanding, verify the rules in force in your co
       lastReviewed: '2026-08-09',
     },
   },
+
+  'how-to-calculate-a-mortgage': {
+    ar: {
+      slug: 'how-to-calculate-a-mortgage',
+      locale: 'ar',
+      title: 'كيف تحسب القرض العقاري',
+      metaDescription:
+        'دليل عملي لحساب القسط الشهري للقرض العقاري مع الدفعة المقدمة والفائدة والرسوم، مع مثال عددي مطابق لحاسبة القرض العقاري وجدول سداد سنوي.',
+      intro:
+        'شراء منزل عبر تمويل عقاري هو أكبر التزام مالي يواجهه كثير من الناس، ومعرفة القسط الشهري والتكلفة الكلية قبل التوقيع أمر بالغ الأهمية. يشرح هذا الدليل كيف تُحسب أقساط القرض العقاري، وسبب أهمية الدفعة المقدمة، وكيف تقرأ جدول السداد السنوي. يتبع المثال الوارد هنا نفس القيم التي تستخدمها حاسبة القرض العقاري في كلار.',
+      sections: [
+        {
+          heading: 'ما الذي يتكون منه القسط العقاري',
+          body: `القسط الشهري للقرض العقاري بسعر فائدة ثابت يتكون من جزأين: **حصة أصل الدين** (الجزء الذي يقلل المبلغ المقترض) و**حصة الفائدة** (الرسوم مقابل اقتراض المال). تختلف نسبتهما عبر الزمن: في السنوات الأولى تذهب حصة أكبر للفائدة، ثم تنعكس المعادلة مع اقتراب نهاية المدة.
+        
+لا تشمل الأقساط التأمين أو الرسوم الشهرية أو ضرائب العقار إلا إذا أضفتها يدوياً إلى الرسوم. ضع ذلك في اعتبارك عند تقييم ميزانيتك الشهرية.`,
+        },
+        {
+          heading: 'أثر الدفعة المقدمة',
+          body: `مبلغ القرض الفعلي هو **سعر العقار ناقص الدفعة المقدمة**، والفائدة تُحسب على هذا المبلغ لا على سعر العقار. إذا كان العقار بمليون ريال ودفعت 200 ألف مقدماً، فإن مبلغ القرض 800 ألف، وتُحسب عليه كل الأرقام.
+        
+زيادة الدفعة المقدمة تخفض القسط الشهري وتقلل إجمالي الفائدة، لكنها تحجز سيولة قد تحتاجها لاحتياط أو تكاليف النقل والتأثيث. وازن بين تخفيض الأقساط والحفاظ على هامش أمان مالي.`,
+        },
+        {
+          heading: 'معادلة القسط الثابت',
+          body: `تُحسب الأقساط بمعادلة القسط الثابت: حوّل النسبة السنوية إلى شهرية بقسمتها على 12، وحدد عدد الأشهر بضرب السنوات في 12، ثم طبّق: القسط الشهري = مبلغ القرض × المعدل الشهري × (1 + المعدل الشهري)^عدد الأشهر ÷ ((1 + المعدل الشهري)^عدد الأشهر − 1).
+        
+الحاسبة تنفذ هذه المعادلة تلقائياً وترصد في جدول السداد السنوي توزيع كل سنة بين أصل الدين والفائدة والرصيد المتبقي.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: عقار بقيمة **200,000 دينار** ودفعة مقدمة **40,000 دينار**، بفائدة **5% سنوياً** ولمدة **20 سنة**، ورسوم **1,000 دينار**.
+        
+مبلغ القرض الفعلي 160,000 دينار، والقسط الشهري ≈ **1,056 ديناراً**، وإجمالي الفائدة ≈ **93,416 ديناراً**، والتكلفة الكلية الفعلية (الأقساط + المقدم + الرسوم) ≈ **294,416 ديناراً**.`,
+        },
+        {
+          heading: 'قراءة جدول السداد السنوي',
+          body: `يعرض الجدول لكل سنة: المبلغ المدفوع فيها، وحصة أصل الدين، وحصة الفائدة، والرصيد المتبقي بعد السنة. ستلاحظ أن الفائدة السنوية تتناقص مع تقدم السداد، بينما تزداد حصة أصل الدين.
+        
+استخدم الجدول لتقدر متى ينخفض رصيدك بسرعة، ولتفهم كم من أقساطك يذهب فائدة فعلاً — وهو ما يفيدك عند مقارنة عروض تمويل مختلفة.`,
+        },
+        {
+          heading: 'افتراضات الحساب',
+          body: `تفترض الحاسبة سعر فائدة **ثابتاً** طوال المدة وسداداً شهرياً منتظماً. تُضاف الدفعة المقدمة والرسوم إلى التكلفة الكلية، ولا تُحتسب رسوم التأمين أو الرسوم المتأخرة أو رسوم السداد المبكر.
+        
+النتائج تقديرية ولا تشمل فروقات أسعار الصرف أو اللوائح المحلية. تحقق دائماً من شروط العقد والجهة المموِّلة قبل اتخاذ القرار، وعند الشك استشر جهة مختصة.`,
+        },
+      ],
+      keyTakeaways: [
+        'القسط الشهري يشمل أصل الدين والفائدة فقط، دون التأمين أو الرسوم الشهرية.',
+        'مبلغ القرض الفعلي هو سعر العقار بعد خصم الدفعة المقدمة.',
+        'زيادة الدفعة المقدمة تخفض القسط وإجمالي الفائدة معاً.',
+        'قارن عروض التمويل بالتكلفة الكلية وليس القسط الشهري وحده.',
+        'النتائج تقديرية تفترض فائدة ثابتة وسداداً منتظماً.',
+      ],
+      faqs: [
+        {
+          q: 'هل يشمل القسط الشهري التأمين؟',
+          a: 'لا يشمل الحساب التأمين أو الرسوم الشهرية إلا إذا أضفتها ضمن الرسوم. استفسر من المُقرِض عن التكاليف الإضافية قبل الالتزام.',
+        },
+        {
+          q: 'ماذا لو كان سعر الفائدة متغيراً؟',
+          a: 'تفترض الحاسبة سعراً ثابتاً. في القروض المتغيرة استخدم سعراً تقديرياً واعلم أن الأقساط ستتغير مع السعر.',
+        },
+        {
+          q: 'هل جدول السداد يعكس الكشف الرسمي؟',
+          a: 'يعرض الجدول رصيداً تقريبياً قد يختلف قليلاً عن كشف المُقرِض بسبب التقريب والرسوم الفعلية، فاستخدمه كمرجع للتخطيط.',
+        },
+      ],
+      relatedCalculators: ['mortgage', 'loan-payment', 'early-payoff'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-calculate-a-mortgage',
+      locale: 'en',
+      title: 'How to calculate a mortgage',
+      metaDescription:
+        'A practical guide to calculating a mortgage’s monthly payment with down payment, interest and fees, with a worked example matching the mortgage calculator and an annual schedule.',
+      intro:
+        'Buying a home with a mortgage is the largest financial commitment many people take on, and knowing the monthly payment and total cost before signing matters. This guide explains how mortgage payments are calculated, why the down payment matters, and how to read the annual repayment schedule. The worked example mirrors the values used by Klar’s mortgage calculator.',
+      sections: [
+        {
+          heading: 'What makes up the mortgage payment',
+          body: `A fixed-rate mortgage payment has two parts: the **principal share** (the part that reduces the amount you borrowed) and the **interest share** (the cost of borrowing the money). Their balance shifts over time: in the early years a larger share goes to interest, then the ratio flips as the term nears its end.
+        
+Payments do not include insurance, monthly charges or property taxes unless you add them to the fees. Keep that in mind when budgeting.`,
+        },
+        {
+          heading: 'The effect of the down payment',
+          body: `The actual loan amount is **the property price minus the down payment**, and interest is charged on that amount, not on the price. If a property costs 1,000,000 riyals and you put down 200,000, the loan is 800,000 and all figures are based on it.
+        
+A bigger down payment lowers the monthly payment and total interest, but it ties up cash you may need as a buffer or for moving and furnishing costs. Balance lower payments against keeping a financial safety margin.`,
+        },
+        {
+          heading: 'The fixed-payment formula',
+          body: `Payments use the fixed-rate annuity formula: convert the annual rate to a monthly rate by dividing by 12, convert the term to months, then apply: monthly payment = loan amount × monthly rate × (1 + monthly rate)^months ÷ ((1 + monthly rate)^months − 1).
+        
+The calculator runs this formula for you and records in the annual schedule how each year splits between principal, interest and remaining balance.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the same values as the calculator: a **200,000 dinar** property with a **40,000 dinar** down payment, at **5% per year** for **20 years**, with **1,000 dinars** in fees.
+        
+The loan amount is 160,000 dinars, the monthly payment about **1,056 dinars**, total interest about **93,416 dinars**, and the effective total cost (payments + down payment + fees) about **294,416 dinars**.`,
+        },
+        {
+          heading: 'Reading the annual schedule',
+          body: `The table shows, for each year: the amount paid, the principal share, the interest share, and the balance after that year. You will see interest fall each year while the principal share rises.
+        
+Use the table to see when your balance drops quickly and to understand how much of your payments is actually interest — useful when comparing financing offers.`,
+        },
+        {
+          heading: 'Assumptions',
+          body: `The calculator assumes a **fixed** interest rate for the whole term and regular monthly payments. The down payment and fees are added to the total cost, and insurance, late fees or early-repayment charges are not included.
+        
+Results are estimates and do not cover exchange-rate changes or local regulations. Always check the contract terms with the lender before deciding, and seek professional advice when in doubt.`,
+        },
+      ],
+      keyTakeaways: [
+        'The monthly payment covers principal and interest only, not insurance or monthly charges.',
+        'The actual loan amount is the price minus the down payment.',
+        'A larger down payment lowers both the payment and total interest.',
+        'Compare financing offers on total cost, not just the monthly payment.',
+        'Results assume a fixed rate and regular payments.',
+      ],
+      faqs: [
+        {
+          q: 'Does the monthly payment include insurance?',
+          a: 'Insurance and monthly charges are only included if you add them to the fees. Ask the lender about additional costs before committing.',
+        },
+        {
+          q: 'What if the interest rate is variable?',
+          a: 'The calculator assumes a fixed rate. On a variable-rate loan, use an estimated rate and expect payments to move with the rate.',
+        },
+        {
+          q: 'Does the schedule match the official statement?',
+          a: 'The table shows an approximate balance that may differ slightly from the lender\u2019s statement due to rounding and actual fees, so treat it as a planning reference.',
+        },
+      ],
+      relatedCalculators: ['mortgage', 'loan-payment', 'early-payoff'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-to-compare-loan-offers': {
+    ar: {
+      slug: 'how-to-compare-loan-offers',
+      locale: 'ar',
+      title: 'كيف تقارن عروض القروض',
+      metaDescription:
+        'دليل عملي لمقارنة عروض القروض بالقسط الشهري والتكلفة الكلية معاً، مع مثال عددي مطابق لحاسبة مقارنة القروض.',
+      intro:
+        'اختيار القرض الأرخص ليس مجرد مقارنة أسعار فائدة: المدة والرسوم يغيران الصورة كلياً. يشرح هذا الدليل الأرقام التي يجب أن تقارنها، ولماذا قد يكون العرض ذو القسط الأصغر أغلى في النهاية. يتبع المثال الوارد هنا نفس القيم التي تستخدمها حاسبة مقارنة القروض في كلار.',
+      sections: [
+        {
+          heading: 'الأرقام التي يجب مقارنتها',
+          body: `عند مقارنة عروض القروض انظر إلى ثلاث أرقام معاً: **القسط الشهري** (لقياس ملاءمته لدخلك)، **إجمالي الفائدة** (تكلفة الاقتراض)، و**التكلفة الكلية** وهي الأقساط مضافاً إليها الرسوم. القاعدة الذهبية: قارن العروض على **نفس مبلغ القرض**، وإلا كانت المقارنة غير عادلة.
+        
+حاسبة مقارنة القروض تعرض هذين العرضين جنباً إلى جنب وتُظهر الفرق في التكلفة مباشرة.`,
+        },
+        {
+          heading: 'لماذا القسط الأصغر قد يكون أغلى',
+          body: `العرض ذو المدة الأطول يعطي قسطاً شهرياً أصغر لأن سداد المبلغ موزع على أشهر أكثر، لكنه يدفع فائدة أكبر في المجمل. والعرض ذو الرسوم الأعلى قد يبدو أرخص من ناحية الفائدة ويزيد تكلفته الكلية.
+        
+قارن دائماً التكلفة الكلية (الأقساط + الرسوم) كمعيار أساسي، ثم استخدم القسط الشهري لتقييم القدرة على السداد.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: قرض بقيمة **50,000 دينار**. العرض الأول بفائدة **6% سنوياً** لمدة **5 سنوات** ورسوم **300 دينار**، والعرض الثاني بفائدة **7.5% سنوياً** لمدة **5 سنوات** بلا رسوم.
+        
+قسط العرض الأول ≈ **966.64 دينار** وتكلفته ≈ **58,298 ديناراً**، بينما قسط العرض الثاني ≈ **1,001.90 دينار** وتكلفته ≈ **60,114 ديناراً**. الفرق في التكلفة ≈ **−1,815 ديناراً** لصالح العرض الأول، رغم أن الفرق في القسط الشهري يبدو صغيراً.`,
+        },
+        {
+          heading: 'عندما تختلف المدد',
+          body: `يمكن مقارنة عرضين بمدد مختلفة، لكن انتبه أن المدة الأطول تقلل القسط وترفع إجمالي الفائدة معاً. لتقارن بدقة، اسأل نفسك: هل أفضّل قسطاً أعلى لفترة أقصر، أم قسطاً أقل لفترة أطول؟ الإجابة تعتمد على دخلك الشهري وخطتك المالية.
+        
+إذا كانت العروض مختلفة في مبالغ القرض، احسب كل عرض منفصلاً وقارن النسب والتكاليف النسبية.`,
+        },
+        {
+          heading: 'افتراضات المقارنة',
+          body: `تفترض المقارنة سعر فائدة **ثابتاً** وسداداً شهرياً منتظماً، وأن الرسوم المدخلة تُضاف إلى التكلفة الكلية. النتائج تقديرية ولا تشمل رسوماً قد تظهر لاحقاً كرسوم السداد المبكر أو غرامات التأخير.
+        
+تحقق من شروط كل عرض لدى المُقرِض، بما فيها أي شروط خفية، قبل اتخاذ القرار النهائي.`,
+        },
+      ],
+      keyTakeaways: [
+        'قارن التكلفة الكلية (الأقساط + الرسوم) وليس القسط الشهري وحده.',
+        'المقارنة العادلة تكون على نفس مبلغ القرض.',
+        'المدة الأطول تقلل القسط وترفع إجمالي الفائدة معاً.',
+        'الرسوم تدخل في التكلفة الكلية وتغير صورة المقارنة.',
+        'تحقق من الشروط الخفية لدى المُقرِض قبل التوقيع.',
+      ],
+      faqs: [
+        {
+          q: 'أي رقم هو الأهم عند الاختيار؟',
+          a: 'التكلفة الكلية هي المعيار الأساسي، يليها القسط الشهري من حيث ملاءمته لدخلك. سعر الفائدة وحده لا يروي القصة كاملة.',
+        },
+        {
+          q: 'هل يمكن مقارنة عرضين بمبلغين مختلفين؟',
+          a: 'صُممت الحاسبة لمقارنة عرضين على نفس المبلغ. لمبالغ مختلفة احسب كل عرض على حدة ثم قارن النسب.',
+        },
+        {
+          q: 'ماذا لو كان أحد العرضين بلا رسوم؟',
+          a: 'أدخل صفراً في رسوم ذلك العرض، وستظهر التكلفة الكلية صافية لتعكس الفرق بدقة.',
+        },
+      ],
+      relatedCalculators: ['loan-comparison', 'loan-payment', 'early-payoff'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-compare-loan-offers',
+      locale: 'en',
+      title: 'How to compare loan offers',
+      metaDescription:
+        'A practical guide to comparing loan offers by monthly payment and total cost together, with a worked example matching the loan comparison calculator.',
+      intro:
+        'Choosing the cheapest loan is not just about comparing interest rates: the term and fees change the picture completely. This guide explains which numbers to compare and why the offer with the smaller payment can end up costing more. The worked example mirrors the values used by Klar’s loan comparison calculator.',
+      sections: [
+        {
+          heading: 'The numbers to compare',
+          body: `When comparing loan offers, look at three numbers together: the **monthly payment** (to judge whether it fits your income), **total interest** (the cost of borrowing), and the **total cost** — the payments plus fees. The golden rule: compare offers on the **same loan amount**, otherwise the comparison is unfair.
+        
+The loan comparison calculator places two offers side by side and shows the cost difference directly.`,
+        },
+        {
+          heading: 'Why the smaller payment can cost more',
+          body: `An offer with a longer term gives a smaller monthly payment because the amount is spread over more months, but it pays more interest overall. And an offer with higher fees can look cheaper on interest while costing more in total.
+        
+Always compare the total cost (payments + fees) as the primary criterion, then use the monthly payment to gauge affordability.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the same values as the calculator: a **50,000 dinar** loan. Offer A at **6% per year** for **5 years** with **300 dinars** in fees, and offer B at **7.5% per year** for **5 years** with no fees.
+        
+Offer A\u2019s payment is about **966.64 dinars** and its cost about **58,298 dinars**, while offer B\u2019s payment is about **1,001.90 dinars** and its cost about **60,114 dinars**. The cost difference is about **\u22121,815 dinars** in favor of offer A, even though the monthly gap looks small.`,
+        },
+        {
+          heading: 'When the terms differ',
+          body: `You can compare two offers with different terms, but note that the longer term lowers the payment and raises total interest at the same time. Ask yourself: would I prefer a higher payment over a shorter period, or a lower payment over a longer one? The answer depends on your income and plans.
+        
+If the offers have different loan amounts, run each separately and compare the rates and relative costs.`,
+        },
+        {
+          heading: 'Assumptions',
+          body: `The comparison assumes a **fixed** interest rate and regular monthly payments, with the entered fees added to the total cost. Results are estimates and do not cover charges that may appear later, such as early-payoff fees or late penalties.
+        
+Check each offer\u2019s terms with the lender, including any hidden conditions, before making a final decision.`,
+        },
+      ],
+      keyTakeaways: [
+        'Compare total cost (payments + fees), not just the monthly payment.',
+        'A fair comparison uses the same loan amount.',
+        'A longer term lowers the payment and raises total interest.',
+        'Fees count toward total cost and change the picture.',
+        'Check for hidden terms with the lender before signing.',
+      ],
+      faqs: [
+        {
+          q: 'Which number matters most?',
+          a: 'Total cost is the primary criterion, followed by how well the monthly payment fits your income. The interest rate alone does not tell the whole story.',
+        },
+        {
+          q: 'Can I compare two offers with different amounts?',
+          a: 'The calculator is designed to compare offers on the same amount. For different amounts, run each separately and compare the rates.',
+        },
+        {
+          q: 'What if one offer has no fees?',
+          a: 'Enter 0 for that offer\u2019s fees and the total cost will reflect the difference accurately.',
+        },
+      ],
+      relatedCalculators: ['loan-comparison', 'loan-payment', 'early-payoff'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-early-loan-payoff-works': {
+    ar: {
+      slug: 'how-early-loan-payoff-works',
+      locale: 'ar',
+      title: 'كيف يعمل السداد المبكر للقرض',
+      metaDescription:
+        'دليل عملي لفهم أثر الدفعات الإضافية على القرض: تقصير المدة وتوفير الفائدة، مع مثال عددي مطابق لحاسبة السداد المبكر.',
+      intro:
+        'الدفعة الإضافية الصغيرة شهرياً على قرضك قد تختصر سنوات من مدة السداد وتوفر مبالغ من الفائدة أكبر مما تتصور. يشرح هذا الدليل كيف يعمل السداد المبكر، ومتى يستحق فعلاً، وما الافتراضات التي تقوم عليها النتيجة. يتبع المثال الوارد هنا نفس القيم التي تستخدمها حاسبة السداد المبكر في كلار.',
+      sections: [
+        {
+          heading: 'إلى أين تذهب الدفعة الإضافية؟',
+          body: `عندما تسدد قسطاً، تُحتسب **الفائدة الشهرية** على الرصيد المتبقي أولاً، ثم يذهب الباقي إلى **أصل الدين**. الدفعة الإضافية تُضاف إلى هذا الباقي فتخفض أصل الدين مباشرة، أي تخفض الرصيد الذي تُحسب عليه الفائدة في الأشهر التالية.
+        
+هذا هو جوهر السداد المبكر: كل دفعة إضافية تقلل الأساس الذي تنمو عليه الفائدة، فتنخفض الفائدة في كل شهر لاحق.`,
+        },
+        {
+          heading: 'لماذا توفر الفائدة بهذه السرعة؟',
+          body: `لأن الفائدة تُحتسب على الرصيد المتبقي، فإن إنقاص الرصيد مبكراً له أثر تراكمي: تدفع فائدة أقل هذا الشهر، فيبقى من رصيدك أقل مما لو لم تدفع، فتكون الفائدة الشهر القادم أقل أيضاً. هذا الأثر يتراكم شهراً بعد شهر حتى النهاية.
+        
+لهذا، الدفعات الإضافية في **السنوات الأولى** من القرض توفر فائدة أكثر من دفعات مماثلة قرب نهاية المدة، لأن الرصيد الذي تقلصه ما زال كبيراً.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: قرض بقيمة **20,000 دينار** بفائدة **6% سنوياً** ولمدة **5 سنوات**، مع دفعة إضافية شهرية **100 دينار**.
+        
+القسط الشهري الأساسي ≈ **386.66 دينار** والمدة الأساسية **60 شهراً**. مع الدفعة الإضافية تقصر المدة إلى نحو **54 شهراً** وتوفر فائدة تزيد على **500 دينار**، بأثر لا يظهر لو اقتصرت على القسط الأساسي.`,
+        },
+        {
+          heading: 'متى لا يكون السداد المبكر مفيداً؟',
+          body: `على قرض **بدون فائدة** لن توفر فائدة، لكن مدة السداد ستقصر ببساطة. وإذا كان لدى المُقرِض **رسوم سداد مبكر** فقد تلتهم جزءاً من الوفورات، خاصة إذا كانت رسوماً ثابتة كبيرة.
+        
+قارن دائماً الوفورات المتوقعة مع الرسوم، واستشر المُقرِض بشأن سياسة السداد المبكر قبل الالتزام بدفعات إضافية.`,
+        },
+        {
+          heading: 'افتراضات الحساب',
+          body: `تفترض الحاسبة فائدة **ثابتة** ودفعة إضافية **ثابتة شهرياً** تُدفع بجانب القسط الأساسي، وأن الرصيد يُخفَّض بعد احتساب الفائدة الشهرية. النتائج تقديرية وقد تختلف عن كشف المُقرِض بسبب رسوم السداد المبكر أو تغير سعر الفائدة.
+        
+استخدم النتيجة كمقدّرة للتخطيط، وتحقق من شروط عقدك الفعلية.`,
+        },
+      ],
+      keyTakeaways: [
+        'الدفعة الإضافية تقلص أصل الدين بعد احتساب الفائدة الشهرية.',
+        'الوفورات تتراكم لأن الفائدة تُحسب على رصيد أصغر شهراً بعد شهر.',
+        'الدفعات الإضافية في السنوات الأولى توفر فائدة أكثر.',
+        'على القرض بدون فائدة يقصر الأجل فقط دون وفرة.',
+        'انتبه لرسوم السداد المبكر التي قد يفرضها المُقرِض.',
+      ],
+      faqs: [
+        {
+          q: 'هل تذهب الدفعة الإضافية كاملة إلى أصل الدين؟',
+          a: 'يُقتطع القسط الشهري (الأساسي + الإضافي) لتغطية الفائدة أولاً ثم أصل الدين؛ الإضافي يسرّع تقليص الرصيد ويقلل الفائدة المستقبلية.',
+        },
+        {
+          q: 'ماذا لو دفعت مبلغاً إضافياً مرة واحدة؟',
+          a: 'الحاسبة تفترض دفعة شهرية ثابتة. للدفعة الواحدة الأثر أصغر، لكنه يتصرف بالمبدأ نفسه: تقليص الرصيد اليوم يوفر فائدة لاحقاً.',
+        },
+        {
+          q: 'هل ينفع السداد المبكر على كل القروض؟',
+          a: 'ينفع غالباً على القروض ذات الفائدة، خصوصاً في بدايتها. على القروض بدون فائدة أو مع رسوم سداد مبكر عالية، قد لا يكون مبرراً مالياً.',
+        },
+      ],
+      relatedCalculators: ['early-payoff', 'loan-payment', 'mortgage'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-early-loan-payoff-works',
+      locale: 'en',
+      title: 'How early loan payoff works',
+      metaDescription:
+        'A practical guide to how extra payments affect your loan — a shorter term and less interest — with a worked example matching the early payoff calculator.',
+      intro:
+        'A small extra monthly payment on your loan can shave years off the term and save more interest than you might expect. This guide explains how early payoff works, when it is actually worthwhile, and the assumptions behind the result. The worked example mirrors the values used by Klar’s early payoff calculator.',
+      sections: [
+        {
+          heading: 'Where the extra payment goes',
+          body: `When you make a payment, **monthly interest** is charged on the remaining balance first, then the rest goes to the **principal**. An extra payment adds to that remainder, reducing the principal directly — which lowers the balance on which future interest is charged.
+        
+That is the essence of early payoff: each extra payment shrinks the base on which interest grows, so interest falls in every following month.`,
+        },
+        {
+          heading: 'Why interest falls so fast',
+          body: `Because interest is charged on the remaining balance, reducing it early has a compounding effect: you pay less interest this month, so your balance is lower than it would otherwise be, and next month\u2019s interest is lower too. The effect builds month after month.
+        
+That is why extra payments in the **early years** of a loan save more interest than similar payments near the end: the balance you reduce is still large.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the same values as the calculator: a **20,000 dinar** loan at **6% per year** for **5 years**, with an extra **100 dinars** each month.
+        
+The baseline payment is about **386.66 dinars** over **60 months**. With the extra payment the term drops to about **54 months**, saving over **500 dinars** in interest — savings that never appear if you stick to the base payment.`,
+        },
+        {
+          heading: 'When early payoff is not worth it',
+          body: `On a **zero-interest** loan you save no interest, though the term still shortens. And if your lender charges **early-payoff fees**, they may eat into the savings, especially fixed fees.
+        
+Always weigh the expected savings against the fees, and ask the lender about their early-payoff policy before committing to extra payments.`,
+        },
+        {
+          heading: 'Assumptions',
+          body: `The calculator assumes a **fixed** rate and a **constant monthly** extra payment made alongside the base payment, with the balance reduced after monthly interest is charged. Results are estimates and may differ from your lender\u2019s statement due to early-payoff fees or rate changes.
+        
+Use the result as a planning estimate and check the actual terms of your contract.`,
+        },
+      ],
+      keyTakeaways: [
+        'An extra payment reduces the principal after monthly interest is charged.',
+        'Savings compound because interest is charged on a smaller balance each month.',
+        'Extra payments in the early years save the most interest.',
+        'On a zero-interest loan only the term shortens — no interest is saved.',
+        'Watch out for early-payoff fees from your lender.',
+      ],
+      faqs: [
+        {
+          q: 'Does the whole extra payment go to the principal?',
+          a: 'The monthly payment (base plus extra) covers interest first, then principal; the extra speeds up the balance reduction and lowers future interest.',
+        },
+        {
+          q: 'What if I only pay extra once?',
+          a: 'The calculator assumes a constant monthly extra. A one-off payment has a smaller effect, but works the same way: reducing the balance today saves interest later.',
+        },
+        {
+          q: 'Is early payoff worth it on every loan?',
+          a: 'Usually on interest-bearing loans, especially early in the term. On zero-interest loans or loans with high early-payoff fees it may not make financial sense.',
+        },
+      ],
+      relatedCalculators: ['early-payoff', 'loan-payment', 'mortgage'],
+      lastReviewed: '2026-08-10',
+    },
+  },
 };
 
 export default guides;

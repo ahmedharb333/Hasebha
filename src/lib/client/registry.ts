@@ -17,6 +17,9 @@ export const mathLoaders: Record<string, MathLoader> = {
   'freelance-rate': () => import('../calculators/freelance.ts'),
   'employee-cost': () => import('../calculators/employee-cost.ts'),
   'leave-balance': () => import('../calculators/leave.ts'),
+  mortgage: () => import('../calculators/mortgage.ts'),
+  'loan-comparison': () => import('../calculators/loan-comparison.ts'),
+  'early-payoff': () => import('../calculators/early-payoff.ts'),
 };
 
 export async function loadMath(slug: string): Promise<CalculatorMath> {

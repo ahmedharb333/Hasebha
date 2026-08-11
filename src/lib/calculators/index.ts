@@ -9,6 +9,9 @@ import overtimePay from './overtime.ts';
 import freelanceRate from './freelance.ts';
 import employeeCost from './employee-cost.ts';
 import leaveBalance from './leave.ts';
+import mortgage from './mortgage.ts';
+import loanComparison from './loan-comparison.ts';
+import earlyPayoff from './early-payoff.ts';
 
 const registry: Record<string, CalculatorMath> = {
   'loan-payment': loanPayment,
@@ -21,6 +24,9 @@ const registry: Record<string, CalculatorMath> = {
   'freelance-rate': freelanceRate,
   'employee-cost': employeeCost,
   'leave-balance': leaveBalance,
+  mortgage,
+  'loan-comparison': loanComparison,
+  'early-payoff': earlyPayoff,
 };
 
 export function getMath(slug: string): CalculatorMath {
