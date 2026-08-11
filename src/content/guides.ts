@@ -3101,6 +3101,410 @@ At the other end, if the needed score is 0 or below, your target is already secu
       lastReviewed: '2026-08-10',
     },
   },
+
+  'how-to-calculate-age': {
+    ar: {
+      slug: 'how-to-calculate-age',
+      locale: 'ar',
+      title: 'كيف تحسب العمر',
+      metaDescription:
+        'دليل عملي لحساب العمر بالتقويم الميلادي: الفرق التقويمي بين تاريخين، معالجة السنوات الكبيسة والمواليد في 29 فبراير، ومثال عددي مطابق لحاسبة العمر.',
+      intro:
+        'العمر رقم تقويمي: يُحسب بين تاريخ الميلاد وتاريخ معيّن بالسنوات والشهور والأيام. يشرح هذا الدليل كيف تعمل الحاسبة، وكيف تُعامل السنوات الكبيسة وأعياد الميلاد في 29 فبراير، مع مثال عددي مطابق لقيم حاسبة العمر في كلار.',
+      sections: [
+        {
+          heading: 'العمر حساب تقويمي لا زمني',
+          body: `العمر هنا يعني الفرق التقويمي بين تاريخ الميلاد وتاريخ الحساب: سنوات وشهور وأيام كاملة. لا يُحتسب الوقت من اليوم (ساعات ودقائق)، فالحساب على مستوى التواريخ وليس الطوابع الزمنية.
+          
+يُعالج الحساب أطوال الشهور المختلفة والسنوات الكبيسة تلقائياً، لأنه مبني على التقويم وليس على عدد ثابت من الأيام.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: مواليد **2000-01-01** حتى **2024-01-01**.
+          
+النتيجة: العمر **24** سنة، أي **288** شهراً، أو **8,766** يوماً، أو **1,252** أسبوعاً. أيام حتى عيد الميلاد القادم: **0**.`,
+        },
+        {
+          heading: 'السنوات الكبيسة ومواليد 29 فبراير',
+          body: `في السنوات غير الكبيسة يُحتسب عيد ميلاد المولود في 29 فبراير في 28 فبراير أو 1 مارس حسب التقويم. تعتمد الحاسبة التقويم لا عدد الأيام الفعلية، فيكون العمر دقيقاً على أساس التقويم.`,
+        },
+        {
+          heading: 'أخطاء شائعة',
+          body: `من الأخطاء: الخلط بين التاريخ الهجري والميلادي (الحاسبة ميلادية حصراً)، وإدخال تاريخ الحساب نفسه كتاريخ ميلاد (يعطي عمراً صفراً)، وافتراض أن العمر يُقاس بالساعات والدقائق بدلاً من التواريخ.`,
+        },
+      ],
+      keyTakeaways: [
+        'العمر = الفرق التقويمي بالسنوات والشهور والأيام بين تاريخ الميلاد وتاريخ الحساب.',
+        'تاريخ الحساب شامل: يشمل يوم العمر نفسه.',
+        'الحساب بالتقويم الميلادي حصراً، ولا يُحتسب وقت اليوم.',
+        'يُعالج يوم 29 فبراير في السنوات غير الكبيسة كـ 28 فبراير أو 1 مارس.',
+      ],
+      faqs: [
+        {
+          q: 'كيف تُعالج الحاسبة مواليد 29 فبراير؟',
+          a: 'في السنوات غير الكبيسة يُحتسب العيد في 28 فبراير أو 1 مارس حسب التقويم، ويُعامل العمر على أساس التقويم لا الأيام الفعلية.',
+        },
+        {
+          q: 'هل الحاسبة بالتاريخ الهجري أم الميلادي؟',
+          a: 'ميلادية فقط. لحساب العمر بالهجري حوّل التاريخ الهجري إلى ميلادي أولاً.',
+        },
+      ],
+      relatedCalculators: ['age', 'date-difference'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-calculate-age',
+      locale: 'en',
+      title: 'How to calculate age',
+      metaDescription:
+        'A practical guide to age on the Gregorian calendar: the calendar difference between two dates, handling leap years and 29 February birthdays, with a worked example matching the age calculator.',
+      intro:
+        'Age is a calendar number: it is computed between a birth date and a given date in years, months and days. This guide explains how the calculator works, how it handles leap years and 29 February birthdays, and gives a worked example matching Klar\u2019s age calculator.',
+      sections: [
+        {
+          heading: 'Age is a calendar calculation, not a time one',
+          body: `Age here means the calendar difference between the birth date and the calculation date: complete years, months and days. Time of day (hours and minutes) is not counted \u2014 the math runs on dates, not timestamps.
+          
+The calculation handles varying month lengths and leap years automatically, because it is calendar-based rather than a fixed day count.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the calculator\u2019s values: born **2000-01-01**, as of **2024-01-01**.
+          
+The result: age **24** years, that is **288** months, or **8,766** days, or **1,252** weeks. Days until next birthday: **0**.`,
+        },
+        {
+          heading: 'Leap years and 29 February birthdays',
+          body: `In non-leap years, someone born on 29 February is counted as turning a year older on 28 February or 1 March per the calendar. The calculator follows the calendar rather than the actual day count, so the age stays precise on a calendar basis.`,
+        },
+        {
+          heading: 'Common mistakes',
+          body: `Among the mistakes: mixing Hijri and Gregorian dates (the calculator is Gregorian only), entering the calculation date as the birth date (yields age zero), and assuming age is measured in hours and minutes rather than dates.`,
+        },
+      ],
+      keyTakeaways: [
+        'Age = the calendar difference in years, months and days between birth and the calculation date.',
+        'The calculation date is inclusive: it includes the day of the age itself.',
+        'The calculation is Gregorian only, and time of day is not counted.',
+        '29 February birthdays count on 28 February or 1 March in non-leap years.',
+      ],
+      faqs: [
+        {
+          q: 'How does the calculator handle 29 February births?',
+          a: 'In non-leap years the birthday counts on 28 February or 1 March per the calendar, and age is handled on a calendar basis rather than actual days.',
+        },
+        {
+          q: 'Is the calculator Hijri or Gregorian?',
+          a: 'Gregorian only. To compute a Hijri age, first convert the Hijri date to Gregorian.',
+        },
+      ],
+      relatedCalculators: ['age', 'date-difference'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-to-count-days-between-dates': {
+    ar: {
+      slug: 'how-to-count-days-between-dates',
+      locale: 'ar',
+      title: 'كيف تعد الأيام بين تاريخين',
+      metaDescription:
+        'دليل عملي لعد الأيام بين تاريخين: التفصيل التقويمي بالسنوات والشهور والأيام، والعدد الدقيق للأيام والأسابيع، مع مثال عددي مطابق لحاسبة الفرق بين تاريخين.',
+      intro:
+        'حساب المدة بين تاريخين يظهر بوجهين: تفصيل تقويمي بالسنوات والشهور والأيام، وعدد إجمالي دقيق للأيام والأسابيع. يشرح هذا الدليل متى تستخدم أيهما، وماذا تعني البقية في صف الأيام، مع مثال عددي مطابق لحاسبة الفرق بين تاريخين في كلار.',
+      sections: [
+        {
+          heading: 'التفصيل التقويمي مقابل العدد الدقيق',
+          body: `التفصيل (سنوات وشهور وأيام) تقويمي: صف **الأيام** هو البقية بعد الأشهر الكاملة، وليس إجمالي الأيام. أما **إجمالي الأيام** فهو العدد الفعلي الدقيق، و**إجمالي الأسابيع** هو إجمالي الأيام مقسوماً على 7.
+          
+استخدم التفصيل عندما تريد المدة المعتادة في العقود والحسابات، وإجمالي الأيام عندما تريد العدد الحرفي.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: **2020-01-01** إلى **2024-01-01**.
+          
+النتيجة: **4** سنوات، **0** شهر، **0** يوم. إجمالي الأيام **1,461** (لأن سنة 2020 كبيسة)، أي **208** أسابيع.`,
+        },
+        {
+          heading: 'تاريخ النهاية مشمول',
+          body: `يُحسب الفرق بطريقة تشمل يوم النهاية كجزء من المدة، بمقارنة التواريخ عند منتصف الليل بالتوقيت المحلي. هذا يفسر لماذا يكون إجمالي الأيام من 2020-01-01 إلى 2024-01-01 هو 1,461 وليس 1,460.`,
+        },
+        {
+          heading: 'أخطاء شائعة',
+          body: `من الأخطاء: عكس التاريخين (تمنعه الحاسبة بعرض خطأ)، والظن أن صف الأيام يساوي إجمالي الأيام، والخلط بين التاريخ الهجري والميلادي (الحساب ميلادي حصراً).`,
+        },
+      ],
+      keyTakeaways: [
+        'المدة تظهر تفصيلاً تقويمياً (سنوات وشهور وأيام) وعدداً دقيقاً (إجمالي الأيام والأسابيع).',
+        'صف الأيام هو البقية بعد الأشهر الكاملة، وليس إجمالي الأيام.',
+        'تاريخ النهاية مشمول في المدة.',
+        'إجمالي الأسابيع = إجمالي الأيام ÷ 7.',
+      ],
+      faqs: [
+        {
+          q: 'هل تاريخ النهاية مشمول في الحساب؟',
+          a: 'نعم، يُحسب الفرق بحيث يشمل يوم النهاية ضمن المدة، بمقارنة التواريخ عند منتصف الليل محلياً.',
+        },
+        {
+          q: 'كيف تُعالج أطوال الشهور المختلفة؟',
+          a: 'الحساب تقويمي: يضبط تلقائياً الفروق بين الشهور ذات الأطوال المختلفة والسنوات الكبيسة.',
+        },
+      ],
+      relatedCalculators: ['date-difference', 'age'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-count-days-between-dates',
+      locale: 'en',
+      title: 'How to count days between dates',
+      metaDescription:
+        'A practical guide to counting days between two dates: the calendar breakdown in years, months and days, and the exact total of days and weeks, with a worked example matching the date difference calculator.',
+      intro:
+        'The span between two dates appears two ways: a calendar breakdown into years, months and days, and an exact total of days and weeks. This guide explains when to use which, what the days residue means, and gives a worked example matching Klar\u2019s date difference calculator.',
+      sections: [
+        {
+          heading: 'Calendar breakdown vs exact count',
+          body: `The breakdown (years, months and days) is calendar-based: the **days** row is the residue after full months, not the total days. **Total days** is the actual exact count, and **total weeks** is total days divided by 7.
+          
+Use the breakdown when you want the conventional span used in contracts and everyday talk, and total days when you want the literal count.`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the calculator\u2019s values: **2020-01-01** to **2024-01-01**.
+          
+The result: **4** years, **0** months, **0** days. Total days **1,461** (2020 is a leap year), that is **208** weeks.`,
+        },
+        {
+          heading: 'The end date is included',
+          body: `The difference is computed so that the end date\u2019s day counts within the span, by comparing the dates at local midnight. That is why the total days from 2020-01-01 to 2024-01-01 is 1,461 and not 1,460.`,
+        },
+        {
+          heading: 'Common mistakes',
+          body: `Among the mistakes: reversing the two dates (the calculator blocks it with an error), expecting the days row to equal the total days, and mixing Hijri and Gregorian dates (the calculation is Gregorian only).`,
+        },
+      ],
+      keyTakeaways: [
+        'The span shows as a calendar breakdown (years, months and days) and an exact count (total days and weeks).',
+        'The days row is the residue after full months, not the total days.',
+        'The end date counts within the span.',
+        'Total weeks = total days \u00f7 7.',
+      ],
+      faqs: [
+        {
+          q: 'Is the end date included?',
+          a: 'Yes. The difference is computed so that the end date\u2019s day counts within the span, by comparing dates at local midnight.',
+        },
+        {
+          q: 'How are differing month lengths handled?',
+          a: 'The calculation is calendar-based: it adjusts automatically for months of different lengths and for leap years.',
+        },
+      ],
+      relatedCalculators: ['date-difference', 'age'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-to-tip-appropriately': {
+    ar: {
+      slug: 'how-to-tip-appropriately',
+      locale: 'ar',
+      title: 'كيف تترك إكرامية مناسبة',
+      metaDescription:
+        'دليل عملي لحساب الإكرامية: نسبة من الفاتورة تُضاف إليها، تقسيم المبلغ بين المجموعة، ومثال عددي مطابق لحاسبة الإكرامية.',
+      intro:
+        'الإكرامية عرف اجتماعي وليست إلزاماً قانونياً، لكن معرفة قيمتها الصحيحة تجعل الدفع أسهل. يشرح هذا الدليل كيف تُحسب الإكرامية من الفاتورة، وكيف تُقسم بين مجموعة، مع مثال عددي مطابق لحاسبة الإكرامية في كلار.',
+      sections: [
+        {
+          heading: 'الإكرامية نسبة من الفاتورة',
+          body: `الإكرامية تُحسب كنسبة مئوية من قيمة الفاتورة وتُضاف إليها: الإكرامية = الفاتورة × النسبة ÷ 100، والإجمالي = الفاتورة + الإكرامية.
+          
+لا توجد نسبة إلزامية؛ اختر النسبة حسب جودة الخدمة وأعراف بلدك (مثلاً 10% شائعة في كثير من الأماكن).`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: فاتورة **120** وإكرامية **10%** لـ**4** أشخاص.
+          
+النتيجة: الإكرامية **12**، والإجمالي **132**، ونصيب كل شخص **33**.`,
+        },
+        {
+          heading: 'تقسيم الفاتورة',
+          body: `إذا تركنا حقل عدد الأشخاص فارغاً يُفترض شخص واحد. وعند التقسيم، يُقسم **الإجمالي** (الفاتورة + الإكرامية) على عدد الأشخاص، وليس الفاتورة وحدها ثم تُضاف الإكرامية بعد التقسيم.`,
+        },
+        {
+          heading: 'أخطاء شائعة',
+          body: `من الأخطاء: حساب الإكرامية على سعر مخفّض ثم إضافتها للفاتورة الأصلية، واحتساب نصيب الفرد قبل الإضافة ثم إضافة الإكرامية بعد التقسيم (مما يضاعفها)، وظن أن تغيير العملة يحوّل المبلغ — العملة للتنسيق فقط.`,
+        },
+      ],
+      keyTakeaways: [
+        'الإكرامية = الفاتورة × النسبة ÷ 100، والإجمالي = الفاتورة + الإكرامية.',
+        'عدد الأشخاص يُفترض 1 إن تُرك فارغاً.',
+        'نصيب الشخص = الإجمالي (مع الإكرامية) ÷ عدد الأشخاص.',
+        'العملة للتنسيق فقط ولا يوجد تحويل بين العملات.',
+      ],
+      faqs: [
+        {
+          q: 'هل التقسيم مبني على الإجمالي مع الإكرامية؟',
+          a: 'نعم، يُقسم الإجمالي (الفاتورة + الإكرامية) على عدد الأشخاص.',
+        },
+        {
+          q: 'هل يمكنني الإكرامية بعملة مختلفة؟',
+          a: 'لا، العملة تحدد تنسيق العرض فقط ولا تُجري أي تحويل.',
+        },
+      ],
+      relatedCalculators: ['tip', 'unit-converter'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-tip-appropriately',
+      locale: 'en',
+      title: 'How to tip appropriately',
+      metaDescription:
+        'A practical guide to calculating a tip: a percentage of the bill added to it, splitting the amount within a group, and a worked example matching the tip calculator.',
+      intro:
+        'Tipping is a social convention rather than a legal obligation, but knowing the right figure makes paying easier. This guide explains how a tip is computed from the bill, how it is split within a group, and gives a worked example matching Klar\u2019s tip calculator.',
+      sections: [
+        {
+          heading: 'The tip is a percentage of the bill',
+          body: `A tip is computed as a percentage of the bill and added to it: tip = bill \u00d7 percentage \u00f7 100, and total = bill + tip.
+          
+There is no mandatory rate; choose the percentage by service quality and local norms (for example 10% is common in many places).`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the calculator\u2019s values: bill **120**, tip **10%**, for **4** people.
+          
+The result: tip **12**, total **132**, and each person pays **33**.`,
+        },
+        {
+          heading: 'Splitting the bill',
+          body: `If you leave the number of people empty, it defaults to one. When splitting, the **total** (bill + tip) is divided by the number of people \u2014 not the bill alone with the tip added after the split.`,
+        },
+        {
+          heading: 'Common mistakes',
+          body: `Among the mistakes: computing the tip on a discounted price and then adding it to the original bill, working out the per-person share before the tip and adding it again after the split (which doubles it), and assuming changing the currency converts the amount \u2014 the currency only formats it.`,
+        },
+      ],
+      keyTakeaways: [
+        'Tip = bill \u00d7 percentage \u00f7 100, and total = bill + tip.',
+        'The number of people defaults to 1 when left empty.',
+        'Per person = total (with tip) \u00f7 number of people.',
+        'The currency is display-only; there is no conversion between currencies.',
+      ],
+      faqs: [
+        {
+          q: 'Is the split based on the total with tip?',
+          a: 'Yes. The total (bill + tip) is divided by the number of people.',
+        },
+        {
+          q: 'Can I tip in a different currency?',
+          a: 'No. The currency only sets the display format and performs no conversion.',
+        },
+      ],
+      relatedCalculators: ['tip', 'unit-converter'],
+      lastReviewed: '2026-08-10',
+    },
+  },
+
+  'how-to-convert-units': {
+    ar: {
+      slug: 'how-to-convert-units',
+      locale: 'ar',
+      title: 'كيف تحوّل الوحدات',
+      metaDescription:
+        'دليل عملي لتحويل الوحدات: عوامل ثابتة لمعظم الفئات، وعلاقة إزاحة خاصة للحرارة، وجدول بكل التحويلات، ومثال عددي مطابق لمحول الوحدات.',
+      intro:
+        'التحويل بين الوحدات أسهل مما يبدو: معظم التحويلات تعتمد ضرب القيمة بعامل ثابت، أما الحرارة فلها علاقة إزاحة خاصة. يشرح هذا الدليل الفرق بينهما، وكيف تقرأ جدول التحويلات، مع مثال عددي مطابق لمحول الوحدات في كلار.',
+      sections: [
+        {
+          heading: 'التحويل بعوامل ثابتة',
+          body: `معظم الفئات (الطول والوزن والمساحة والحجم) تُحوّل بضرب القيمة بعامل ثابت حول وحدة أساس: متر للطول، كيلوغرام للوزن، لتر للحجم. على سبيل المثال 1 كم = 1000 م، و1 كغ = 2.20462 رطل تقريباً.
+          
+الوحدتان يجب أن تكونا من نفس الفئة: لا يمكن تحويل كيلوغرام (وزن) إلى لتر (حجم).`,
+        },
+        {
+          heading: 'الحرارة علاقة إزاحة لا نسبة',
+          body: `مقاييس الحرارة تبدأ من نقاط صفر مختلفة: كلفن من الصفر المطلق، ومئوية وفهرنهايت من نقطة صفر أخرى. لذلك التحويل خطي بإزاحة وليس نسبة ثابتة: 100 °مئوية = 212 °فهرنهايت، و0 °مئوية = 273.15 كلفن، و**−40 °مئوية = −40 °فهرنهايت** (نقطة التقاء المقياسين).`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: **1000** من **م** إلى **كم**.
+          
+النتيجة: **1** كم، ويعرض الجدول أن 1000 م = **1,000,000** ملم، وهكذا لكل وحدة في فئة الطول.`,
+        },
+        {
+          heading: 'أخطاء شائعة',
+          body: `من الأخطاء: الخلط بين الجالون الأمريكي والإمبراطوري (الحاسبة تستخدم الأمريكي)، ومحاولة تحويل وحدات من فئات مختلفة، واختيار نفس الوحدة للتحويل من وإلى (تمنعه الحاسبة بعرض خطأ)، وتجاهل أن مئوية وكلفن لا تتحولان بعامل ثابت.`,
+        },
+      ],
+      keyTakeaways: [
+        'معظم التحويلات = القيمة × عامل الوحدة المصدر ÷ عامل الوحدة الهدف.',
+        'الحرارة تحويل خطي بإزاحة: 100 °مئوية = 212 °فهرنهايت.',
+        'الوحدتان يجب أن تكونا من نفس الفئة.',
+        'تعرض الحاسبة جدولاً بكل التحويلات للفئة المختارة.',
+      ],
+      faqs: [
+        {
+          q: 'لماذا لا يمكنني تحويل الباوند إلى اللتر؟',
+          a: 'الباوند وزن واللتر حجم، وهما فئتان مختلفتان. التحويل ممكن فقط بين وحدات من نفس الفئة.',
+        },
+        {
+          q: 'هل تستخدم الحاسبة الجالون الأمريكي أم الإمبراطوري؟',
+          a: 'الجالون الأمريكي (3.785 لتر). الجالون الإمبراطوري أكبر (4.546 لتر).',
+        },
+      ],
+      relatedCalculators: ['unit-converter', 'tip'],
+      lastReviewed: '2026-08-10',
+    },
+    en: {
+      slug: 'how-to-convert-units',
+      locale: 'en',
+      title: 'How to convert units',
+      metaDescription:
+        'A practical guide to converting units: fixed factors for most categories, a special affine relationship for temperature, a table of every conversion, and a worked example matching the unit converter.',
+      intro:
+        'Converting units is easier than it looks: most conversions multiply the value by a fixed factor, while temperature has a special offset relationship. This guide explains the difference, how to read the conversion table, and gives a worked example matching Klar\u2019s unit converter.',
+      sections: [
+        {
+          heading: 'Conversion by fixed factors',
+          body: `Most categories (length, weight, area and volume) convert by multiplying the value by a fixed factor around a base unit: the metre for length, the kilogram for weight, the litre for volume. For example 1 km = 1000 m, and 1 kg \u2248 2.20462 lb.
+          
+Both units must belong to the same category: you cannot convert kilograms (weight) into litres (volume).`,
+        },
+        {
+          heading: 'Temperature is an offset, not a ratio',
+          body: `Temperature scales start from different zero points: Kelvin from absolute zero, Celsius and Fahrenheit from another zero. So the conversion is affine rather than a fixed ratio: 100 \u00b0C = 212 \u00b0F, 0 \u00b0C = 273.15 K, and **\u221240 \u00b0C = \u221240 \u00b0F** (the point where both scales meet).`,
+        },
+        {
+          heading: 'A worked example',
+          body: `Using the calculator\u2019s values: **1000** from **m** to **km**.
+          
+The result: **1** km, and the table shows 1000 m = **1,000,000** mm, and so on for every unit in the length category.`,
+        },
+        {
+          heading: 'Common mistakes',
+          body: `Among the mistakes: confusing the US gallon with the imperial gallon (the calculator uses the US one), trying to convert units from different categories, picking the same unit on both sides (the calculator blocks it with an error), and forgetting that Celsius and Kelvin do not convert by a fixed factor.`,
+        },
+      ],
+      keyTakeaways: [
+        'Most conversions = value \u00d7 source-unit factor \u00f7 target-unit factor.',
+        'Temperature converts by an offset: 100 \u00b0C = 212 \u00b0F.',
+        'Both units must belong to the same category.',
+        'The calculator shows a table of every conversion for the chosen category.',
+      ],
+      faqs: [
+        {
+          q: 'Why can\u2019t I convert pounds to litres?',
+          a: 'Pounds measure weight and litres measure volume \u2014 they are different categories. Conversion is only possible between units of the same category.',
+        },
+        {
+          q: 'Does the calculator use the US or imperial gallon?',
+          a: 'The US gallon (3.785 l). The imperial gallon is larger (4.546 l).',
+        },
+      ],
+      relatedCalculators: ['unit-converter', 'tip'],
+      lastReviewed: '2026-08-10',
+    },
+  },
 };
 
 export default guides;

@@ -2083,7 +2083,7 @@ git commit -m "feat(calc): education calculators - GPA, grade average, final gra
 
 **Date fields note:** `type: 'date'` fields emit `yyyy-mm-dd` values from `<input type="date">`. Math must parse ISO dates explicitly (not `new Date('yyyy-mm-dd')`, which is UTC — use local parsing `new Date(y, m-1, d)`).
 
-- [ ] **Step 1: Add 4 config entries (everyday, `active: true`)**
+- [x] **Step 1: Add 4 config entries (everyday, `active: true`)**
 
 ```ts
   {
@@ -2140,7 +2140,7 @@ git commit -m "feat(calc): education calculators - GPA, grade average, final gra
   },
 ```
 
-- [ ] **Step 2: Create `src/lib/calculators/age.ts`**
+- [x] **Step 2: Create `src/lib/calculators/age.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -2206,7 +2206,7 @@ export default age;
 
 **Age test**: example → ageYears == 24, totalDays == 8766, totalWeeks == 1252, totalMonths == 288, daysUntilNextBirthday == 0 (or 365); birthday after asOf → `birthDate: 'max'`; invalid date `2020-13-01` → `invalid`; empty birthDate → `required`; leap-day birth 2000-02-29 vs 2024-02-29 → ageYears 24.
 
-- [ ] **Step 3: Create `src/lib/calculators/date-difference.ts`**
+- [x] **Step 3: Create `src/lib/calculators/date-difference.ts`**
 
 Uses `parseIso`, `daysBetween` and `calendarDiff` from `utils.ts` (same helpers age.ts uses).
 
@@ -2266,7 +2266,7 @@ export default dateDifference;
 
 **Date-difference test**: example → years == 4, totalDays == 1461, totalWeeks == 208, months == 0, days == 0; 2020-01-31 → 2021-02-28 → years 1, months 0, days 28; end before start → `endDate: 'max'`.
 
-- [ ] **Step 4: Create `src/lib/calculators/tip.ts`**
+- [x] **Step 4: Create `src/lib/calculators/tip.ts`**
 
 ```ts
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
@@ -2323,7 +2323,7 @@ export default tip;
 
 **Tip test**: example → tipAmount == 12, totalWithTip == 132, perPerson == 33; people empty → perPerson == total (default 1); people 2 → half; tipPercent 0 → tipAmount 0; missing bill → `required`.
 
-- [ ] **Step 5: Create `src/lib/calculators/unit-converter.ts`**
+- [x] **Step 5: Create `src/lib/calculators/unit-converter.ts`**
 
 Categories each have their own from/to selects, shown via `showIf` on the `category` select (the client's only dynamic mechanism). Temperature is special-cased (affine conversion, not a factor).
 
@@ -2446,14 +2446,14 @@ export default unitConverter;
 
 **Unit-converter test**: 1000 m → km == 1; 1 lb → kg within `0.45359..0.4536`; 100 °C → °F == 212; 0 °C → K within `273.14..273.16`; 1 km² → acre within `247.104..247.106`; 1 gal → l within `3.785..3.786`; negative length → `value: 'min'`; negative temperature allowed (−40 °C → −40 °F); same unit from/to → `invalid`.
 
-- [ ] **Step 6: Register config, math, loaders, content; write guides**
+- [x] **Step 6: Register config, math, loaders, content; write guides**
 
 `src/lib/calculators/index.ts`: imports + `age, 'date-difference': dateDifference, tip, 'unit-converter': unitConverter`.
 `src/lib/client/registry.ts`: `age: () => import('../calculators/age.ts'), 'date-difference': () => import('../calculators/date-difference.ts'), tip: () => import('../calculators/tip.ts'), 'unit-converter': () => import('../calculators/unit-converter.ts'),`.
 `src/content/calculators/index.ts`: imports + `age, 'date-difference': dateDifference, tip, 'unit-converter': unitConverter`.
 Guides: `how-to-calculate-age` → `['age', 'date-difference']`; `how-to-count-days-between-dates` → `['date-difference', 'age']`; `how-to-tip-appropriately` → `['tip', 'unit-converter']`; `how-to-convert-units` → `['unit-converter', 'tip']`. Worked examples use each tool's content example numbers.
 
-- [ ] **Step 7: Verify + commit**
+- [x] **Step 7: Verify + commit**
 
 Run `npm test`, `npm run check`, `npm run build` — all clean. Everyday category shows 4 tools. Commit:
 

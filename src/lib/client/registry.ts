@@ -31,6 +31,10 @@ export const mathLoaders: Record<string, MathLoader> = {
   gpa: () => import('../calculators/gpa.ts'),
   'grade-average': () => import('../calculators/grade-average.ts'),
   'final-grade-planner': () => import('../calculators/final-grade.ts'),
+  age: () => import('../calculators/age.ts'),
+  'date-difference': () => import('../calculators/date-difference.ts'),
+  tip: () => import('../calculators/tip.ts'),
+  'unit-converter': () => import('../calculators/unit-converter.ts'),
 };
 
 export async function loadMath(slug: string): Promise<CalculatorMath> {

@@ -24,6 +24,10 @@ import calorieIntake from './calorie-intake.ts';
 import gpa from './gpa.ts';
 import gradeAverage from './grade-average.ts';
 import finalGradePlanner from './final-grade-planner.ts';
+import age from './age.ts';
+import dateDifference from './date-difference.ts';
+import tip from './tip.ts';
+import unitConverter from './unit-converter.ts';
 
 const registry: Record<string, Record<Locale, CalcContent>> = {
   'loan-payment': loanPayment,
@@ -50,6 +54,10 @@ const registry: Record<string, Record<Locale, CalcContent>> = {
   gpa,
   'grade-average': gradeAverage,
   'final-grade-planner': finalGradePlanner,
+  age,
+  'date-difference': dateDifference,
+  tip,
+  'unit-converter': unitConverter,
 };
 
 export function getCalcContent(slug: string, locale: Locale): CalcContent {

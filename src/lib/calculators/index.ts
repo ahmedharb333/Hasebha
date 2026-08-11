@@ -23,6 +23,10 @@ import calorieIntake from './calorie.ts';
 import gpa from './gpa.ts';
 import gradeAverage from './grade-average.ts';
 import finalGradePlanner from './final-grade.ts';
+import age from './age.ts';
+import dateDifference from './date-difference.ts';
+import tip from './tip.ts';
+import unitConverter from './unit-converter.ts';
 
 const registry: Record<string, CalculatorMath> = {
   'loan-payment': loanPayment,
@@ -49,6 +53,10 @@ const registry: Record<string, CalculatorMath> = {
   gpa,
   'grade-average': gradeAverage,
   'final-grade-planner': finalGradePlanner,
+  age,
+  'date-difference': dateDifference,
+  tip,
+  'unit-converter': unitConverter,
 };
 
 export function getMath(slug: string): CalculatorMath {
