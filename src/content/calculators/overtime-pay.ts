@@ -11,6 +11,20 @@ const ar: CalcContent = {
   intro:
     'احسب الأجر الأساسي للساعة وأجر ساعات العمل الإضافية وإجمالي الأجر الأسبوعي، مع مضاعف قابل للتخصيص يناسب قواعد بلدك أو شركتك.',
   fields: {
+    country: {
+      label: 'البلد',
+      hint: 'اختر البلد لتطبيق مضاعفات العمل الإضافي القانونية، أو اتركه فارغاً لاختيار مضاعف يدوي.',
+      options: {
+        '': 'اختر البلد… (مضاعف يدوي)',
+        jo: 'الأردن',
+        sa: 'السعودية',
+        ae: 'الإمارات',
+        kw: 'الكويت',
+        qa: 'قطر',
+        bh: 'البحرين',
+        om: 'عُمان',
+      },
+    },
     basis: {
       label: 'أساس الحساب',
       options: {
@@ -34,8 +48,19 @@ const ar: CalcContent = {
       label: 'ساعات العمل الإضافي في الأسبوع',
       hint: 'عدد الساعات الإضافية أسبوعياً.',
     },
+    otKind: {
+      label: 'نوع العمل الإضافي',
+      hint: 'نوع الساعات الإضافية لتطبيق المضاعف القانوني للبلد.',
+      options: {
+        standard: 'عمل إضافي عادي',
+        night: 'عمل ليلي',
+        rest_day: 'يوم الراحة',
+        public_holiday: 'العطلات الرسمية',
+      },
+    },
     multiplier: {
-      label: 'مضاعف الأجر الإضافي',
+      label: 'المضاعف اليدوي',
+      hint: 'يُستخدم عند عدم اختيار بلد.',
       options: {
         '1.0': '×1.0',
         '1.25': '×1.25',
@@ -88,6 +113,7 @@ const ar: CalcContent = {
     'النتائج محسوبة على أساس أسبوعي وليس شهرياً.',
     'لا يشمل الحساب بدلات أو علاوات أو امتيازات أخرى.',
     'مضاعف العمل الإضافي يختلف بين البلدان؛ تحقق من القاعدة المطبقة في بلدك.',
+    'عند اختيار البلد تُطبق قيمة المضاعف القانونية لكل نوع من أنواع العمل الإضافي.',
   ],
   whenUseful:
     'مفيد عند تقدير أجر ساعات العمل الإضافية في جداول العمل، أو عند التفاوض على تعويض العمل الإضافي، أو لمقارنة عروض عمل تتضمن ساعات إضافية.',
@@ -152,6 +178,20 @@ const en: CalcContent = {
   intro:
     'Calculate your base hourly rate, overtime rate and total weekly earnings with a configurable multiplier that fits your country or company rules.',
   fields: {
+    country: {
+      label: 'Country',
+      hint: 'Select the country to apply its legal overtime multipliers, or leave it empty to choose a manual multiplier.',
+      options: {
+        '': 'Choose a country… (manual multiplier)',
+        jo: 'Jordan',
+        sa: 'Saudi Arabia',
+        ae: 'UAE',
+        kw: 'Kuwait',
+        qa: 'Qatar',
+        bh: 'Bahrain',
+        om: 'Oman',
+      },
+    },
     basis: {
       label: 'Pay basis',
       options: {
@@ -175,8 +215,19 @@ const en: CalcContent = {
       label: 'Overtime hours per week',
       hint: 'Number of additional hours worked each week.',
     },
+    otKind: {
+      label: 'Overtime kind',
+      hint: 'The kind of overtime hours, to apply the country\u2019s legal multiplier.',
+      options: {
+        standard: 'Standard overtime',
+        night: 'Night work',
+        rest_day: 'Rest day',
+        public_holiday: 'Public holidays',
+      },
+    },
     multiplier: {
-      label: 'Overtime multiplier',
+      label: 'Manual multiplier',
+      hint: 'Used when no country is selected.',
       options: {
         '1.0': '×1.0',
         '1.25': '×1.25',
@@ -229,6 +280,7 @@ const en: CalcContent = {
     'Results are weekly, not monthly.',
     'Allowances, bonuses and other benefits are not included.',
     'Overtime multipliers vary by country; check the rule that applies to you.',
+    'When a country is selected the legal multiplier for each overtime kind is applied.',
   ],
   whenUseful:
     'Useful when estimating overtime pay for work schedules, negotiating overtime compensation, or comparing job offers that involve extra hours.',

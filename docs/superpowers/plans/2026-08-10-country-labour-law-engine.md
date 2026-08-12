@@ -1315,10 +1315,10 @@ Modify `src/lib/calculators/leave.ts`:
 
 **Content update for both tools:** client `showIf` on `tenureYears`/`otKind` uses country codes; the `''` value keeps the manual UI when "choose" is selected.
 
-- [ ] Step 1: modify `overtime.ts` + content + tests; `npm test` green.
-- [ ] Step 2: modify `leave.ts` + content + tests; `npm test` green.
-- [ ] Step 3: `npm run check` + `npm run build` clean.
-- [ ] Step 4: commit `feat(calc): country-rule retrofits for overtime-pay and leave-balance`.
+- [x] Step 1: modify `overtime.ts` + content + tests; `npm test` green. *(There was no existing `tests/overtime-pay.test.ts` — created it covering the manual path (already covered in `calculators.test.ts`) plus country-rule cases. Deviation: the sketch test said "KW night 1.5" but the module's Kuwait night multiplier is 1.25 — asserted 1.25. Validator now checks `country`/`otKind` only when a country is selected, and the manual multiplier only when it is not.)*
+- [x] Step 2: modify `leave.ts` + content + tests; `npm test` green. *(No existing `tests/leave-balance.test.ts` — created it. When a country is selected, the annual entitlement is band-looked-up by `tenureYears` (new showIf-only field) and the manual `annualEntitlement` field is hidden; the law-derived entitlement is emitted as an `annualEntitlement` hero row, keeping `accrued` as hero on the manual path so the no-country output is byte-identical.)*
+- [x] Step 3: `npm run check` (0 errors) + `npm run build` (181 pages) clean.
+- [x] Step 4: commit `feat(calc): country-rule retrofits for overtime-pay and leave-balance`.
 
 ---
 

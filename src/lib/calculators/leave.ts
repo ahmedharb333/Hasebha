@@ -1,4 +1,6 @@
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
+import { getCountryRules, isRegistered } from '../country-rules/registry.ts';
+import { countrySelectOptions } from './country-field.ts';
 
 const METHODS = ['monthly', 'daily', 'full'] as const;
 const DAYS_PER_YEAR = 365;
@@ -32,7 +34,17 @@ function fullMonthsBetween(start: Date, end: Date): number {
 export const leaveBalance: CalculatorMath = {
   slug: 'leave-balance',
   fields: [
-    { id: 'annualEntitlement', type: 'number', required: true, min: 0, max: 365, step: 'any' },
+    { id: 'country', type: 'select', defaultValue: '', options: countrySelectOptions },
+    {
+      id: 'tenureYears',
+      type: 'number',
+      min: 0,
+      max: 60,
+      step: 'any',
+      defaultValue: '0',
+      showIf: { field: 'country', values: ['jo', 'sa', 'ae', 'kw', 'qa', 'bh', 'om'] },
+    },
+    { id: 'annualEntitlement', type: 'number', required: true, min: 0, max: 365, step: 'any', showIf: { field: 'country', values: [''] } },
     { id: 'startDate', type: 'date', required: true },
     { id: 'calcDate', type: 'date', required: true },
     { id: 'leaveTaken', type: 'number', min: 0, max: 1000, step: 'any', defaultValue: '0' },
@@ -41,6 +53,8 @@ export const leaveBalance: CalculatorMath = {
     { id: 'maxCarryover', type: 'number', min: 0, max: 1000, step: 'any' },
   ],
   example: {
+    country: '',
+    tenureYears: '0',
     annualEntitlement: '30',
     startDate: '2024-01-01',
     calcDate: '2025-01-01',
@@ -52,8 +66,14 @@ export const leaveBalance: CalculatorMath = {
 
   validate(input: CalcInput): Record<string, string> {
     const errors: Record<string, string> = {};
-    const entErr = checkNumber(input.annualEntitlement, 0, 365);
-    if (entErr) errors.annualEntitlement = entErr;
+    if (input.country) {
+      if (!isRegistered(input.country)) errors.country = 'invalid';
+      const tErr = checkNumber(input.tenureYears, 0, 60);
+      if (tErr) errors.tenureYears = tErr;
+    } else {
+      const entErr = checkNumber(input.annualEntitlement, 0, 365);
+      if (entErr) errors.annualEntitlement = entErr;
+    }
 
     const start = parseDate(input.startDate);
     const calc = parseDate(input.calcDate);
@@ -78,7 +98,21 @@ export const leaveBalance: CalculatorMath = {
   },
 
   calculate(input: CalcInput): CalcOutput {
-    const entitlement = toNumber(input.annualEntitlement);
+    const country = input.country;
+    let entitlement: number;
+    let lawDerived = false;
+    if (country && isRegistered(country)) {
+      const rules = getCountryRules(country)!;
+      const tenure = toNumber(input.tenureYears);
+      const band =
+        [...rules.leave.annualDays].sort((a, b) => b.fromYears - a.fromYears).find((b) => tenure >= b.fromYears) ??
+        rules.leave.annualDays[0];
+      entitlement = band.days;
+      lawDerived = true;
+    } else {
+      entitlement = toNumber(input.annualEntitlement);
+    }
+
     const start = parseDate(input.startDate)!;
     const calc = parseDate(input.calcDate)!;
     const taken = toNumber(input.leaveTaken);
@@ -108,16 +142,20 @@ export const leaveBalance: CalculatorMath = {
     const available = Math.max(accrued + effectiveCarryover - taken, 0);
     const remainingEntitlement = Math.max(entitlement - taken, 0);
 
-    return {
-      results: [
-        { key: 'accrued', value: accrued, kind: 'number', hero: true },
-        { key: 'used', value: taken, kind: 'number' },
-        { key: 'available', value: available, kind: 'number' },
-        { key: 'remainingEntitlement', value: remainingEntitlement, kind: 'number' },
-        { key: 'carryover', value: effectiveCarryover, kind: 'number' },
-        { key: 'expired', value: expired, kind: 'number' },
-      ],
-    };
+    const results: CalcOutput['results'] = [];
+    if (lawDerived) {
+      results.push({ key: 'annualEntitlement', value: entitlement, kind: 'number', hero: true });
+    }
+    results.push(
+      { key: 'accrued', value: accrued, kind: 'number', hero: !lawDerived },
+      { key: 'used', value: taken, kind: 'number' },
+      { key: 'available', value: available, kind: 'number' },
+      { key: 'remainingEntitlement', value: remainingEntitlement, kind: 'number' },
+      { key: 'carryover', value: effectiveCarryover, kind: 'number' },
+      { key: 'expired', value: expired, kind: 'number' },
+    );
+
+    return { results };
   },
 };
 

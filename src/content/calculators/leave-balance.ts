@@ -11,9 +11,27 @@ const ar: CalcContent = {
   intro:
     'احسب رصيد إجازتك السنوية المستحق والمتاح والمتبقي، مع مراعاة طريقة الاستحقاق (شهري، يومي، أو سنوي كامل)، والرصيد المرحّل، والحد الأقصى للترحيل.',
   fields: {
+    country: {
+      label: 'البلد',
+      hint: 'اختر البلد لتطبيق الاستحقاق السنوي القانوني حسب سنوات الخدمة، أو اتركه فارغاً لإدخال الاستحقاق يدوياً.',
+      options: {
+        '': 'اختر البلد… (استحقاق يدوي)',
+        jo: 'الأردن',
+        sa: 'السعودية',
+        ae: 'الإمارات',
+        kw: 'الكويت',
+        qa: 'قطر',
+        bh: 'البحرين',
+        om: 'عُمان',
+      },
+    },
+    tenureYears: {
+      label: 'مدة الخدمة (بالسنوات)',
+      hint: 'عدد سنوات الخدمة لتحديد الاستحقاق السنوي القانوني.',
+    },
     annualEntitlement: {
       label: 'الإجازة السنوية المستحقة (أيام)',
-      hint: 'عدد أيام الإجازة المستحقة لكل سنة عمل كاملة.',
+      hint: 'عدد أيام الإجازة المستحقة لكل سنة عمل كاملة. يُستخدم عند عدم اختيار بلد.',
     },
     startDate: {
       label: 'تاريخ بدء التعيين',
@@ -52,6 +70,10 @@ const ar: CalcContent = {
     __generic: 'يرجى مراجعة الحقول المحددة وإعادة المحاولة.',
   },
   results: {
+    annualEntitlement: {
+      label: 'الاستحقاق السنوي القانوني',
+      hint: 'أيام الإجازة السنوية المقررة قانوناً حسب مدة الخدمة.',
+    },
     accrued: {
       label: 'الإجازة المستحقة',
       hint: 'مجموع الأيام المتراكمة حتى تاريخ الاحتساب.',
@@ -88,6 +110,7 @@ const ar: CalcContent = {
     'لا تُحتسب العطل الرسمية أو قواعد الترحيب الخاصة في هذه الحاسبة.',
     'الرصيد المرحّل يُقيّد بالحد الأقصى للترحيل إذا أدخلته.',
     'قواعد الإجازات تختلف بين البلدان وبين عقود العمل، فتحقق من القاعدة المطبقة عندك.',
+    'عند اختيار البلد يُطبق الاستحقاق السنوي القانوني حسب مدة الخدمة بدلاً من الإدخال اليدوي.',
   ],
   whenUseful:
     'مفيد للموظفين وقسم الموارد البشرية لمتابعة الرصيد المتراكم والمتاح، وللتخطيط للإجازات قبل نهاية السنة أو قبل الاستقالة.',
@@ -152,9 +175,27 @@ const en: CalcContent = {
   intro:
     'Calculate your accrued, available and remaining annual leave, taking into account the accrual method (monthly, daily or full-year), approved carryover and any carryover cap.',
   fields: {
+    country: {
+      label: 'Country',
+      hint: 'Select the country to apply its statutory annual leave by years of service, or leave it empty to enter the entitlement manually.',
+      options: {
+        '': 'Choose a country… (manual entitlement)',
+        jo: 'Jordan',
+        sa: 'Saudi Arabia',
+        ae: 'UAE',
+        kw: 'Kuwait',
+        qa: 'Qatar',
+        bh: 'Bahrain',
+        om: 'Oman',
+      },
+    },
+    tenureYears: {
+      label: 'Years of service',
+      hint: 'Years of service, to determine the statutory annual leave entitlement.',
+    },
     annualEntitlement: {
       label: 'Annual leave entitlement (days)',
-      hint: 'Number of leave days earned for each full working year.',
+      hint: 'Number of leave days earned for each full working year. Used when no country is selected.',
     },
     startDate: {
       label: 'Start date',
@@ -193,8 +234,12 @@ const en: CalcContent = {
     __generic: 'Please review the highlighted fields and try again.',
   },
   results: {
+    annualEntitlement: {
+      label: 'Statutory annual entitlement',
+      hint: 'The annual leave days granted by law for the years of service.',
+    },
     accrued: {
-      label: 'Accrued leave',
+      label: 'Accrued',
       hint: 'Total days accumulated up to the balance date.',
     },
     used: {
@@ -226,6 +271,7 @@ const en: CalcContent = {
   assumptions: [
     'Monthly accrual counts only full months and does not split a partial month.',
     'Daily accrual assumes 365 days per year.',
+    'When a country is selected, the statutory annual entitlement by years of service is applied instead of a manual entry.',
     'Public holidays or special onboarding rules are not covered by this calculator.',
     'Carryover is capped by the maximum carryover if you provide one.',
     'Leave rules vary by country and employment contract; check the rule that applies to you.',
