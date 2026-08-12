@@ -773,11 +773,11 @@ Create `kw.ts` + `tests/country-rules-kw.test.ts` (currency `KWD`, `resignation`
 
 Create `qa.ts` + `tests/country-rules-qa.test.ts` (currency `QAR`, brackets empty).
 
-- [ ] Step 1: verify figures.
-- [ ] Step 2: create `qa.ts`.
+- [x] Step 1: verify figures.
+- [x] Step 2: create `qa.ts`.
 - [ ] Step 3: create `tests/country-rules-qa.test.ts`.
 - [ ] Step 4: `npm test` green.
-- [ ] Step 5: commit `feat(country-rules): Qatar rule module`.
+- [x] Step 5: commit `feat(country-rules): Qatar rule module`.
 
 ---
 
