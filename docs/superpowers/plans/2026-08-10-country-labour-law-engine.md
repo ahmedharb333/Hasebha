@@ -972,15 +972,15 @@ test('end-of-service: currency mismatch flagged', () => {
 });
 ```
 
-- [ ] Step 1: create `src/lib/calculators/country-field.ts`.
-- [ ] Step 2: create `src/lib/calculators/end-of-service.ts`.
-- [ ] Step 3: create `src/content/calculators/end-of-service.ts` (ar/en).
-- [ ] Step 4: register in `src/lib/calculators/index.ts`, `src/lib/client/registry.ts`, `src/content/calculators/index.ts`.
-- [ ] Step 5: flip config `active: true` + `related` + `guide` in `src/config/calculators.ts`.
-- [ ] Step 6: create `tests/end-of-service.test.ts`.
-- [ ] Step 7: `npm test` — all green. **Update `tests/catalog.test.ts`:** the `tier-B entries are reserved and inactive` test now fails for the newly-activated slug — change it to assert the remaining reserved-and-inactive list, or assert the newly-active ones are `active`. Keep an invariant like "Tier B employment count === 11".
-- [ ] Step 8: `npm run check` + `npm run build` — clean; new page `dist/calculators/end-of-service/index.html` (+ EN) exist.
-- [ ] Step 9: commit `feat(calc): end-of-service gratuity calculator with country rules`.
+- [x] Step 1: create `src/lib/calculators/country-field.ts`.
+- [x] Step 2: create `src/lib/calculators/end-of-service.ts`. *(deviation: added `{ id: 'currency', type: 'currency', defaultValue: 'JOD' }` — the plan's math had no currency field yet `validate` checks `input.currency` and Task 5's hook targets `select[data-role="currency"]`; without it the shell renders no currency select and the mismatch check is dead)*
+- [x] Step 3: create `src/content/calculators/end-of-service.ts` (ar/en).
+- [x] Step 4: register in `src/lib/calculators/index.ts`, `src/lib/client/registry.ts`, `src/content/calculators/index.ts`.
+- [x] Step 5: flip config `active: true` + `related` + `guide` in `src/config/calculators.ts`.
+- [x] Step 6: create `tests/end-of-service.test.ts`.
+- [x] Step 7: `npm test` — all green. **Update `tests/catalog.test.ts`:** the `tier-B entries are reserved and inactive` test now fails for the newly-activated slug — change it to assert the remaining reserved-and-inactive list, or assert the newly-active ones are `active`. Keep an invariant like "Tier B employment count === 11". *(used: removed `end-of-service` from the reserved list + added an `activated Tier B` test)*
+- [x] Step 8: `npm run check` + `npm run build` — clean; new page `dist/calculators/end-of-service/index.html` (+ EN) exist. *(also created the guide `how-to-calculate-end-of-service` in `guides.ts` now — the catalog test requires every active calculator to have a localized guide; Task 21 later only adds the remaining 5)*
+- [x] Step 9: commit `feat(calc): end-of-service gratuity calculator with country rules`.
 
 ---
 
@@ -1327,7 +1327,7 @@ Modify `src/lib/calculators/leave.ts`:
 Append 6 guides to `src/content/guides.ts` (ar/en each; follow existing guide shape — `title`, `description`, `sections` with `heading`/`body`, `related` slugs). Terse, factual, assumption-stating; each cites that numbers come from official statutory sources with the source name in the guide body (no live URLs needed in guides).
 
 Guides:
-- `how-to-calculate-end-of-service` (ar: دليل حساب مكافأة نهاية الخدمة) — bands logic, daily wage = basic/30, fractional years, resignation scaling (KW), caps.
+- `how-to-calculate-end-of-service` (ar: دليل حساب مكافأة نهاية الخدمة) — bands logic, daily wage = basic/30, fractional years, resignation scaling (KW), caps. **DONE — created with Task 14** (catalog test requires every active tool to have a localized guide).
 - `how-to-calculate-social-insurance` (ar: دليل حساب التأمين الاجتماعي) — EE/ER rates, caps, citizens-only notes per country.
 - `how-to-calculate-notice-period` (ar: دليل حساب فترة الإشعار) — band tables + notice rules.
 - `how-to-calculate-maternity-leave` (ar: دليل حساب إجازة الأمومة) — weeks/days per country, pay-split notes.

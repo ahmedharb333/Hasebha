@@ -38,6 +38,7 @@ export const mathLoaders: Record<string, MathLoader> = {
   'markup-margin': () => import('../calculators/markup-margin.ts'),
   'break-even': () => import('../calculators/break-even.ts'),
   'wholesale-retail': () => import('../calculators/wholesale-retail.ts'),
+  'end-of-service': () => import('../calculators/end-of-service.ts'),
 };
 
 export async function loadMath(slug: string): Promise<CalculatorMath> {

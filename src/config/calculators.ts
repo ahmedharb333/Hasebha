@@ -500,9 +500,9 @@ export const CALCULATORS: CalculatorEntry[] = [
       ar: 'تقدر مكافأة نهاية الخدمة وفق قوانين العمل في بلدك.',
       en: 'Estimates end-of-service gratuity under your country\u2019s labour law.',
     },
-    related: [],
-    guide: '',
-    active: false,
+    related: ['social-insurance', 'notice-period'],
+    guide: 'how-to-calculate-end-of-service',
+    active: true,
   },
   {
     id: 'social-insurance',

@@ -8,6 +8,158 @@ import type { Locale } from '../config/site';
  * Last reviewed: 2026-08-09.
  */
 const guides: Record<string, Record<Locale, GuideContent>> = {
+  'how-to-calculate-end-of-service': {
+    ar: {
+      slug: 'how-to-calculate-end-of-service',
+      locale: 'ar',
+      title: 'كيف تحسب مكافأة نهاية الخدمة',
+      metaDescription:
+        'دليل عملي لحساب مكافأة نهاية الخدمة في دول الخليج والأردن: شرائح الأيام لكل سنة، والأجر اليومي من الراتب الأساسي، والاستقالة الطوعية، والسقوف، مع مثال عددي مطابق للحاسبة.',
+      intro:
+        'مكافأة نهاية الخدمة هي المبلغ الذي يستحقه الموظف عند انتهاء عقده، وتُحسب عادةً كعدد أيام من الراتب لكل سنة خدمة. تختلف الشرائح والأسس بين الدول اختلافاً كبيراً، ويلعب الراتب الأساسي دوراً محورياً في النتيجة. يشرح هذا الدليل آلية الحساب ويتبع المثال نفسه الذي تستخدمه حاسبة مكافأة نهاية الخدمة في كلار.',
+      sections: [
+        {
+          heading: 'المعلومات التي تحتاجها',
+          body: `لحساب المكافأة تحتاج أربعة مدخلات أساسية: **البلد** لأنه يحدد الشرائح والسقوف وقواعد الاستقالة، **تاريخ بداية الخدمة**، **تاريخ نهاية الخدمة**، و**الراتب الأساسي الشهري** وهو الراتب قبل البدلات والعمولات، لأن معظم قوانين المنطقة تحسب المكافأة عليه.
+ 
+احرص على استخدام الراتب الأساسي لا الإجمالي؛ فالبدلات والسكن والنقل لا تدخل في أساس الحساب في الغالب، وإدخالها سيبالغ في النتيجة.`,
+        },
+        {
+          heading: 'الأجر اليومي والسنوات',
+          body: `الأجر اليومي يُشتق من الراتب الأساسي بقسمته على 30 يوماً: إذا كان الراتب الأساسي 900 دينار، فالأجر اليومي 30 ديناراً. أما مدة الخدمة فتُحسب بين تاريخي البداية والنهاية بالسنوات مع الكسور: ثماني سنوات وستة أشهر مثلاً تُعامل كـ 8.5 سنة تقريباً، وتُقسم كسور السنة تناسبياً على أساس 365 يوماً.`,
+        },
+        {
+          heading: 'شرائح الأيام لكل سنة',
+          body: `تختلف القاعدة الأساسية بين الدول:
+ 
+**الأردن**: مكافأة شهر كامل (30 يوماً) عن كل سنة خدمة، مع تقسيم الكسور تناسبياً.
+**السعودية**: نصف شهر عن السنوات الخمس الأولى ثم شهر كامل عن كل سنة بعدها، وهي شرائح تُطبق تراكمياً.
+**الإمارات**: 21 يوماً عن السنوات الخمس الأولى ثم 30 يوماً بعدها، مع سقف إجمالي نحو 24 راتباً شهرياً.
+**الكويت**: 15 يوماً عن السنوات الخمس الأولى ثم شهر كامل بعدها، مع سقف 18 شهراً.
+**قطر**: نصف شهر عن السنوات الخمس الأولى ثم شهر كامل بعدها.
+**البحرين**: نصف شهر عن السنوات الخمس الأولى ثم شهر كامل بعدها.
+**عُمان**: شهر كامل (30 يوماً) عن كل سنة خدمة دون حد أعلى.
+ 
+الحاسبة تطبق هذه الشرائح تلقائياً بحسب البلد المختار، بما فيها التقسيم التناسبي للسنة الجزئية.`,
+        },
+        {
+          heading: 'الاستقالة الطوعية',
+          body: `الاستقالة الطوعية قد تُخفض المكافأة في بعض الدول. أبرز مثال هو **الكويت**: لا مكافأة لمن يستقيل قبل إكمال 3 سنوات، ونصف المكافأة من 3 إلى 5 سنوات، والثلثان من 5 إلى 10 سنوات، والمكافأة كاملة بعد 10 سنوات. في هذا الإصدار، لا تنص قوانين الدول الأخرى المغطاة على مقياس تخفيض للاستقالة، لذا اختر «إنهاء من جهة العمل» إذا كان العقد انتهى دون استقالة طوعية.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `لنأخذ مثالاً مطابقاً لقيم الحاسبة: موظف في **الأردن** خدم من **2018-01-01** إلى **2026-01-01** (≈ 8 سنوات) براتب أساسي **800 دينار**، مع انتهاء العقد من جهة العمل.
+ 
+الأجر اليومي = 800 ÷ 30 ≈ 26.67 دينار. أيام المكافأة = 8 × 30 = 240 يوماً. المكافأة ≈ 240 × 26.67 ≈ **6,400 دينار**.`,
+        },
+        {
+          heading: 'السقوف والفترات الانتقالية',
+          body: `بعض الدول تفرض سقفاً أعلى للمكافأة، مثل الإمارات (نحو 24 راتباً شهرياً) والكويت (18 شهراً)، وتطبقه الحاسبة تلقائياً. كما قد تُحتسب الخدمة قبل تغيير القانون بأسس مختلفة في بعض الدول. النتيجة تقديرية تستند إلى القوانين الحالية، وللفترات الانتقالية الدقيقة راجع جهة العمل أو السلطات المختصة.`,
+        },
+        {
+          heading: 'افتراضات الحساب',
+          body: `تعتمد النتيجة على أن الراتب الأساسي ثابت طوال الخدمة أو أن القيمة المدخلة تمثل الراتب الأساسي الحالي، وأن السنة تقسم إلى 365 يوماً. تُراجع الشرائح دورياً مقابل المصادر الرسمية، وقد تتغير القوانين، لذا تحقق من الأرقام لدى الجهات المختصة قبل اتخاذ قرار.`,
+        },
+      ],
+      keyTakeaways: [
+        'المكافأة = أيام الاستحقاق × (الراتب الأساسي ÷ 30).',
+        'الشرائح والسقوف تختلف بين الدول وتُطبق تراكمياً.',
+        'الاستقالة الطوعية تُخفض المكافأة في الكويت وفق مقياس قانوني.',
+        'الكسور السنوية تُقسم تناسبياً، والسقوف تُحد من النتيجة حيثما وُجدت.',
+      ],
+      faqs: [
+        {
+          q: 'هل تشمل المكافأة البدلات والسكن؟',
+          a: 'في معظم قوانين المنطقة تُحسب المكافأة على الراتب الأساسي الشهري دون البدلات، لذا أدخل الأساسي فقط في الحاسبة.',
+        },
+        {
+          q: 'ما الفرق بين الاحتساب تراكمياً والاحتساب بسعر واحد؟',
+          a: 'الاحتساب التراكمي يطبق سعراً مختلفاً على كل شريحة خدمة (مثل نصف شهر للسنوات الخمس الأولى ثم شهر كامل بعدها)، وهذا ما تتبعه الحاسبة في الدول ذات الشرائح.',
+        },
+        {
+          q: 'هل تتغير المكافأة إذا وقع العقد الجديد دون انقطاع؟',
+          a: 'تعتمد القواعد على استمرارية الخدمة وتفاصيل العقد. أدخل تاريخ نهاية الخدمة الفعلي، وتحقق من كيفية معاملة استمرار الخدمة في بلدك.',
+        },
+      ],
+      relatedCalculators: ['end-of-service', 'social-insurance', 'notice-period'],
+      lastReviewed: '2026-08-12',
+    },
+    en: {
+      slug: 'how-to-calculate-end-of-service',
+      locale: 'en',
+      title: 'How to calculate end-of-service gratuity',
+      metaDescription:
+        'A practical guide to calculating end-of-service gratuity across the Gulf and Jordan: days-per-year bands, the daily wage from basic salary, voluntary resignation, and caps, with a worked example that matches the calculator.',
+      intro:
+        'End-of-service gratuity is the amount an employee is entitled to when their contract ends, usually calculated as a number of salary days for each year of service. Bands and bases differ widely between countries, and the basic salary plays a central role. This guide explains the calculation and follows the same example used by the end-of-service calculator on Klar.',
+      sections: [
+        {
+          heading: 'What you need',
+          body: `You need four inputs: the **country**, because it determines the bands, caps and resignation rules; the **service start date**; the **service end date**; and the **basic monthly salary**, i.e. the salary before allowances and commissions, because most regional laws base the gratuity on it.
+ 
+Use the basic salary, not the gross one; allowances, housing and transport are generally excluded from the base, and including them inflates the result.`,
+        },
+        {
+          heading: 'Daily wage and years of service',
+          body: `The daily wage is derived by dividing the basic salary by 30 days: a basic salary of 900 units gives a daily wage of 30 units. Service length is measured between the start and end dates in years with fractions: eight years and six months is treated as about 8.5 years, and the fractional year is pro-rated on a 365-day basis.`,
+        },
+        {
+          heading: 'Days-per-year bands',
+          body: `The base rule varies by country:
+ 
+**Jordan**: one full month (30 days) per year of service, with fractional years pro-rated.
+**Saudi Arabia**: half a month for the first five years, then one month per year after that, applied cumulatively.
+**UAE**: 21 days for the first five years, then 30 days after, with an overall cap of about 24 monthly salaries.
+**Kuwait**: 15 days for the first five years, then one month after, capped at 18 months.
+**Qatar**: half a month for the first five years, then one month after.
+**Bahrain**: half a month for the first five years, then one month after.
+**Oman**: one full month (30 days) for each year of service with no upper cap.
+ 
+The calculator applies these bands automatically for the selected country, including pro-rating a partial year.`,
+        },
+        {
+          heading: 'Voluntary resignation',
+          body: `Voluntary resignation can reduce the gratuity in some countries. The clearest example is **Kuwait**: no gratuity before 3 years, half from 3 to 5 years, two-thirds from 5 to 10 years, and the full amount after 10 years. In this version, the other covered countries do not provide a resignation reduction scale, so choose \u201CTerminated by employer\u201D if the contract ended without a voluntary resignation.`,
+        },
+        {
+          heading: 'Worked example',
+          body: `A worked example matching the calculator: an employee in **Jordan** served from **2018-01-01** to **2026-01-01** (≈ 8 years) on a basic salary of **800 units**, with the contract ended by the employer.
+ 
+Daily wage = 800 ÷ 30 ≈ 26.67 units. Entitlement days = 8 × 30 = 240 days. Gratuity ≈ 240 × 26.67 ≈ **6,400 units**.`,
+        },
+        {
+          heading: 'Caps and transitional periods',
+          body: `Some countries cap the gratuity, such as the UAE (about 24 monthly salaries) and Kuwait (18 months), and the calculator applies these automatically. Service before a law change may also be computed on different bases in some countries. The result is an estimate based on current law; for exact transitional treatment consult your employer or the authorities.`,
+        },
+        {
+          heading: 'Assumptions',
+          body: `The result assumes the basic salary is stable over service (or that the entered value represents the current basic salary) and that a year is 365 days. Bands are reviewed periodically against official sources, and laws can change, so verify the figures with the relevant authorities before making decisions.`,
+        },
+      ],
+      keyTakeaways: [
+        'Gratuity = entitlement days × (basic salary ÷ 30).',
+        'Bands and caps differ by country and apply cumulatively.',
+        'Voluntary resignation reduces the gratuity in Kuwait per a statutory scale.',
+        'Fractional years are pro-rated, and caps limit the result where they exist.',
+      ],
+      faqs: [
+        {
+          q: 'Do allowances and housing count?',
+          a: 'Most regional laws base the gratuity on the basic monthly salary excluding allowances, so enter only the basic amount in the calculator.',
+        },
+        {
+          q: 'What is the difference between cumulative and flat-rate calculation?',
+          a: 'A cumulative calculation applies a different rate to each service band (e.g. half a month for the first five years, then a full month after), which is what the calculator follows in banded countries.',
+        },
+        {
+          q: 'Does the gratuity change if a new contract follows without a gap?',
+          a: 'It depends on continuity rules and the contract\u2019s terms. Enter the actual service end date and check how continuous service is treated in your country.',
+        },
+      ],
+      relatedCalculators: ['end-of-service', 'social-insurance', 'notice-period'],
+      lastReviewed: '2026-08-12',
+    },
+  },
   'how-to-calculate-loan-payment': {
     ar: {
       slug: 'how-to-calculate-loan-payment',

@@ -32,11 +32,21 @@ test('catalog: all active calculators have every artifact', () => {
 });
 
 test('catalog: tier-B entries are reserved and inactive', () => {
-  const reserved = ['end-of-service', 'social-insurance', 'notice-period', 'maternity-leave', 'gross-to-net', 'income-tax'];
+  const reserved = ['social-insurance', 'notice-period', 'maternity-leave', 'gross-to-net', 'income-tax'];
   for (const slug of reserved) {
     const entry = CALCULATORS.find((c) => c.slug === slug);
     assert.ok(entry, `${slug}: reserved entry exists`);
     assert.equal(entry.active, false, `${slug}: inactive`);
+    assert.equal(entry.category, 'employment', `${slug}: employment category`);
+  }
+});
+
+test('catalog: activated Tier B employment tools are active', () => {
+  const activated = ['end-of-service'];
+  for (const slug of activated) {
+    const entry = CALCULATORS.find((c) => c.slug === slug);
+    assert.ok(entry, `${slug}: entry exists`);
+    assert.equal(entry.active, true, `${slug}: active`);
     assert.equal(entry.category, 'employment', `${slug}: employment category`);
   }
 });
