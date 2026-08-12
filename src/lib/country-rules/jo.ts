@@ -6,13 +6,13 @@ export const jo: CountryRules = {
   overtime: {
     multipliers: [
       { kind: 'standard', multiplier: 1.25 },
-      { kind: 'night', multiplier: 1.5 },
+      { kind: 'night', multiplier: 1.25 },
       { kind: 'rest_day', multiplier: 1.5 },
       { kind: 'public_holiday', multiplier: 1.5 },
     ],
     weeklyCapHours: 48,
     source: {
-      title: 'Jordan Labour Law No. 8 of 1996 (as amended), Art. 59 (rates) and Art. 56 (48h week)',
+      title: 'Jordan Labour Law No. 8 of 1996 (as amended), Art. 59 (125% overtime; 150% rest/religious/official holidays; no separate night premium — night overtime at the general rate) and Art. 56 (48h week)',
       url: 'https://www.mol.gov.jo/ebv4.0/root_storage/en/eb_list_page/final_labor_law_(with_2023_amendments)_qa_(2).pdf',
       accessed: '2026-08-11',
     },
@@ -53,13 +53,13 @@ export const jo: CountryRules = {
       { fromYears: 0, days: 14 },
       { fromYears: 5, days: 21 },
     ],
-    maternityWeeks: 10,
+    maternityDays: 90,
     source: {
-      title: 'Jordan Labour Law No. 8 of 1996 (as amended), Art. 61 (annual leave) and Art. 70 (maternity leave)',
+      title: 'Jordan Labour Law No. 8 of 1996 (as amended 2025), Art. 61 (annual leave) and Art. 70 (maternity leave, 90 continuous days)',
       url: 'https://www.mol.gov.jo/ebv4.0/root_storage/en/eb_list_page/final_labor_law_(with_2023_amendments)_qa_(2).pdf',
       accessed: '2026-08-11',
     },
-    effectiveFrom: '2019-05-16',
+    effectiveFrom: '2025-03-10',
   },
   incomeTax: {
     brackets: [
@@ -72,7 +72,7 @@ export const jo: CountryRules = {
     ],
     personalAllowance: 9000,
     source: {
-      title: 'Jordan Income Tax Law No. 34 of 2014 as amended by No. 38 of 2018, personal income tax brackets (effective 1 Jan 2019)',
+      title: 'Jordan Income Tax Law No. 34 of 2014 as amended by No. 38 of 2018, personal income tax brackets (effective 1 Jan 2019) plus 1% national contribution on taxable income above JOD 200,000 (not modeled — no interface field)',
       url: 'https://istd.gov.jo/ebv4.0/root_storage/en/eb_list_page/income_tax_law_no._(38_)_of_2018.pdf',
       accessed: '2026-08-11',
     },

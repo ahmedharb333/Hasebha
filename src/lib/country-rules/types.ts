@@ -47,7 +47,7 @@ export interface NoticePeriodRules {
 
 export interface LeaveRules {
   annualDays: { fromYears: number; days: number }[];
-  maternityWeeks: number;
+  maternityDays: number;
   source: RuleSource;
   effectiveFrom: string;
 }
