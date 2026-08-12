@@ -1334,12 +1334,12 @@ Guides:
 - `how-to-calculate-gross-to-net` (ar: دليل حساب الراتب الصافي) — deduction order, caps, no-income-tax GCC note.
 - `how-to-calculate-income-tax` (ar: دليل حساب ضريبة الدخل) — brackets, allowance, no-PIT countries.
 
-All 6 guide slugs map to the config `guide` fields set in Tasks 14–19.
+All 6 guide slugs map to the config `guide` fields set in Tasks 14–19. **Executed early (all 6 guides committed with Task 14 + this commit):** the catalog test requires every *active* calculator to have a localized guide, so guides must land with activation, not after. `how-to-calculate-end-of-service` was created with Task 14; the other 5 landed here.
 
-- [ ] Step 1: append 6 guides (12 locale variants) to `guides.ts`.
-- [ ] Step 2: `npm test` (guide integrity test in the catalog suite passes — every config `guide` slug resolves).
-- [ ] Step 3: `npm run build` — 12 new guide pages exist.
-- [ ] Step 4: commit `feat(content): guides for country-law employment calculators`.
+- [x] Step 1: append 6 guides (12 locale variants) to `guides.ts`. *(end-of-service with Task 14; social-insurance, notice-period, maternity-leave, gross-to-net, income-tax with this commit)*
+- [x] Step 2: `npm test` (guide integrity test in the catalog suite passes — every config `guide` slug resolves).
+- [x] Step 3: `npm run build` — 12 new guide pages exist.
+- [x] Step 4: commit `feat(content): guides for country-law employment calculators`.
 
 ---
 

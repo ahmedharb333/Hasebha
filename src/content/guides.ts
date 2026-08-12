@@ -160,6 +160,554 @@ Daily wage = 800 ÷ 30 ≈ 26.67 units. Entitlement days = 8 × 30 = 240 days. G
       lastReviewed: '2026-08-12',
     },
   },
+  'how-to-calculate-social-insurance': {
+    ar: {
+      slug: 'how-to-calculate-social-insurance',
+      locale: 'ar',
+      title: 'كيف تحسب اشتراكات التأمين الاجتماعي',
+      metaDescription:
+        'دليل عملي لحساب اشتراكات التأمين الاجتماعي (حصة الموظف وصاحب العمل) في دول الخليج والأردن، مع السقوف الشهرية وملاحظات اشتراط المواطنة.',
+      intro:
+        'التأمين الاجتماعي هو اقتطاع إلزامي يدفعه الموظف وصاحب العمل معاً عن الراتب الخاضع، ويغطي التقاعد والمعاشات في معظم الدول. تختلف النسب والسقوف بين البلدان، وفي دول الخليج تشمل الاشتراكات المواطنين في أغلبها. يشرح هذا الدليل الأساس ويطابق قيم حاسبة التأمين الاجتماعي في كلار.',
+      sections: [
+        {
+          heading: 'من يدفع وكم؟',
+          body: `الاشتراك يُدفع من طرفين: **حصة الموظف** تُخصم من راتبه، و**حصة صاحب العمل** تُدفع فوق الراتب. النسب الحالية المطبقة في الحاسبة:
+ 
+**الأردن**: الموظف 7.5% وصاحب العمل 14.25%، سقف 3,733 دينار شهرياً، ويشمل جميع الموظفين.
+**السعودية**: الموظف 9.75% وصاحب العمل 11.75%، سقف 45,000 ريال شهرياً، للمواطنين.
+**الإمارات**: الموظف 11% وصاحب العمل 15%، سقف 70,000 درهم شهرياً، للمواطنين.
+**الكويت**: الموظف 8% وصاحب العمل 11.5%، سقف 2,750 دينار شهرياً، للمواطنين.
+**قطر**: الموظف 7% وصاحب العمل 14%، سقف 100,000 ريال شهرياً، للمواطنين.
+**البحرين**: الموظف 8% وصاحب العمل 18%، سقف 4,000 دينار شهرياً، للمواطنين.
+**عُمان**: الموظف 8% وصاحب العمل 14.5%، سقف 3,000 ريال شهرياً، للمواطنين.`,
+        },
+        {
+          heading: 'السقف الشهري',
+          body: `لا تُحتسب الاشتراكات على كامل الراتب بل على **السقف الشهري** المحدد في كل بلد. إذا كان الراتب أعلى من السقف، يُقتطع على قيمة السقف فقط. على سبيل المثال في السعودية: راتب 50,000 ريال يُعامل معاملة 45,000 ريال، وحصة الموظف = 45,000 × 9.75% ≈ 4,387.5 ريال.`,
+        },
+        {
+          heading: 'المواطنة في دول الخليج',
+          body: `في السعودية والإمارات والكويت وقطر والبحرين وعُمان تسري اشتراكات التأمين الاجتماعي في الأساس على **المواطنين**؛ ولا تشمل الحاسبة نظام الادخار أو تعويض إصابات العمل للوافدين حيث يكونان منفصلين ومؤجلين. في الأردن يشمل الاشتراك جميع الموظفين بموجب قانون الضمان الاجتماعي.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `مثال مطابق لقيم الحاسبة: موظف سعودي راتبه **15,000 ريال**. الراتب أقل من السقف فلا يُطبق تقييد. حصة الموظف = 15,000 × 9.75% ≈ **1,462.5 ريال**، وحصة صاحب العمل = 15,000 × 11.75% ≈ **1,762.5 ريال**، والمجموع ≈ **3,225 ريالاً** شهرياً.`,
+        },
+        {
+          heading: 'متى تتغير النسب؟',
+          body: `تُعدَّل النسب والسقوف من حين لآخر بمراسيم وأنظمة رسمية (مثل الانتقال إلى نظام التأمينات الجديد في عُمان في يوليو 2026). تُراجع الأرقام دورياً في الحاسبة، لكن تحقق دائماً من آخر التحديثات لدى الهيئات المختصة قبل اعتمادها.`,
+        },
+      ],
+      keyTakeaways: [
+        'حصة الموظف تُخصم من راتبه وحصة صاحب العمل تُدفع فوقه.',
+        'الاقتطاع يُحسب على الراتب بعد تقييده بالسقف الشهري إن تجاوزه.',
+        'في دول الخليج تغطي الاشتراكات المواطنين في أغلبها، والأردن يشمل الجميع.',
+        'النسب والسقوف قابلة للتغيير بمراسيم رسمية وتُراجع دورياً.',
+      ],
+      faqs: [
+        {
+          q: 'هل يُخصم التأمين الاجتماعي من الوافدين؟',
+          a: 'في أغلب دول الخليج يخضع المواطنون للاشتراكات التقاعدية، بينما تندرج تغطية الوافدين (إصابات العمل والادخار) ضمن أنظمة منفصلة بتواريخ تطبيق مختلفة. أدخل حالة الموظف بعد التحقق من جهة العمل.',
+        },
+        {
+          q: 'ماذا يحدث إذا تجاوز الراتب السقف؟',
+          a: 'يُحتسب الاقتطاع على قيمة السقف فقط، فلا يتضخم الاشتراك مع الراتب الأعلى. تُظهر الحاسبة «الأساس المقيد» لترى القيمة المعتمدة.',
+        },
+        {
+          q: 'هل تُعد النسب دورياً؟',
+          a: 'نعم، تُعدَّل النسب والسقوف بقرارات رسمية. تتبع الحاسبة أحدث القيم المسجلة في قاعدة البيانات وتشير إلى مصدر كل بلد.',
+        },
+      ],
+      relatedCalculators: ['social-insurance', 'end-of-service', 'gross-to-net'],
+      lastReviewed: '2026-08-12',
+    },
+    en: {
+      slug: 'how-to-calculate-social-insurance',
+      locale: 'en',
+      title: 'How to calculate social-insurance contributions',
+      metaDescription:
+        'A practical guide to calculating social-insurance contributions (employee and employer shares) across the Gulf and Jordan, with monthly caps and citizens-only notes.',
+      intro:
+        'Social insurance is a mandatory contribution paid by both the employee and the employer on the covered salary, funding pensions and retirement schemes in most countries. Rates and caps differ by country, and in the Gulf the contributions largely cover citizens. This guide explains the basics and matches the social-insurance calculator on Klar.',
+      sections: [
+        {
+          heading: 'Who pays, and how much?',
+          body: `The contribution is paid by two parties: the **employee share** is deducted from the salary, and the **employer share** is paid on top of it. The rates currently used by the calculator:
+ 
+**Jordan**: employee 7.5% and employer 14.25%, cap JOD 3,733 per month, covering all employees.
+**Saudi Arabia**: employee 9.75% and employer 11.75%, cap SAR 45,000 per month, citizens.
+**UAE**: employee 11% and employer 15%, cap AED 70,000 per month, citizens.
+**Kuwait**: employee 8% and employer 11.5%, cap KWD 2,750 per month, citizens.
+**Qatar**: employee 7% and employer 14%, cap QAR 100,000 per month, citizens.
+**Bahrain**: employee 8% and employer 18%, cap BHD 4,000 per month, citizens.
+**Oman**: employee 8% and employer 14.5%, cap OMR 3,000 per month, citizens.`,
+        },
+        {
+          heading: 'The monthly cap',
+          body: `Contributions are not based on the full salary but on the **monthly cap** set by each country. If the salary exceeds the cap, only the capped amount is used. For example in Saudi Arabia: a salary of 50,000 SAR is treated as 45,000 SAR, and the employee share = 45,000 × 9.75% ≈ 4,387.5 SAR.`,
+        },
+        {
+          heading: 'Citizenship in the Gulf',
+          body: `In Saudi Arabia, the UAE, Kuwait, Qatar, Bahrain and Oman, social-insurance contributions essentially cover **citizens**; the calculator does not cover expat savings or work-injury schemes, which are separate and have their own deferred start dates. In Jordan, the Social Security Corporation covers all employees.`,
+        },
+        {
+          heading: 'Worked example',
+          body: `An example matching the calculator: a Saudi employee earning **15,000 SAR**. The salary is below the cap, so no limit applies. Employee share = 15,000 × 9.75% ≈ **1,462.5 SAR**, employer share = 15,000 × 11.75% ≈ **1,762.5 SAR**, and the total ≈ **3,225 SAR** per month.`,
+        },
+        {
+          heading: 'When do the rates change?',
+          body: `Rates and caps are adjusted from time to time by official decrees and regulations (such as the move to the new insurance system in Oman in July 2026). The figures are reviewed periodically in the calculator, but always verify the latest updates with the relevant authorities before relying on them.`,
+        },
+      ],
+      keyTakeaways: [
+        'The employee share is deducted from the salary; the employer share is paid on top.',
+        'Contributions are based on the salary capped at the monthly limit if it is exceeded.',
+        'In the Gulf the contributions largely cover citizens; Jordan covers everyone.',
+        'Rates and caps change by official decree and are reviewed periodically.',
+      ],
+      faqs: [
+        {
+          q: 'Are expats subject to social insurance?',
+          a: 'In most Gulf states, citizens are covered by the pension contributions, while expat coverage (work injury and savings) sits in separate schemes with different start dates. Enter the employee\u2019s situation after checking with the employer.',
+        },
+        {
+          q: 'What happens if the salary exceeds the cap?',
+          a: 'Only the capped amount is used, so the contribution does not grow with a higher salary. The calculator shows the \u201Ccapped base\u201D so you can see the amount used.',
+        },
+        {
+          q: 'Are the rates updated periodically?',
+          a: 'Yes, rates and caps change through official decisions. The calculator follows the latest values in the database and cites the source for each country.',
+        },
+      ],
+      relatedCalculators: ['social-insurance', 'end-of-service', 'gross-to-net'],
+      lastReviewed: '2026-08-12',
+    },
+  },
+  'how-to-calculate-notice-period': {
+    ar: {
+      slug: 'how-to-calculate-notice-period',
+      locale: 'ar',
+      title: 'كيف تحسب فترة الإشعار',
+      metaDescription:
+        'دليل عملي لفترة الإشعار الواجبة عند إنهاء عقد العمل في دول الخليج والأردن، مع جداول الأيام لكل بلد وملاحظات حول من يوجّه الإشعار.',
+      intro:
+        'فترة الإشعار هي المهلة التي يجب أن تسبق إنهاء عقد العمل، سواء من طرف الموظف أو صاحب العمل، وتُحددها قوانين العمل في كل بلد وقد تختلف باختلاف مدة الخدمة أو طريقة الدفع. يشرح هذا الدليل القواعد المطبقة في الحاسبة.',
+      sections: [
+        {
+          heading: 'لماذا تختلف الفترة بين البلدان؟',
+          body: `تضع كل دولة قوانينها الخاصة للإشعار. بعضها يثبت مدة واحدة، وبعضها يربطها بمدة الخدمة. القيم المطبقة في الحاسبة:
+ 
+**الأردن**: 30 يوماً للعقود غير محددة المدة.
+**السعودية**: 30 يوماً للعامل بأجر شهري عند إشعاره من جانبه، و60 يوماً عند إشعار صاحب العمل (بعد تعديلات فبراير 2025).
+**الإمارات**: من 30 إلى 90 يوماً وفق ما يتفق عليه، بحد أدنى 30 يوماً.
+**الكويت**: 3 أشهر للعامل بأجر شهري، وشهر للباقين.
+**قطر**: شهر للخدمة حتى سنتين، وشهران لما بعد ذلك (للعقود غير المحددة).
+**البحرين**: 30 يوماً على الأقل كتابياً.
+**عُمان**: 30 يوماً للأجير الشهري و15 يوماً لغيره، و3 أشهر على الأقل للإنهاء لأسباب اقتصادية.`,
+        },
+        {
+          heading: 'دور مدة الخدمة',
+          body: `في بعض البلدان تُربط الفترة بمدة الخدمة، مثل قطر حيث تتضاعف الفترة بعد سنتين من الخدمة. تدعم الحاسبة هذه الحالات بشرائح حسب سنوات الخدمة، وتختار الشريحة المناسبة تلقائياً من القيم المسجلة لكل بلد.`,
+        },
+        {
+          heading: 'من يوجّه الإشعار؟',
+          body: `لا تعني الفترة نفسها أن الطرفين متساويان دائماً. في السعودية مثلاً يمنح القانون 60 يوماً إذا كان الإشعار من صاحب العمل و30 يوماً إذا كان من العامل. الحاسبة تعرض المدة الأساسية المسجلة في القانون، وراجع تفاصيل الاتجاهين في نصوص القوانين.`,
+        },
+        {
+          heading: 'بدل الإشعار',
+          body: `يجوز في أغلب الدول تعويض الإشعار بدفع مبلغ يعادل أجر الفترة بدلاً من استمرار العمل، مثل عُمان حيث يُدفع تعويض يساوي أجر فترة الإشعار على آخر أجر إجمالي. تُراجع الشروط في عقد العمل وقانون البلد.`,
+        },
+      ],
+      keyTakeaways: [
+        'فترة الإشعار تختلف بين البلدان وقد تختلف باختلاف مدة الخدمة وطريقة الدفع.',
+        'قطر تربط الفترة بمدة الخدمة (شهر حتى سنتين، شهران بعدها).',
+        'قد يكون إشعار صاحب العمل أطول من إشعار العامل في بعض الدول (مثل السعودية).',
+        'يجوز في أغلب الدول دفع بدل نقدي يعادل أجر فترة الإشعار.',
+      ],
+      faqs: [
+        {
+          q: 'هل يمكن الاتفاق على فترة إشعار أطول؟',
+          a: 'نعم، يجوز لمعظم القوانين الاتفاق على فترة أطول من الحد الأدنى، بشرط ألا تقل عنه، وأحياناً يُبطل أي اتفاق يخفض الحد الأدنى القانوني.',
+        },
+        {
+          q: 'ماذا يعني تعويض الإشعار؟',
+          a: 'تعويض الإشعار هو دفع مبلغ نقدي يعادل أجر فترة الإشعار كاملة لإنهاء العقد فوراً دون انتظار المدة، ويُحسب على آخر أجر.',
+        },
+        {
+          q: 'هل يختلف الإشعار في العقود محددة المدة؟',
+          a: 'نعم، بعض القوانين (مثل قطر) تضع سلماً منفصلاً للعقود محددة المدة. الحاسبة تعرض قاعدة العقد غير محدد المدة، ويلزم التحقق من العقد نفسه.',
+        },
+      ],
+      relatedCalculators: ['notice-period', 'end-of-service', 'leave-balance'],
+      lastReviewed: '2026-08-12',
+    },
+    en: {
+      slug: 'how-to-calculate-notice-period',
+      locale: 'en',
+      title: 'How to calculate the notice period',
+      metaDescription:
+        'A practical guide to the notice period required to end an employment contract across the Gulf and Jordan, with per-country day tables and notes on who serves the notice.',
+      intro:
+        'The notice period is the lead time that must precede the end of an employment contract, whether given by the employee or the employer. Labour laws in each country set the period, and it can vary with the length of service or the payment method. This guide explains the rules used by the calculator.',
+      sections: [
+        {
+          heading: 'Why does it differ between countries?',
+          body: `Each country sets its own notice rules. Some fix a single period, while others link it to the length of service. The values used by the calculator:
+ 
+**Jordan**: 30 days for indefinite-term contracts.
+**Saudi Arabia**: 30 days for a monthly-paid worker when the notice is given by the worker, and 60 days when given by the employer (after the February 2025 amendments).
+**UAE**: 30 to 90 days as agreed, with a minimum of 30 days.
+**Kuwait**: 3 months for monthly-paid workers, and 1 month for others.
+**Qatar**: 1 month for service of up to two years, and 2 months beyond that (indefinite contracts).
+**Bahrain**: at least 30 days in writing.
+**Oman**: 30 days for a monthly-paid worker and 15 for others, and at least 3 months for economic-cause termination.`,
+        },
+        {
+          heading: 'The role of service length',
+          body: `Some countries tie the period to the length of service, such as Qatar, where it doubles after two years of service. The calculator supports these cases with bands by years of service and selects the right band automatically from each country\u2019s stored rules.`,
+        },
+        {
+          heading: 'Who serves the notice?',
+          body: `The same period does not always apply to both parties. In Saudi Arabia, for example, the law gives 60 days when the notice comes from the employer and 30 when it comes from the worker. The calculator shows the base period stored in the law; check the direction-specific details in the statutory texts.`,
+        },
+        {
+          heading: 'Payment in lieu of notice',
+          body: `Most countries allow replacing the notice with a payment equal to the wage for the period instead of continuing work, such as Oman, where a compensation equal to the notice-period wage on the last gross wage is paid. Review the contract terms and the country\u2019s law.`,
+        },
+      ],
+      keyTakeaways: [
+        'The notice period differs between countries and can vary with service length and pay method.',
+        'Qatar links the period to service length (1 month up to two years, 2 months after).',
+        'Employer-side notice can be longer than worker-side notice in some countries (e.g. Saudi Arabia).',
+        'Most countries allow a cash payment in lieu of the notice period.',
+      ],
+      faqs: [
+        {
+          q: 'Can the parties agree a longer notice period?',
+          a: 'Yes, most laws allow agreeing a period longer than the minimum, as long as it is not below it, and some void any agreement that reduces the statutory minimum.',
+        },
+        {
+          q: 'What does payment in lieu of notice mean?',
+          a: 'It is a cash payment equal to the full wage for the notice period, ending the contract immediately without waiting out the period, usually based on the last wage.',
+        },
+        {
+          q: 'Does fixed-term employment use a different notice?',
+          a: 'Yes, some laws (such as Qatar) set a separate scale for fixed-term contracts. The calculator shows the indefinite-contract rule; always check the contract itself.',
+        },
+      ],
+      relatedCalculators: ['notice-period', 'end-of-service', 'leave-balance'],
+      lastReviewed: '2026-08-12',
+    },
+  },
+  'how-to-calculate-maternity-leave': {
+    ar: {
+      slug: 'how-to-calculate-maternity-leave',
+      locale: 'ar',
+      title: 'كيف تحسب إجازة الأمومة',
+      metaDescription:
+        'دليل عملي لإجازة الأمومة في دول الخليج والأردن: عدد الأيام لكل بلد، وملاحظات حول توزيع الأجر وبدء الإجازة قبل الولادة.',
+      intro:
+        'إجازة الأمومة حق منصوص عليه في قوانين العمل تختلف مدته بين الدول، وقد تتضمن تفاصيل حول الأجر قبل الولادة وبعدها. يشرح هذا الدليل المدد المطبقة في الحاسبة وملاحظات توزيع الأجر.',
+      sections: [
+        {
+          heading: 'المدد حسب البلد',
+          body: `المدد المعتمدة في الحاسبة:
+ 
+**الأردن**: 90 يوماً (عدّلها القانون في 2025).
+**السعودية**: 84 يوماً (12 أسبوعاً بأجر كامل بعد التعديلات اعتباراً من فبراير 2025، مع 6 أسابيع إلزامية بعد الولادة).
+**الإمارات**: 60 يوماً (45 يوماً بأجر كامل و15 بأجر نصف).
+**الكويت**: 70 يوماً (30 قبل الولادة و40 بعدها).
+**قطر**: 50 يوماً.
+**البحرين**: 60 يوماً.
+**عُمان**: 98 يوماً، بحد أقصى 14 يوماً قبل الولادة.`,
+        },
+        {
+          heading: 'توزيع الأجر',
+          body: `لا تعني المدة الكاملة أجراً كاملاً دائماً. في الإمارات مثلاً أول 45 يوماً بأجر كامل ثم 15 يوماً بنصف الأجر. تختلف المعالجة بين البلدان، وتعرض الحاسبة المدة الإجمالية، بينما يجب التحقق من تفاصيل الأجر من قانون كل بلد أو جهة العمل.`,
+        },
+        {
+          heading: 'الأيام قبل الولادة',
+          body: `تحدد بعض القوانين متى تبدأ الإجازة، مثل عُمان بحد أقصى 14 يوماً قبل الولادة المتوقعة، والكويت 30 يوماً قبلها. تفاصيل التوقيت قابلة للتعديل بالاتفاق أو بحسب الحالة الصحية، وتخضع للوائح التنفيذية.`,
+        },
+      ],
+      keyTakeaways: [
+        'المدد تتراوح من 50 يوماً في قطر إلى 98 يوماً في عُمان.',
+        'قد تُدفع الإجازة بأجر كامل أو جزئي حسب مراحلها في بعض الدول.',
+        'بعض الدول تحدد حداً أقصى للأيام التي تسبق الولادة.',
+        'النتيجة تُظهر المدة الإجمالية، والأجر التفصيلي يخضع لقانون البلد.',
+      ],
+      faqs: [
+        {
+          q: 'هل تُحسب الأيام تقويمية؟',
+          a: 'نعم، تُحتسب الأيام تقويمية شاملة عطلات نهاية الأسبوع والأعياد في المدة الإجمالية.',
+        },
+        {
+          q: 'هل يمكن تمديد الإجازة؟',
+          a: 'بعض الدول تتيح تمديداً غير مدفوع (مثل الإمارات بموجب اللائحة التنفيذية)، وهو خارج المدة القانونية الأساسية.',
+        },
+        {
+          q: 'ماذا عن الموظفين غير الخاضعين؟',
+          a: 'تنطبق هذه المدد على الخاضعين لقانون العمل، وقد تختلف أحكام القطاعات العامة أو فئات خاصة، لذا تحقق من جهة العمل.',
+        },
+      ],
+      relatedCalculators: ['maternity-leave', 'leave-balance', 'notice-period'],
+      lastReviewed: '2026-08-12',
+    },
+    en: {
+      slug: 'how-to-calculate-maternity-leave',
+      locale: 'en',
+      title: 'How to calculate maternity leave',
+      metaDescription:
+        'A practical guide to maternity leave across the Gulf and Jordan: days per country, plus notes on pay splits and starting leave before birth.',
+      intro:
+        'Maternity leave is a statutory right whose length varies by country and can include details about pay before and after birth. This guide explains the durations used by the calculator and pay-split notes.',
+      sections: [
+        {
+          heading: 'Duration by country',
+          body: `The durations used by the calculator:
+ 
+**Jordan**: 90 days (amended in 2025).
+**Saudi Arabia**: 84 days (12 weeks on full pay after the amendments effective February 2025, with 6 mandatory weeks after birth).
+**UAE**: 60 days (45 on full pay and 15 on half pay).
+**Kuwait**: 70 days (30 before and 40 after the expected delivery date).
+**Qatar**: 50 days.
+**Bahrain**: 60 days.
+**Oman**: 98 days, with a maximum of 14 days before birth.`,
+        },
+        {
+          heading: 'The pay split',
+          body: `Full duration does not always mean full pay. In the UAE, for example, the first 45 days are on full pay and the next 15 on half pay. Treatment varies by country; the calculator shows the total duration, while pay details should be verified against each country\u2019s law or the employer.`,
+        },
+        {
+          heading: 'Days before birth',
+          body: `Some laws set when leave starts, such as Oman with a maximum of 14 days before the expected delivery date, and Kuwait with 30 days before it. Timing details may be adjusted by agreement or health condition and are subject to implementing regulations.`,
+        },
+      ],
+      keyTakeaways: [
+        'Durations range from 50 days in Qatar to 98 days in Oman.',
+        'Leave may be paid in full or in part depending on its stage in some countries.',
+        'Some countries cap the days that can precede birth.',
+        'The result shows the total duration; detailed pay follows the country\u2019s law.',
+      ],
+      faqs: [
+        {
+          q: 'Are the days calendar days?',
+          a: 'Yes, the days are calendar days, including weekends and holidays, within the total duration.',
+        },
+        {
+          q: 'Can the leave be extended?',
+          a: 'Some countries allow an unpaid extension (such as the UAE under its implementing regulation), which falls outside the core statutory duration.',
+        },
+        {
+          q: 'What about workers not covered?',
+          a: 'These durations apply to employees covered by labour law; public-sector or special categories may differ, so check with the employer.',
+        },
+      ],
+      relatedCalculators: ['maternity-leave', 'leave-balance', 'notice-period'],
+      lastReviewed: '2026-08-12',
+    },
+  },
+  'how-to-calculate-gross-to-net': {
+    ar: {
+      slug: 'how-to-calculate-gross-to-net',
+      locale: 'ar',
+      title: 'كيف تحسب الراتب الصافي من الإجمالي',
+      metaDescription:
+        'دليل عملي لتحويل الراتب الإجمالي إلى الصافي بعد الخصومات القانونية (التأمين الاجتماعي وضريبة الدخل) في دول الخليج والأردن، مع ترتيب الاقتطاعات والسقوف.',
+      intro:
+        'الراتب الإجمالي هو ما يدفعه صاحب العمل، أما الصافي فهو ما يصلك فعلياً بعد الاقتطاعات القانونية. يعتمد التحويل على ترتيب الاقتطاعات وسقوف كل بلد، ومعظم دول الخليج لا تفرض ضريبة دخل على الأفراد. يشرح هذا الدليل خطوات الحاسبة.',
+      sections: [
+        {
+          heading: 'ترتيب الاقتطاعات',
+          body: `تُطبق الحاسبة الاقتطاعات بالترتيب المسجل لكل بلد. في جميع البلدان المغطاة يبدأ التحويل بـ**التأمين الاجتماعي** على الراتب (مقيّداً بالسقف الشهري إن وُجد)، ثم في **الأردن** تُضاف **ضريبة الدخل** بعد تطبيق الإعفاء الشخصي والشرائح السنوية.`,
+        },
+        {
+          heading: 'لا ضريبة دخل في الخليج',
+          body: `السعودية والإمارات والكويت وقطر والبحرين لا تفرض ضريبة دخل شخصية على رواتب الموظفين، لذا يقتصر الاقتطاع على التأمين الاجتماعي حيث يخضع له الموظف. في عُمان تُعلن ضريبة شخصية (5% فوق 42,000 ريال سنوياً) اعتباراً من 1 يناير 2028، وهي خارج النطاق الحالي.`,
+        },
+        {
+          heading: 'الأردن: الشرائح والإعفاء',
+          body: `في الأردن تُحسب الضريبة سنوياً على الدخل بعد **الإعفاء الشخصي (9,000 دينار)**، ثم بشرائح تبدأ من 5% وتتصاعد حتى 30%. تحوّل الحاسبة الراتب الشهري إلى سنوي، وتطبق الإعفاء والشرائح، ثم تعيد النتيجة إلى أساس شهري.`,
+        },
+        {
+          heading: 'السقوف وأثرها',
+          body: `عندما يتجاوز الراتب سقف التأمين الاجتماعي، يُقتطع الاشتراك على السقف لا على الراتب الكامل، ما يعني أن الصافي لا يتناقص بنسبة ثابتة عند الراتب المرتفع. تُظهر الحاسبة الأساس المقيد في النتائج.`,
+        },
+      ],
+      keyTakeaways: [
+        'الصافي = الإجمالي − خصم التأمين الاجتماعي (− ضريبة الدخل في الأردن).',
+        'التأمين الاجتماعي يُحسب على الراتب المقيد بالسقف الشهري.',
+        'دول الخليج (عدا عُمان اعتباراً من 2028) لا تفرض ضريبة دخل شخصية.',
+        'الأردن يطبق إعفاءً شخصياً ثم شرائح تصاعدية سنوية.',
+      ],
+      faqs: [
+        {
+          q: 'هل تشمل الحاسبة بدلات وخصومات أخرى؟',
+          a: 'تغطي الحالية الخصومات القانونية الأساسية (التأمين الاجتماعي وضريبة الدخل). القروض والاقتطاعات الاتفاقية والقضائية لا تُحتسب.',
+        },
+        {
+          q: 'لماذا يظهر الأساس المقيد؟',
+          a: 'لأن اشتراك التأمين الاجتماعي يُحتسب على سقف شهري محدد لكل بلد، ويوضح الأساس المقيد القيمة المعتمدة عند تجاوز الراتب للسقف.',
+        },
+        {
+          q: 'هل توجد ضريبة دخل في دول الخليج؟',
+          a: 'لا تفرض السعودية والإمارات والكويت وقطر والبحرين ضريبة دخل شخصية على الرواتب. عُمان ستُدخل ضريبة شخصية في 2028.',
+        },
+      ],
+      relatedCalculators: ['gross-to-net', 'income-tax', 'social-insurance'],
+      lastReviewed: '2026-08-12',
+    },
+    en: {
+      slug: 'how-to-calculate-gross-to-net',
+      locale: 'en',
+      title: 'How to convert gross salary to net',
+      metaDescription:
+        'A practical guide to converting gross salary to net after statutory deductions (social insurance and income tax) across the Gulf and Jordan, with deduction order and caps.',
+      intro:
+        'The gross salary is what the employer pays, while the net salary is what you actually receive after statutory deductions. The conversion depends on the order of deductions and each country\u2019s caps, and most Gulf states do not tax personal employment income. This guide explains the calculator\u2019s steps.',
+      sections: [
+        {
+          heading: 'The order of deductions',
+          body: `The calculator applies deductions in the order stored for each country. In all covered countries the conversion starts with **social insurance** on the salary (capped at the monthly limit if any), then in **Jordan** **income tax** is added after applying the personal allowance and the annual brackets.`,
+        },
+        {
+          heading: 'No income tax in the Gulf',
+          body: `Saudi Arabia, the UAE, Kuwait, Qatar and Bahrain do not levy personal income tax on employment salaries, so the only deduction is social insurance where the employee is covered. Oman announced a personal tax (5% above OMR 42,000 per year) effective 1 January 2028, outside the current scope.`,
+        },
+        {
+          heading: 'Jordan: brackets and allowance',
+          body: `In Jordan, tax is calculated annually on income after the **personal allowance (JOD 9,000)**, then on progressive brackets starting at 5% up to 30%. The calculator converts the monthly salary to annual, applies the allowance and brackets, then returns the result to a monthly basis.`,
+        },
+        {
+          heading: 'Caps and their effect',
+          body: `When the salary exceeds the social-insurance cap, the contribution is based on the cap rather than the full salary, so the net does not shrink at a fixed rate at high salaries. The calculator shows the capped base in the results.`,
+        },
+      ],
+      keyTakeaways: [
+        'Net = gross − social insurance (− income tax in Jordan).',
+        'Social insurance is based on the salary capped at the monthly limit.',
+        'Gulf states (except Oman from 2028) do not levy personal income tax.',
+        'Jordan applies a personal allowance, then progressive annual brackets.',
+      ],
+      faqs: [
+        {
+          q: 'Does the calculator include other deductions?',
+          a: 'It covers the core statutory deductions (social insurance and income tax). Loans and contractual or court-ordered deductions are not included.',
+        },
+        {
+          q: 'Why is a capped base shown?',
+          a: 'Because the social-insurance contribution is based on a monthly cap per country, and the capped base shows the amount used when the salary exceeds the cap.',
+        },
+        {
+          q: 'Is there income tax in the Gulf?',
+          a: 'Saudi Arabia, the UAE, Kuwait, Qatar and Bahrain do not levy personal income tax on salaries. Oman will introduce a personal tax in 2028.',
+        },
+      ],
+      relatedCalculators: ['gross-to-net', 'income-tax', 'social-insurance'],
+      lastReviewed: '2026-08-12',
+    },
+  },
+  'how-to-calculate-income-tax': {
+    ar: {
+      slug: 'how-to-calculate-income-tax',
+      locale: 'ar',
+      title: 'كيف تحسب ضريبة الدخل على الراتب',
+      metaDescription:
+        'دليل عملي لضريبة الدخل الشخصية في الأردن (الشرائح والإعفاء) وغيابها في دول الخليج، مع نظرة على ضريبة عُمان المقررة عام 2028.',
+      intro:
+        'ضريبة الدخل على رواتب الموظفين غير موحدة في المنطقة: تفرضها الأردن بشرائح تصاعدية، ولا تفرضها معظم دول الخليج أصلاً، بينما تعلن عُمان ضريبة شخصية مقررة لعام 2028. يشرح هذا الدليل ما تعرضه الحاسبة.',
+      sections: [
+        {
+          heading: 'الأردن: الشرائح والإعفاء',
+          body: `يُطبق في الأردن إعفاء شخصي قدره **9,000 دينار سنوياً** على مجموع الدخل، ثم تُفرض الشرائح التصاعدية على ما تبقى: 5% حتى 5,000 دينار، و10% حتى 10,000، و15% حتى 15,000، و20% حتى 20,000، و25% حتى 1,000,000، و30% فيما فوق. تُحسب الضريبة سنوياً ثم تُوزع على الأشهر.`,
+        },
+        {
+          heading: 'دول بلا ضريبة دخل شخصية',
+          body: `السعودية والإمارات والكويت وقطر والبحرين لا تفرض ضريبة دخل شخصية على رواتب الموظفين؛ وما يُفرض في بعضها ضرائب شركات وأرباح أنشطة تجارية لا تمس الأجور. لذلك تكون الضريبة **صفراً** لهذه الدول في الحاسبة.`,
+        },
+        {
+          heading: 'عُمان: من 2028',
+          body: `عُمان حالياً بلا ضريبة دخل شخصية، لكن المرسوم السلطاني رقم 56/2025 يقرر ضريبة **5%** على الدخل السنوي الذي يتجاوز **42,000 ريال** للمقيمين الضريبيين وبعض غير المقيمين، على أن تسري اعتباراً من **1 يناير 2028**. الحاسبة تعكس الوضع الحالي (صفر).`,
+        },
+        {
+          heading: 'كيف تحسبها بنفسك',
+          body: `جمع الدخل السنوي، اطرح الإعفاء الشخصي، وطبق كل شريحة على الجزء الواقع ضمنها فقط (لا على كامل المبلغ بسعر أعلى شريحة). مثال: دخل سنوي 14,000 دينار بعد الإعفاء: 5,000 × 5% + 4,000 × 10% = 250 + 400 = 650 ديناراً.`,
+        },
+      ],
+      keyTakeaways: [
+        'الأردن: إعفاء 9,000 دينار ثم شرائح من 5% إلى 30%.',
+        'السعودية والإمارات والكويت وقطر والبحرين: صفر ضريبة على الرواتب.',
+        'عُمان: ضريبة 5% فوق 42,000 ريال سنوياً اعتباراً من 1 يناير 2028.',
+        'الشرائح تُطبق على الجزء الواقع ضمن كل شريحة، لا على كامل الدخل.',
+      ],
+      faqs: [
+        {
+          q: 'لماذا تُظهر الحاسبة صفراً لدول الخليج؟',
+          a: 'لأن قوانينها لا تفرض ضريبة دخل شخصية على رواتب الموظفين حالياً؛ الضرائب فيها موجهة لشركات وأنشطة تجارية.',
+        },
+        {
+          q: 'هل الإعفاء الشخصي للأردن لكل الموظفين؟',
+          a: 'الإعفاء العام 9,000 دينار سنوياً، وقد تزيد إعفاءات خاصة (أسرية وتعليمية) حسب الحالة؛ الحاسبة تعتمد الإعفاء الأساسي.',
+        },
+        {
+          q: 'هل يشمل المثال المساهمة الوطنية؟',
+          a: 'لا، هناك مساهمة وطنية 1% على الدخل الخاضع فوق 200,000 دينار في الأردن، وهي خارج نطاق الحاسبة الحالي.',
+        },
+      ],
+      relatedCalculators: ['income-tax', 'gross-to-net', 'social-insurance'],
+      lastReviewed: '2026-08-12',
+    },
+    en: {
+      slug: 'how-to-calculate-income-tax',
+      locale: 'en',
+      title: 'How to calculate income tax on salary',
+      metaDescription:
+        'A practical guide to personal income tax in Jordan (brackets and allowance) and its absence in the Gulf, with a look at Oman\u2019s tax scheduled for 2028.',
+      intro:
+        'Personal income tax on employment salaries is not uniform across the region: Jordan levies progressive brackets, most Gulf states levy none at all, and Oman has announced a personal tax for 2028. This guide explains what the calculator shows.',
+      sections: [
+        {
+          heading: 'Jordan: brackets and allowance',
+          body: `Jordan applies a personal allowance of **JOD 9,000 per year** to total income, then progressive brackets on the remainder: 5% up to 5,000, 10% up to 10,000, 15% up to 15,000, 20% up to 20,000, 25% up to 1,000,000, and 30% above. Tax is computed annually, then spread over the months.`,
+        },
+        {
+          heading: 'Countries with no personal income tax',
+          body: `Saudi Arabia, the UAE, Kuwait, Qatar and Bahrain do not levy personal income tax on employment salaries; the taxes they do impose target companies and business profits, not wages. The tax is therefore **zero** for these countries in the calculator.`,
+        },
+        {
+          heading: 'Oman: from 2028',
+          body: `Oman currently has no personal income tax, but Royal Decree 56/2025 introduces a **5%** tax on annual income above **OMR 42,000** for tax residents and certain non-residents, effective **1 January 2028**. The calculator reflects the current position (zero).`,
+        },
+        {
+          heading: 'How to compute it yourself',
+          body: `Add up annual income, subtract the personal allowance, and apply each bracket only to the slice that falls within it (not the whole amount at the top rate). Example: annual income of 14,000 after the allowance: 5,000 × 5% + 4,000 × 10% = 250 + 400 = 650.`,
+        },
+      ],
+      keyTakeaways: [
+        'Jordan: allowance of 9,000, then brackets from 5% to 30%.',
+        'Saudi Arabia, UAE, Kuwait, Qatar, Bahrain: zero tax on salaries.',
+        'Oman: 5% above 42,000 per year effective 1 January 2028.',
+        'Brackets apply to each slice, not the entire income at the top rate.',
+      ],
+      faqs: [
+        {
+          q: 'Why does the calculator show zero for Gulf states?',
+          a: 'Because their laws do not currently levy personal income tax on employment salaries; their taxes target companies and business activity.',
+        },
+        {
+          q: 'Is the Jordanian allowance the same for everyone?',
+          a: 'The general allowance is JOD 9,000 per year, and additional family and education allowances may apply; the calculator uses the basic allowance.',
+        },
+        {
+          q: 'Does the example include the national contribution?',
+          a: 'No, there is a 1% national contribution on taxable income above JOD 200,000 in Jordan, which is outside the calculator\u2019s current scope.',
+        },
+      ],
+      relatedCalculators: ['income-tax', 'gross-to-net', 'social-insurance'],
+      lastReviewed: '2026-08-12',
+    },
+  },
   'how-to-calculate-loan-payment': {
     ar: {
       slug: 'how-to-calculate-loan-payment',
