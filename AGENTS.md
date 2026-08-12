@@ -49,4 +49,5 @@ Every calculator requires all of these (a missing one breaks build or the tool):
 - **Ads**: `AdSlot` renders nothing until a real publisher ID is set. Only `afterResult` (CalculatorLayout) and `sidebar` (CalcSidebar) are mounted; `belowIntro`, `inContent`, `betweenGuideSections` are declared in `src/config/ads.ts` but intentionally unmounted — keep them that way.
 - Font preloads in `BaseLayout.astro` point at `/fonts/ibmplexsansarabic-{arabic,latin}-400.woff2`, matching the real self-hosted IBM Plex Sans Arabic files in `public/fonts/` (declared in `fonts.css` with unicode-range subsets). If you swap fonts, update the preloads in lockstep.
 - `@/*` alias maps to `src/*` (tsconfig + astro.config.mjs).
+- **Country rules publish gate is test-only for v1**: `assertPublishGate()` in `src/lib/country-rules/publish-gate.ts` is exercised by `tests/publish-gate.test.ts`, not by `astro build`. Any country module must pass it — don't weaken the gate to ship a rule; fix the rule.
 - `dist/` and `.astro/` are gitignored.

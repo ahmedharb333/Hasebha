@@ -833,12 +833,12 @@ Create `om.ts` + `tests/country-rules-om.test.ts` (currency `OMR`, single-band E
 
 Now that all 7 modules exist, create the engine glue and tests:
 
-- [ ] Step 1: create `src/lib/country-rules/registry.ts` (exact code from Task 2).
-- [ ] Step 2: create `src/lib/country-rules/publish-gate.ts` (exact code from Task 2).
-- [ ] Step 3: create `tests/publish-gate.test.ts` + `tests/country-config.test.ts` (from Tasks 2/3) + per-country sanity tests from Tasks 6–12.
-- [ ] Step 4: run `node --test tests/publish-gate.test.ts tests/country-config.test.ts` — 0 violations; exactly 7 codes.
-- [ ] Step 5: run `npm test` — full suite green. `npm run check` — 0 errors.
-- [ ] Step 6: `npm run build` — clean. **Decision:** keep the gate test-only for v1 (`astro build` does not invoke `assertPublishGate`); note in AGENTS.md.
+- [x] Step 1: create `src/lib/country-rules/registry.ts` (exact code from Task 2). *(extension-only edits: runtime imports use `.ts` per repo convention for `node --test` type-stripping)*
+- [x] Step 2: create `src/lib/country-rules/publish-gate.ts` (exact code from Task 2). *(fixed `checkSource` param type to `RuleSource & { effectiveFrom?: string }` and imported `CountryRules` — literal plan code failed `astro check`)*
+- [x] Step 3: create `tests/publish-gate.test.ts` + `tests/country-config.test.ts` (from Tasks 2/3) + per-country sanity tests from Tasks 6–12. *(`tests/country-config.test.ts` deferred to Task 3's commit — it needs `config/countries.ts`/`content/countries.ts`, which don't exist yet; keeps this commit green)*
+- [x] Step 4: run `node --test tests/publish-gate.test.ts` — 0 violations; exactly 7 codes.
+- [x] Step 5: run `npm test` — full suite green (179/179). `npm run check` — 0 errors.
+- [x] Step 6: `npm run build` — clean. **Decision:** keep the gate test-only for v1 (`astro build` does not invoke `assertPublishGate`); note in AGENTS.md.
 - [ ] Step 7: commit `feat(country-rules): registry and publish gate green for 7 countries`.
 
 ---
