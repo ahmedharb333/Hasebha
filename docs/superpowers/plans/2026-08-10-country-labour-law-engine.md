@@ -105,10 +105,10 @@ test('currencies: getCurrency falls back to JOD', () => {
 });
 ```
 
-- [ ] Step 1: edit `src/config/currencies.ts` (type + 4 entries).
-- [ ] Step 2: create `tests/currencies.test.ts` with the tests above.
-- [ ] Step 3: `npm test` — all pass (existing 167 + 3 new). `npm run check` — 0 errors.
-- [ ] Step 4: commit `feat(country-rules): extend currency set with KWD, QAR, BHD, OMR`.
+- [x] Step 1: edit `src/config/currencies.ts` (type + 4 entries).
+- [x] Step 2: create `tests/currencies.test.ts` with the tests above.
+- [x] Step 3: `npm test` — all pass. `npm run check` — 0 errors.
+- [x] Step 4: commit `e546d74 feat(country-rules): extend currency set with KWD, QAR, BHD, OMR`.
 
 ---
 
@@ -351,9 +351,9 @@ test('publish-gate: exactly the 7 first-wave countries are registered', () => {
 
 **Ordering note:** `registry.ts` imports the 7 modules; Tasks 6–12 create them. Until those exist, `astro check`/`npm test` fail on missing imports. To keep every commit green, implement the engine as one committed unit: Tasks 2 → 6-12 → 13 in dependency order, with the registry/publish-gate files and the 7 country modules all landing before the gate test is added (Task 13 completes the engine). Task 2 creates `types.ts` only; Task 13 adds `registry.ts` + `publish-gate.ts` + gate test once all 7 modules exist.
 
-- [ ] Step 1: create `src/lib/country-rules/types.ts` (exact code above).
-- [ ] Step 2: `npm run check` — 0 errors.
-- [ ] Step 3: commit `feat(country-rules): country-rules data model types`.
+- [x] Step 1: create `src/lib/country-rules/types.ts` (exact code above).
+- [x] Step 2: `npm run check` — 0 errors.
+- [x] Step 3: commit `d6acb43 feat(country-rules): country-rules data model types`.
 
 ---
 
@@ -675,11 +675,11 @@ test('jo: rules resolve and are sane', () => {
 });
 ```
 
-- [ ] Step 1: verify figures via official sources (web search each category).
-- [ ] Step 2: create `src/lib/country-rules/jo.ts` with verified values + real URLs + today's `accessed` date.
-- [ ] Step 3: create `tests/country-rules-jo.test.ts`.
-- [ ] Step 4: `npm test` (jo test green; registry still not present — test lands with Task 13 if needed to keep green).
-- [ ] Step 5: commit `feat(country-rules): Jordan rule module`.
+- [x] Step 1: verify figures via official sources (web search each category).
+- [x] Step 2: create `src/lib/country-rules/jo.ts` with verified values + real URLs + today's `accessed` date.
+- [x] Step 3: create `tests/country-rules-jo.test.ts`.
+- [x] Step 4: `npm test` green.
+- [x] Step 5: commit `48148d3 feat(country-rules): Jordan rule module` (+ `111c77f fix(country-rules): jo maternity 90 days (maternityDays), night 1.25, plan sync`).
 
 ---
 
@@ -703,9 +703,9 @@ test('jo: rules resolve and are sane', () => {
 
 - [x] Step 1: verify figures.
 - [x] Step 2: create `sa.ts`.
-- [ ] Step 3: create `tests/country-rules-sa.test.ts`.
-- [ ] Step 4: `npm test` green.
-- [x] Step 5: commit `feat(country-rules): Saudi Arabia rule module`.
+- [x] Step 3: create `tests/country-rules-sa.test.ts`.
+- [x] Step 4: `npm test` green.
+- [x] Step 5: commit `b14d3b7 feat(country-rules): Saudi Arabia rule module`.
 
 ---
 
@@ -727,9 +727,9 @@ Create `src/lib/country-rules/ae.ts` + `tests/country-rules-ae.test.ts` (currenc
 
 - [x] Step 1: verify figures (GPSSA cap; maternity split; ILOE note).
 - [x] Step 2: create `ae.ts`.
-- [ ] Step 3: create `tests/country-rules-ae.test.ts`.
-- [ ] Step 4: `npm test` green.
-- [x] Step 5: commit `feat(country-rules): UAE rule module`.
+- [x] Step 3: create `tests/country-rules-ae.test.ts`.
+- [x] Step 4: `npm test` green.
+- [x] Step 5: commit `539fbca feat(country-rules): UAE rule module`.
 
 ---
 
@@ -751,9 +751,9 @@ Create `kw.ts` + `tests/country-rules-kw.test.ts` (currency `KWD`, `resignation`
 
 - [x] Step 1: verify figures (PIFSS cap; notice duration).
 - [x] Step 2: create `kw.ts`.
-- [ ] Step 3: create `tests/country-rules-kw.test.ts`.
-- [ ] Step 4: `npm test` green.
-- [x] Step 5: commit `feat(country-rules): Kuwait rule module`.
+- [x] Step 3: create `tests/country-rules-kw.test.ts`.
+- [x] Step 4: `npm test` green.
+- [x] Step 5: commit `c9061b9 feat(country-rules): Kuwait rule module`.
 
 ---
 
@@ -775,9 +775,9 @@ Create `qa.ts` + `tests/country-rules-qa.test.ts` (currency `QAR`, brackets empt
 
 - [x] Step 1: verify figures.
 - [x] Step 2: create `qa.ts`.
-- [ ] Step 3: create `tests/country-rules-qa.test.ts`.
-- [ ] Step 4: `npm test` green.
-- [x] Step 5: commit `feat(country-rules): Qatar rule module`.
+- [x] Step 3: create `tests/country-rules-qa.test.ts`.
+- [x] Step 4: `npm test` green.
+- [x] Step 5: commit `e5895d2 feat(country-rules): Qatar rule module`.
 
 ---
 
@@ -799,9 +799,9 @@ Create `qa.ts` + `tests/country-rules-qa.test.ts` (currency `QAR`, brackets empt
 
 - [x] Step 1: verify figures (esp. SIO EE/ER rates 2026; Art. 116 formula).
 - [x] Step 2: create `bh.ts`.
-- [ ] Step 3: create `tests/country-rules-bh.test.ts`.
-- [ ] Step 4: `npm test` green.
-- [x] Step 5: commit `feat(country-rules): Bahrain rule module`.
+- [x] Step 3: create `tests/country-rules-bh.test.ts`.
+- [x] Step 4: `npm test` green.
+- [x] Step 5: commit `8d01dba feat(country-rules): Bahrain rule module`.
 
 ---
 
@@ -823,9 +823,9 @@ Create `om.ts` + `tests/country-rules-om.test.ts` (currency `OMR`, single-band E
 
 - [x] Step 1: verify figures (SPF rates via RD 60/2025; RD 53/2023 EOS Art. 61).
 - [x] Step 2: create `om.ts`.
-- [ ] Step 3: create `tests/country-rules-om.test.ts`.
+- [x] Step 3: create `tests/country-rules-om.test.ts`.
 - [x] Step 4: `npm test` green.
-- [x] Step 5: commit `feat(country-rules): Oman rule module`.
+- [x] Step 5: commit `aac1da0 feat(country-rules): Oman rule module`.
 
 ---
 
@@ -839,7 +839,7 @@ Now that all 7 modules exist, create the engine glue and tests:
 - [x] Step 4: run `node --test tests/publish-gate.test.ts` — 0 violations; exactly 7 codes.
 - [x] Step 5: run `npm test` — full suite green (179/179). `npm run check` — 0 errors.
 - [x] Step 6: `npm run build` — clean. **Decision:** keep the gate test-only for v1 (`astro build` does not invoke `assertPublishGate`); note in AGENTS.md.
-- [ ] Step 7: commit `feat(country-rules): registry and publish gate green for 7 countries`.
+- [x] Step 7: commit `58725de feat(country-rules): registry and publish gate green for 7 countries`.
 
 ---
 
