@@ -39,6 +39,7 @@ export const mathLoaders: Record<string, MathLoader> = {
   'break-even': () => import('../calculators/break-even.ts'),
   'wholesale-retail': () => import('../calculators/wholesale-retail.ts'),
   'end-of-service': () => import('../calculators/end-of-service.ts'),
+  'social-insurance': () => import('../calculators/social-insurance.ts'),
 };
 
 export async function loadMath(slug: string): Promise<CalculatorMath> {

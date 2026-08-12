@@ -31,6 +31,7 @@ import markupMargin from './markup-margin.ts';
 import breakEven from './break-even.ts';
 import wholesaleRetail from './wholesale-retail.ts';
 import endOfService from './end-of-service.ts';
+import socialInsurance from './social-insurance.ts';
 
 const registry: Record<string, CalculatorMath> = {
   'loan-payment': loanPayment,
@@ -65,6 +66,7 @@ const registry: Record<string, CalculatorMath> = {
   'break-even': breakEven,
   'wholesale-retail': wholesaleRetail,
   'end-of-service': endOfService,
+  'social-insurance': socialInsurance,
 };
 
 export function getMath(slug: string): CalculatorMath {

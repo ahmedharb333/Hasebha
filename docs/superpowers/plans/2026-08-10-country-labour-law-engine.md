@@ -1037,13 +1037,13 @@ export const socialInsurance: CalculatorMath = {
 
 **Tests** `tests/social-insurance.test.ts`: missing country → required; currency mismatch; Saudi capped computation (fixture `monthlySalary: 50000, country: sa` → capped at 45000; ee = 45000 × eeRate).
 
-- [ ] Step 1: create math.
-- [ ] Step 2: create content (ar/en).
-- [ ] Step 3: register ×3.
-- [ ] Step 4: config activate + related/guide.
-- [ ] Step 5: create tests.
-- [ ] Step 6: `npm test` + `npm run check` + `npm run build`.
-- [ ] Step 7: commit `feat(calc): social insurance calculator with country rules`.
+- [x] Step 1: create math.
+- [x] Step 2: create content (ar/en).
+- [x] Step 3: register ×3.
+- [x] Step 4: config activate + related/guide. *(also moved `social-insurance` out of the reserved-inactive list into the activated list in `tests/catalog.test.ts`)*
+- [x] Step 5: create tests. *(also added a negative-salary → `min` case; implemented `s < 0` → `min` in validate, a small deviation from the sketch above which only checked `NaN`)*
+- [x] Step 6: `npm test` (190 pass) + `npm run check` (0 errors) + `npm run build` (173 pages).
+- [x] Step 7: commit `feat(calc): social insurance calculator with country rules`.
 
 ---
 

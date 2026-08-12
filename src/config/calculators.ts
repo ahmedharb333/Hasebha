@@ -513,9 +513,9 @@ export const CALCULATORS: CalculatorEntry[] = [
       ar: 'تحسب اشتراكات التأمين الاجتماعي للموظف وصاحب العمل.',
       en: 'Calculates social-insurance contributions for employee and employer.',
     },
-    related: [],
-    guide: '',
-    active: false,
+    related: ['end-of-service', 'gross-to-net'],
+    guide: 'how-to-calculate-social-insurance',
+    active: true,
   },
   {
     id: 'notice-period',
