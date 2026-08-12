@@ -1345,14 +1345,14 @@ All 6 guide slugs map to the config `guide` fields set in Tasks 14–19. **Execu
 
 ### Task 22: Final verification, QA sweep, self-review
 
-- [ ] **Step 1: Full gate run** — `npm test` (all green; 37 active tools), `npm run check` (0 errors), `npm run build` (clean), `npm run preview` spot check (HTTP 200 on: `/calculators/end-of-service/`, `/en/calculators/income-tax/`, `/calculators/employment/`, both locales).
-- [ ] **Step 2: Page counts** — verify `dist/calculators/` lists all 37 tool slugs; the employment category page shows 11; indexes show 37.
-- [ ] **Step 3: Header selector** — appears on employment tool pages (grep `data-country-select` in `dist/en/calculators/end-of-service/index.html`), absent on finance/health/everyday/business pages (grep absence).
-- [ ] **Step 4: Country field + mismatch** — in a built math bundle, confirm validate maps a foreign currency to `countryMismatch`; manual QA note: AR page shows the Arabic mismatch message.
+- [x] **Step 1: Full gate run** — `npm test` (232 pass; 37 active tools), `npm run check` (0 errors), `npm run build` (181 pages, clean), `npm run preview` spot check (HTTP 200 on `/calculators/end-of-service/`, `/en/calculators/income-tax/`, `/calculators/employment/`, `/en/`).
+- [x] **Step 2: Page counts** — `dist/calculators/` holds 43 dirs = 6 category pages + 37 tool slugs; the employment category page links all 11 employment tools; both locale indexes list all 37 tool slugs.
+- [x] **Step 3: Header selector** — `data-country-select` present in `dist/calculators/end-of-service/index.html` and `dist/en/calculators/gross-to-net/index.html`; absent on loan-payment, bmi, tip, markup-margin (finance/health/everyday/business) pages.
+- [x] **Step 4: Country field + mismatch** — the 4 currency-bearing country bundles (end-of-service, gross-to-net, income-tax, social-insurance) contain `countryMismatch`; the AR end-of-service payload embeds the Arabic mismatch message; unit tests assert the `countryMismatch` validation key.
 - [ ] **Step 5: RTL/manual spot-check** (browser, `npm run dev`) — employment pages load; header selector works; tool country field initialized from header choice; currency follows country; reset restores defaults; no console errors. **This is the only human-dependent step.**
-- [ ] **Step 6: Self-review against spec** — re-read `docs/superpowers/specs/2026-08-10-country-labour-law-engine-design.md`; confirm: publish gate enforced (tests), 7 countries registered, selector behavior, 6 tools + 2 retrofits, no currency conversion, no DOM-coupling renames.
-- [ ] **Step 7: AGENTS.md** — update the stale "`country-rules/` and markdown content collections in the doc are not implemented" bullet to describe the live engine, the `klar-country` storage key, and the gate-as-test decision.
-- [ ] **Step 8: Commit** — `chore(country-rules): finalize country engine — QA, docs, AGENTS.md`.
+- [x] **Step 6: Self-review against spec** — re-read the design spec: publish gate enforced via tests, 7 countries registered (jo/sa/ae/kw/qa/bh/om), selector behavior (`klar-country` + `DEFAULT_COUNTRY: 'jo'` + `applyCountryDefault`), 6 Tier B tools active + 2 retrofits (overtime-pay, leave-balance; salary-converter/employee-cost untouched per spec), no currency conversion (mismatch error instead), no DOM-coupling renames.
+- [x] **Step 7: AGENTS.md** — replaced the stale "country-rules not implemented" bullet with the live engine description (`klar-country`, `applyCountryDefault`, rule coverage, publish-gate-as-test).
+- [x] **Step 8: Commit** — `chore(country-rules): finalize country engine — QA, docs, AGENTS.md`.
 
 ---
 
