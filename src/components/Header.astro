@@ -1,5 +1,7 @@
 ---
 import { NAV, LOGO } from '../config/site';
+import { CALCULATORS } from '../config/calculators';
+import { COUNTRIES } from '../config/countries';
 import { localizedPath } from '../lib/i18n';
 import type { Locale } from '../config/site';
 
@@ -9,6 +11,9 @@ interface Props {
 }
 
 const { locale, path } = Astro.props;
+const slug = path.match(/^\/calculators\/([^/]+)\//)?.[1];
+const activeEntry = slug ? CALCULATORS.find((c) => c.slug === slug && c.active) : undefined;
+const isEmploymentPage = activeEntry?.category === 'employment' || path === '/calculators/employment/';
 const navItems = NAV.main.map((item) => ({
   label: item.label[locale],
   href: localizedPath(locale, item.href),
@@ -40,6 +45,16 @@ const enPath = localizedPath('en', path);
         ))}
       </ul>
     </nav>
+
+    {isEmploymentPage && (
+      <label class="country-select" aria-label={locale === 'ar' ? 'اختر البلد' : 'Choose country'}>
+        <select data-country-select>
+          {COUNTRIES.map((c) => (
+            <option value={c.code}>{locale === 'ar' ? c.labelAr : c.labelEn}</option>
+          ))}
+        </select>
+      </label>
+    )}
 
     <button
       class="theme-toggle"
@@ -104,4 +119,10 @@ const enPath = localizedPath('en', path);
       syncPressed();
     }
   });
+
+  const countrySelect = document.querySelector<HTMLSelectElement>('[data-country-select]');
+  if (countrySelect) {
+    const { initCountrySelector } = await import('../lib/client/country.ts');
+    initCountrySelector(countrySelect);
+  }
 </script>

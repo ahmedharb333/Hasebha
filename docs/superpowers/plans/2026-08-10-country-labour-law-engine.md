@@ -533,10 +533,10 @@ if (countrySelect) {
 
 **Note:** keep existing nav/theme wiring intact. If the file's script is not yet a module, `await import` inside an inline script requires converting to `<script type="module">` — do that while preserving the existing handlers.
 
-- [ ] Step 1: create `src/lib/client/country.ts`.
-- [ ] Step 2: modify `Header.astro` (computed `isEmploymentPage`, selector markup, module wiring).
-- [ ] Step 3: `npm run check` + `npm run build` — clean. Verify selector appears on employment pages and is absent on finance pages (grep `dist/en/calculators/employee-cost/index.html` for `data-country-select` present; `dist/en/calculators/loan-payment/index.html` absent).
-- [ ] Step 4: commit `feat(country-rules): header country selector on employment pages`.
+- [x] Step 1: create `src/lib/client/country.ts`.
+- [x] Step 2: modify `Header.astro` (computed `isEmploymentPage`, selector markup, module wiring). *(plus a minimal `.country-select` style block in `components.css` matching the header controls)*
+- [x] Step 3: `npm run check` + `npm run build` — clean. Verify selector appears on employment pages and is absent on finance pages (grep `dist/en/calculators/employee-cost/index.html` for `data-country-select` present; `dist/en/calculators/loan-payment/index.html` absent).
+- [x] Step 4: commit `feat(country-rules): header country selector on employment pages`.
 
 ---
 

@@ -135,6 +135,28 @@
   display: block;
 }
 
+.country-select select {
+  height: 40px;
+  padding-inline: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition);
+}
+.country-select select:hover {
+  border-color: var(--color-accent);
+  color: var(--color-primary);
+}
+.country-select select:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
 @media (max-width: 767px) {
   .nav-toggle {
     display: inline-flex;
