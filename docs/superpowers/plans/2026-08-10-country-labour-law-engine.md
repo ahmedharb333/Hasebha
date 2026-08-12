@@ -821,11 +821,11 @@ Create `qa.ts` + `tests/country-rules-qa.test.ts` (currency `QAR`, brackets empt
 
 Create `om.ts` + `tests/country-rules-om.test.ts` (currency `OMR`, single-band EOS).
 
-- [ ] Step 1: verify figures (PASI rates; RD 53/2023 EOS).
-- [ ] Step 2: create `om.ts`.
+- [x] Step 1: verify figures (SPF rates via RD 60/2025; RD 53/2023 EOS Art. 61).
+- [x] Step 2: create `om.ts`.
 - [ ] Step 3: create `tests/country-rules-om.test.ts`.
-- [ ] Step 4: `npm test` green.
-- [ ] Step 5: commit `feat(country-rules): Oman rule module`.
+- [x] Step 4: `npm test` green.
+- [x] Step 5: commit `feat(country-rules): Oman rule module`.
 
 ---
 
