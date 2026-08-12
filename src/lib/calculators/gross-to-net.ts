@@ -1,21 +1,10 @@
 import type { CalcInput, CalcOutput, CalculatorMath } from './types';
 import { getCountryRules, isRegistered } from '../country-rules/registry.ts';
 import { countrySelectOptions } from './country-field.ts';
+import { annualTax } from './tax.ts';
 
 function toNumber(raw: string | undefined): number {
   return raw === undefined || raw === '' ? NaN : Number(raw);
-}
-
-export function annualTax(brackets: { from: number; rate: number }[], annual: number): number {
-  let tax = 0;
-  for (let i = 0; i < brackets.length; i++) {
-    const lower = brackets[i].from;
-    const upper = i + 1 < brackets.length ? brackets[i + 1].from : Infinity;
-    if (annual <= lower) break;
-    tax += (Math.min(annual, upper) - lower) * brackets[i].rate / 100;
-    if (annual <= upper) break;
-  }
-  return tax;
 }
 
 export const grossToNet: CalculatorMath = {

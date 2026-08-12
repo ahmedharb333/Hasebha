@@ -35,6 +35,7 @@ import socialInsurance from './social-insurance.ts';
 import noticePeriod from './notice-period.ts';
 import maternityLeave from './maternity-leave.ts';
 import grossToNet from './gross-to-net.ts';
+import incomeTax from './income-tax.ts';
 
 const registry: Record<string, CalculatorMath> = {
   'loan-payment': loanPayment,
@@ -73,6 +74,7 @@ const registry: Record<string, CalculatorMath> = {
   'notice-period': noticePeriod,
   'maternity-leave': maternityLeave,
   'gross-to-net': grossToNet,
+  'income-tax': incomeTax,
 };
 
 export function getMath(slug: string): CalculatorMath {

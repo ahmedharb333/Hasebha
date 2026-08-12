@@ -1250,10 +1250,10 @@ export const incomeTax: CalculatorMath = {
 
 **Content** ar/en (results `taxAmount`, `effectiveRate`, `taxableIncome`; copy notes no-PIT countries explicitly). **Tests** `tests/income-tax.test.ts`: jo annual 15,000 → tax 350; sa → 0; kw → 0; missing country → required; currency mismatch.
 
-- [ ] Step 0: create `src/lib/calculators/tax.ts` (shared `annualTax`) and refactor gross-to-net to use it.
-- [ ] Step 1–5: math, content, registrations, config activation, tests.
-- [ ] Step 6: `npm test` + `npm run check` + `npm run build`.
-- [ ] Step 7: commit `feat(calc): income tax calculator with country rules`.
+- [x] Step 0: create `src/lib/calculators/tax.ts` (shared `annualTax`) and refactor gross-to-net to use it. *(gross-to-net and its test now import from `tax.ts`; no re-export left in gross-to-net.)*
+- [x] Step 1–5: math, content, registrations, config activation, tests. *(removed the now-empty "tier-B reserved and inactive" catalog test — all tier-B tools are active.)*
+- [x] Step 6: `npm test` (218 pass) + `npm run check` (0 errors) + `npm run build` (181 pages).
+- [x] Step 7: commit `feat(calc): income tax calculator with country rules`.
 
 ---
 

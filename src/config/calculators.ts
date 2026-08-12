@@ -565,9 +565,9 @@ export const CALCULATORS: CalculatorEntry[] = [
       ar: 'تحسب ضريبة الدخل على الأجور حسب الشرائح في بلدك.',
       en: 'Calculates income tax on wages using your country\u2019s brackets.',
     },
-    related: [],
-    guide: '',
-    active: false,
+    related: ['gross-to-net', 'social-insurance'],
+    guide: 'how-to-calculate-income-tax',
+    active: true,
   },
 ];
 

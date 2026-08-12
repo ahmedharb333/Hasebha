@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { grossToNet, annualTax } from '../src/lib/calculators/gross-to-net.ts';
+import { grossToNet } from '../src/lib/calculators/gross-to-net.ts';
+import { annualTax } from '../src/lib/calculators/tax.ts';
 
 function row(out: ReturnType<typeof grossToNet.calculate>, key: string) {
   return out.results.find((r) => r.key === key)!.value;
