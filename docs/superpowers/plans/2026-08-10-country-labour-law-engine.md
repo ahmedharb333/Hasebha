@@ -568,9 +568,9 @@ function applyCountryDefault(shell: HTMLElement): void {
 
 Call `applyCountryDefault(shell)` at the top of `initCalculator(shell)`, before the first `run()`.
 
-- [ ] Step 1: modify `calculatorApp.ts` (imports + `applyCountryDefault` + call site).
-- [ ] Step 2: `npm run build` clean; `npm test` no regressions.
-- [ ] Step 3: commit `feat(country-rules): apply stored country and currency defaults in calculator client`.
+- [x] Step 1: modify `calculatorApp.ts` (imports + `applyCountryDefault` + call site). *(dropped the plan's unused `DEFAULT_CURRENCY` import to keep `astro check` at 0 warnings)*
+- [x] Step 2: `npm run build` clean; `npm test` no regressions.
+- [x] Step 3: commit `feat(country-rules): apply stored country and currency defaults in calculator client`.
 
 ---
 

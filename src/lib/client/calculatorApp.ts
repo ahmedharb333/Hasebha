@@ -7,6 +7,8 @@
 import { getCurrency } from '../../config/currencies';
 import { parseNumber, formatNumber, formatCurrency, formatPercent } from '../number';
 import { debounce } from './debounce';
+import { getStoredCountry } from './country.ts';
+import { getCountryRules, isRegistered } from '../country-rules/registry.ts';
 import type { CalcInput, CalcOutput, CalculatorMath } from '../calculators/types';
 import type { Locale } from '../../config/site';
 import {
@@ -77,6 +79,22 @@ function formatValue(kind: string | undefined, value: number, currencyCode: stri
   return formatNumber(value, locale, 2);
 }
 
+function applyCountryDefault(shell: HTMLElement): void {
+  const countryField = shell.querySelector<HTMLSelectElement>('[data-field="country"] select');
+  const currencyField = shell.querySelector<HTMLSelectElement>('select[data-role="currency"]');
+  if (!countryField) return;
+  const stored = getStoredCountry();
+  if (isRegistered(stored)) {
+    countryField.value = stored;
+    const rules = getCountryRules(stored);
+    if (currencyField && rules) currencyField.value = rules.currency;
+  }
+  countryField.addEventListener('change', () => {
+    const rules = getCountryRules(countryField.value);
+    if (currencyField && rules) currencyField.value = rules.currency;
+  });
+}
+
 export interface CalculatorAppHandle {
   destroy(): void;
 }
@@ -97,6 +115,8 @@ export function initCalculator(
     const node = root.querySelector<HTMLElement>(`[data-field="${field.id}"]`);
     if (node) fieldEls.set(field.id, node);
   }
+
+  applyCountryDefault(root);
 
   const errorEls = new Map<string, HTMLElement>();
   let currentCurrency = currencySelect?.value ?? payload.currencyDefault;
