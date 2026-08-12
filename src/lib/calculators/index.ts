@@ -33,6 +33,7 @@ import wholesaleRetail from './wholesale-retail.ts';
 import endOfService from './end-of-service.ts';
 import socialInsurance from './social-insurance.ts';
 import noticePeriod from './notice-period.ts';
+import maternityLeave from './maternity-leave.ts';
 
 const registry: Record<string, CalculatorMath> = {
   'loan-payment': loanPayment,
@@ -69,6 +70,7 @@ const registry: Record<string, CalculatorMath> = {
   'end-of-service': endOfService,
   'social-insurance': socialInsurance,
   'notice-period': noticePeriod,
+  'maternity-leave': maternityLeave,
 };
 
 export function getMath(slug: string): CalculatorMath {

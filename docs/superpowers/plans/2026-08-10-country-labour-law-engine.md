@@ -1123,9 +1123,9 @@ export const maternityLeave: CalculatorMath = {
 
 **Tests** `tests/maternity-leave.test.ts`: country required; jo → 90 days; sa → 70; kw → 70; ae → 60; qa → 50; bh → 60; om → per draft hedge (49 or 50 — verify).
 
-- [ ] Step 1–5: math, content, registrations, config activation, tests.
-- [ ] Step 6: `npm test` + `npm run check` + `npm run build`.
-- [ ] Step 7: commit `feat(calc): maternity leave calculator with country rules`.
+- [x] Step 1–5: math, content, registrations, config activation, tests. *(deviations from the sketch tests, asserting per module: SA = 84 days (12 weeks), not 70; Oman = 98 days (14 weeks), not 49/50.)*
+- [x] Step 6: `npm test` (206 pass) + `npm run check` (0 errors) + `npm run build` (177 pages).
+- [x] Step 7: commit `feat(calc): maternity leave calculator with country rules`.
 
 ---
 

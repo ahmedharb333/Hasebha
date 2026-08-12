@@ -539,9 +539,9 @@ export const CALCULATORS: CalculatorEntry[] = [
       ar: 'تحسب مدة إجازة الأمومة وأجرها حسب القانون.',
       en: 'Calculates maternity-leave duration and pay under the law.',
     },
-    related: [],
-    guide: '',
-    active: false,
+    related: ['leave-balance', 'notice-period'],
+    guide: 'how-to-calculate-maternity-leave',
+    active: true,
   },
   {
     id: 'gross-to-net',
