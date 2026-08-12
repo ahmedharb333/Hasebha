@@ -749,11 +749,11 @@ Create `src/lib/country-rules/ae.ts` + `tests/country-rules-ae.test.ts` (currenc
 
 Create `kw.ts` + `tests/country-rules-kw.test.ts` (currency `KWD`, `resignation` present, `capMonths === 18`).
 
-- [ ] Step 1: verify figures (PIFSS cap; notice duration).
-- [ ] Step 2: create `kw.ts`.
+- [x] Step 1: verify figures (PIFSS cap; notice duration).
+- [x] Step 2: create `kw.ts`.
 - [ ] Step 3: create `tests/country-rules-kw.test.ts`.
 - [ ] Step 4: `npm test` green.
-- [ ] Step 5: commit `feat(country-rules): Kuwait rule module`.
+- [x] Step 5: commit `feat(country-rules): Kuwait rule module`.
 
 ---
 
