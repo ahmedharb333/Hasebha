@@ -797,11 +797,11 @@ Create `qa.ts` + `tests/country-rules-qa.test.ts` (currency `QAR`, brackets empt
 
 **The SIO non-Bahraini overlay and the phased EE/ER rates are the kind of figure that drifts — verify hard.** Create `bh.ts` + `tests/country-rules-bh.test.ts` (currency `BHD`).
 
-- [ ] Step 1: verify figures (esp. SIO EE/ER rates 2026; Art. 116 formula).
-- [ ] Step 2: create `bh.ts`.
+- [x] Step 1: verify figures (esp. SIO EE/ER rates 2026; Art. 116 formula).
+- [x] Step 2: create `bh.ts`.
 - [ ] Step 3: create `tests/country-rules-bh.test.ts`.
 - [ ] Step 4: `npm test` green.
-- [ ] Step 5: commit `feat(country-rules): Bahrain rule module`.
+- [x] Step 5: commit `feat(country-rules): Bahrain rule module`.
 
 ---
 
