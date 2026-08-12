@@ -451,11 +451,11 @@ test('countries: default is jo and getCountry resolves', () => {
 });
 ```
 
-- [ ] Step 1: create `src/config/countries.ts`.
-- [ ] Step 2: create `src/content/countries.ts`.
-- [ ] Step 3: create `tests/country-config.test.ts` (needs registry — lands with Task 13; test committed with the engine unit).
-- [ ] Step 4: `npm test` + `npm run check`.
-- [ ] Step 5: commit `feat(country-rules): country config and localized labels` (skip the test until Task 13 if needed to keep green).
+- [x] Step 1: create `src/config/countries.ts`.
+- [x] Step 2: create `src/content/countries.ts`.
+- [x] Step 3: create `tests/country-config.test.ts` (needs registry — lands with Task 13; test committed with the engine unit). *(actually committed here with the config/content files — engine already landed at Task 13)*
+- [x] Step 4: `npm test` + `npm run check`.
+- [x] Step 5: commit `feat(country-rules): country config and localized labels` (skip the test until Task 13 if needed to keep green).
 
 ---
 
