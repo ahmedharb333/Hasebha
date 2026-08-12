@@ -725,11 +725,11 @@ test('jo: rules resolve and are sane', () => {
 
 Create `src/lib/country-rules/ae.ts` + `tests/country-rules-ae.test.ts` (currency `AED`, brackets empty, `capMonths === 24`).
 
-- [ ] Step 1: verify figures (GPSSA cap; maternity split; ILOE note).
-- [ ] Step 2: create `ae.ts`.
+- [x] Step 1: verify figures (GPSSA cap; maternity split; ILOE note).
+- [x] Step 2: create `ae.ts`.
 - [ ] Step 3: create `tests/country-rules-ae.test.ts`.
 - [ ] Step 4: `npm test` green.
-- [ ] Step 5: commit `feat(country-rules): UAE rule module`.
+- [x] Step 5: commit `feat(country-rules): UAE rule module`.
 
 ---
 
