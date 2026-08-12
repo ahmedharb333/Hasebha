@@ -1085,9 +1085,9 @@ export const noticePeriod: CalculatorMath = {
 
 **Tests** `tests/notice-period.test.ts`: country required; SA 7 years → 60 days; KW any tenure → 90 days; JO any → 30 days; invalid country → invalid.
 
-- [ ] Step 1–5: math, content, registrations, config activation, tests.
-- [ ] Step 6: `npm test` + `npm run check` + `npm run build`.
-- [ ] Step 7: commit `feat(calc): notice period calculator with country rules`.
+- [x] Step 1–5: math, content, registrations, config activation, tests. *(deviation from the sketch tests: SA returns 30 days for any tenure — the actual module has a single `{fromYears: 0, days: 30}` band (worker-side, Saudi Law Art. 75/2025), and the sketch's "SA 7y → 60" assumed a 15/30/60 band table that the module does not contain. Tests assert against the module: SA 30, KW 90, JO 30.)*
+- [x] Step 6: `npm test` (196 pass) + `npm run check` (0 errors) + `npm run build` (175 pages).
+- [x] Step 7: commit `feat(calc): notice period calculator with country rules`.
 
 ---
 

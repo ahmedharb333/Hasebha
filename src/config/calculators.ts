@@ -526,9 +526,9 @@ export const CALCULATORS: CalculatorEntry[] = [
       ar: 'تحدد فترة الإشعار الواجبة عند إنهاء عقد العمل.',
       en: 'Determines the notice period required to end an employment contract.',
     },
-    related: [],
-    guide: '',
-    active: false,
+    related: ['end-of-service', 'leave-balance'],
+    guide: 'how-to-calculate-notice-period',
+    active: true,
   },
   {
     id: 'maternity-leave',
