@@ -1198,10 +1198,10 @@ export const grossToNet: CalculatorMath = {
 
 **Content** ar/en (results `netMonthly`, `totalDeductions`, per-step rows). **Tests** `tests/gross-to-net.test.ts`: jo deducts both steps; sa deducts only socialInsurance; currency mismatch.
 
-- [ ] Step 0: verify the `annualTax` progression with the 350 fixture; add a focused unit test.
-- [ ] Step 1–5: math, content, registrations, config activation, tests.
-- [ ] Step 6: `npm test` + `npm run check` + `npm run build`.
-- [ ] Step 7: commit `feat(calc): gross-to-net calculator with country rules`.
+- [x] Step 0: verify the `annualTax` progression with the 350 fixture; add a focused unit test. *(The sketch `annualTax` taxed the slice *below* each bracket's `from` at that bracket's rate and could subtract negative slices beyond the taxable amount. Rewrote it so bracket `i`'s rate applies to the slice `[from_i, from_{i+1})`; the 350 fixture passes exactly and is covered by a unit test. Also added empty-brackets → 0 coverage.)*
+- [x] Step 1–5: math, content, registrations, config activation, tests.
+- [x] Step 6: `npm test` (214 pass) + `npm run check` (0 errors) + `npm run build` (179 pages).
+- [x] Step 7: commit `feat(calc): gross-to-net calculator with country rules`.
 
 ---
 

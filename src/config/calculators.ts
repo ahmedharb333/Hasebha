@@ -552,9 +552,9 @@ export const CALCULATORS: CalculatorEntry[] = [
       ar: 'تحويل الراتب الإجمالي إلى الصافي بعد الخصومات القانونية.',
       en: 'Converts gross salary to net after statutory deductions.',
     },
-    related: [],
-    guide: '',
-    active: false,
+    related: ['income-tax', 'social-insurance'],
+    guide: 'how-to-calculate-gross-to-net',
+    active: true,
   },
   {
     id: 'income-tax',
