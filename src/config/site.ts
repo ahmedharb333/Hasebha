@@ -10,7 +10,7 @@ export const DEFAULT_LOCALE: Locale = 'ar';
 
 export const SITE = {
   /** Live domain. */
-  url: 'https://klar.wordly.pro',
+  url: 'https://klar.worldly.pro',
   /** Brand name (display). */
   brandName: {
     ar: 'كلار',
