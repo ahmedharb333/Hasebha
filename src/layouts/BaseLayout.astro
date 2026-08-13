@@ -1,5 +1,6 @@
 ---
 import { SITE, THEME } from '../config/site';
+import { ADS } from '../config/ads';
 import { ANALYTICS } from '../config/analytics';
 import { FEATURES } from '../config/features';
 import { buildTitle, organizationJsonLd, metaRobots, absoluteUrl } from '../lib/seo';
@@ -79,6 +80,15 @@ const latinFontHref = '/fonts/ibmplexsansarabic-latin-400.woff2';
     <meta name="twitter:description" content={description} />
 
     {gscEnabled && <meta name="google-site-verification" content={ANALYTICS.gscVerification} />}
+
+    {ADS.enabled && ADS.publisherId && (
+      <script
+        is:inline
+        async
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${ADS.publisherId}`}
+        crossorigin="anonymous"
+      />
+    )}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 

@@ -5,11 +5,13 @@
 
 export const ADS = {
   /** Master switch. Advertising stays OFF until set to true deliberately. */
-  enabled: false,
-  /** Test mode renders nothing public and never shows test ads as real. */
+  enabled: true,
+  /** Test mode renders nothing public and never shows test ads as real.
+   * Kept true until AdSense approves — the head script loads for verification,
+   * but no ad-slot markup is emitted yet. */
   testMode: true,
-  /** AdSense publisher ID placeholder — replace with the real one (pub-...). */
-  publisherId: '',
+  /** AdSense publisher ID (pub-...). */
+  publisherId: 'pub-2317129100484201',
   /** Global AdSense head code placeholder. Inserted between <head> tags only
    * when enabled && publisherId is set && a real code is provided. */
   headCode: '',
