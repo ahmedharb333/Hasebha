@@ -33,8 +33,12 @@ export const grossToNet: CalculatorMath = {
     const detail: { key: string; value: number }[] = [];
     for (const step of rules.grossToNet.order) {
       if (step === 'socialInsurance') {
-        const capped = Math.min(grossMonthly, rules.socialInsurance.capMonthly);
-        const ee = capped * rules.socialInsurance.employeeRate / 100;
+        const si = rules.socialInsurance;
+        const capped = Math.min(grossMonthly, si.capMonthly);
+        const supplementary = si.supplementaryRate !== undefined && si.supplementaryLimit !== undefined
+          ? Math.min(capped, si.supplementaryLimit) * si.supplementaryRate / 100
+          : 0;
+        const ee = capped * si.employeeRate / 100 + supplementary;
         net -= ee;
         detail.push({ key: 'socialInsurance', value: ee });
       } else if (step === 'incomeTax') {

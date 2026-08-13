@@ -62,3 +62,10 @@ test('gross-to-net: missing country required', () => {
   const e = grossToNet.validate({ country: '', monthlyGross: '1000', currency: 'JOD' });
   assert.equal(e.country, 'required');
 });
+
+test('gross-to-net: Kuwait deducts supplementary-insurance band from net', () => {
+  const out = grossToNet.calculate({ country: 'kw', monthlyGross: '1500', currency: 'KWD' });
+  const si = row(out, 'socialInsurance');
+  assert.equal(si, 1500 * 8 / 100 + 1500 * 2.5 / 100);
+  assert.equal(row(out, 'netMonthly'), 1500 - si);
+});

@@ -90,7 +90,7 @@ const ar: CalcContent = {
     },
   ],
   methodologyNote:
-    'تعتمد الحاسبة على شرائح ضريبة الدخل والإعفاء الشخصي من قاعدة بيانات قوانين العمل. مثال الأردن: شرائح من 5% إلى 30% مع إعفاء شخصي 9,000 دينار سنوياً (قانون ضريبة الدخل رقم 34 لسنة 2014 وتعديلاته).',
+    'تعتمد الحاسبة على شرائح ضريبة الدخل والإعفاء الشخصي من قاعدة بيانات قوانين العمل. مثال الأردن: شرائح من 5% إلى 30% مع إعفاء شخصي 9,000 دينار سنوياً (قانون ضريبة الدخل رقم 34 لسنة 2014 المعدل بالقانون رقم 38 لسنة 2018).',
   disclaimerNote:
     'هذه النتيجة تقديرية لأغراض إعلامية فقط ولا تُعد مشورة ضريبية أو قانونية. تحقق من الشرائح والإعفاءات المطبقة لدى السلطة الضريبية المختصة.',
   lastReviewed: '2026-08-12',
@@ -205,7 +205,7 @@ const en: CalcContent = {
     },
   ],
   methodologyNote:
-    'The calculator uses the income-tax brackets and personal allowance from the labour-law rules database. Jordan example: 5%–30% brackets with a 9,000 JOD annual personal allowance (Income Tax Law No. 34 of 2014 and amendments).',
+    'The calculator uses the income-tax brackets and personal allowance from the labour-law rules database. Jordan example: 5%–30% brackets with a 9,000 JOD annual personal allowance (Income Tax Law No. 34 of 2014 as amended by Law No. 38 of 2018).',
   disclaimerNote:
     'This result is an estimate for information purposes only and is not tax or legal advice. Verify the applicable brackets and allowances with the relevant tax authority.',
   lastReviewed: '2026-08-12',

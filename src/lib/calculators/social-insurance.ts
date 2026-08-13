@@ -29,8 +29,12 @@ export const socialInsurance: CalculatorMath = {
     const rules = getCountryRules(input.country!)!;
     const base = toNumber(input.monthlySalary);
     const capped = Math.min(base, rules.socialInsurance.capMonthly);
-    const ee = capped * rules.socialInsurance.employeeRate / 100;
-    const er = capped * rules.socialInsurance.employerRate / 100;
+    const si = rules.socialInsurance;
+    const supplementary = si.supplementaryRate !== undefined && si.supplementaryLimit !== undefined
+      ? Math.min(capped, si.supplementaryLimit) * si.supplementaryRate / 100
+      : 0;
+    const ee = capped * si.employeeRate / 100 + supplementary;
+    const er = capped * si.employerRate / 100;
     return {
       results: [
         { key: 'employeeShare', value: ee, kind: 'currency', hero: true },

@@ -51,6 +51,9 @@ export function validateCountryRules(r: CountryRules): string[] {
   if (r.socialInsurance.employerRate < 0 || r.socialInsurance.employerRate > 100) out.push(`${p}: erRate out of range`);
   if (r.socialInsurance.capMonthly <= 0) out.push(`${p}: capMonthly must be > 0`);
   if (!['citizens', 'all'].includes(r.socialInsurance.appliesTo)) out.push(`${p}: appliesTo invalid`);
+  if ((r.socialInsurance.supplementaryRate !== undefined) !== (r.socialInsurance.supplementaryLimit !== undefined)) out.push(`${p}: supplementaryRate and supplementaryLimit must be set together`);
+  if (r.socialInsurance.supplementaryRate !== undefined && (r.socialInsurance.supplementaryRate <= 0 || r.socialInsurance.supplementaryRate > 100)) out.push(`${p}: supplementaryRate out of range`);
+  if (r.socialInsurance.supplementaryLimit !== undefined && r.socialInsurance.supplementaryLimit <= 0) out.push(`${p}: supplementaryLimit must be > 0`);
   checkSource(`${p}.socialInsurance`, r.socialInsurance.source, out);
 
   // notice

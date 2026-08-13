@@ -9,8 +9,8 @@ export const LOCALES: Locale[] = ['ar', 'en'];
 export const DEFAULT_LOCALE: Locale = 'ar';
 
 export const SITE = {
-  /** Placeholder domain — replace with the real domain before launch. */
-  url: 'https://klar.io',
+  /** Live domain. */
+  url: 'https://klar.wordly.pro',
   /** Brand name (display). */
   brandName: {
     ar: 'كلار',

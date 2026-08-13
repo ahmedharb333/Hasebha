@@ -33,6 +33,9 @@ export interface SocialInsuranceRules {
   employeeRate: number; // percent
   employerRate: number; // percent
   capMonthly: number;
+  /** Optional supplementary employee contribution: extra rate applied to the first `supplementaryLimit` of capped salary (e.g. Kuwait 2.5% on the first KWD 1,500 under Law 128/1992). */
+  supplementaryRate?: number;
+  supplementaryLimit?: number;
   /** 'citizens' | 'all' — who is covered. */
   appliesTo: 'citizens' | 'all';
   source: RuleSource;

@@ -41,6 +41,8 @@ export const kw: CountryRules = {
     employeeRate: 8,
     employerRate: 11.5,
     capMonthly: 2750,
+    supplementaryRate: 2.5,
+    supplementaryLimit: 1500,
     appliesTo: 'citizens',
     source: {
       title: 'Kuwait Social Security Law (Amiri Order No. 61 of 1976, as amended) administered by PIFSS: employee 8% and employer 11.5% of monthly salary up to a ceiling of KWD 2,750/month, covering Kuwaiti nationals only; plus a 2.5% employee Supplementary Insurance contribution (Law No. 128 of 1992, in force since Jan 2015) on the first KWD 1,500/month of salary, making the effective employee rate 10.5% on the first KWD 1,500; expatriates are not covered (they receive Labour Law end-of-service indemnity instead)',

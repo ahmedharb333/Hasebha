@@ -1362,3 +1362,22 @@ All 6 guide slugs map to the config `guide` fields set in Tasks 14–19. **Execu
 - overtime-pay and leave-balance retrofitted; other tools untouched except as listed.
 - Currency set = 9 codes; no conversion anywhere; mismatch produces a localized error.
 - Full gates green; AGENTS.md current; plan checkboxes marked; working tree clean.
+
+---
+
+## Retroactive review — fix round (2026-08-13)
+
+Tasks 7–21 landed as 20 unsupervised commits (`111c77f..HEAD`). Retroactive deep-dive (`task-bulk-review-report.md` in `.superpowers/sdd/2026-08-10-country-labour-law-engine/`): **APPROVE**, no critical/high. All statutory figures trace to live authoritative sources; publish gate, currency display-only, DOM coupling, i18n all honored.
+
+**Applied fixes (TDD, uncommitted):**
+1. **Kuwait Supplementary Insurance modeled** (medium): `SocialInsuranceRules` gained optional `supplementaryRate`/`supplementaryLimit`; `kw.ts` sets 2.5% / KWD 1,500 (Law 128/1992); `social-insurance` and `gross-to-net` engines apply the extra band on the first 1,500 of capped salary; publish gate validates the pair. Previously the disclosure lived only in the source note and KW gross-to-net understated deductions by 2.5% on the first KWD 1,500.
+2. **`klar:country-change` wired** (low): the event was dispatched by the header selector with no consumer. `applyCountryDefault` now returns `applyStored`; `initCalculator` listens for the event, re-applies the stored country/currency and recomputes silently (`run({ silent: true })`), with cleanup in `destroy()`. Completes the plan's "notify calculators" intent. AGENTS.md updated.
+3. **`src/content/countries.ts` deleted** (low): vestigial — `COUNTRY_LABELS` only fed `country-config.test.ts`, `countryField` imported nowhere; labels already live in `src/config/countries.ts`. Test now asserts `labelAr`/`labelEn` from `COUNTRIES`. This supersedes Task 3's Step 2 file; the code (and AGENTS.md) is the source of truth over the old doc.
+4. **Unreachable `countryMismatch` keys removed** from `maternity-leave`/`notice-period` content (those tools have no currency field).
+5. **Income-tax citation fixed**: content now cites "Law No. 34 of 2014 as amended by Law No. 38 of 2018", matching `jo.ts` (was bare "and amendments").
+
+**Pushback (no change):** the end-of-service band `>` vs resignation `>=` boundary nit is a non-bug — the band partition is continuous and the boundary term contributes 0, so both conventions yield identical totals; resignation `>=` at exact anniversaries is the correct inclusive reading. Locked in by tests (`end-of-service.test.ts`: sa 5.0y = 75 d, sa 6y = 105 d, kw 22y capped 540 d, kw 5.0y voluntary ≈ 2/3).
+
+**Deferred (documented, non-blocking):** jo EOS SSC-coverage hint and sa notice worker-vs-employer disclosure (content-copy additions; rules already disclosed in module source notes); qa/bh rest-day/holiday alternate readings kept as sourced; sa new-entrant phase-in and om 2028 PIT kept as disclosed-not-modeled.
+
+**Gates after fix round:** `npm test` 241/241, `npm run check` 0 errors, `npm run build` 181 pages. Working tree has the 16-file fix round **uncommitted** — human reviews and commits. Task 22 Step 5 (RTL/manual browser QA) is the only remaining human-dependent step.

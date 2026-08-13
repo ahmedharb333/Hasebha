@@ -32,7 +32,6 @@ const ar: CalcContent = {
     min: 'القيمة أقل من الحد الأدنى المسموح.',
     max: 'القيمة أكبر من الحد الأقصى المسموح.',
     __generic: 'يرجى مراجعة الحقول المحددة وإعادة المحاولة.',
-    countryMismatch: 'هذا البلد يتطلب عملة مختلفة.',
   },
   results: {
     maternityDays: {
@@ -136,7 +135,6 @@ const en: CalcContent = {
     min: 'The value is below the allowed minimum.',
     max: 'The value exceeds the allowed maximum.',
     __generic: 'Please review the highlighted fields and try again.',
-    countryMismatch: 'This country requires a different currency.',
   },
   results: {
     maternityDays: {

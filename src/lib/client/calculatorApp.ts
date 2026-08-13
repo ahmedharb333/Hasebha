@@ -79,20 +79,24 @@ function formatValue(kind: string | undefined, value: number, currencyCode: stri
   return formatNumber(value, locale, 2);
 }
 
-function applyCountryDefault(shell: HTMLElement): void {
+function applyCountryDefault(shell: HTMLElement): () => void {
   const countryField = shell.querySelector<HTMLSelectElement>('[data-field="country"] select');
   const currencyField = shell.querySelector<HTMLSelectElement>('select[data-role="currency"]');
-  if (!countryField) return;
-  const stored = getStoredCountry();
-  if (isRegistered(stored)) {
+  const applyStored = (): void => {
+    const stored = getStoredCountry();
+    if (!countryField || !isRegistered(stored)) return;
     countryField.value = stored;
     const rules = getCountryRules(stored);
     if (currencyField && rules) currencyField.value = rules.currency;
+  };
+  if (countryField) {
+    applyStored();
+    countryField.addEventListener('change', () => {
+      const rules = getCountryRules(countryField.value);
+      if (currencyField && rules) currencyField.value = rules.currency;
+    });
   }
-  countryField.addEventListener('change', () => {
-    const rules = getCountryRules(countryField.value);
-    if (currencyField && rules) currencyField.value = rules.currency;
-  });
+  return applyStored;
 }
 
 export interface CalculatorAppHandle {
@@ -116,7 +120,7 @@ export function initCalculator(
     if (node) fieldEls.set(field.id, node);
   }
 
-  applyCountryDefault(root);
+  const applyStoredCountry = applyCountryDefault(root);
 
   const errorEls = new Map<string, HTMLElement>();
   let currentCurrency = currencySelect?.value ?? payload.currencyDefault;
@@ -479,6 +483,13 @@ export function initCalculator(
     if (lastOutput) render(lastOutput);
   });
 
+  const onCountryChange = (): void => {
+    applyStoredCountry();
+    if (currencySelect) currentCurrency = currencySelect.value;
+    run({ silent: true });
+  };
+  window.addEventListener('klar:country-change', onCountryChange);
+
   updateVisibility();
   trackCalculatorView(payload.slug, payload.category);
 
@@ -487,6 +498,7 @@ export function initCalculator(
       form.removeEventListener('submit', submitHandler);
       form.removeEventListener('input', liveRun);
       liveRun.cancel();
+      window.removeEventListener('klar:country-change', onCountryChange);
     },
   };
 }
