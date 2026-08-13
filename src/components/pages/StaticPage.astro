@@ -31,9 +31,12 @@ const t = {
     <div class="prose page-body">
       {showMailto && (
         <div class="alert alert--info">
-          <a href={`mailto:${SITE.owner.email}?subject=${encodeURIComponent(SITE.contact.mailtoSubject[locale])}`}>
-            {locale === 'ar' ? 'أرسل رسالة مباشرة' : 'Send a direct message'}
-          </a>
+          <p style="margin: 0">
+            <span>{locale === 'ar' ? 'راسلنا على:' : 'Email us at:'}</span>{' '}
+            <a href={`mailto:${SITE.owner.email}?subject=${encodeURIComponent(SITE.contact.mailtoSubject[locale])}`} dir="ltr">
+              {SITE.owner.email}
+            </a>
+          </p>
         </div>
       )}
       {page.sections.map((section) => (
