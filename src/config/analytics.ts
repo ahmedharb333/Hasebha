@@ -6,8 +6,11 @@
 export const ANALYTICS = {
   /** Whether tracking scripts may load at all (also gated by consent). */
   enabled: false,
-  /** Whether visitor consent is required before loading tracking tags. */
-  consentEnabled: true,
+  /** Whether visitor consent is required before loading tracking tags.
+   * Disabled: Google's certified CMP (via AdSense) is the sole consent UI,
+   * so the built-in banner is suppressed to avoid a duplicate EEA prompt.
+   * If GA4/Clarity are ever enabled, re-enable this and reconcile with the CMP. */
+  consentEnabled: false,
   ga4: {
     /** Master switch for Google Analytics 4. */
     enabled: false,

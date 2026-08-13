@@ -47,7 +47,7 @@ const cookiesLabel = locale === 'ar' ? 'إدارة خيارات الكوكيز' 
       <div>
         <h2>{locale === 'ar' ? 'التواصل' : 'Contact'}</h2>
         <ul>
-          <li><button type="button" class="btn btn--ghost btn--sm" data-consent-open>{cookiesLabel}</button></li>
+          <li><button type="button" class="btn btn--ghost btn--sm" data-cmp-reopen data-cookies-href={localizedPath(locale, '/cookies/')}>{cookiesLabel}</button></li>
           <li><a href={localizedPath(locale, '/contact/')}>{locale === 'ar' ? 'صفحة التواصل' : 'Contact page'}</a></li>
         </ul>
       </div>
@@ -58,3 +58,19 @@ const cookiesLabel = locale === 'ar' ? 'إدارة خيارات الكوكيز' 
     </div>
   </div>
 </footer>
+
+<script>
+  // Cookie-settings button. Reopens Google's certified CMP consent message
+  // (EEA/UK/CH ad-consent withdrawal). Where the CMP is not present (outside
+  // those regions), falls back to the cookies policy page.
+  const btn = document.querySelector<HTMLButtonElement>('[data-cmp-reopen]');
+  btn?.addEventListener('click', () => {
+    const fc = (window as unknown as { googlefc?: { showRevocationMessage?: () => void } }).googlefc;
+    if (fc && typeof fc.showRevocationMessage === 'function') {
+      fc.showRevocationMessage();
+    } else {
+      const href = btn.dataset.cookiesHref;
+      if (href) window.location.href = href;
+    }
+  });
+</script>
