@@ -24,7 +24,7 @@ export const SITE = {
   /** Owner / editorial placeholder. Kept empty until real info is provided. */
   owner: {
     name: { ar: '', en: '' },
-    email: '',
+    email: 'contact@worldly.pro',
     emailDisplay: { ar: 'بريد إلكتروني', en: 'email' },
     phone: '',
     address: { ar: '', en: '' },
