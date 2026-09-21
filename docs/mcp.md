@@ -45,6 +45,11 @@ AI agent ──▶ MCP tool (src/mcp/tools.ts)
 | `klar_calculate_unit_conversion` | `unit-converter` | Convert a value between units in one category |
 | `klar_calculate_gpa` | `gpa` | Credit-weighted GPA from a list of courses |
 | `klar_calculate_grade_average` | `grade-average` | Simple average of a list of grades |
+| `klar_calculate_bmi` | `bmi` | Body mass index + healthy weight range |
+| `klar_calculate_ideal_weight` | `ideal-weight` | Healthy weight range from height (BMI method) |
+| `klar_calculate_bmr` | `bmr` | BMR (Mifflin-St Jeor) + TDEE |
+| `klar_calculate_calorie_intake` | `calorie-intake` | Daily calorie target for a weight goal |
+| `klar_calculate_body_fat` | `body-fat` | Body fat % (US Navy tape, cm) |
 
 ### Inputs
 
@@ -167,6 +172,33 @@ GPA; to find a grade needed for a target use final grade.
 `grades[]` to the engine's slot fields. Returns `average` (hero), `count`, `highest`,
 `lowest`. Unweighted mean; for a credit-weighted GPA use the GPA tool.
 
+### Health tools (Phase 3B)
+
+Health tools return `estimate: true` and a `health` block (`method`, `usesProfile`,
+`measurementUnits?`, `notMedicalAdvice: true`, a method-specific `disclaimer`). They are
+screening estimates, never a diagnosis or individualized advice, and have no currency.
+
+**`klar_calculate_bmi`** — `weight`, `weightUnit` (`kg`\|`lb`), `height`, `heightUnit`
+(`cm`\|`m`). Returns `bmi` (hero) + healthy weight range (`healthyLow`/`healthyHigh`, in
+kg). Method: WHO BMI 18.5–24.9. Not energy expenditure; not a healthy-range-from-height
+tool by itself.
+
+**`klar_calculate_ideal_weight`** — `height`, `heightUnit`. Returns `healthyLow` (hero),
+`healthyHigh`, `midRange` (kg). Method: BMI-range only (no Devine/Robinson/Hamwi/frame/
+sex). Not a current-weight classifier.
+
+**`klar_calculate_bmr`** — `sex`, `age`, `weight`(+unit), `height`(+unit), `activity`.
+Returns `bmr` (hero) + `tdee` (kcal/day). Method: Mifflin-St Jeor. Resting/maintenance
+energy — not a dietary calorie target.
+
+**`klar_calculate_calorie_intake`** — as BMR plus `goal` (`lose`\|`maintain`\|`gain`) and
+`rate` (`slow`\|`moderate`\|`aggressive` → 250/500/750 kcal). Returns `targetCalories`
+(hero), `bmr`, `tdee`. A dietary target, more than BMR/TDEE alone.
+
+**`klar_calculate_body_fat`** — `sex`, `height`, `waist`, `neck`, `hip` (females). All in
+cm (surfaced via `measurementUnits`; no conversion). Returns `bodyFatPct` (hero). Method:
+US Navy tape. Not a BMI.
+
 ### Output — AI-native contract
 
 Each tool returns a JSON string (MCP text content) in the canonical AI contract
@@ -261,7 +293,7 @@ Add to `claude_desktop_config.json` (Settings → Developer → Edit Config):
 ```
 
 Use the absolute path to `src/mcp/server.ts` on your machine. Restart Claude
-Desktop; the twenty-three `klar_calculate_*` tools then appear.
+Desktop; the twenty-eight `klar_calculate_*` tools then appear.
 
 ### Claude Code
 
@@ -298,7 +330,7 @@ No changes to `server.ts` or `adapter.ts` are needed.
 
 ## Scope / not included
 
-- Only the twenty-three tools above.
+- Only the twenty-eight tools above.
 - No public HTTP API (MCP/stdio only).
 - No persistent storage — calculations are ephemeral; no user input is stored.
 - No changes to the website, its URLs, SEO, i18n, or AdSense.

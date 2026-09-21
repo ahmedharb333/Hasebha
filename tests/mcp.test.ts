@@ -45,13 +45,21 @@ const AI_VALID: Record<string, Record<string, unknown>> = {
   klar_calculate_unit_conversion: { value: 5, category: 'length', fromUnit: 'km', toUnit: 'mi' },
   klar_calculate_gpa: { scale: '4', courses: [{ grade: 'A', credits: 3 }, { grade: 'B', credits: 4 }, { grade: 'A-', credits: 3 }] },
   klar_calculate_grade_average: { grades: [85, 92, 78, 88] },
+  klar_calculate_bmi: { weight: 80, weightUnit: 'kg', height: 175, heightUnit: 'cm' },
+  klar_calculate_ideal_weight: { height: 175, heightUnit: 'cm' },
+  klar_calculate_bmr: { sex: 'male', age: 40, weight: 90, weightUnit: 'kg', height: 174, heightUnit: 'cm', activity: 'moderate' },
+  klar_calculate_calorie_intake: { sex: 'male', age: 40, weight: 90, weightUnit: 'kg', height: 174, heightUnit: 'cm', activity: 'moderate', goal: 'lose', rate: 'moderate' },
+  klar_calculate_body_fat: { sex: 'male', height: 174, waist: 90, neck: 40 },
 };
+
+/** Slugs whose AI_META declares specialized health metadata. */
+const HEALTH_TOOLS = ['klar_calculate_bmi', 'klar_calculate_ideal_weight', 'klar_calculate_bmr', 'klar_calculate_calorie_intake', 'klar_calculate_body_fat'];
 
 /* ------------------------------------------------------------------ */
 /* Tool registry                                                       */
 /* ------------------------------------------------------------------ */
 
-test('mcp: exposes exactly the twenty-three tools mapped to real slugs', () => {
+test('mcp: exposes exactly the twenty-eight tools mapped to real slugs', () => {
   const byName = Object.fromEntries(tools.map((t) => [t.name, t.slug]));
   assert.deepEqual(byName, {
     klar_calculate_loan_payment: 'loan-payment',
@@ -77,8 +85,13 @@ test('mcp: exposes exactly the twenty-three tools mapped to real slugs', () => {
     klar_calculate_unit_conversion: 'unit-converter',
     klar_calculate_gpa: 'gpa',
     klar_calculate_grade_average: 'grade-average',
+    klar_calculate_bmi: 'bmi',
+    klar_calculate_ideal_weight: 'ideal-weight',
+    klar_calculate_bmr: 'bmr',
+    klar_calculate_calorie_intake: 'calorie-intake',
+    klar_calculate_body_fat: 'body-fat',
   });
-  assert.equal(tools.length, 23);
+  assert.equal(tools.length, 28);
   // Every tool slug resolves to a real engine, and every tool has an input schema.
   for (const t of tools) {
     assert.ok(getMath(t.slug), `slug missing: ${t.slug}`);
@@ -373,9 +386,10 @@ test('batch2a: grade-average rejects more than 6 grades', () => {
 /* mechanism and backward compatibility only.                          */
 /* ================================================================== */
 
-/* Backward compat: none of the existing 23 tools gains specialized metadata. */
-test('phase3a: existing tools carry no estimate/health/jurisdiction metadata', () => {
+/* Backward compat: the generic (non-health) tools gain no specialized metadata. */
+test('phase3a: generic tools carry no estimate/health/jurisdiction metadata', () => {
   for (const [name, input] of Object.entries(AI_VALID)) {
+    if (HEALTH_TOOLS.includes(name)) continue; // health tools legitimately set these (Phase 3B)
     const ai = aiFor(name, input);
     assert.equal(ai.estimate, undefined, `${name} estimate`);
     assert.equal(ai.health, undefined, `${name} health`);
@@ -437,6 +451,101 @@ test('phase3a: resolveJurisdiction yields empty currency for unsupported/absent 
   const absent = resolveJurisdiction(spec, {});
   assert.equal(absent.currency, '');
   assert.match(absent.legalNote, /selected country/);
+});
+
+/* ================================================================== */
+/* Phase 3B — health tools (bmi, ideal-weight, bmr, calorie, body-fat) */
+/* ================================================================== */
+
+test('phase3b: health schemas are semantic (no positional/web-form fields)', () => {
+  const shape = (name: string) => Object.keys(tools.find((t) => t.name === name)!.inputSchema).sort();
+  assert.deepEqual(shape('klar_calculate_bmi'), ['height', 'heightUnit', 'weight', 'weightUnit']);
+  assert.deepEqual(shape('klar_calculate_ideal_weight'), ['height', 'heightUnit']);
+  assert.deepEqual(shape('klar_calculate_bmr'), ['activity', 'age', 'height', 'heightUnit', 'sex', 'weight', 'weightUnit']);
+  assert.deepEqual(shape('klar_calculate_calorie_intake'), ['activity', 'age', 'goal', 'height', 'heightUnit', 'rate', 'sex', 'weight', 'weightUnit']);
+  assert.deepEqual(shape('klar_calculate_body_fat'), ['height', 'hip', 'neck', 'sex', 'waist']);
+});
+
+test('phase3b: every health tool returns estimate=true and specific health metadata', () => {
+  const expected: Record<string, string> = {
+    klar_calculate_bmi: 'WHO BMI 18.5–24.9',
+    klar_calculate_ideal_weight: 'BMI-range',
+    klar_calculate_bmr: 'Mifflin-St Jeor',
+    klar_calculate_calorie_intake: 'Mifflin-St Jeor + activity + goal/rate adjustment',
+    klar_calculate_body_fat: 'US Navy tape',
+  };
+  for (const name of HEALTH_TOOLS) {
+    const ai = aiFor(name, AI_VALID[name]);
+    assert.equal(ai.success, true, `${name} success`);
+    assert.equal(ai.estimate, true, `${name} estimate`);
+    assert.ok(ai.health, `${name} health block`);
+    assert.equal(ai.health!.method, expected[name], `${name} method`);
+    assert.equal(ai.health!.notMedicalAdvice, true, `${name} notMedicalAdvice`);
+    // Disclaimer is specific (not generic filler) and states it is not a diagnosis.
+    assert.ok(ai.health!.disclaimer.length > 30, `${name} disclaimer specific`);
+    assert.match(ai.health!.disclaimer, /not a medical diagnosis/i, `${name} disclaimer scope`);
+    assert.ok(Array.isArray(ai.health!.usesProfile) && ai.health!.usesProfile.length > 0, `${name} usesProfile`);
+    // No jurisdiction on health tools.
+    assert.equal(ai.jurisdiction, undefined, `${name} no jurisdiction`);
+  }
+});
+
+test('phase3b: body-fat surfaces cm measurement units (no invented conversion)', () => {
+  const ai = aiFor('klar_calculate_body_fat', AI_VALID.klar_calculate_body_fat);
+  assert.deepEqual(ai.health!.measurementUnits, { height: 'cm', neck: 'cm', waist: 'cm', hip: 'cm' });
+});
+
+test('phase3b: bmi hero + healthy range, and heros correct across health tools', () => {
+  const bmi = aiFor('klar_calculate_bmi', { weight: 80, weightUnit: 'kg', height: 175, heightUnit: 'cm' });
+  const hero = bmi.answers.find((a) => a.hero);
+  assert.equal(hero?.key, 'bmi');
+  assert.ok(Math.abs((hero?.value as number) - 26.122448979591837) < 1e-9, `got ${hero?.value}`);
+  // BMI value is unitless (not monetary).
+  assert.equal(hero?.monetary, undefined);
+  assert.equal(aiFor('klar_calculate_ideal_weight', AI_VALID.klar_calculate_ideal_weight).answers.find((a) => a.hero)?.key, 'healthyLow');
+  assert.equal(aiFor('klar_calculate_bmr', AI_VALID.klar_calculate_bmr).answers.find((a) => a.hero)?.key, 'bmr');
+  assert.equal(aiFor('klar_calculate_calorie_intake', AI_VALID.klar_calculate_calorie_intake).answers.find((a) => a.hero)?.key, 'targetCalories');
+  assert.equal(aiFor('klar_calculate_body_fat', AI_VALID.klar_calculate_body_fat).answers.find((a) => a.hero)?.key, 'bodyFatPct');
+});
+
+test('phase3b: exact engine parity for all health tools', () => {
+  for (const name of HEALTH_TOOLS) {
+    const tool = tools.find((t) => t.name === name)!;
+    const input = AI_VALID[name];
+    const engine = getMath(tool.slug).calculate(toCalcInput(input));
+    const ai = aiFor(name, input);
+    assert.deepEqual((ai.raw as { results: unknown }).results, engine.results, `${name} raw parity`);
+    for (const a of ai.answers) {
+      assert.equal(a.value, engine.results.find((r) => r.key === a.key)?.value, `${name} ${a.key} value parity`);
+    }
+  }
+});
+
+test('phase3b: health engines have no currency (no invented currency)', () => {
+  for (const name of HEALTH_TOOLS) {
+    const ai = aiFor(name, AI_VALID[name]);
+    assert.equal(ai.metadata?.currency, undefined, `${name} no currency`);
+    for (const a of ai.answers) assert.equal(a.currency, undefined, `${name} ${a.key} no currency code`);
+  }
+});
+
+test('phase3b: bmr and calorie-intake are distinct (bmr has no calorie target)', () => {
+  const bmr = aiFor('klar_calculate_bmr', AI_VALID.klar_calculate_bmr);
+  assert.ok(!bmr.answers.some((a) => a.key === 'targetCalories'), 'bmr must not produce a calorie target');
+  const cal = aiFor('klar_calculate_calorie_intake', AI_VALID.klar_calculate_calorie_intake);
+  assert.ok(cal.answers.some((a) => a.key === 'targetCalories'), 'calorie-intake must produce a target');
+});
+
+test('phase3b: body-fat requires hip for females (engine rule preserved)', () => {
+  const ai = aiFor('klar_calculate_body_fat', { sex: 'female', height: 165, waist: 80, neck: 34 });
+  assert.equal(ai.success, false);
+  assert.equal(ai.error?.fields?.hip, 'required');
+});
+
+test('phase3b: bmr rejects out-of-range age', () => {
+  const ai = aiFor('klar_calculate_bmr', { sex: 'male', age: 200, weight: 90, height: 174 });
+  assert.equal(ai.success, false);
+  assert.equal(ai.error?.fields?.age, 'max');
 });
 
 /* ------------------------------------------------------------------ */

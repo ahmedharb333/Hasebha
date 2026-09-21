@@ -473,6 +473,95 @@ export const AI_META: Record<string, AIMeta> = {
       'Simple average of up to 6 grades; for a credit-weighted GPA use the GPA tool.',
     ],
   },
+  bmi: {
+    category: 'health',
+    estimate: true,
+    labels: {
+      bmi: { label: 'Body mass index (BMI)' },
+      healthyLow: { label: 'Healthy weight range — low', unit: 'kg', note: 'In kilograms, regardless of the input weight unit.' },
+      healthyHigh: { label: 'Healthy weight range — high', unit: 'kg', note: 'In kilograms, regardless of the input weight unit.' },
+    },
+    assumptions: ['BMI = weight(kg) / height(m)².', 'Healthy reference range is BMI 18.5–24.9.'],
+    limitations: ['Does not personalize interpretation by age or sex; not an energy or body-composition measure.'],
+    health: {
+      method: 'WHO BMI 18.5–24.9',
+      usesProfile: ['weight', 'height'],
+      notMedicalAdvice: true,
+      disclaimer: 'BMI screening estimate (weight ÷ height²) against the WHO 18.5–24.9 range — not a medical diagnosis or individualized advice.',
+    },
+  },
+  'ideal-weight': {
+    category: 'health',
+    estimate: true,
+    labels: {
+      healthyLow: { label: 'Healthy weight — low', unit: 'kg' },
+      healthyHigh: { label: 'Healthy weight — high', unit: 'kg' },
+      midRange: { label: 'Mid-range weight', unit: 'kg' },
+    },
+    assumptions: ['Healthy weight range = BMI 18.5–24.9 applied to the given height (weights in kg).'],
+    limitations: ['Uses the BMI range only — not Devine, Robinson, Hamwi, frame size, or sex adjustments.'],
+    health: {
+      method: 'BMI-range',
+      usesProfile: ['height'],
+      notMedicalAdvice: true,
+      disclaimer: 'Healthy-weight-range estimate from the BMI 18.5–24.9 band for your height — not a medical diagnosis or individualized advice.',
+    },
+  },
+  bmr: {
+    category: 'health',
+    estimate: true,
+    labels: {
+      bmr: { label: 'Basal metabolic rate (BMR)', unit: 'kcal/day' },
+      tdee: { label: 'Total daily energy expenditure (TDEE)', unit: 'kcal/day' },
+    },
+    assumptions: [
+      'BMR via the Mifflin-St Jeor equation.',
+      'TDEE = BMR × activity factor (sedentary 1.2, light 1.375, moderate 1.55, active 1.725, very-active 1.9).',
+    ],
+    limitations: ['Resting/maintenance energy estimate — not a weight-goal calorie target (use the calorie intake tool).'],
+    health: {
+      method: 'Mifflin-St Jeor',
+      usesProfile: ['sex', 'age', 'weight', 'height', 'activity'],
+      notMedicalAdvice: true,
+      disclaimer: 'Energy-expenditure estimate via the Mifflin-St Jeor equation — not a medical diagnosis or individualized advice.',
+    },
+  },
+  'calorie-intake': {
+    category: 'health',
+    estimate: true,
+    labels: {
+      targetCalories: { label: 'Daily calorie target', unit: 'kcal/day' },
+      bmr: { label: 'Basal metabolic rate (BMR)', unit: 'kcal/day' },
+      tdee: { label: 'Total daily energy expenditure (TDEE)', unit: 'kcal/day' },
+    },
+    assumptions: [
+      'BMR via Mifflin-St Jeor; TDEE = BMR × activity factor.',
+      'Goal adjusts TDEE by a daily delta set by rate — lose subtracts / gain adds slow 250, moderate 500, aggressive 750 kcal; maintain = 0.',
+    ],
+    limitations: ['A dietary calorie target for a weight goal — more than BMR/TDEE alone; not individualized medical or nutritional advice.'],
+    health: {
+      method: 'Mifflin-St Jeor + activity + goal/rate adjustment',
+      usesProfile: ['sex', 'age', 'weight', 'height', 'activity', 'goal', 'rate'],
+      notMedicalAdvice: true,
+      disclaimer: 'Dietary calorie-target estimate (Mifflin-St Jeor + activity + goal/rate) — not a medical diagnosis or individualized advice.',
+    },
+  },
+  'body-fat': {
+    category: 'health',
+    estimate: true,
+    labels: {
+      bodyFatPct: { label: 'Body fat percentage' },
+    },
+    assumptions: ['US Navy tape-measure method from height, neck and waist (plus hip for females); measurements in cm.'],
+    limitations: ['Tape-measure estimate — not a body-composition scan (e.g. DEXA/BIA) and not a BMI.'],
+    health: {
+      method: 'US Navy tape',
+      usesProfile: ['sex', 'height', 'neck', 'waist', 'hip (female)'],
+      measurementUnits: { height: 'cm', neck: 'cm', waist: 'cm', hip: 'cm' },
+      notMedicalAdvice: true,
+      disclaimer: 'Body-fat estimate via the US Navy tape-measure method (measurements in cm) — not a medical diagnosis or individualized advice.',
+    },
+  },
 };
 
 /**

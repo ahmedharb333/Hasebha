@@ -487,4 +487,85 @@ export const tools: ToolDef[] = [
       return out;
     },
   },
+  {
+    name: 'klar_calculate_bmi',
+    title: 'BMI',
+    slug: 'bmi',
+    description:
+      'Calculate Body Mass Index (BMI = weight in kg ÷ height in m²) and the healthy weight range for the given height using the WHO healthy band (BMI 18.5–24.9). Use for a weight-status index. Does NOT calculate energy expenditure (use BMR), is NOT a healthy-weight-range-from-height tool by itself (use ideal weight), and does not personalize interpretation by age or sex.',
+    inputSchema: {
+      weight: z.number().min(1).max(1000).describe('Body weight (unit given by weightUnit).'),
+      weightUnit: z.enum(['kg', 'lb']).default('kg').describe('Unit for weight.'),
+      height: z.number().min(0.5).max(300).describe('Height: 50–300 when heightUnit=cm, or 0.5–3 when heightUnit=m.'),
+      heightUnit: z.enum(['cm', 'm']).default('cm').describe('Unit for height.'),
+    },
+  },
+  {
+    name: 'klar_calculate_ideal_weight',
+    title: 'Ideal weight',
+    slug: 'ideal-weight',
+    description:
+      'Calculate a healthy weight RANGE for a given height using the BMI method (weights for BMI 18.5–24.9). Use to get a healthy weight range from height. Does NOT classify a current weight (use BMI), and does NOT compute BMR/calories. Uses the BMI range only — not Devine, Robinson, Hamwi, frame size, or sex adjustments.',
+    inputSchema: {
+      height: z.number().min(0.5).max(300).describe('Height: 50–300 when heightUnit=cm, or 0.5–3 when heightUnit=m.'),
+      heightUnit: z.enum(['cm', 'm']).default('cm').describe('Unit for height.'),
+    },
+  },
+  {
+    name: 'klar_calculate_bmr',
+    title: 'BMR & TDEE',
+    slug: 'bmr',
+    description:
+      'Calculate Basal Metabolic Rate (resting energy) via the Mifflin-St Jeor equation, plus Total Daily Energy Expenditure (TDEE = BMR × activity factor). Use for resting/maintenance energy expenditure. This is NOT a dietary calorie target for a weight goal — for that use the calorie intake tool.',
+    inputSchema: {
+      sex: z.enum(['male', 'female']).default('male').describe('Biological sex used by the BMR equation.'),
+      age: z.number().min(1).max(120).describe('Age in years.'),
+      weight: z.number().min(1).max(1000).describe('Body weight (unit given by weightUnit).'),
+      weightUnit: z.enum(['kg', 'lb']).default('kg').describe('Unit for weight.'),
+      height: z.number().min(0.5).max(300).describe('Height: 50–300 cm or 0.5–3 m per heightUnit.'),
+      heightUnit: z.enum(['cm', 'm']).default('cm').describe('Unit for height.'),
+      activity: z
+        .enum(['sedentary', 'light', 'moderate', 'active', 'very-active'])
+        .default('moderate')
+        .describe('Activity level for the TDEE factor (1.2 / 1.375 / 1.55 / 1.725 / 1.9).'),
+    },
+  },
+  {
+    name: 'klar_calculate_calorie_intake',
+    title: 'Calorie intake',
+    slug: 'calorie-intake',
+    description:
+      'Calculate a DAILY CALORIE TARGET for a weight goal: BMR (Mifflin-St Jeor) → TDEE (× activity factor) → adjusted by goal and rate. Use for "how many calories should I eat" to lose/maintain/gain weight. This is a dietary target, MORE than BMR/TDEE alone — for energy expenditure only, use the BMR tool.',
+    inputSchema: {
+      sex: z.enum(['male', 'female']).default('male').describe('Biological sex used by the BMR equation.'),
+      age: z.number().min(1).max(120).describe('Age in years.'),
+      weight: z.number().min(1).max(1000).describe('Body weight (unit given by weightUnit).'),
+      weightUnit: z.enum(['kg', 'lb']).default('kg').describe('Unit for weight.'),
+      height: z.number().min(0.5).max(300).describe('Height: 50–300 cm or 0.5–3 m per heightUnit.'),
+      heightUnit: z.enum(['cm', 'm']).default('cm').describe('Unit for height.'),
+      activity: z
+        .enum(['sedentary', 'light', 'moderate', 'active', 'very-active'])
+        .default('moderate')
+        .describe('Activity level for the TDEE factor.'),
+      goal: z.enum(['lose', 'maintain', 'gain']).default('maintain').describe('Weight goal.'),
+      rate: z
+        .enum(['slow', 'moderate', 'aggressive'])
+        .default('moderate')
+        .describe('Pace of change; sets the daily deficit/surplus (slow 250, moderate 500, aggressive 750 kcal). Ignored when goal=maintain.'),
+    },
+  },
+  {
+    name: 'klar_calculate_body_fat',
+    title: 'Body fat',
+    slug: 'body-fat',
+    description:
+      'Estimate body fat percentage using the US Navy tape-measure method from height, neck and waist circumference (plus hip for females). All measurements must be in centimetres. Use for a body-fat percentage estimate. This is NOT a BMI and not a body-composition scan.',
+    inputSchema: {
+      sex: z.enum(['male', 'female']).default('male').describe('Biological sex (females also require hip).'),
+      height: z.number().min(50).max(300).describe('Height in cm.'),
+      waist: z.number().min(20).max(400).describe('Waist circumference in cm.'),
+      neck: z.number().min(10).max(200).describe('Neck circumference in cm.'),
+      hip: z.number().min(20).max(400).optional().describe('Hip circumference in cm — required for females, ignored for males.'),
+    },
+  },
 ];
