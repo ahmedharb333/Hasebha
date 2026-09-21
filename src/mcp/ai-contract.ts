@@ -11,6 +11,7 @@
 import { runCalculator } from './adapter.ts';
 import type { CalcResponse } from './adapter.ts';
 import type { ToolDef } from './tools.ts';
+import { getCountryRules } from '../lib/country-rules/registry.ts';
 
 export interface AIAnswer {
   /** Engine result key (unchanged). */
@@ -47,6 +48,51 @@ export interface AIError {
   fields?: Record<string, string>;
 }
 
+/**
+ * Health-calculator metadata (Phase 3A). Communicates the actual mathematical
+ * scope of a screening estimate — never a generic disclaimer.
+ */
+export interface HealthMeta {
+  /** Named formula/standard, e.g. "Mifflin-St Jeor", "US Navy tape", "WHO BMI 18.5–24.9". */
+  method: string;
+  /** Which profile inputs the result depends on, e.g. ["sex","age","height","weight"]. */
+  usesProfile: string[];
+  /** Measurement units the engine silently assumes, e.g. { waist: "cm" }. */
+  measurementUnits?: Record<string, string>;
+  /** Fixed: these tools do not give medical advice. */
+  notMedicalAdvice: true;
+  /** One specific line naming the method and the screening-estimate scope. */
+  disclaimer: string;
+}
+
+/** Supported jurisdiction codes — sourced from the country-rules registry. */
+export const SUPPORTED_COUNTRIES = ['jo', 'sa', 'ae', 'kw', 'qa', 'bh', 'om'] as const;
+
+/**
+ * Static jurisdiction spec stored per tool in AI_META. Country/currency are
+ * resolved at runtime from the request + the engine's country rules.
+ */
+export interface JurisdictionSpec {
+  calculationPeriod: 'annual' | 'monthly' | 'weekly' | 'total' | 'days';
+  basis: 'statutory' | 'formulaic';
+  /** One specific line; a "{country}" placeholder is filled at runtime. */
+  legalNote: string;
+  /** Input field that carries an employment-end type (end-of-service only). */
+  employmentEndTypeField?: string;
+}
+
+/** Resolved jurisdiction metadata attached to a result (Phase 3A). */
+export interface JurisdictionMeta {
+  country: string;
+  supportedCountries: string[];
+  currency: string;
+  calculationPeriod: JurisdictionSpec['calculationPeriod'];
+  basis: JurisdictionSpec['basis'];
+  rulesSnapshot: true;
+  employmentEndType?: 'terminated' | 'voluntary';
+  legalNote: string;
+}
+
 export interface AICalculatorResult {
   calculator: { slug: string; name: string; category: string };
   success: boolean;
@@ -54,6 +100,12 @@ export interface AICalculatorResult {
   assumptions: string[];
   limitations: string[];
   metadata?: { currency?: string; country?: string; period?: string };
+  /** True when the result is an estimate rather than an exact/statutory-verified figure. */
+  estimate?: boolean;
+  /** Present only for health calculators (Phase 3B). */
+  health?: HealthMeta;
+  /** Present only for jurisdiction/statutory calculators (Phase 3C). */
+  jurisdiction?: JurisdictionMeta;
   /** Untouched engine output, for parity/debugging. */
   raw?: { results: unknown; table?: unknown };
   /** Structured error when success is false. */
@@ -75,6 +127,10 @@ interface AIMeta {
   limitations: string[];
   /** Human note about the time basis, when it matters. */
   period?: string;
+  /** Phase 3A: opt-in specialized metadata. Absent tools stay generic. */
+  estimate?: boolean;
+  health?: HealthMeta;
+  jurisdiction?: JurisdictionSpec;
 }
 
 /**
@@ -456,6 +512,48 @@ function formatDisplay(value: number, kind: string | undefined, unit: string | u
 }
 
 /**
+ * Resolve a static JurisdictionSpec into concrete JurisdictionMeta using the
+ * request's country and the engine's OWN country rules for currency (never a
+ * user-supplied guess, never an invented code). Unsupported/absent country ->
+ * empty currency; the supported list is always surfaced so an agent can check.
+ */
+export function resolveJurisdiction(spec: JurisdictionSpec, input: Record<string, unknown>): JurisdictionMeta {
+  const country = typeof input.country === 'string' ? input.country : '';
+  const currency = getCountryRules(country)?.currency ?? '';
+  const meta: JurisdictionMeta = {
+    country,
+    supportedCountries: [...SUPPORTED_COUNTRIES],
+    currency,
+    calculationPeriod: spec.calculationPeriod,
+    basis: spec.basis,
+    rulesSnapshot: true,
+    legalNote: spec.legalNote.replace('{country}', country ? country.toUpperCase() : 'the selected country'),
+  };
+  if (spec.employmentEndTypeField) {
+    const v = input[spec.employmentEndTypeField];
+    if (v === 'terminated' || v === 'voluntary') meta.employmentEndType = v;
+  }
+  return meta;
+}
+
+/**
+ * Attach opt-in specialized metadata (estimate / health / jurisdiction) from a
+ * tool's AIMeta onto a result. A tool with no such metadata is untouched, so
+ * generic tools never receive health/jurisdiction fields. Pure; mutates+returns.
+ */
+export function applySpecialized(
+  base: AICalculatorResult,
+  meta: { estimate?: boolean; health?: HealthMeta; jurisdiction?: JurisdictionSpec } | undefined,
+  input: Record<string, unknown>,
+): AICalculatorResult {
+  if (!meta) return base;
+  if (meta.estimate) base.estimate = true;
+  if (meta.health) base.health = meta.health;
+  if (meta.jurisdiction) base.jurisdiction = resolveJurisdiction(meta.jurisdiction, input);
+  return base;
+}
+
+/**
  * Wrap the adapter's engine output in the canonical AI contract.
  * `input` is the raw tool arguments (used only for metadata like currency).
  */
@@ -482,6 +580,10 @@ export function toAIResult(tool: ToolDef, response: CalcResponse, input: Record<
   if (currency) metadata.currency = currency;
   if (meta?.period) metadata.period = meta.period;
   if (Object.keys(metadata).length > 0) base.metadata = metadata;
+
+  // Opt-in specialized metadata (estimate/health/jurisdiction). Only tools whose
+  // AI_META declares these get them; the existing generic tools are unaffected.
+  applySpecialized(base, meta, input);
 
   if (!response.success) {
     base.error = response.error;

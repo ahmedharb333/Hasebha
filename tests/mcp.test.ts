@@ -2,7 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { runCalculator, toCalcInput } from '../src/mcp/adapter.ts';
 import { tools } from '../src/mcp/tools.ts';
-import { runTool } from '../src/mcp/ai-contract.ts';
+import { runTool, resolveJurisdiction, applySpecialized, SUPPORTED_COUNTRIES } from '../src/mcp/ai-contract.ts';
+import type { AICalculatorResult, HealthMeta, JurisdictionSpec } from '../src/mcp/ai-contract.ts';
 import { getMath } from '../src/lib/calculators/index.ts';
 
 /** Build the AI contract exactly as the server does (preValidate + transform + engine + enrich). */
@@ -364,6 +365,78 @@ test('batch2a: grade-average rejects more than 6 grades', () => {
   const ai = aiFor('klar_calculate_grade_average', { grades: [1, 2, 3, 4, 5, 6, 7] });
   assert.equal(ai.success, false);
   assert.equal(ai.error?.fields?.grades, 'max');
+});
+
+/* ================================================================== */
+/* Phase 3A — specialized contract layer (health / jurisdiction)       */
+/* No health or jurisdiction tools are wired yet; this tests the       */
+/* mechanism and backward compatibility only.                          */
+/* ================================================================== */
+
+/* Backward compat: none of the existing 23 tools gains specialized metadata. */
+test('phase3a: existing tools carry no estimate/health/jurisdiction metadata', () => {
+  for (const [name, input] of Object.entries(AI_VALID)) {
+    const ai = aiFor(name, input);
+    assert.equal(ai.estimate, undefined, `${name} estimate`);
+    assert.equal(ai.health, undefined, `${name} health`);
+    assert.equal(ai.jurisdiction, undefined, `${name} jurisdiction`);
+  }
+});
+
+test('phase3a: supported countries are exactly the 7 registered jurisdictions', () => {
+  assert.deepEqual([...SUPPORTED_COUNTRIES], ['jo', 'sa', 'ae', 'kw', 'qa', 'bh', 'om']);
+});
+
+test('phase3a: applySpecialized attaches health metadata and the estimate flag', () => {
+  const base: AICalculatorResult = { calculator: { slug: 'x', name: 'X', category: 'health' }, success: true, answers: [], assumptions: [], limitations: [] };
+  const health: HealthMeta = {
+    method: 'WHO BMI 18.5–24.9',
+    usesProfile: ['height', 'weight'],
+    notMedicalAdvice: true,
+    disclaimer: 'Screening estimate from BMI; not a medical diagnosis or advice.',
+  };
+  applySpecialized(base, { estimate: true, health }, {});
+  assert.equal(base.estimate, true);
+  assert.deepEqual(base.health, health);
+  assert.equal(base.jurisdiction, undefined);
+});
+
+test('phase3a: applySpecialized with no metadata leaves the result generic', () => {
+  const base: AICalculatorResult = { calculator: { slug: 'x', name: 'X', category: 'general' }, success: true, answers: [], assumptions: [], limitations: [] };
+  applySpecialized(base, undefined, {});
+  assert.equal(base.estimate, undefined);
+  assert.equal(base.health, undefined);
+  assert.equal(base.jurisdiction, undefined);
+});
+
+test('phase3a: resolveJurisdiction derives currency from country rules (no invention)', () => {
+  const spec: JurisdictionSpec = {
+    calculationPeriod: 'annual',
+    basis: 'statutory',
+    legalNote: 'Statutory estimate for {country}; not legal/tax advice; verify current law.',
+    employmentEndTypeField: 'resignation',
+  };
+  const j = resolveJurisdiction(spec, { country: 'jo', resignation: 'voluntary' });
+  assert.equal(j.country, 'jo');
+  assert.equal(j.currency, 'JOD'); // derived from the jo country rules
+  assert.equal(j.rulesSnapshot, true);
+  assert.equal(j.calculationPeriod, 'annual');
+  assert.equal(j.basis, 'statutory');
+  assert.deepEqual(j.supportedCountries, ['jo', 'sa', 'ae', 'kw', 'qa', 'bh', 'om']);
+  assert.match(j.legalNote, /JO/);
+  assert.equal(j.employmentEndType, 'voluntary');
+});
+
+test('phase3a: resolveJurisdiction yields empty currency for unsupported/absent country', () => {
+  const spec: JurisdictionSpec = { calculationPeriod: 'monthly', basis: 'statutory', legalNote: 'Statutory estimate for {country}.' };
+  const unsupported = resolveJurisdiction(spec, { country: 'zz' });
+  assert.equal(unsupported.currency, ''); // no invented code
+  assert.equal(unsupported.country, 'zz');
+  assert.equal(unsupported.employmentEndType, undefined);
+  assert.match(unsupported.legalNote, /ZZ/);
+  const absent = resolveJurisdiction(spec, {});
+  assert.equal(absent.currency, '');
+  assert.match(absent.legalNote, /selected country/);
 });
 
 /* ------------------------------------------------------------------ */
