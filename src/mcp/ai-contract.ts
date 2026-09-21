@@ -8,6 +8,7 @@
  *
  * Pure, deterministic, JSON-serializable, no Astro/DOM/UI/browser dependencies.
  */
+import { runCalculator } from './adapter.ts';
 import type { CalcResponse } from './adapter.ts';
 import type { ToolDef } from './tools.ts';
 
@@ -302,7 +303,139 @@ export const AI_META: Record<string, AIMeta> = {
       'Assumes a constant annual return; does not forecast actual investment performance.',
     ],
   },
+  'retirement-savings': {
+    category: 'savings-investing',
+    labels: {
+      finalBalance: { label: 'Final balance (future value)' },
+      totalContributions: { label: 'Total contributions' },
+      totalInterestEarned: { label: 'Total interest earned' },
+    },
+    assumptions: [
+      'Fixed monthly contribution; return compounds monthly at a constant annual rate.',
+    ],
+    limitations: [
+      'Monthly contributions only; does not forecast actual investment performance.',
+      'For a lump sum or non-monthly compounding use the compound interest tool; to solve for the needed contribution use the savings goal tool.',
+    ],
+  },
+  'salary-converter': {
+    category: 'work-pay',
+    labels: {
+      hourly: { label: 'Hourly pay' },
+      daily: { label: 'Daily pay' },
+      weekly: { label: 'Weekly pay' },
+      monthly: { label: 'Monthly pay' },
+      annual: { label: 'Annual pay' },
+    },
+    assumptions: [
+      'Re-expresses the same gross pay across periods using the given work pattern.',
+    ],
+    limitations: [
+      'Does not deduct tax or social insurance (not net pay); does not compute employer cost.',
+    ],
+  },
+  'loan-comparison': {
+    category: 'loans',
+    labels: {
+      monthlyA: { label: 'Option A monthly payment' },
+      monthlyB: { label: 'Option B monthly payment' },
+      totalInterestA: { label: 'Option A total interest' },
+      totalInterestB: { label: 'Option B total interest' },
+      totalCostA: { label: 'Option A total cost (payments + fees)' },
+      totalCostB: { label: 'Option B total cost (payments + fees)' },
+      diffTotalCost: { label: 'Total-cost difference (A − B)' },
+    },
+    assumptions: [
+      'Both options use the same principal; each has its own rate, term, and fees.',
+      'Fixed rate, fully-amortizing payments.',
+    ],
+    limitations: [
+      'Compares exactly two options; does not judge which is "best" beyond total cost.',
+    ],
+  },
+  'employee-cost': {
+    category: 'work-pay',
+    labels: {
+      monthlyCost: { label: 'Monthly employer cost' },
+      annualCost: { label: 'Annual employer cost' },
+      firstYearTotal: { label: 'First-year total cost' },
+      salaryShare: { label: 'Salary share of first-year cost' },
+    },
+    assumptions: [
+      'First-year total = annual recurring cost + one-time costs (equipment, recruitment, training, other).',
+    ],
+    limitations: [
+      "Employer's cost of employment; not the employee's take-home pay and not a salary period conversion.",
+    ],
+  },
+  'freelance-rate': {
+    category: 'work-pay',
+    labels: {
+      minimumHourly: { label: 'Minimum hourly rate (break-even)' },
+      recommendedHourly: { label: 'Recommended hourly rate' },
+      dailyRate: { label: 'Daily rate' },
+      projectRate: { label: 'Example project rate' },
+      billableHours: { label: 'Billable hours per year', unit: 'hours' },
+    },
+    assumptions: [
+      'Rate covers desired income and expenses over billable hours, with a tax reserve and target profit margin.',
+    ],
+    limitations: [
+      'Sets a rate from an income goal; does not convert an existing salary or compute employer cost.',
+    ],
+  },
+  'unit-converter': {
+    category: 'conversion',
+    labels: {
+      convertedValue: { label: 'Converted value', note: 'Expressed in the requested target unit.' },
+    },
+    assumptions: ['fromUnit and toUnit are both within the chosen category.'],
+    limitations: ['Converts within one category only; does not convert across categories.'],
+  },
+  gpa: {
+    category: 'education',
+    labels: {
+      gpa: { label: 'GPA' },
+      totalCredits: { label: 'Total credit hours', unit: 'credits' },
+      totalPoints: { label: 'Total grade points', unit: 'points' },
+    },
+    assumptions: ['Credit-weighted average of grade points on the chosen 4.0 or 5.0 scale.'],
+    limitations: [
+      'Computes an existing GPA from up to 6 courses; does not determine the grade needed for a target (use the final grade tool).',
+    ],
+  },
+  'grade-average': {
+    category: 'education',
+    labels: {
+      average: { label: 'Average grade', unit: 'points' },
+      count: { label: 'Number of grades', unit: 'grades' },
+      highest: { label: 'Highest grade', unit: 'points' },
+      lowest: { label: 'Lowest grade', unit: 'points' },
+    },
+    assumptions: ['Unweighted arithmetic mean of the provided grades.'],
+    limitations: [
+      'Simple average of up to 6 grades; for a credit-weighted GPA use the GPA tool.',
+    ],
+  },
 };
+
+/**
+ * Run a tool end-to-end exactly as the MCP server does: optional MCP-layer
+ * preValidation, optional input transformation into the engine shape, engine
+ * execution (single source of truth), then AI-contract enrichment. Shared by
+ * the server and the tests so they behave identically.
+ */
+export function runTool(tool: ToolDef, rawArgs: Record<string, unknown>): AICalculatorResult {
+  const preErr = tool.preValidate?.(rawArgs);
+  let response: CalcResponse;
+  if (preErr && Object.keys(preErr).length > 0) {
+    response = { success: false, error: { code: 'VALIDATION_ERROR', message: 'One or more inputs are invalid.', fields: preErr } };
+  } else {
+    const engineInput = tool.transformInput ? tool.transformInput(rawArgs) : rawArgs;
+    response = runCalculator(tool.slug, engineInput);
+  }
+  return toAIResult(tool, response, rawArgs);
+}
 
 /** Turn a camelCase/snake key into a readable fallback label. */
 function humanize(key: string): string {

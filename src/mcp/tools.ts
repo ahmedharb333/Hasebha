@@ -6,6 +6,7 @@
  */
 import { z } from 'zod';
 import type { ZodRawShape } from 'zod';
+import { getMath } from '../lib/calculators/index.ts';
 
 export interface ToolDef {
   name: string;
@@ -14,7 +15,23 @@ export interface ToolDef {
   /** Slug into the existing calculator registry (getMath). */
   slug: string;
   inputSchema: ZodRawShape;
+  /**
+   * Optional: translate the AI-facing input shape into the engine's own field
+   * shape (e.g. semantic `courses[]` -> slot fields `grade0/credits0`). The
+   * engine is never modified; this only reshapes input. Returns engine input.
+   */
+  transformInput?: (args: Record<string, unknown>) => Record<string, unknown>;
+  /**
+   * Optional: MCP-layer validation of the AI-facing input before it is
+   * transformed (e.g. checking a unit belongs to the chosen category, using the
+   * engine's own field options). Returns AI-field -> error code, or null when ok.
+   * This never reimplements engine math — it guards input shape only.
+   */
+  preValidate?: (args: Record<string, unknown>) => Record<string, string> | null;
 }
+
+/** Valid letter grades, sourced conceptually from the gpa engine's option set. */
+const LETTER_GRADES = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'] as const;
 
 const currency = z
   .string()
@@ -260,6 +277,214 @@ export const tools: ToolDef[] = [
         .default('monthly')
         .describe('How often the contribution is made.'),
       currency,
+    },
+  },
+  {
+    name: 'klar_calculate_retirement_savings',
+    title: 'Retirement savings',
+    slug: 'retirement-savings',
+    description:
+      'Project the future value of retirement savings from a starting balance plus a FIXED MONTHLY contribution over a number of years at an expected annual return (compounded monthly). Returns the final balance, total contributions, and total interest earned. Use this for regular monthly retirement/investment saving. For a lump sum with no or non-monthly contributions, or to choose the compounding/contribution frequency, use the compound interest tool instead. To solve for the contribution needed to hit a target, use the savings goal tool.',
+    inputSchema: {
+      currentSavings: z.number().min(0).max(1e15).describe('Starting balance already saved.'),
+      monthlyContribution: z.number().min(0).max(1e15).describe('Fixed amount contributed every month.'),
+      annualReturn: z.number().min(0).max(100).describe('Expected annual return as a percent (compounded monthly).'),
+      years: z.number().min(1).max(100).describe('Number of years to project.'),
+      currency,
+    },
+  },
+  {
+    name: 'klar_calculate_salary_converter',
+    title: 'Salary converter',
+    slug: 'salary-converter',
+    description:
+      'Convert a pay rate between periods (hourly, daily, weekly, monthly, annual) based on a work pattern. Returns the equivalent hourly, daily, weekly, monthly and annual amounts. This only re-expresses the SAME gross pay across time periods — it does NOT deduct tax or social insurance (not net pay), and does NOT compute the employer\'s total cost of the employee.',
+    inputSchema: {
+      salaryAmount: z.number().min(0.000001).max(1e12).describe('The pay amount to convert.'),
+      salaryFrequency: z
+        .enum(['hourly', 'daily', 'weekly', 'monthly', 'annual'])
+        .default('monthly')
+        .describe('The period the salaryAmount is expressed in.'),
+      daysPerWeek: z.number().min(1).max(7).default(5).describe('Working days per week (default 5).'),
+      hoursPerDay: z.number().min(1).max(24).default(8).describe('Working hours per day (default 8).'),
+      paidWeeksPerYear: z.number().min(1).max(52).default(52).describe('Paid weeks per year (default 52).'),
+      unpaidLeaveDays: z.number().min(0).max(365).default(0).describe('Unpaid leave days per year (default 0).'),
+      currency,
+    },
+  },
+  {
+    name: 'klar_calculate_loan_comparison',
+    title: 'Loan comparison',
+    slug: 'loan-comparison',
+    description:
+      'Compare TWO loan options for the same principal: each option has its own interest rate, term, and optional fees. Returns each option\'s monthly payment, total interest, and total cost, plus the total-cost difference. Use this when the user explicitly wants to compare two loans/offers. For a single loan\'s payment, use the loan payment tool instead.',
+    inputSchema: {
+      principal: z.number().min(0).max(1e15).describe('Loan principal, the same for both options.'),
+      termUnit,
+      optionA: z
+        .object({
+          rate: z.number().min(0).max(100).describe('Annual interest rate percent for option A.'),
+          term: z.number().min(0.001).max(100).describe('Term for option A (in termUnit).'),
+          fees: z.number().min(0).max(1e15).default(0).describe('One-off fees for option A (default 0).'),
+        })
+        .describe('First loan option.'),
+      optionB: z
+        .object({
+          rate: z.number().min(0).max(100).describe('Annual interest rate percent for option B.'),
+          term: z.number().min(0.001).max(100).describe('Term for option B (in termUnit).'),
+          fees: z.number().min(0).max(1e15).default(0).describe('One-off fees for option B (default 0).'),
+        })
+        .describe('Second loan option.'),
+      currency,
+    },
+    transformInput: (args) => {
+      const a = (args.optionA ?? {}) as Record<string, unknown>;
+      const b = (args.optionB ?? {}) as Record<string, unknown>;
+      return {
+        principal: args.principal,
+        termUnit: args.termUnit,
+        currency: args.currency,
+        rateA: a.rate, termA: a.term, feesA: a.fees ?? 0,
+        rateB: b.rate, termB: b.term, feesB: b.fees ?? 0,
+      };
+    },
+  },
+  {
+    name: 'klar_calculate_employee_cost',
+    title: 'Employee cost',
+    slug: 'employee-cost',
+    description:
+      'Calculate the total cost to an EMPLOYER of an employee: gross salary plus employer contributions, recurring costs (insurance, benefits, software, other) and one-time costs (equipment, recruitment, training, other). Returns monthly cost, annual cost, first-year total, and salary share of that total. This is the employer\'s cost — not the employee\'s take-home pay, and not a salary period conversion.',
+    inputSchema: {
+      grossSalary: z.number().min(0.000001).max(1e12).describe('Monthly gross salary.'),
+      employerContributionPct: z.number().min(0).max(100).default(0).describe('Employer contribution as a percent of gross (default 0).'),
+      insuranceCost: z.number().min(0).max(1e9).default(0).describe('Monthly insurance cost (default 0).'),
+      benefitsCost: z.number().min(0).max(1e9).default(0).describe('Monthly benefits cost (default 0).'),
+      softwareCost: z.number().min(0).max(1e9).default(0).describe('Monthly software/tools cost (default 0).'),
+      otherRecurringCost: z.number().min(0).max(1e9).default(0).describe('Other monthly recurring cost (default 0).'),
+      equipmentCost: z.number().min(0).max(1e9).default(0).describe('One-time equipment cost (default 0).'),
+      recruitmentCost: z.number().min(0).max(1e9).default(0).describe('One-time recruitment cost (default 0).'),
+      trainingCost: z.number().min(0).max(1e9).default(0).describe('One-time training cost (default 0).'),
+      otherOneTimeCost: z.number().min(0).max(1e9).default(0).describe('Other one-time cost (default 0).'),
+      currency,
+    },
+  },
+  {
+    name: 'klar_calculate_freelance_rate',
+    title: 'Freelance rate',
+    slug: 'freelance-rate',
+    description:
+      'Calculate the hourly/daily rate a freelancer should charge to reach a desired annual income, accounting for business expenses, a tax reserve, non-billable time, leave, and a target profit margin. Returns minimum and recommended hourly rates, a daily rate, an optional project rate, and billable hours per year. This sets a rate from an income goal — it does NOT convert an existing salary between periods and does NOT compute an employer\'s cost.',
+    inputSchema: {
+      desiredIncome: z.number().min(0.000001).max(1e12).describe('Desired annual take-home income.'),
+      annualExpenses: z.number().min(0).max(1e12).describe('Annual business expenses.'),
+      taxReservePct: z.number().min(0).max(50).default(0).describe('Percent of revenue reserved for tax (default 0).'),
+      nonBillablePct: z.number().min(0).max(90).default(20).describe('Percent of working time that is non-billable (default 20).'),
+      vacationDays: z.number().min(0).max(120).default(20).describe('Vacation days per year (default 20).'),
+      sickDays: z.number().min(0).max(120).default(5).describe('Sick days per year (default 5).'),
+      hoursPerWeek: z.number().min(1).max(84).default(40).describe('Working hours per week (default 40).'),
+      profitMarginPct: z.number().min(0).max(100).default(0).describe('Target profit margin percent (default 0).'),
+      projectHours: z.number().min(0).max(10000).default(0).describe('Hours for an example project quote (default 0 = skip).'),
+      currency,
+    },
+  },
+  {
+    name: 'klar_calculate_unit_conversion',
+    title: 'Unit conversion',
+    slug: 'unit-converter',
+    description:
+      'Convert a value between units within one category: length (mm, cm, m, km, in, ft, yd, mi), weight (mg, g, kg, tonne, oz, lb, stone), temperature (celsius, fahrenheit, kelvin), area (mm2, cm2, m2, hectare, km2, in2, ft2, yd2, acre), or volume (ml, l, cm3, m3, gal, qt, floz, tsp, tbsp). fromUnit and toUnit must both belong to the chosen category. Returns the converted value. Does not convert across categories.',
+    inputSchema: {
+      value: z.number().describe('The numeric value to convert.'),
+      category: z
+        .enum(['length', 'weight', 'temperature', 'area', 'volume'])
+        .describe('Measurement category; fromUnit and toUnit must be in this category.'),
+      fromUnit: z.string().describe('Source unit code (must be in the chosen category).'),
+      toUnit: z.string().describe('Target unit code (must be in the chosen category, and different from fromUnit).'),
+    },
+    // Validate units against the ENGINE'S OWN option set — no duplicated unit data.
+    preValidate: (args) => {
+      const category = String(args.category ?? '');
+      const math = getMath('unit-converter');
+      const fromField = math.fields.find((f) => f.id === `from${category}`);
+      if (!fromField || !fromField.options) return { category: 'invalid' };
+      const units = new Set(fromField.options.map((o) => o.value));
+      const errors: Record<string, string> = {};
+      if (!units.has(String(args.fromUnit))) errors.fromUnit = 'invalid';
+      if (!units.has(String(args.toUnit))) errors.toUnit = 'invalid';
+      if (!errors.fromUnit && !errors.toUnit && String(args.fromUnit) === String(args.toUnit)) errors.toUnit = 'invalid';
+      return Object.keys(errors).length ? errors : null;
+    },
+    transformInput: (args) => {
+      const category = String(args.category ?? '');
+      return {
+        value: args.value,
+        category,
+        [`from${category}`]: args.fromUnit,
+        [`to${category}`]: args.toUnit,
+      };
+    },
+  },
+  {
+    name: 'klar_calculate_gpa',
+    title: 'GPA',
+    slug: 'gpa',
+    description:
+      'Calculate a grade point average (GPA) from a list of courses, each with a letter grade and credit hours, on a 4.0 or 5.0 scale. Returns the GPA plus total credits and total grade points. Use this to compute an EXISTING GPA from completed courses. To find the score needed on a final exam to reach a target grade, use the final grade tool instead. Supports up to 6 courses.',
+    inputSchema: {
+      scale: z.enum(['4', '5']).default('4').describe('GPA scale: 4.0 or 5.0.'),
+      courses: z
+        .array(
+          z.object({
+            grade: z.enum(LETTER_GRADES).describe('Letter grade (A+ … F).'),
+            credits: z.number().min(0.5).max(20).describe('Credit hours for the course.'),
+          }),
+        )
+        .min(1)
+        .max(6)
+        .describe('Courses, each with a letter grade and credit hours (max 6).'),
+    },
+    preValidate: (args) => {
+      const courses = args.courses;
+      if (Array.isArray(courses) && courses.length > 6) return { courses: 'max' };
+      return null;
+    },
+    transformInput: (args) => {
+      const out: Record<string, unknown> = { scale: String(args.scale ?? '4') };
+      const courses = Array.isArray(args.courses) ? args.courses : [];
+      courses.slice(0, 6).forEach((c, i) => {
+        const course = (c ?? {}) as Record<string, unknown>;
+        out[`grade${i}`] = course.grade;
+        out[`credits${i}`] = course.credits;
+      });
+      return out;
+    },
+  },
+  {
+    name: 'klar_calculate_grade_average',
+    title: 'Grade average',
+    slug: 'grade-average',
+    description:
+      'Calculate the simple average of a list of numeric grades (each 0–100). Returns the average plus the count and the highest and lowest grades. This is an unweighted mean of grades you already have. To compute a credit-weighted GPA use the GPA tool; to find the score needed to reach a target use the final grade tool. Supports up to 6 grades.',
+    inputSchema: {
+      grades: z
+        .array(z.number().min(0).max(100))
+        .min(1)
+        .max(6)
+        .describe('Numeric grades, each 0–100 (max 6).'),
+    },
+    preValidate: (args) => {
+      const grades = args.grades;
+      if (Array.isArray(grades) && grades.length > 6) return { grades: 'max' };
+      return null;
+    },
+    transformInput: (args) => {
+      const out: Record<string, unknown> = {};
+      const grades = Array.isArray(args.grades) ? args.grades : [];
+      grades.slice(0, 6).forEach((g, i) => {
+        out[`grade${i}`] = g;
+      });
+      return out;
     },
   },
 ];

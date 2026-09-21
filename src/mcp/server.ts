@@ -10,8 +10,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { tools } from './tools.ts';
-import { runCalculator } from './adapter.ts';
-import { toAIResult } from './ai-contract.ts';
+import { runTool } from './ai-contract.ts';
 
 const server = new McpServer({ name: 'klar-calculators', version: '0.1.0' });
 
@@ -20,11 +19,9 @@ for (const tool of tools) {
     tool.name,
     { title: tool.title, description: tool.description, inputSchema: tool.inputSchema },
     async (args) => {
-      const input = args as Record<string, unknown>;
-      // Engine computes (single source of truth); the AI layer only adds
-      // labels/units/assumptions/limitations around the untouched result.
-      const response = runCalculator(tool.slug, input);
-      const aiResult = toAIResult(tool, response, input);
+      // runTool does MCP-layer preValidation + input transformation, then the
+      // engine (single source of truth), then AI-contract enrichment.
+      const aiResult = runTool(tool, args as Record<string, unknown>);
       return { content: [{ type: 'text', text: JSON.stringify(aiResult) }] };
     },
   );

@@ -37,6 +37,14 @@ AI agent ──▶ MCP tool (src/mcp/tools.ts)
 | `klar_calculate_final_grade_needed` | `final-grade-planner` | Score needed on a final to hit a target |
 | `klar_calculate_loan_early_payoff` | `early-payoff` | Payoff time & interest saved from extra payments |
 | `klar_calculate_savings_goal` | `savings-goal` | Required contribution to reach a savings target |
+| `klar_calculate_retirement_savings` | `retirement-savings` | Future value from a fixed monthly contribution |
+| `klar_calculate_salary_converter` | `salary-converter` | Convert pay between hourly/daily/weekly/monthly/annual |
+| `klar_calculate_loan_comparison` | `loan-comparison` | Compare two loan options |
+| `klar_calculate_employee_cost` | `employee-cost` | Total employer cost of an employee |
+| `klar_calculate_freelance_rate` | `freelance-rate` | Freelance hourly/day rate from an income goal |
+| `klar_calculate_unit_conversion` | `unit-converter` | Convert a value between units in one category |
+| `klar_calculate_gpa` | `gpa` | Credit-weighted GPA from a list of courses |
+| `klar_calculate_grade_average` | `grade-average` | Simple average of a list of grades |
 
 ### Inputs
 
@@ -113,6 +121,51 @@ monthly payment only — not a refinance/rate-change.
 `monthly`), `currency`. Inverse of a future-value projection: returns
 `requiredContribution` (hero, per period), `totalContributed`, `estimatedReturn`, and
 `completionMonths` (a count of contribution periods, not literally months).
+
+**`klar_calculate_retirement_savings`** — `currentSavings`, `monthlyContribution`,
+`annualReturn` (0–100), `years`, `currency`. Fixed monthly contribution, compounded
+monthly. Returns `finalBalance` (hero), `totalContributions`, `totalInterestEarned`.
+For a lump sum / non-monthly compounding use compound interest; to solve for the
+contribution use savings goal.
+
+**`klar_calculate_salary_converter`** — `salaryAmount`, `salaryFrequency` (`hourly` \|
+`daily` \| `weekly` \| `monthly` \| `annual`), `daysPerWeek` (5), `hoursPerDay` (8),
+`paidWeeksPerYear` (52), `unpaidLeaveDays` (0), `currency`. Returns hourly/daily/weekly/
+monthly/annual (annual is hero). Same gross pay across periods — not net pay, not
+employer cost.
+
+**`klar_calculate_loan_comparison`** — `principal`, `termUnit` (default `years`),
+`optionA` `{rate, term, fees}`, `optionB` `{rate, term, fees}`, `currency`. The adapter
+maps the two option objects to the engine's paired fields. Returns `monthlyA` (hero),
+`monthlyB`, `totalInterestA/B`, `totalCostA/B`, `diffTotalCost`. For a single loan use
+loan payment.
+
+**`klar_calculate_employee_cost`** — `grossSalary` plus optional employer/recurring/
+one-time cost fields (`employerContributionPct`, `insuranceCost`, `benefitsCost`,
+`softwareCost`, `otherRecurringCost`, `equipmentCost`, `recruitmentCost`, `trainingCost`,
+`otherOneTimeCost`, all default 0), `currency`. Returns `monthlyCost`, `annualCost`,
+`firstYearTotal` (hero), `salaryShare` (%). Employer's cost — not take-home pay.
+
+**`klar_calculate_freelance_rate`** — `desiredIncome`, `annualExpenses`, `taxReservePct`
+(0), `nonBillablePct` (20), `vacationDays` (20), `sickDays` (5), `hoursPerWeek` (40),
+`profitMarginPct` (0), `projectHours` (0), `currency`. Returns `minimumHourly`,
+`recommendedHourly` (hero), `dailyRate`, `projectRate`, `billableHours`. Sets a rate from
+an income goal — not a salary conversion, not employer cost.
+
+**`klar_calculate_unit_conversion`** — `value`, `category` (`length` \| `weight` \|
+`temperature` \| `area` \| `volume`), `fromUnit`, `toUnit` (both in the category, and
+different). The adapter maps these to the engine's per-category fields and validates unit
+membership against the engine's own option set. Returns `convertedValue` (hero, in the
+target unit). Converts within one category only.
+
+**`klar_calculate_gpa`** — `scale` (`4` \| `5`, default `4`), `courses` (1–6 of
+`{grade, credits}`, `grade` a letter A+…F). The adapter maps `courses[]` to the engine's
+slot fields. Returns `gpa` (hero), `totalCredits`, `totalPoints`. Computes an existing
+GPA; to find a grade needed for a target use final grade.
+
+**`klar_calculate_grade_average`** — `grades` (1–6 numbers, each 0–100). The adapter maps
+`grades[]` to the engine's slot fields. Returns `average` (hero), `count`, `highest`,
+`lowest`. Unweighted mean; for a credit-weighted GPA use the GPA tool.
 
 ### Output — AI-native contract
 
@@ -208,7 +261,7 @@ Add to `claude_desktop_config.json` (Settings → Developer → Edit Config):
 ```
 
 Use the absolute path to `src/mcp/server.ts` on your machine. Restart Claude
-Desktop; the fifteen `klar_calculate_*` tools then appear.
+Desktop; the twenty-three `klar_calculate_*` tools then appear.
 
 ### Claude Code
 
@@ -245,7 +298,7 @@ No changes to `server.ts` or `adapter.ts` are needed.
 
 ## Scope / not included
 
-- Only the fifteen tools above.
+- Only the twenty-three tools above.
 - No public HTTP API (MCP/stdio only).
 - No persistent storage — calculations are ephemeral; no user input is stored.
 - No changes to the website, its URLs, SEO, i18n, or AdSense.

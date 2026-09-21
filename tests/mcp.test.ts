@@ -2,14 +2,21 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { runCalculator, toCalcInput } from '../src/mcp/adapter.ts';
 import { tools } from '../src/mcp/tools.ts';
-import { toAIResult } from '../src/mcp/ai-contract.ts';
+import { runTool } from '../src/mcp/ai-contract.ts';
 import { getMath } from '../src/lib/calculators/index.ts';
 
-/** Build the AI contract exactly as the server does: engine result + wrapper. */
+/** Build the AI contract exactly as the server does (preValidate + transform + engine + enrich). */
 function aiFor(name: string, input: Record<string, unknown>) {
   const tool = tools.find((t) => t.name === name);
   if (!tool) throw new Error(`no tool: ${name}`);
-  return toAIResult(tool, runCalculator(tool.slug, input), input);
+  return runTool(tool, input);
+}
+
+/** Engine input for a tool given AI-facing args (applies the tool's transform, if any). */
+function engineInputFor(name: string, aiArgs: Record<string, unknown>): Record<string, unknown> {
+  const tool = tools.find((t) => t.name === name);
+  if (!tool) throw new Error(`no tool: ${name}`);
+  return tool.transformInput ? tool.transformInput(aiArgs) : aiArgs;
 }
 
 /** One valid input per exposed tool, for structure/parity tests. */
@@ -29,13 +36,21 @@ const AI_VALID: Record<string, Record<string, unknown>> = {
   klar_calculate_final_grade_needed: { currentGrade: 80, finalWeight: 30, targetGrade: 85 },
   klar_calculate_loan_early_payoff: { principal: 20000, annualRate: 6, term: 5, termUnit: 'years', extraMonthly: 100, currency: 'USD' },
   klar_calculate_savings_goal: { target: 120000, currentSavings: 10000, annualReturn: 5, years: 10, contributionFrequency: 'monthly', currency: 'USD' },
+  klar_calculate_retirement_savings: { currentSavings: 10000, monthlyContribution: 500, annualReturn: 8, years: 15, currency: 'USD' },
+  klar_calculate_salary_converter: { salaryAmount: 1200, salaryFrequency: 'monthly', daysPerWeek: 5, hoursPerDay: 8, paidWeeksPerYear: 52, unpaidLeaveDays: 0, currency: 'USD' },
+  klar_calculate_loan_comparison: { principal: 100000, termUnit: 'years', optionA: { rate: 5, term: 20, fees: 0 }, optionB: { rate: 6, term: 15, fees: 0 }, currency: 'USD' },
+  klar_calculate_employee_cost: { grossSalary: 1500, employerContributionPct: 10, insuranceCost: 80, currency: 'USD' },
+  klar_calculate_freelance_rate: { desiredIncome: 36000, annualExpenses: 4000, taxReservePct: 10, nonBillablePct: 20, vacationDays: 20, sickDays: 5, hoursPerWeek: 40, profitMarginPct: 15, projectHours: 200, currency: 'USD' },
+  klar_calculate_unit_conversion: { value: 5, category: 'length', fromUnit: 'km', toUnit: 'mi' },
+  klar_calculate_gpa: { scale: '4', courses: [{ grade: 'A', credits: 3 }, { grade: 'B', credits: 4 }, { grade: 'A-', credits: 3 }] },
+  klar_calculate_grade_average: { grades: [85, 92, 78, 88] },
 };
 
 /* ------------------------------------------------------------------ */
 /* Tool registry                                                       */
 /* ------------------------------------------------------------------ */
 
-test('mcp: exposes exactly the fifteen tools mapped to real slugs', () => {
+test('mcp: exposes exactly the twenty-three tools mapped to real slugs', () => {
   const byName = Object.fromEntries(tools.map((t) => [t.name, t.slug]));
   assert.deepEqual(byName, {
     klar_calculate_loan_payment: 'loan-payment',
@@ -53,8 +68,16 @@ test('mcp: exposes exactly the fifteen tools mapped to real slugs', () => {
     klar_calculate_final_grade_needed: 'final-grade-planner',
     klar_calculate_loan_early_payoff: 'early-payoff',
     klar_calculate_savings_goal: 'savings-goal',
+    klar_calculate_retirement_savings: 'retirement-savings',
+    klar_calculate_salary_converter: 'salary-converter',
+    klar_calculate_loan_comparison: 'loan-comparison',
+    klar_calculate_employee_cost: 'employee-cost',
+    klar_calculate_freelance_rate: 'freelance-rate',
+    klar_calculate_unit_conversion: 'unit-converter',
+    klar_calculate_gpa: 'gpa',
+    klar_calculate_grade_average: 'grade-average',
   });
-  assert.equal(tools.length, 15);
+  assert.equal(tools.length, 23);
   // Every tool slug resolves to a real engine, and every tool has an input schema.
   for (const t of tools) {
     assert.ok(getMath(t.slug), `slug missing: ${t.slug}`);
@@ -226,7 +249,121 @@ test('mcp: added tools expose the expected input fields', () => {
   assert.deepEqual(shape('klar_calculate_final_grade_needed'), ['currentGrade', 'finalWeight', 'targetGrade']);
   assert.deepEqual(shape('klar_calculate_loan_early_payoff'), ['annualRate', 'currency', 'extraMonthly', 'principal', 'term', 'termUnit']);
   assert.deepEqual(shape('klar_calculate_savings_goal'), ['annualReturn', 'contributionFrequency', 'currency', 'currentSavings', 'target', 'years']);
+  // Batch 2A — semantic AI schemas (no web-form artifacts).
+  assert.deepEqual(shape('klar_calculate_retirement_savings'), ['annualReturn', 'currency', 'currentSavings', 'monthlyContribution', 'years']);
+  assert.deepEqual(shape('klar_calculate_salary_converter'), ['currency', 'daysPerWeek', 'hoursPerDay', 'paidWeeksPerYear', 'salaryAmount', 'salaryFrequency', 'unpaidLeaveDays']);
+  assert.deepEqual(shape('klar_calculate_loan_comparison'), ['currency', 'optionA', 'optionB', 'principal', 'termUnit']);
+  assert.deepEqual(shape('klar_calculate_unit_conversion'), ['category', 'fromUnit', 'toUnit', 'value']);
+  assert.deepEqual(shape('klar_calculate_gpa'), ['courses', 'scale']);
+  assert.deepEqual(shape('klar_calculate_grade_average'), ['grades']);
+  // No web-form artifacts leaked into any AI schema.
+  for (const t of tools) {
+    for (const k of Object.keys(t.inputSchema)) {
+      assert.ok(!/^(grade|credits)\d+$/.test(k), `web-form slot field leaked: ${t.name}.${k}`);
+      assert.ok(!/^(from|to)(length|weight|temperature|area|volume)$/.test(k), `dynamic unit field leaked: ${t.name}.${k}`);
+    }
+  }
   assert.ok(shape('klar_calculate_discount').includes('mode'));
+});
+
+/* ================================================================== */
+/* Batch 2A — retirement, salary, loan-comparison, employee-cost,      */
+/* freelance, unit-conversion, gpa, grade-average                      */
+/* ================================================================== */
+
+test('batch2a: retirement-savings final balance is hero and monetary', () => {
+  const ai = aiFor('klar_calculate_retirement_savings', AI_VALID.klar_calculate_retirement_savings);
+  const hero = ai.answers.find((a) => a.hero);
+  assert.equal(hero?.key, 'finalBalance');
+  assert.equal(hero?.monetary, true);
+  assert.equal(hero?.currency, 'USD');
+  assert.equal(ai.success, true);
+});
+
+test('batch2a: salary-converter exposes all five period rates with annual as hero', () => {
+  const ai = aiFor('klar_calculate_salary_converter', AI_VALID.klar_calculate_salary_converter);
+  const keys = ai.answers.map((a) => a.key).sort();
+  assert.deepEqual(keys, ['annual', 'daily', 'hourly', 'monthly', 'weekly']);
+  assert.equal(ai.answers.find((a) => a.hero)?.key, 'annual');
+  // Monthly 1200 -> annual 14400 (no leave).
+  assert.equal(ai.answers.find((a) => a.key === 'annual')?.value, 14400);
+});
+
+test('batch2a: loan-comparison transforms nested options and returns both payments', () => {
+  const ai = aiFor('klar_calculate_loan_comparison', AI_VALID.klar_calculate_loan_comparison);
+  assert.equal(ai.success, true);
+  const keys = ai.answers.map((a) => a.key);
+  assert.ok(keys.includes('monthlyA') && keys.includes('monthlyB') && keys.includes('diffTotalCost'));
+  assert.equal(ai.answers.find((a) => a.hero)?.key, 'monthlyA');
+  // Transform maps nested optionA/B to flat engine fields.
+  const eng = engineInputFor('klar_calculate_loan_comparison', AI_VALID.klar_calculate_loan_comparison);
+  assert.deepEqual(eng, { principal: 100000, termUnit: 'years', currency: 'USD', rateA: 5, termA: 20, feesA: 0, rateB: 6, termB: 15, feesB: 0 });
+});
+
+test('batch2a: employee-cost first-year total is hero and salary share is a percent', () => {
+  const ai = aiFor('klar_calculate_employee_cost', AI_VALID.klar_calculate_employee_cost);
+  assert.equal(ai.answers.find((a) => a.hero)?.key, 'firstYearTotal');
+  assert.equal(ai.answers.find((a) => a.key === 'salaryShare')?.unit, '%');
+});
+
+test('batch2a: freelance-rate recommended hourly is hero and monetary', () => {
+  const ai = aiFor('klar_calculate_freelance_rate', AI_VALID.klar_calculate_freelance_rate);
+  const hero = ai.answers.find((a) => a.hero);
+  assert.equal(hero?.key, 'recommendedHourly');
+  assert.equal(hero?.monetary, true);
+});
+
+test('batch2a: unit-conversion 5 km -> mi ~= 3.10686', () => {
+  const ai = aiFor('klar_calculate_unit_conversion', { value: 5, category: 'length', fromUnit: 'km', toUnit: 'mi' });
+  assert.equal(ai.success, true);
+  const v = ai.answers.find((a) => a.hero)?.value as number;
+  assert.ok(Math.abs(v - 3.106855961) < 1e-6, `got ${v}`);
+});
+
+test('batch2a: unit-conversion rejects a unit not in the category', () => {
+  const ai = aiFor('klar_calculate_unit_conversion', { value: 5, category: 'length', fromUnit: 'kg', toUnit: 'mi' });
+  assert.equal(ai.success, false);
+  assert.equal(ai.error?.code, 'VALIDATION_ERROR');
+  assert.equal(ai.error?.fields?.fromUnit, 'invalid');
+  assert.equal(ai.answers.length, 0);
+});
+
+test('batch2a: unit-conversion rejects identical from/to units', () => {
+  const ai = aiFor('klar_calculate_unit_conversion', { value: 5, category: 'length', fromUnit: 'km', toUnit: 'km' });
+  assert.equal(ai.success, false);
+  assert.equal(ai.error?.fields?.toUnit, 'invalid');
+});
+
+test('batch2a: gpa transforms courses[] to slot fields and computes credit-weighted GPA', () => {
+  // 3*4.0 + 4*3.0 + 3*3.7 = 12 + 12 + 11.1 = 35.1 over 10 credits = 3.51
+  const ai = aiFor('klar_calculate_gpa', { scale: '4', courses: [{ grade: 'A', credits: 3 }, { grade: 'B', credits: 4 }, { grade: 'A-', credits: 3 }] });
+  assert.equal(ai.success, true);
+  const gpa = ai.answers.find((a) => a.hero);
+  assert.equal(gpa?.key, 'gpa');
+  assert.ok(Math.abs((gpa?.value as number) - 3.51) < 1e-9, `got ${gpa?.value}`);
+  assert.equal(ai.answers.find((a) => a.key === 'totalCredits')?.value, 10);
+});
+
+test('batch2a: gpa rejects more than 6 courses (documented engine cap)', () => {
+  const many = Array.from({ length: 7 }, () => ({ grade: 'A', credits: 3 }));
+  const ai = aiFor('klar_calculate_gpa', { scale: '4', courses: many });
+  assert.equal(ai.success, false);
+  assert.equal(ai.error?.fields?.courses, 'max');
+});
+
+test('batch2a: grade-average transforms grades[] and averages them', () => {
+  const ai = aiFor('klar_calculate_grade_average', { grades: [85, 92, 78, 88] });
+  assert.equal(ai.success, true);
+  const avg = ai.answers.find((a) => a.hero);
+  assert.equal(avg?.key, 'average');
+  assert.ok(Math.abs((avg?.value as number) - 85.75) < 1e-9, `got ${avg?.value}`);
+  assert.equal(ai.answers.find((a) => a.key === 'count')?.value, 4);
+});
+
+test('batch2a: grade-average rejects more than 6 grades', () => {
+  const ai = aiFor('klar_calculate_grade_average', { grades: [1, 2, 3, 4, 5, 6, 7] });
+  assert.equal(ai.success, false);
+  assert.equal(ai.error?.fields?.grades, 'max');
 });
 
 /* ------------------------------------------------------------------ */
@@ -726,11 +863,13 @@ test('ai: vat/discount surface the chosen direction/mode as an assumption', () =
   assert.ok(disc.assumptions.some((a) => /Mode: afterDiscount/.test(a)));
 });
 
-/* G. Exact parity — AI values equal the engine's, unchanged. */
+/* G. Exact parity — AI values equal the engine's, unchanged (through any transform). */
 test('ai: enriched values exactly match the engine output (parity)', () => {
   for (const [name, input] of Object.entries(AI_VALID)) {
     const tool = tools.find((t) => t.name === name)!;
-    const engine = getMath(tool.slug).calculate(toCalcInput(input));
+    // Reshape AI input to the engine shape exactly as the server would.
+    const engineInput = tool.transformInput ? tool.transformInput(input) : input;
+    const engine = getMath(tool.slug).calculate(toCalcInput(engineInput));
     const ai = aiFor(name, input);
     // raw is the untouched engine result.
     assert.deepEqual((ai.raw as { results: unknown }).results, engine.results, `${name} raw parity`);
