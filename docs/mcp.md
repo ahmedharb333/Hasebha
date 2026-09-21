@@ -18,13 +18,19 @@ AI agent ──▶ MCP tool (src/mcp/tools.ts)
    Existing Klar engine (src/lib/calculators/*.ts)  ◀── also used by the website
 ```
 
-## Available tools (MVP)
+## Available tools
 
 | Tool | Calculator slug | Purpose |
 | --- | --- | --- |
 | `klar_calculate_loan_payment` | `loan-payment` | Fixed-rate loan monthly payment, totals, amortization |
 | `klar_calculate_mortgage` | `mortgage` | Mortgage payment, totals, amortization |
 | `klar_calculate_compound_interest` | `compound-interest` | Compound growth with contributions |
+| `klar_calculate_vat` | `vat` | Add / remove / extract VAT on an amount |
+| `klar_calculate_discount` | `discount-percentage` | Discount pricing and percent change |
+| `klar_calculate_markup_margin` | `markup-margin` | Profit, markup % and margin % from cost + price |
+| `klar_calculate_break_even` | `break-even` | Break-even units, revenue, contribution margin |
+| `klar_calculate_debt_to_income` | `debt-to-income` | Debt-to-income ratio and remaining income |
+| `klar_calculate_selling_price_from_markup` | `wholesale-retail` | Selling price from cost + target markup % |
 
 ### Inputs
 
@@ -50,34 +56,71 @@ Numbers are passed as JSON numbers. `annualRate` is a percent (e.g. `5` = 5%).
 `annualRate`, `compoundingFrequency` (`monthly` \| `quarterly` \| `semiAnnually` \|
 `annually`, default `monthly`), `years`, `currency`.
 
-### Output
+**`klar_calculate_vat`** — `amount`, `vatRate` (0–100 percent), `direction`
+(`add` \| `remove` \| `extract`, default `add`), `currency`. `add`: amount is net,
+returns gross. `remove`: amount is gross, returns net before VAT. `extract`: returns
+the VAT portion.
 
-Each tool returns a JSON string in the MCP text content — machine-readable, not a
-formatted prose blob:
+**`klar_calculate_discount`** — `mode` (`afterDiscount` \| `discountAmount` \|
+`percentIncrease` \| `percentDecrease` \| `percentDifference` \| `originalPrice`,
+default `afterDiscount`) plus the fields that mode uses: `original`, `discountPct`,
+`discountAmount2`, `valueA`, `valueB`, `finalPrice`, `discountPct2`, `currency`.
+
+**`klar_calculate_markup_margin`** — `cost`, `sellingPrice`. Returns profit, markup %
+(profit/cost) and margin % (profit/price). Does **not** solve price from a target
+markup/margin.
+
+**`klar_calculate_break_even`** — `fixedCosts`, `unitPrice` (must exceed
+`unitVariableCost`), `unitVariableCost`.
+
+**`klar_calculate_debt_to_income`** — `monthlyDebt`, `grossIncome` (> 0), `currency`.
+
+**`klar_calculate_selling_price_from_markup`** — `cost`, `markupPct` (0–1000, relative
+to cost). Returns `sellingPrice` (hero) and `profit`. Markup-based pricing only — the
+inverse of markup&margin; does **not** solve price from a target profit margin. No
+currency input, so monetary outputs are `kind:"currency"` with no currency code.
+
+### Output — AI-native contract
+
+Each tool returns a JSON string (MCP text content) in the canonical AI contract
+(`src/mcp/ai-contract.ts`). The AI layer adds semantics — labels, units, currency,
+explicit hero answers, assumptions and capability limitations — around the
+**untouched** engine result. The engine stays the single source of truth: the raw
+result is preserved under `raw`, and every enriched `answers[].value` equals the
+engine value exactly (no rounding).
 
 ```json
 {
+  "calculator": { "slug": "debt-to-income", "name": "Debt-to-income", "category": "personal-finance" },
   "success": true,
-  "calculator": "loan-payment",
-  "result": {
-    "results": [
-      { "key": "monthlyPayment", "value": 954.58, "kind": "currency", "hero": true },
-      { "key": "totalPaid", "value": 114550.75, "kind": "currency" },
-      { "key": "totalInterest", "value": 24550.75, "kind": "currency" }
-    ],
-    "table": { "columns": ["year", "..."], "cellKinds": ["number", "..."], "rows": [[1, "..."]] }
-  }
+  "answers": [
+    { "key": "dtiRatio", "label": "Debt-to-income ratio", "value": 28.000000000000004,
+      "displayValue": "28%", "unit": "%", "kind": "percent", "hero": true },
+    { "key": "remainingIncome", "label": "Remaining income after debt", "value": 1800,
+      "displayValue": "1800 USD", "currency": "USD", "kind": "currency" }
+  ],
+  "assumptions": ["Debt payments and income represent the same time period."],
+  "limitations": ["Does not compute loan payments, interest, or amortization."],
+  "metadata": { "currency": "USD", "period": "Debt and income must use the same period (e.g. both monthly)." },
+  "raw": { "results": [ { "key": "dtiRatio", "value": 28.000000000000004, "kind": "percent", "hero": true }, "..." ] }
 }
 ```
 
-`result` is the calculator's own `CalcOutput` — the exact fields the website shows.
+`value` is authoritative and exact; `displayValue` is display-only. `raw.results`
+(and `raw.table` where present) is the calculator's own `CalcOutput`.
 
-On invalid input the tool returns a structured error (the engine's own field codes:
-`required` | `invalid` | `min` | `max`):
+On invalid input the tool returns the same contract with `success: false` and a
+structured `error` (the engine's own field codes: `required` | `invalid` | `min` |
+`max`). `answers` is empty — no values are invented — while `limitations` still
+travel so the agent keeps capability context:
 
 ```json
 {
+  "calculator": { "slug": "loan-payment", "name": "Loan payment", "category": "loans" },
   "success": false,
+  "answers": [],
+  "assumptions": ["Fixed interest rate for the entire term.", "..."],
+  "limitations": ["Does not determine whether the loan is financially advisable."],
   "error": {
     "code": "VALIDATION_ERROR",
     "message": "One or more inputs are invalid.",
@@ -85,6 +128,10 @@ On invalid input the tool returns a structured error (the engine's own field cod
   }
 }
 ```
+
+Note: the MCP input schema (zod) rejects missing/mistyped **required** arguments
+before the engine runs; the structured `VALIDATION_ERROR` above covers domain rules
+(min/max, cross-field, mode-required fields). Both paths reject rather than guess.
 
 ## Requirements
 
@@ -119,7 +166,7 @@ Add to `claude_desktop_config.json` (Settings → Developer → Edit Config):
 ```
 
 Use the absolute path to `src/mcp/server.ts` on your machine. Restart Claude
-Desktop; the three `klar_calculate_*` tools then appear.
+Desktop; the nine `klar_calculate_*` tools then appear.
 
 ### Claude Code
 
@@ -156,7 +203,7 @@ No changes to `server.ts` or `adapter.ts` are needed.
 
 ## Scope / not included
 
-- Only the three MVP tools above.
+- Only the nine tools above.
 - No public HTTP API (MCP/stdio only).
 - No persistent storage — calculations are ephemeral; no user input is stored.
 - No changes to the website, its URLs, SEO, i18n, or AdSense.
