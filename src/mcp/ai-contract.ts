@@ -22,6 +22,13 @@ export interface AIAnswer {
   displayValue?: string;
   /** Unit symbol/word where applicable (e.g. "%", "units"). */
   unit?: string;
+  /**
+   * True when the value is a monetary amount. If `currency` is also set the
+   * currency is known; if `monetary` is true but `currency` is absent, the
+   * amount is currency-denominated but the currency is unspecified (the
+   * calculator has no currency input) — never assume USD/EUR/etc.
+   */
+  monetary?: boolean;
   /** ISO currency code when the value is a monetary amount and a currency is known. */
   currency?: string;
   /** Engine value kind: 'currency' | 'percent' | 'number'. */
@@ -273,7 +280,12 @@ export function toAIResult(tool: ToolDef, response: CalcResponse, input: Record<
       kind: r.kind,
     };
     if (unit) answer.unit = unit;
-    if (isCurrency && currency) answer.currency = currency;
+    // Monetary amount: always flag it. Attach the currency code only when known;
+    // its absence means "currency unspecified" — never inferred.
+    if (isCurrency) {
+      answer.monetary = true;
+      if (currency) answer.currency = currency;
+    }
     if (r.hero) answer.hero = true;
     if (lbl?.note) answer.note = lbl.note;
     return answer;

@@ -439,6 +439,37 @@ test('ai: percentages, currency and unit answers are explicit', () => {
   assert.equal(be.answers.find((a) => a.key === 'breakEvenUnits')?.unit, 'units');
 });
 
+/* C2. Monetary flag distinguishes known vs unspecified currency. */
+test('ai: monetary amounts are flagged; currency present only when known', () => {
+  // Known currency (has a currency input): monetary true AND currency set.
+  const loan = aiFor('klar_calculate_loan_payment', AI_VALID.klar_calculate_loan_payment);
+  const pay = loan.answers.find((a) => a.key === 'monthlyPayment');
+  assert.equal(pay?.monetary, true);
+  assert.equal(pay?.currency, 'USD');
+
+  // Currency-less monetary tools: monetary true, NO currency code, bare displayValue.
+  for (const [name, keys] of [
+    ['klar_calculate_selling_price_from_markup', ['sellingPrice', 'profit']],
+    ['klar_calculate_markup_margin', ['profit']],
+    ['klar_calculate_break_even', ['breakEvenRevenue', 'contributionMargin']],
+  ] as const) {
+    const ai = aiFor(name, AI_VALID[name]);
+    for (const k of keys) {
+      const a = ai.answers.find((x) => x.key === k);
+      assert.equal(a?.monetary, true, `${name}.${k} monetary`);
+      assert.equal(a?.currency, undefined, `${name}.${k} no currency code`);
+      // displayValue stays a bare number (no invented code) for currency-unknown.
+      assert.equal(/[A-Za-z]/.test(a?.displayValue ?? ''), false, `${name}.${k} bare displayValue`);
+    }
+  }
+
+  // Non-monetary answers are not flagged monetary.
+  const dtiRatio = aiFor('klar_calculate_debt_to_income', AI_VALID.klar_calculate_debt_to_income).answers.find((a) => a.key === 'dtiRatio');
+  assert.equal(dtiRatio?.monetary, undefined);
+  const units = aiFor('klar_calculate_break_even', AI_VALID.klar_calculate_break_even).answers.find((a) => a.key === 'breakEvenUnits');
+  assert.equal(units?.monetary, undefined);
+});
+
 /* D. Hero / primary answer. */
 test('ai: primary answer is flagged as hero', () => {
   assert.equal(aiFor('klar_calculate_loan_payment', AI_VALID.klar_calculate_loan_payment).answers.find((a) => a.hero)?.key, 'monthlyPayment');

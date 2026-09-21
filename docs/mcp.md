@@ -78,7 +78,7 @@ markup/margin.
 **`klar_calculate_selling_price_from_markup`** — `cost`, `markupPct` (0–1000, relative
 to cost). Returns `sellingPrice` (hero) and `profit`. Markup-based pricing only — the
 inverse of markup&margin; does **not** solve price from a target profit margin. No
-currency input, so monetary outputs are `kind:"currency"` with no currency code.
+currency input, so monetary outputs are `monetary:true` with no currency code.
 
 ### Output — AI-native contract
 
@@ -97,7 +97,7 @@ engine value exactly (no rounding).
     { "key": "dtiRatio", "label": "Debt-to-income ratio", "value": 28.000000000000004,
       "displayValue": "28%", "unit": "%", "kind": "percent", "hero": true },
     { "key": "remainingIncome", "label": "Remaining income after debt", "value": 1800,
-      "displayValue": "1800 USD", "currency": "USD", "kind": "currency" }
+      "displayValue": "1800 USD", "monetary": true, "currency": "USD", "kind": "currency" }
   ],
   "assumptions": ["Debt payments and income represent the same time period."],
   "limitations": ["Does not compute loan payments, interest, or amortization."],
@@ -108,6 +108,14 @@ engine value exactly (no rounding).
 
 `value` is authoritative and exact; `displayValue` is display-only. `raw.results`
 (and `raw.table` where present) is the calculator's own `CalcOutput`.
+
+**Monetary values.** A money amount carries `monetary: true`. If `currency` is also
+present the currency is known (the calculator has a currency input); if `monetary` is
+true but `currency` is absent, the amount is currency-denominated but the currency is
+**unspecified** — do not assume USD/EUR/etc, and `displayValue` is a bare number. Tools
+without a currency input (`markup-margin`, `break-even`, `selling-price-from-markup`)
+return `monetary: true` with no `currency`. Non-monetary answers (percentages, counts)
+omit `monetary`.
 
 On invalid input the tool returns the same contract with `success: false` and a
 structured `error` (the engine's own field codes: `required` | `invalid` | `min` |
