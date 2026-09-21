@@ -214,6 +214,94 @@ export const AI_META: Record<string, AIMeta> = {
       'Does not compute markup or margin from an existing selling price.',
     ],
   },
+  tip: {
+    category: 'everyday',
+    labels: {
+      tipAmount: { label: 'Tip amount' },
+      totalWithTip: { label: 'Total with tip' },
+      perPerson: { label: 'Amount per person' },
+    },
+    assumptions: [
+      'Tip = bill amount × tip percent / 100.',
+      'The total is split equally across the number of people.',
+    ],
+    limitations: [
+      'Applies the tip percent to the bill amount as provided; does not add or separate tax.',
+    ],
+  },
+  age: {
+    category: 'dates',
+    labels: {
+      ageYears: { label: 'Age in completed years', unit: 'years' },
+      totalMonths: { label: 'Age in total months', unit: 'months' },
+      totalDays: { label: 'Age in total days', unit: 'days' },
+      totalWeeks: { label: 'Age in total weeks', unit: 'weeks' },
+      daysUntilNextBirthday: { label: 'Days until next birthday', unit: 'days' },
+    },
+    assumptions: ['The as-of date defaults to today when omitted.'],
+    limitations: [],
+  },
+  'date-difference': {
+    category: 'dates',
+    labels: {
+      years: { label: 'Full years between the dates', unit: 'years' },
+      months: { label: 'Additional months (after full years)', unit: 'months' },
+      days: { label: 'Additional days (after months)', unit: 'days' },
+      totalDays: { label: 'Total days between the dates', unit: 'days' },
+      totalWeeks: { label: 'Total whole weeks between the dates', unit: 'weeks' },
+    },
+    assumptions: [
+      'years/months/days are the calendar breakdown; totalDays/totalWeeks are the absolute span.',
+    ],
+    limitations: [],
+  },
+  'final-grade-planner': {
+    category: 'education',
+    labels: {
+      requiredFinal: { label: 'Required score on the final', unit: 'points', note: 'Clamped to 0–100. This is the needed score on the final exam itself. Reachability depends on comparing the target grade with the maximum achievable overall grade, not this value.' },
+      currentContribution: { label: 'Current grade contribution (excluding the final)', unit: 'points' },
+      maxAchievable: { label: 'Maximum achievable overall grade', unit: 'points' },
+    },
+    assumptions: [
+      'The non-final portion of the grade is fixed at the current grade.',
+      'Required final = (target − current × (1 − weight)) / weight.',
+    ],
+    limitations: [
+      'Required final is clamped to 0–100; if the maximum achievable grade is below the target, the target is unreachable.',
+    ],
+  },
+  'early-payoff': {
+    category: 'loans',
+    labels: {
+      baselinePayment: { label: 'Baseline monthly payment (no extra)' },
+      baselineMonths: { label: 'Baseline payoff time in months', unit: 'months' },
+      newMonths: { label: 'Payoff time with the extra payment', unit: 'months' },
+      interestSaved: { label: 'Interest saved by paying extra' },
+    },
+    assumptions: [
+      'Fixed interest rate; the extra amount is paid every month.',
+      'Baseline is the standard fully-amortizing payment with no extra.',
+    ],
+    limitations: [
+      'Models a fixed extra monthly payment only; not a refinance, rate change, or lump-sum analysis.',
+    ],
+  },
+  'savings-goal': {
+    category: 'savings-investing',
+    labels: {
+      requiredContribution: { label: 'Required contribution per period' },
+      totalContributed: { label: 'Total contributed over the horizon' },
+      estimatedReturn: { label: 'Estimated investment return' },
+      completionMonths: { label: 'Number of contribution periods', unit: 'periods', note: 'Count of contribution periods (years × periods per year), not necessarily months.' },
+    },
+    assumptions: [
+      'Contribution is made every period at the chosen frequency; return compounds at that frequency.',
+      'Solves the required periodic contribution to reach the target (inverse of a future-value projection).',
+    ],
+    limitations: [
+      'Assumes a constant annual return; does not forecast actual investment performance.',
+    ],
+  },
 };
 
 /** Turn a camelCase/snake key into a readable fallback label. */

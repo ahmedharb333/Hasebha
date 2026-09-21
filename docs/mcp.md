@@ -31,6 +31,12 @@ AI agent ──▶ MCP tool (src/mcp/tools.ts)
 | `klar_calculate_break_even` | `break-even` | Break-even units, revenue, contribution margin |
 | `klar_calculate_debt_to_income` | `debt-to-income` | Debt-to-income ratio and remaining income |
 | `klar_calculate_selling_price_from_markup` | `wholesale-retail` | Selling price from cost + target markup % |
+| `klar_calculate_tip` | `tip` | Tip amount, total, and per-person split |
+| `klar_calculate_age` | `age` | Age / elapsed time from a birth date |
+| `klar_calculate_date_difference` | `date-difference` | Difference between two dates |
+| `klar_calculate_final_grade_needed` | `final-grade-planner` | Score needed on a final to hit a target |
+| `klar_calculate_loan_early_payoff` | `early-payoff` | Payoff time & interest saved from extra payments |
+| `klar_calculate_savings_goal` | `savings-goal` | Required contribution to reach a savings target |
 
 ### Inputs
 
@@ -79,6 +85,34 @@ markup/margin.
 to cost). Returns `sellingPrice` (hero) and `profit`. Markup-based pricing only — the
 inverse of markup&margin; does **not** solve price from a target profit margin. No
 currency input, so monetary outputs are `monetary:true` with no currency code.
+
+**`klar_calculate_tip`** — `billAmount`, `tipPercent` (0–100), `people` (1–100, default
+1), `currency`. Returns `tipAmount` (hero), `totalWithTip`, `perPerson`. Tip percent is
+applied to the bill as provided; does not add or separate tax.
+
+**`klar_calculate_age`** — `birthDate` (ISO `YYYY-MM-DD`), `asOfDate` (ISO, optional,
+defaults to today). Returns `ageYears` (hero), `totalMonths`, `totalDays`, `totalWeeks`,
+`daysUntilNextBirthday`. Non-monetary.
+
+**`klar_calculate_date_difference`** — `startDate`, `endDate` (ISO `YYYY-MM-DD`, end ≥
+start). Returns the calendar breakdown `years` (hero) / `months` / `days` plus absolute
+`totalDays` / `totalWeeks`. Non-monetary.
+
+**`klar_calculate_final_grade_needed`** — `currentGrade` (0–100), `finalWeight` (1–100
+percent), `targetGrade` (0–100). Returns `requiredFinal` (hero, clamped 0–100),
+`currentContribution`, `maxAchievable`. If `maxAchievable` < target the goal is
+unreachable. Non-monetary (points).
+
+**`klar_calculate_loan_early_payoff`** — `principal`, `annualRate` (0–100), `term`,
+`termUnit` (default `years`), `extraMonthly` (default 0), `currency`. Returns
+`baselinePayment` (hero), `baselineMonths`, `newMonths`, `interestSaved`. Fixed extra
+monthly payment only — not a refinance/rate-change.
+
+**`klar_calculate_savings_goal`** — `target`, `currentSavings`, `annualReturn` (0–100),
+`years`, `contributionFrequency` (`monthly` \| `quarterly` \| `annually`, default
+`monthly`), `currency`. Inverse of a future-value projection: returns
+`requiredContribution` (hero, per period), `totalContributed`, `estimatedReturn`, and
+`completionMonths` (a count of contribution periods, not literally months).
 
 ### Output — AI-native contract
 
@@ -174,7 +208,7 @@ Add to `claude_desktop_config.json` (Settings → Developer → Edit Config):
 ```
 
 Use the absolute path to `src/mcp/server.ts` on your machine. Restart Claude
-Desktop; the nine `klar_calculate_*` tools then appear.
+Desktop; the fifteen `klar_calculate_*` tools then appear.
 
 ### Claude Code
 
@@ -211,7 +245,7 @@ No changes to `server.ts` or `adapter.ts` are needed.
 
 ## Scope / not included
 
-- Only the nine tools above.
+- Only the fifteen tools above.
 - No public HTTP API (MCP/stdio only).
 - No persistent storage — calculations are ephemeral; no user input is stored.
 - No changes to the website, its URLs, SEO, i18n, or AdSense.

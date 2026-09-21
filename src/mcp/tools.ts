@@ -174,4 +174,92 @@ export const tools: ToolDef[] = [
         .describe('Target markup percent, relative to cost (e.g. 25 means selling price = cost × 1.25).'),
     },
   },
+  {
+    name: 'klar_calculate_tip',
+    title: 'Tip',
+    slug: 'tip',
+    description:
+      'Calculate a tip and the total from a bill amount and tip percent, optionally split across a number of people. Returns the tip amount, the total including the tip, and the amount per person. The tip percent is applied to the bill amount exactly as provided — it does not add or separate tax.',
+    inputSchema: {
+      billAmount: z.number().min(0).max(1e15).describe('Bill amount the tip is calculated on.'),
+      tipPercent: z.number().min(0).max(100).describe('Tip as a percent of the bill (e.g. 15 means 15%).'),
+      people: z
+        .number()
+        .min(1)
+        .max(100)
+        .default(1)
+        .describe('Number of people to split the total across (default 1).'),
+      currency,
+    },
+  },
+  {
+    name: 'klar_calculate_age',
+    title: 'Age',
+    slug: 'age',
+    description:
+      'Calculate age (and elapsed time) from a birth date to an as-of date. Returns age in years (primary), plus total months, days, weeks, and days until the next birthday. If no as-of date is given, today is used.',
+    inputSchema: {
+      birthDate: z.string().describe('Birth date in ISO format YYYY-MM-DD.'),
+      asOfDate: z
+        .string()
+        .optional()
+        .describe('Reference date in ISO format YYYY-MM-DD. Optional; defaults to today. Must not be before birthDate.'),
+    },
+  },
+  {
+    name: 'klar_calculate_date_difference',
+    title: 'Date difference',
+    slug: 'date-difference',
+    description:
+      'Calculate the difference between two dates. Returns the calendar breakdown (full years, plus additional months and days) and the absolute span in total days and total weeks. Use for "how long between two dates" questions.',
+    inputSchema: {
+      startDate: z.string().describe('Start date in ISO format YYYY-MM-DD.'),
+      endDate: z.string().describe('End date in ISO format YYYY-MM-DD. Must not be before startDate.'),
+    },
+  },
+  {
+    name: 'klar_calculate_final_grade_needed',
+    title: 'Final grade needed',
+    slug: 'final-grade-planner',
+    description:
+      'Calculate the score needed on a final exam to reach a target overall grade, given the current grade and the final exam\'s weight. Returns the required final score (primary), the current grade\'s contribution, and the maximum achievable overall grade. Scores are 0–100. If the required final exceeds the maximum achievable, the target is not reachable.',
+    inputSchema: {
+      currentGrade: z.number().min(0).max(100).describe('Current overall grade so far, 0–100.'),
+      finalWeight: z.number().min(1).max(100).describe('Weight of the final exam as a percent of the overall grade, 1–100.'),
+      targetGrade: z.number().min(0).max(100).describe('Desired overall grade, 0–100.'),
+    },
+  },
+  {
+    name: 'klar_calculate_loan_early_payoff',
+    title: 'Loan early payoff',
+    slug: 'early-payoff',
+    description:
+      'For a fixed-rate loan, calculate how a fixed extra monthly payment shortens the payoff and how much interest it saves. Returns the baseline monthly payment, baseline payoff months, new payoff months with the extra payment, and interest saved. Use for "how much do I save by paying extra each month" questions — not for a plain loan payment (use the loan payment tool) or a rate change.',
+    inputSchema: {
+      principal: z.number().min(0).max(1e15).describe('Outstanding loan principal.'),
+      annualRate: z.number().min(0).max(100).describe('Annual interest rate as a percent.'),
+      term: z.number().min(0.001).max(100).describe('Remaining loan term (interpreted with termUnit).'),
+      termUnit,
+      extraMonthly: z.number().min(0).max(1e15).default(0).describe('Extra amount paid each month on top of the normal payment (default 0).'),
+      currency,
+    },
+  },
+  {
+    name: 'klar_calculate_savings_goal',
+    title: 'Savings goal',
+    slug: 'savings-goal',
+    description:
+      'Calculate the recurring contribution needed to reach a savings target by a deadline, given current savings and an expected annual return. This is the inverse of a future-value projection: you supply the target and it solves for the required contribution per period. Returns the required contribution per period (primary), total contributed, estimated investment return, and the number of contribution periods.',
+    inputSchema: {
+      target: z.number().min(0).max(1e15).describe('Savings target to reach.'),
+      currentSavings: z.number().min(0).max(1e15).describe('Amount already saved.'),
+      annualReturn: z.number().min(0).max(100).describe('Expected annual return as a percent.'),
+      years: z.number().min(0.01).max(100).describe('Number of years until the target date.'),
+      contributionFrequency: z
+        .enum(['monthly', 'quarterly', 'annually'])
+        .default('monthly')
+        .describe('How often the contribution is made.'),
+      currency,
+    },
+  },
 ];

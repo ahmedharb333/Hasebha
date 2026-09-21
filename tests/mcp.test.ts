@@ -23,13 +23,19 @@ const AI_VALID: Record<string, Record<string, unknown>> = {
   klar_calculate_break_even: { fixedCosts: 10000, unitPrice: 50, unitVariableCost: 30 },
   klar_calculate_debt_to_income: { monthlyDebt: 700, grossIncome: 2500, currency: 'USD' },
   klar_calculate_selling_price_from_markup: { cost: 100, markupPct: 25 },
+  klar_calculate_tip: { billAmount: 80, tipPercent: 15, people: 1, currency: 'USD' },
+  klar_calculate_age: { birthDate: '2000-01-01', asOfDate: '2024-01-01' },
+  klar_calculate_date_difference: { startDate: '2020-01-01', endDate: '2024-01-01' },
+  klar_calculate_final_grade_needed: { currentGrade: 80, finalWeight: 30, targetGrade: 85 },
+  klar_calculate_loan_early_payoff: { principal: 20000, annualRate: 6, term: 5, termUnit: 'years', extraMonthly: 100, currency: 'USD' },
+  klar_calculate_savings_goal: { target: 120000, currentSavings: 10000, annualReturn: 5, years: 10, contributionFrequency: 'monthly', currency: 'USD' },
 };
 
 /* ------------------------------------------------------------------ */
 /* Tool registry                                                       */
 /* ------------------------------------------------------------------ */
 
-test('mcp: exposes exactly the nine tools mapped to real slugs', () => {
+test('mcp: exposes exactly the fifteen tools mapped to real slugs', () => {
   const byName = Object.fromEntries(tools.map((t) => [t.name, t.slug]));
   assert.deepEqual(byName, {
     klar_calculate_loan_payment: 'loan-payment',
@@ -41,8 +47,14 @@ test('mcp: exposes exactly the nine tools mapped to real slugs', () => {
     klar_calculate_break_even: 'break-even',
     klar_calculate_debt_to_income: 'debt-to-income',
     klar_calculate_selling_price_from_markup: 'wholesale-retail',
+    klar_calculate_tip: 'tip',
+    klar_calculate_age: 'age',
+    klar_calculate_date_difference: 'date-difference',
+    klar_calculate_final_grade_needed: 'final-grade-planner',
+    klar_calculate_loan_early_payoff: 'early-payoff',
+    klar_calculate_savings_goal: 'savings-goal',
   });
-  assert.equal(tools.length, 9);
+  assert.equal(tools.length, 15);
   // Every tool slug resolves to a real engine, and every tool has an input schema.
   for (const t of tools) {
     assert.ok(getMath(t.slug), `slug missing: ${t.slug}`);
@@ -208,7 +220,144 @@ test('mcp: added tools expose the expected input fields', () => {
   assert.deepEqual(shape('klar_calculate_break_even'), ['fixedCosts', 'unitPrice', 'unitVariableCost']);
   assert.deepEqual(shape('klar_calculate_debt_to_income'), ['currency', 'grossIncome', 'monthlyDebt']);
   assert.deepEqual(shape('klar_calculate_selling_price_from_markup'), ['cost', 'markupPct']);
+  assert.deepEqual(shape('klar_calculate_tip'), ['billAmount', 'currency', 'people', 'tipPercent']);
+  assert.deepEqual(shape('klar_calculate_age'), ['asOfDate', 'birthDate']);
+  assert.deepEqual(shape('klar_calculate_date_difference'), ['endDate', 'startDate']);
+  assert.deepEqual(shape('klar_calculate_final_grade_needed'), ['currentGrade', 'finalWeight', 'targetGrade']);
+  assert.deepEqual(shape('klar_calculate_loan_early_payoff'), ['annualRate', 'currency', 'extraMonthly', 'principal', 'term', 'termUnit']);
+  assert.deepEqual(shape('klar_calculate_savings_goal'), ['annualReturn', 'contributionFrequency', 'currency', 'currentSavings', 'target', 'years']);
   assert.ok(shape('klar_calculate_discount').includes('mode'));
+});
+
+/* ------------------------------------------------------------------ */
+/* Batch 1 Class-A additions: age / date-difference / final-grade /    */
+/* early-payoff / savings-goal                                         */
+/* ------------------------------------------------------------------ */
+
+test('age: 2000-01-01 to 2024-01-01 is 24 years (hero)', () => {
+  const res = runCalculator('age', { birthDate: '2000-01-01', asOfDate: '2024-01-01' });
+  assert.equal(res.success, true);
+  if (!res.success) return;
+  const hero = res.result.results.find((r) => r.hero);
+  assert.equal(hero?.key, 'ageYears');
+  assert.equal(hero?.value, 24);
+});
+
+test('age: birth date after as-of date is rejected', () => {
+  const res = runCalculator('age', { birthDate: '2030-01-01', asOfDate: '2024-01-01' });
+  assert.equal(res.success, false);
+  if (res.success) return;
+  assert.equal(res.error.fields?.birthDate, 'max');
+});
+
+test('age: missing birth date is required', () => {
+  const res = runCalculator('age', {});
+  assert.equal(res.success, false);
+  if (res.success) return;
+  assert.equal(res.error.fields?.birthDate, 'required');
+});
+
+test('date-difference: 2020-01-01 to 2024-01-01 is 4 years (hero)', () => {
+  const res = runCalculator('date-difference', { startDate: '2020-01-01', endDate: '2024-01-01' });
+  assert.equal(res.success, true);
+  if (!res.success) return;
+  const hero = res.result.results.find((r) => r.hero);
+  assert.equal(hero?.key, 'years');
+  assert.equal(hero?.value, 4);
+});
+
+test('date-difference: end before start is rejected', () => {
+  const res = runCalculator('date-difference', { startDate: '2024-01-01', endDate: '2020-01-01' });
+  assert.equal(res.success, false);
+  if (res.success) return;
+  assert.equal(res.error.fields?.endDate, 'max');
+});
+
+test('final-grade-needed: current 80, weight 30%, target 85 -> required 96.6667 (hero)', () => {
+  const res = runCalculator('final-grade-planner', { currentGrade: 80, finalWeight: 30, targetGrade: 85 });
+  assert.equal(res.success, true);
+  if (!res.success) return;
+  const hero = res.result.results.find((r) => r.hero);
+  assert.equal(hero?.key, 'requiredFinal');
+  assert.ok(Math.abs((hero?.value ?? 0) - 96.66666666666667) < 1e-9, `got ${hero?.value}`);
+});
+
+test('final-grade-needed: weight below 1 is rejected', () => {
+  const res = runCalculator('final-grade-planner', { currentGrade: 80, finalWeight: 0, targetGrade: 85 });
+  assert.equal(res.success, false);
+  if (res.success) return;
+  assert.equal(res.error.fields?.finalWeight, 'min');
+});
+
+test('loan-early-payoff: extra payment shortens the term and returns baseline payment as hero', () => {
+  const res = runCalculator('early-payoff', { principal: 20000, annualRate: 6, term: 5, termUnit: 'years', extraMonthly: 100 });
+  assert.equal(res.success, true);
+  if (!res.success) return;
+  const hero = res.result.results.find((r) => r.hero);
+  assert.equal(hero?.key, 'baselinePayment');
+  const baseM = res.result.results.find((r) => r.key === 'baselineMonths')?.value ?? 0;
+  const newM = res.result.results.find((r) => r.key === 'newMonths')?.value ?? 0;
+  assert.ok(newM < baseM, `newMonths ${newM} should be < baselineMonths ${baseM}`);
+});
+
+test('loan-early-payoff: missing principal is required', () => {
+  const res = runCalculator('early-payoff', { annualRate: 6, term: 5 });
+  assert.equal(res.success, false);
+  if (res.success) return;
+  assert.equal(res.error.fields?.principal, 'required');
+});
+
+test('savings-goal: returns required contribution as hero', () => {
+  const res = runCalculator('savings-goal', { target: 120000, currentSavings: 10000, annualReturn: 5, years: 10, contributionFrequency: 'monthly' });
+  assert.equal(res.success, true);
+  if (!res.success) return;
+  const hero = res.result.results.find((r) => r.hero);
+  assert.equal(hero?.key, 'requiredContribution');
+  assert.ok((hero?.value ?? 0) > 0);
+});
+
+test('savings-goal: invalid contribution frequency is rejected', () => {
+  const res = runCalculator('savings-goal', { target: 120000, currentSavings: 10000, annualReturn: 5, years: 10, contributionFrequency: 'weekly' });
+  assert.equal(res.success, false);
+  if (res.success) return;
+  assert.equal(res.error.fields?.contributionFrequency, 'invalid');
+});
+
+test('ai: batch-1 additions expose correct hero, labels, and monetary semantics', () => {
+  // Non-monetary tools: dates + grades carry units, not monetary.
+  const age = aiFor('klar_calculate_age', AI_VALID.klar_calculate_age);
+  const ageHero = age.answers.find((a) => a.hero);
+  assert.equal(ageHero?.key, 'ageYears');
+  assert.equal(ageHero?.label, 'Age in completed years');
+  assert.equal(ageHero?.unit, 'years');
+  assert.equal(ageHero?.monetary, undefined);
+
+  const dd = aiFor('klar_calculate_date_difference', AI_VALID.klar_calculate_date_difference);
+  assert.equal(dd.answers.find((a) => a.hero)?.key, 'years');
+  assert.ok(dd.answers.every((a) => a.monetary === undefined), 'date-difference has no monetary answers');
+
+  const fg = aiFor('klar_calculate_final_grade_needed', AI_VALID.klar_calculate_final_grade_needed);
+  const fgHero = fg.answers.find((a) => a.hero);
+  assert.equal(fgHero?.key, 'requiredFinal');
+  assert.ok(fgHero?.note && /clamp/i.test(fgHero.note), 'requiredFinal note about clamping');
+
+  // Monetary tools with a currency input: monetary + currency present.
+  const ep = aiFor('klar_calculate_loan_early_payoff', AI_VALID.klar_calculate_loan_early_payoff);
+  const epHero = ep.answers.find((a) => a.hero);
+  assert.equal(epHero?.key, 'baselinePayment');
+  assert.equal(epHero?.monetary, true);
+  assert.equal(epHero?.currency, 'USD');
+  // months answers are counts, not monetary.
+  assert.equal(ep.answers.find((a) => a.key === 'baselineMonths')?.monetary, undefined);
+
+  const sg = aiFor('klar_calculate_savings_goal', AI_VALID.klar_calculate_savings_goal);
+  const sgHero = sg.answers.find((a) => a.hero);
+  assert.equal(sgHero?.key, 'requiredContribution');
+  assert.equal(sgHero?.monetary, true);
+  assert.equal(sgHero?.currency, 'USD');
+  const periods = sg.answers.find((a) => a.key === 'completionMonths');
+  assert.equal(periods?.unit, 'periods');
+  assert.ok(periods?.note && /period/i.test(periods.note), 'completionMonths note clarifies periods');
 });
 
 /* ------------------------------------------------------------------ */
@@ -222,6 +371,12 @@ for (const { slug, input } of [
   { slug: 'break-even', input: { fixedCosts: 10000, unitPrice: 50, unitVariableCost: 30 } },
   { slug: 'debt-to-income', input: { monthlyDebt: 700, grossIncome: 2500, currency: 'USD' } },
   { slug: 'wholesale-retail', input: { cost: 100, markupPct: 25 } },
+  { slug: 'tip', input: { billAmount: 80, tipPercent: 15, people: 4, currency: 'USD' } },
+  { slug: 'age', input: { birthDate: '2000-01-01', asOfDate: '2024-06-15' } },
+  { slug: 'date-difference', input: { startDate: '2020-01-01', endDate: '2024-03-10' } },
+  { slug: 'final-grade-planner', input: { currentGrade: 80, finalWeight: 30, targetGrade: 85 } },
+  { slug: 'early-payoff', input: { principal: 20000, annualRate: 6, term: 5, termUnit: 'years', extraMonthly: 100, currency: 'USD' } },
+  { slug: 'savings-goal', input: { target: 120000, currentSavings: 10000, annualReturn: 5, years: 10, contributionFrequency: 'monthly', currency: 'USD' } },
 ] as const) {
   test(`mcp: ${slug} result is identical to its engine output (parity)`, () => {
     const res = runCalculator(slug, input);
@@ -370,6 +525,75 @@ test('ai: selling-price-from-markup returns canonical contract with correct sema
   // Limitation: markup, not margin. Assumption: markup relative to cost.
   assert.ok(ai.limitations.some((l) => /markup percent, not from a profit margin/i.test(l)), JSON.stringify(ai.limitations));
   assert.ok(ai.assumptions.some((a) => /relative to cost/i.test(a)), JSON.stringify(ai.assumptions));
+});
+
+/* ------------------------------------------------------------------ */
+/* Tip                                                                 */
+/* ------------------------------------------------------------------ */
+
+test('tip: bill 80 + 15%, 1 person -> tip 12, total 92, per person 92', () => {
+  const res = runCalculator('tip', { billAmount: 80, tipPercent: 15, people: 1 });
+  assert.equal(res.success, true);
+  if (!res.success) return;
+  const v = (k: string) => res.result.results.find((r) => r.key === k)?.value ?? NaN;
+  assert.ok(Math.abs(v('tipAmount') - 12) < 1e-9, `tip ${v('tipAmount')}`);
+  assert.ok(Math.abs(v('totalWithTip') - 92) < 1e-9, `total ${v('totalWithTip')}`);
+  assert.ok(Math.abs(v('perPerson') - 92) < 1e-9, `perPerson ${v('perPerson')}`);
+  assert.equal(res.result.results.find((r) => r.hero)?.key, 'tipAmount');
+});
+
+test('tip: bill 120 + 10%, 4 people -> tip 12, total 132, per person 33', () => {
+  const res = runCalculator('tip', { billAmount: 120, tipPercent: 10, people: 4 });
+  assert.equal(res.success, true);
+  if (!res.success) return;
+  const v = (k: string) => res.result.results.find((r) => r.key === k)?.value ?? NaN;
+  assert.ok(Math.abs(v('tipAmount') - 12) < 1e-9, `tip ${v('tipAmount')}`);
+  assert.ok(Math.abs(v('totalWithTip') - 132) < 1e-9, `total ${v('totalWithTip')}`);
+  assert.ok(Math.abs(v('perPerson') - 33) < 1e-9, `perPerson ${v('perPerson')}`);
+});
+
+test('tip: bill 50 + 20%, 2 people -> tip 10, total 60, per person 30', () => {
+  const res = runCalculator('tip', { billAmount: 50, tipPercent: 20, people: 2 });
+  assert.equal(res.success, true);
+  if (!res.success) return;
+  const v = (k: string) => res.result.results.find((r) => r.key === k)?.value ?? NaN;
+  assert.ok(Math.abs(v('tipAmount') - 10) < 1e-9, `tip ${v('tipAmount')}`);
+  assert.ok(Math.abs(v('perPerson') - 30) < 1e-9, `perPerson ${v('perPerson')}`);
+});
+
+test('tip: missing bill amount is required', () => {
+  const res = runCalculator('tip', { tipPercent: 15 });
+  assert.equal(res.success, false);
+  if (res.success) return;
+  assert.equal(res.error.fields?.billAmount, 'required');
+});
+
+test('tip: tip percent above 100 is rejected (engine boundary)', () => {
+  const res = runCalculator('tip', { billAmount: 80, tipPercent: 150 });
+  assert.equal(res.success, false);
+  if (res.success) return;
+  assert.equal(res.error.fields?.tipPercent, 'max');
+});
+
+test('tip: fewer than 1 person is rejected (engine boundary)', () => {
+  const res = runCalculator('tip', { billAmount: 80, tipPercent: 15, people: 0 });
+  assert.equal(res.success, false);
+  if (res.success) return;
+  assert.equal(res.error.fields?.people, 'min');
+});
+
+test('ai: tip returns canonical contract with tipAmount hero and monetary answers', () => {
+  const ai = aiFor('klar_calculate_tip', { billAmount: 80, tipPercent: 15, people: 1, currency: 'USD' });
+  assert.equal(ai.success, true);
+  const hero = ai.answers.find((a) => a.hero);
+  assert.equal(hero?.key, 'tipAmount');
+  assert.equal(hero?.label, 'Tip amount');
+  assert.equal(hero?.value, 12);
+  assert.equal(hero?.monetary, true);
+  assert.equal(hero?.currency, 'USD');
+  assert.ok(ai.answers.every((a) => a.monetary === true), 'all tip answers monetary');
+  assert.ok(ai.assumptions.some((a) => /tip percent \/ 100|split equally/i.test(a)), JSON.stringify(ai.assumptions));
+  assert.ok(ai.limitations.some((l) => /does not add or separate tax/i.test(l)), JSON.stringify(ai.limitations));
 });
 
 /* ------------------------------------------------------------------ */
