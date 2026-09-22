@@ -7,6 +7,26 @@
 import { z } from 'zod';
 import type { ZodRawShape } from 'zod';
 import { getMath } from '../lib/calculators/index.ts';
+import { getCountryRules } from '../lib/country-rules/registry.ts';
+
+/**
+ * Jurisdiction currency handling: the AI never supplies a currency. Derive it
+ * from the country's own rules so it always matches the engine's guard (no
+ * countryMismatch), and leave it unset for an unsupported country so the engine
+ * returns its normal country-invalid error. Never invents a currency.
+ */
+function deriveCountryCurrency(args: Record<string, unknown>): Record<string, unknown> {
+  const country = String(args.country ?? '');
+  const rules = getCountryRules(country);
+  const out: Record<string, unknown> = { ...args };
+  if (rules) out.currency = rules.currency;
+  return out;
+}
+
+/** Country input shared by jurisdiction tools (engine owns the invalid-country error). */
+const countryInput = z
+  .string()
+  .describe('Country code — one of: jo, sa, ae, kw, qa, bh, om. Any other value is rejected as unsupported.');
 
 export interface ToolDef {
   name: string;
@@ -567,5 +587,62 @@ export const tools: ToolDef[] = [
       neck: z.number().min(10).max(200).describe('Neck circumference in cm.'),
       hip: z.number().min(20).max(400).optional().describe('Hip circumference in cm — required for females, ignored for males.'),
     },
+  },
+  {
+    name: 'klar_calculate_maternity_leave',
+    title: 'Maternity leave',
+    slug: 'maternity-leave',
+    description:
+      'Return the statutory maternity-leave entitlement for a supported country (a country-based lookup of embedded labour rules). Use for statutory maternity-leave days. Does NOT calculate an annual leave balance (use leave tools), and does NOT assess an individual medical/maternity situation. Statutory estimate from a fixed embedded rules snapshot — not legal advice.',
+    inputSchema: {
+      country: countryInput,
+    },
+  },
+  {
+    name: 'klar_calculate_notice_period',
+    title: 'Notice period',
+    slug: 'notice-period',
+    description:
+      'Return the statutory notice period (in days) for a supported country given years of tenure — a lookup against embedded labour rules. Use for statutory notice by tenure. Does NOT calculate annual leave, and is NOT end-of-service/gratuity, and NOT a general employment-contract interpretation. Statutory estimate from a fixed embedded rules snapshot — not legal advice.',
+    inputSchema: {
+      country: countryInput,
+      tenureYears: z.number().min(0).max(50).describe('Completed years of service.'),
+    },
+  },
+  {
+    name: 'klar_calculate_social_insurance',
+    title: 'Social insurance',
+    slug: 'social-insurance',
+    description:
+      'Calculate monthly social-insurance contributions (employee share, employer share, total, and capped base) for a supported country from a monthly salary, using the country\'s embedded statutory rates and caps. Use for social-insurance amounts. Does NOT return full net salary, is NOT income tax, and is NOT gross-to-net. Currency is derived from the country. Statutory estimate from a fixed embedded rules snapshot — not legal/tax advice.',
+    inputSchema: {
+      country: countryInput,
+      monthlySalary: z.number().min(0).max(1e12).describe('Monthly salary the contribution is based on.'),
+    },
+    transformInput: deriveCountryCurrency,
+  },
+  {
+    name: 'klar_calculate_income_tax',
+    title: 'Income tax',
+    slug: 'income-tax',
+    description:
+      'Calculate statutory annual income tax for a supported country from annual income, using the country\'s embedded brackets and personal allowance. Returns the tax amount, effective rate, and taxable income. Use for the annual income-tax figure. Does NOT give monthly take-home pay, is NOT social insurance, and is NOT gross-to-net. Currency is derived from the country. Statutory estimate from a fixed embedded rules snapshot — not legal/tax advice.',
+    inputSchema: {
+      country: countryInput,
+      annualIncome: z.number().min(0).max(1e12).describe('Gross annual income.'),
+    },
+    transformInput: deriveCountryCurrency,
+  },
+  {
+    name: 'klar_calculate_gross_to_net',
+    title: 'Gross to net',
+    slug: 'gross-to-net',
+    description:
+      'Calculate monthly NET pay from monthly GROSS salary for a supported country, applying the statutory deduction sequence the engine implements (social insurance and/or income tax, in the country\'s defined order). Returns net pay, total deductions, and each deduction. Use for monthly gross→net. Does NOT convert a salary between periods (use salary converter), is NOT employer total cost (use employee cost), and is NOT an annual income-tax-only figure. Currency is derived from the country. Statutory estimate from a fixed embedded rules snapshot — not legal/tax advice.',
+    inputSchema: {
+      country: countryInput,
+      monthlyGross: z.number().min(0).max(1e12).describe('Monthly gross salary.'),
+    },
+    transformInput: deriveCountryCurrency,
   },
 ];

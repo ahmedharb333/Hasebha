@@ -5,6 +5,7 @@ import { tools } from '../src/mcp/tools.ts';
 import { runTool, resolveJurisdiction, applySpecialized, SUPPORTED_COUNTRIES } from '../src/mcp/ai-contract.ts';
 import type { AICalculatorResult, HealthMeta, JurisdictionSpec } from '../src/mcp/ai-contract.ts';
 import { getMath } from '../src/lib/calculators/index.ts';
+import { getCountryRules } from '../src/lib/country-rules/registry.ts';
 
 /** Build the AI contract exactly as the server does (preValidate + transform + engine + enrich). */
 function aiFor(name: string, input: Record<string, unknown>) {
@@ -50,16 +51,23 @@ const AI_VALID: Record<string, Record<string, unknown>> = {
   klar_calculate_bmr: { sex: 'male', age: 40, weight: 90, weightUnit: 'kg', height: 174, heightUnit: 'cm', activity: 'moderate' },
   klar_calculate_calorie_intake: { sex: 'male', age: 40, weight: 90, weightUnit: 'kg', height: 174, heightUnit: 'cm', activity: 'moderate', goal: 'lose', rate: 'moderate' },
   klar_calculate_body_fat: { sex: 'male', height: 174, waist: 90, neck: 40 },
+  klar_calculate_maternity_leave: { country: 'jo' },
+  klar_calculate_notice_period: { country: 'jo', tenureYears: 4 },
+  klar_calculate_social_insurance: { country: 'jo', monthlySalary: 1500 },
+  klar_calculate_income_tax: { country: 'jo', annualIncome: 24000 },
+  klar_calculate_gross_to_net: { country: 'jo', monthlyGross: 2000 },
 };
 
 /** Slugs whose AI_META declares specialized health metadata. */
 const HEALTH_TOOLS = ['klar_calculate_bmi', 'klar_calculate_ideal_weight', 'klar_calculate_bmr', 'klar_calculate_calorie_intake', 'klar_calculate_body_fat'];
+/** Slugs whose AI_META declares specialized jurisdiction metadata (Phase 3C-1). */
+const JURISDICTION_TOOLS = ['klar_calculate_maternity_leave', 'klar_calculate_notice_period', 'klar_calculate_social_insurance', 'klar_calculate_income_tax', 'klar_calculate_gross_to_net'];
 
 /* ------------------------------------------------------------------ */
 /* Tool registry                                                       */
 /* ------------------------------------------------------------------ */
 
-test('mcp: exposes exactly the twenty-eight tools mapped to real slugs', () => {
+test('mcp: exposes exactly the thirty-three tools mapped to real slugs', () => {
   const byName = Object.fromEntries(tools.map((t) => [t.name, t.slug]));
   assert.deepEqual(byName, {
     klar_calculate_loan_payment: 'loan-payment',
@@ -90,8 +98,13 @@ test('mcp: exposes exactly the twenty-eight tools mapped to real slugs', () => {
     klar_calculate_bmr: 'bmr',
     klar_calculate_calorie_intake: 'calorie-intake',
     klar_calculate_body_fat: 'body-fat',
+    klar_calculate_maternity_leave: 'maternity-leave',
+    klar_calculate_notice_period: 'notice-period',
+    klar_calculate_social_insurance: 'social-insurance',
+    klar_calculate_income_tax: 'income-tax',
+    klar_calculate_gross_to_net: 'gross-to-net',
   });
-  assert.equal(tools.length, 28);
+  assert.equal(tools.length, 33);
   // Every tool slug resolves to a real engine, and every tool has an input schema.
   for (const t of tools) {
     assert.ok(getMath(t.slug), `slug missing: ${t.slug}`);
@@ -389,7 +402,7 @@ test('batch2a: grade-average rejects more than 6 grades', () => {
 /* Backward compat: the generic (non-health) tools gain no specialized metadata. */
 test('phase3a: generic tools carry no estimate/health/jurisdiction metadata', () => {
   for (const [name, input] of Object.entries(AI_VALID)) {
-    if (HEALTH_TOOLS.includes(name)) continue; // health tools legitimately set these (Phase 3B)
+    if (HEALTH_TOOLS.includes(name) || JURISDICTION_TOOLS.includes(name)) continue; // specialized tools set these
     const ai = aiFor(name, input);
     assert.equal(ai.estimate, undefined, `${name} estimate`);
     assert.equal(ai.health, undefined, `${name} health`);
@@ -546,6 +559,118 @@ test('phase3b: bmr rejects out-of-range age', () => {
   const ai = aiFor('klar_calculate_bmr', { sex: 'male', age: 200, weight: 90, height: 174 });
   assert.equal(ai.success, false);
   assert.equal(ai.error?.fields?.age, 'max');
+});
+
+/* ================================================================== */
+/* Phase 3C-1 — jurisdiction tools                                     */
+/* ================================================================== */
+
+test('phase3c1: jurisdiction schemas are semantic and never expose currency', () => {
+  const shape = (name: string) => Object.keys(tools.find((t) => t.name === name)!.inputSchema).sort();
+  assert.deepEqual(shape('klar_calculate_maternity_leave'), ['country']);
+  assert.deepEqual(shape('klar_calculate_notice_period'), ['country', 'tenureYears']);
+  assert.deepEqual(shape('klar_calculate_social_insurance'), ['country', 'monthlySalary']);
+  assert.deepEqual(shape('klar_calculate_income_tax'), ['annualIncome', 'country']);
+  assert.deepEqual(shape('klar_calculate_gross_to_net'), ['country', 'monthlyGross']);
+  for (const name of JURISDICTION_TOOLS) {
+    assert.ok(!Object.keys(tools.find((t) => t.name === name)!.inputSchema).includes('currency'), `${name} must not expose currency`);
+  }
+});
+
+test('phase3c1: jurisdiction metadata is complete and correct', () => {
+  const expectedPeriod: Record<string, string> = {
+    klar_calculate_maternity_leave: 'days',
+    klar_calculate_notice_period: 'days',
+    klar_calculate_social_insurance: 'monthly',
+    klar_calculate_income_tax: 'annual',
+    klar_calculate_gross_to_net: 'monthly',
+  };
+  for (const name of JURISDICTION_TOOLS) {
+    const ai = aiFor(name, AI_VALID[name]);
+    assert.equal(ai.success, true, `${name} success`);
+    assert.equal(ai.estimate, true, `${name} estimate`);
+    const j = ai.jurisdiction;
+    assert.ok(j, `${name} jurisdiction block`);
+    assert.equal(j!.country, 'jo');
+    assert.deepEqual(j!.supportedCountries, ['jo', 'sa', 'ae', 'kw', 'qa', 'bh', 'om']);
+    assert.equal(j!.currency, getCountryRules('jo')!.currency); // JOD, from country rules
+    assert.equal(j!.calculationPeriod, expectedPeriod[name]);
+    assert.equal(j!.basis, 'statutory');
+    assert.equal(j!.rulesSnapshot, true);
+    assert.equal(j!.employmentEndType, undefined, `${name} no employmentEndType`);
+    assert.match(j!.legalNote, /statutory estimate/i);
+    assert.match(j!.legalNote, /not legal\/tax advice/i);
+    assert.match(j!.legalNote, /JO/); // {country} filled
+    assert.equal(ai.health, undefined, `${name} no health`);
+  }
+});
+
+test('phase3c1: currency is derived from country rules (jo/sa/ae/kw), never a user input', () => {
+  assert.equal(getCountryRules('jo')!.currency, 'JOD');
+  assert.equal(getCountryRules('sa')!.currency, 'SAR');
+  assert.equal(getCountryRules('ae')!.currency, 'AED');
+  for (const country of ['jo', 'sa', 'ae', 'kw'] as const) {
+    const ai = aiFor('klar_calculate_social_insurance', { country, monthlySalary: 1500 });
+    assert.equal(ai.success, true, `${country} success`);
+    const derived = getCountryRules(country)!.currency;
+    assert.equal(ai.jurisdiction!.currency, derived, `${country} jurisdiction currency`);
+    assert.equal(ai.metadata?.currency, derived, `${country} metadata currency`);
+    const hero = ai.answers.find((a) => a.hero);
+    assert.equal(hero?.currency, derived, `${country} hero currency`);
+    assert.equal(hero?.monetary, true, `${country} hero monetary`);
+  }
+});
+
+test('phase3c1: exact engine parity for all jurisdiction tools', () => {
+  for (const name of JURISDICTION_TOOLS) {
+    const tool = tools.find((t) => t.name === name)!;
+    const engineInput = tool.transformInput ? tool.transformInput(AI_VALID[name]) : AI_VALID[name];
+    const engine = getMath(tool.slug).calculate(toCalcInput(engineInput));
+    const ai = aiFor(name, AI_VALID[name]);
+    assert.deepEqual((ai.raw as { results: unknown }).results, engine.results, `${name} raw parity`);
+    for (const a of ai.answers) {
+      assert.equal(a.value, engine.results.find((r) => r.key === a.key)?.value, `${name} ${a.key} value parity`);
+    }
+  }
+});
+
+test('phase3c1: unsupported country returns structured country-invalid error (all tools)', () => {
+  const inputs: Record<string, Record<string, unknown>> = {
+    klar_calculate_maternity_leave: { country: 'de' },
+    klar_calculate_notice_period: { country: 'de', tenureYears: 4 },
+    klar_calculate_social_insurance: { country: 'de', monthlySalary: 1500 },
+    klar_calculate_income_tax: { country: 'de', annualIncome: 24000 },
+    klar_calculate_gross_to_net: { country: 'de', monthlyGross: 2000 },
+  };
+  for (const name of JURISDICTION_TOOLS) {
+    const ai = aiFor(name, inputs[name]);
+    assert.equal(ai.success, false, `${name} unsupported`);
+    assert.equal(ai.error?.fields?.country, 'invalid', `${name} country invalid`);
+    assert.equal(ai.answers.length, 0, `${name} no answers`);
+  }
+});
+
+test('phase3c1: missing country is rejected — no silent default', () => {
+  const inputs: Record<string, Record<string, unknown>> = {
+    klar_calculate_maternity_leave: {},
+    klar_calculate_notice_period: { tenureYears: 4 },
+    klar_calculate_social_insurance: { monthlySalary: 1500 },
+    klar_calculate_income_tax: { annualIncome: 24000 },
+    klar_calculate_gross_to_net: { monthlyGross: 2000 },
+  };
+  for (const name of JURISDICTION_TOOLS) {
+    const ai = aiFor(name, inputs[name]);
+    assert.equal(ai.success, false, `${name} missing country`);
+    assert.equal(ai.error?.fields?.country, 'required', `${name} country required`);
+  }
+});
+
+test('phase3c1: heroes are correct for jurisdiction tools', () => {
+  assert.equal(aiFor('klar_calculate_maternity_leave', AI_VALID.klar_calculate_maternity_leave).answers.find((a) => a.hero)?.key, 'maternityDays');
+  assert.equal(aiFor('klar_calculate_notice_period', AI_VALID.klar_calculate_notice_period).answers.find((a) => a.hero)?.key, 'noticeDays');
+  assert.equal(aiFor('klar_calculate_social_insurance', AI_VALID.klar_calculate_social_insurance).answers.find((a) => a.hero)?.key, 'employeeShare');
+  assert.equal(aiFor('klar_calculate_income_tax', AI_VALID.klar_calculate_income_tax).answers.find((a) => a.hero)?.key, 'taxAmount');
+  assert.equal(aiFor('klar_calculate_gross_to_net', AI_VALID.klar_calculate_gross_to_net).answers.find((a) => a.hero)?.key, 'netMonthly');
 });
 
 /* ------------------------------------------------------------------ */

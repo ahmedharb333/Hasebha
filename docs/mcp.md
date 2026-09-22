@@ -50,6 +50,11 @@ AI agent ──▶ MCP tool (src/mcp/tools.ts)
 | `klar_calculate_bmr` | `bmr` | BMR (Mifflin-St Jeor) + TDEE |
 | `klar_calculate_calorie_intake` | `calorie-intake` | Daily calorie target for a weight goal |
 | `klar_calculate_body_fat` | `body-fat` | Body fat % (US Navy tape, cm) |
+| `klar_calculate_maternity_leave` | `maternity-leave` | Statutory maternity-leave days (by country) |
+| `klar_calculate_notice_period` | `notice-period` | Statutory notice period by tenure |
+| `klar_calculate_social_insurance` | `social-insurance` | Employee/employer social-insurance shares |
+| `klar_calculate_income_tax` | `income-tax` | Statutory annual income tax |
+| `klar_calculate_gross_to_net` | `gross-to-net` | Monthly gross → net (statutory deductions) |
 
 ### Inputs
 
@@ -199,6 +204,32 @@ energy — not a dietary calorie target.
 cm (surfaced via `measurementUnits`; no conversion). Returns `bodyFatPct` (hero). Method:
 US Navy tape. Not a BMI.
 
+### Jurisdiction tools (Phase 3C-1)
+
+Jurisdiction tools return `estimate: true` and a `jurisdiction` block (`country`,
+`supportedCountries`, `currency`, `calculationPeriod`, `basis: "statutory"`,
+`rulesSnapshot: true`, `legalNote`). **Country is required** and must be one of `jo, sa,
+ae, kw, qa, bh, om` — any other value returns the engine's structured `country: "invalid"`
+error. **Currency is derived from the country's rules** (jo→JOD, sa→SAR, ae→AED, …) and is
+never an AI input. Rules are a fixed embedded snapshot — no live legislation lookup;
+`legalNote` says so. These are statutory estimates, not legal/tax advice.
+
+**`klar_calculate_maternity_leave`** — `country`. Returns `maternityDays` (hero),
+`maternityWeeks`. Country lookup; not an annual leave balance.
+
+**`klar_calculate_notice_period`** — `country`, `tenureYears`. Returns `noticeDays`
+(hero), `noticeMonths`. Statutory notice by tenure; not leave, not gratuity.
+
+**`klar_calculate_social_insurance`** — `country`, `monthlySalary`. Returns
+`employeeShare` (hero), `employerShare`, `total`, `cappedBase`. Not income tax, not net pay.
+
+**`klar_calculate_income_tax`** — `country`, `annualIncome`. Returns `taxAmount` (hero),
+`effectiveRate`, `taxableIncome`. Annual tax only; not net pay, not social insurance.
+
+**`klar_calculate_gross_to_net`** — `country`, `monthlyGross`. Returns `netMonthly`
+(hero), `totalDeductions`, and each deduction (`socialInsurance`/`incomeTax`) in the
+country's order. Not a salary-period conversion, not employer cost.
+
 ### Output — AI-native contract
 
 Each tool returns a JSON string (MCP text content) in the canonical AI contract
@@ -293,7 +324,7 @@ Add to `claude_desktop_config.json` (Settings → Developer → Edit Config):
 ```
 
 Use the absolute path to `src/mcp/server.ts` on your machine. Restart Claude
-Desktop; the twenty-eight `klar_calculate_*` tools then appear.
+Desktop; the thirty-three `klar_calculate_*` tools then appear.
 
 ### Claude Code
 
@@ -330,7 +361,7 @@ No changes to `server.ts` or `adapter.ts` are needed.
 
 ## Scope / not included
 
-- Only the twenty-eight tools above.
+- Only the thirty-three tools above.
 - No public HTTP API (MCP/stdio only).
 - No persistent storage — calculations are ephemeral; no user input is stored.
 - No changes to the website, its URLs, SEO, i18n, or AdSense.

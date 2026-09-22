@@ -562,6 +562,86 @@ export const AI_META: Record<string, AIMeta> = {
       disclaimer: 'Body-fat estimate via the US Navy tape-measure method (measurements in cm) — not a medical diagnosis or individualized advice.',
     },
   },
+  'maternity-leave': {
+    category: 'employment-law',
+    estimate: true,
+    labels: {
+      maternityDays: { label: 'Statutory maternity leave', unit: 'days' },
+      maternityWeeks: { label: 'Approximate weeks', unit: 'weeks' },
+    },
+    assumptions: ['Country-based lookup of the statutory maternity-leave entitlement.'],
+    limitations: ['Statutory entitlement only; does not calculate an annual leave balance or an individual medical/maternity situation.'],
+    jurisdiction: {
+      calculationPeriod: 'days',
+      basis: 'statutory',
+      legalNote: 'Statutory estimate for {country}; based on the rules embedded in this calculator; not legal/tax advice; verify current law.',
+    },
+  },
+  'notice-period': {
+    category: 'employment-law',
+    estimate: true,
+    labels: {
+      noticeDays: { label: 'Statutory notice period', unit: 'days' },
+      noticeMonths: { label: 'Notice period in months', unit: 'months' },
+    },
+    assumptions: ['Statutory notice period determined by years of tenure.'],
+    limitations: ['Statutory notice only; not annual leave, not end-of-service/gratuity, not a contract interpretation.'],
+    jurisdiction: {
+      calculationPeriod: 'days',
+      basis: 'statutory',
+      legalNote: 'Statutory estimate for {country}; based on the rules embedded in this calculator; not legal/tax advice; verify current law.',
+    },
+  },
+  'social-insurance': {
+    category: 'employment-law',
+    estimate: true,
+    labels: {
+      employeeShare: { label: 'Employee social-insurance share' },
+      employerShare: { label: 'Employer social-insurance share' },
+      total: { label: 'Total social-insurance contribution' },
+      cappedBase: { label: 'Contribution base (capped)' },
+    },
+    assumptions: ['Statutory rates applied to the salary, capped at the country limit; includes any supplementary component the rules define.'],
+    limitations: ['Social-insurance contributions only; not income tax and not full net pay (use gross-to-net for net).'],
+    jurisdiction: {
+      calculationPeriod: 'monthly',
+      basis: 'statutory',
+      legalNote: 'Statutory estimate for {country}; based on the rules embedded in this calculator; not legal/tax advice; verify current law.',
+    },
+  },
+  'income-tax': {
+    category: 'employment-law',
+    estimate: true,
+    labels: {
+      taxAmount: { label: 'Annual income tax' },
+      effectiveRate: { label: 'Effective tax rate' },
+      taxableIncome: { label: 'Taxable income (after allowance)' },
+    },
+    assumptions: ['Statutory brackets applied to income after the personal allowance.'],
+    limitations: ['Annual income tax only; not monthly take-home pay, not social insurance, not gross-to-net.'],
+    jurisdiction: {
+      calculationPeriod: 'annual',
+      basis: 'statutory',
+      legalNote: 'Statutory estimate for {country}; based on the rules embedded in this calculator; not legal/tax advice; verify current law.',
+    },
+  },
+  'gross-to-net': {
+    category: 'employment-law',
+    estimate: true,
+    labels: {
+      netMonthly: { label: 'Monthly net pay' },
+      totalDeductions: { label: 'Total monthly deductions' },
+      socialInsurance: { label: 'Social-insurance deduction' },
+      incomeTax: { label: 'Income-tax deduction' },
+    },
+    assumptions: ['Applies the statutory deduction sequence the engine defines for the country (social insurance and/or income tax, in the country order).'],
+    limitations: ['Only the deductions the engine implements; not a salary-period conversion, not employer total cost, not an annual income-tax-only figure.'],
+    jurisdiction: {
+      calculationPeriod: 'monthly',
+      basis: 'statutory',
+      legalNote: 'Statutory estimate for {country}; based on the rules embedded in this calculator; not legal/tax advice; verify current law.',
+    },
+  },
 };
 
 /**
@@ -650,7 +730,12 @@ export function toAIResult(tool: ToolDef, response: CalcResponse, input: Record<
   const meta = AI_META[tool.slug];
   const category = meta?.category ?? 'general';
   const currencyRaw = input.currency;
-  const currency = typeof currencyRaw === 'string' && currencyRaw.trim() !== '' ? currencyRaw.trim() : undefined;
+  let currency = typeof currencyRaw === 'string' && currencyRaw.trim() !== '' ? currencyRaw.trim() : undefined;
+  // Jurisdiction tools: currency is DERIVED from the country's rules, never a
+  // user input, so monetary answers and metadata match jurisdiction.currency.
+  if (meta?.jurisdiction) {
+    currency = getCountryRules(typeof input.country === 'string' ? input.country : '')?.currency ?? undefined;
+  }
 
   const base: AICalculatorResult = {
     calculator: { slug: tool.slug, name: tool.title, category },
