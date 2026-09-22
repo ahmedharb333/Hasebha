@@ -27,7 +27,7 @@ const AI_VALID: Record<string, Record<string, unknown>> = {
   klar_calculate_mortgage: { price: 200000, downPayment: 40000, annualRate: 5, term: 20, termUnit: 'years', fees: 0, currency: 'USD' },
   klar_calculate_compound_interest: { initial: 5000, contribution: 200, contributionFrequency: 'monthly', annualRate: 7, compoundingFrequency: 'monthly', years: 20, currency: 'USD' },
   klar_calculate_vat: { amount: 100, vatRate: 15, direction: 'add', currency: 'USD' },
-  klar_calculate_discount: { mode: 'afterDiscount', original: 250, discountPct: 20, currency: 'USD' },
+  klar_calculate_discount: { mode: 'afterDiscount', listPrice: 250, discountPercent: 20, currency: 'USD' },
   klar_calculate_markup_margin: { cost: 100, sellingPrice: 125 },
   klar_calculate_break_even: { fixedCosts: 10000, unitPrice: 50, unitVariableCost: 30 },
   klar_calculate_debt_to_income: { monthlyDebt: 700, grossIncome: 2500, currency: 'USD' },
@@ -1335,4 +1335,84 @@ test('ai: missing input yields a structured error, no invented answers', () => {
   assert.equal(ai.error?.fields?.grossIncome, 'required');
   // Limitations still travel with a failed call so the agent keeps context.
   assert.ok(ai.limitations.length > 0);
+});
+
+/* ================================================================== */
+/* MCP v1 hardening — the four post-audit P2 fixes                     */
+/* ================================================================== */
+
+/* Fix 1: loan-comparison surfaces the comparison result (diffTotalCost). */
+test('v1fix: loan-comparison makes the total-cost difference prominent', () => {
+  const ai = aiFor('klar_calculate_loan_comparison', AI_VALID.klar_calculate_loan_comparison);
+  const diff = ai.answers.find((a) => a.key === 'diffTotalCost');
+  assert.ok(diff, 'diffTotalCost present');
+  assert.match(diff!.note ?? '', /key comparison|cheaper/i);
+  const monthlyA = ai.answers.find((a) => a.key === 'monthlyA');
+  assert.match(monthlyA!.note ?? '', /compare|diffTotalCost/i);
+  assert.ok(ai.assumptions.some((a) => /diffTotalCost/.test(a)), 'assumption points to diffTotalCost');
+});
+
+/* Fix 2: runTool applies the tool's own Zod defaults for a direct (non-SDK) call. */
+test('v1fix: direct runTool applies Zod contract defaults (loan downPayment/fees)', () => {
+  // No downPayment/fees given — the engine has no default for these, only the
+  // Zod schema does. runTool must still succeed (defaults normalized to 0).
+  const ai = aiFor('klar_calculate_loan_payment', { principal: 300000, annualRate: 6.25, term: 30, termUnit: 'years', currency: 'USD' });
+  assert.equal(ai.success, true);
+  assert.equal(ai.answers.find((a) => a.hero)?.key, 'monthlyPayment');
+  // Parity: equals the engine with downPayment/fees = 0.
+  const engine = getMath('loan-payment').calculate(toCalcInput({ principal: 300000, annualRate: 6.25, term: 30, termUnit: 'years', downPayment: 0, fees: 0, currency: 'USD' }));
+  assert.deepEqual((ai.raw as { results: unknown }).results, engine.results);
+});
+
+test('v1fix: normalizeDefaults fills mortgage fees and enum defaults without inventing values', () => {
+  // mortgage: fees defaults to 0 (Zod), downPayment is required (no default).
+  const ok = aiFor('klar_calculate_mortgage', { price: 350000, downPayment: 70000, annualRate: 5.25, term: 30, termUnit: 'years', currency: 'USD' });
+  assert.equal(ok.success, true);
+  assert.equal(ok.answers.find((a) => a.hero)?.key, 'monthlyPayment');
+  // A required-without-default field is NOT invented: omit downPayment -> engine rejects.
+  const bad = aiFor('klar_calculate_mortgage', { price: 350000, annualRate: 5.25, term: 30, currency: 'USD' });
+  assert.equal(bad.success, false);
+  assert.equal(bad.error?.fields?.downPayment, 'required');
+});
+
+/* Fix 3: leave-balance makes "available" prominent via a note (engine hero unchanged). */
+test('v1fix: leave-balance surfaces available as the balance figure', () => {
+  const ai = aiFor('klar_calculate_leave_balance', AI_VALID.klar_calculate_leave_balance);
+  const available = ai.answers.find((a) => a.key === 'available');
+  assert.ok(available, 'available present');
+  assert.match(available!.note ?? '', /balance/i);
+  // Engine hero is preserved untouched (annualEntitlement for statutory law-derived).
+  assert.equal((ai.raw as { results: Array<{ key: string; hero?: boolean }> }).results.find((r) => r.hero)?.key, 'annualEntitlement');
+});
+
+/* Fix 4: discount reshaped to semantic mode-scoped fields; all six modes work. */
+test('v1fix: discount semantic schema — no legacy web-form field names', () => {
+  const keys = Object.keys(tools.find((t) => t.name === 'klar_calculate_discount')!.inputSchema);
+  for (const legacy of ['original', 'discountPct', 'discountAmount2', 'valueA', 'valueB', 'discountPct2']) {
+    assert.ok(!keys.includes(legacy), `legacy field leaked: ${legacy}`);
+  }
+  for (const semantic of ['mode', 'listPrice', 'discountPercent', 'discountValue', 'fromValue', 'toValue', 'finalPrice', 'finalDiscountPercent']) {
+    assert.ok(keys.includes(semantic), `missing semantic field: ${semantic}`);
+  }
+});
+
+test('v1fix: discount all six modes compute correctly and stay at engine parity', () => {
+  const cases: Array<[Record<string, unknown>, string, number]> = [
+    [{ mode: 'afterDiscount', listPrice: 250, discountPercent: 20 }, 'finalPrice', 200],
+    [{ mode: 'discountAmount', listPrice: 250, discountValue: 50 }, 'discountPct', 20],
+    [{ mode: 'originalPrice', finalPrice: 200, finalDiscountPercent: 20 }, 'originalPrice', 250],
+    [{ mode: 'percentIncrease', fromValue: 100, toValue: 120 }, 'change', 20],
+    [{ mode: 'percentDecrease', fromValue: 100, toValue: 80 }, 'change', -20],
+    [{ mode: 'percentDifference', fromValue: 100, toValue: 120 }, 'percentDifference', 18.181818181818183],
+  ];
+  const tool = tools.find((t) => t.name === 'klar_calculate_discount')!;
+  for (const [input, key, expected] of cases) {
+    const ai = aiFor('klar_calculate_discount', input);
+    assert.equal(ai.success, true, `${input.mode} success`);
+    const val = ai.answers.find((a) => a.key === key)?.value as number;
+    assert.ok(Math.abs(val - expected) < 1e-9, `${input.mode} ${key}: got ${val}, want ${expected}`);
+    // Parity through the transform.
+    const engine = getMath('discount-percentage').calculate(toCalcInput(tool.transformInput!(input)));
+    assert.deepEqual((ai.raw as { results: unknown }).results, engine.results, `${input.mode} parity`);
+  }
 });

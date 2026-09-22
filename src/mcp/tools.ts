@@ -150,16 +150,29 @@ export const tools: ToolDef[] = [
       mode: z
         .enum(['afterDiscount', 'discountAmount', 'percentIncrease', 'percentDecrease', 'percentDifference', 'originalPrice'])
         .default('afterDiscount')
-        .describe('Which discount/percent calculation to run.'),
-      original: z.number().min(0).max(1e15).optional().describe('Original/list price. Used by afterDiscount and discountAmount.'),
-      discountPct: z.number().min(0).max(100).optional().describe('Discount percent. Used by afterDiscount.'),
-      discountAmount2: z.number().min(0).max(1e15).optional().describe('Discount amount in currency. Used by discountAmount.'),
-      valueA: z.number().min(0).max(1e15).optional().describe('First value. Used by percentIncrease/percentDecrease/percentDifference.'),
-      valueB: z.number().min(0).max(1e15).optional().describe('Second value. Used by percentIncrease/percentDecrease/percentDifference.'),
+        .describe('Which calculation: afterDiscount (final price from list price + discount %), discountAmount (discount % from list price + discount value), originalPrice (list price from final price + discount %), percentIncrease/percentDecrease (percent change fromValue→toValue), percentDifference (percent difference between two values).'),
+      // Semantic, mode-scoped fields (mapped to the engine's internal fields by transformInput).
+      listPrice: z.number().min(0).max(1e15).optional().describe('Original/list price. Used by afterDiscount and discountAmount.'),
+      discountPercent: z.number().min(0).max(100).optional().describe('Discount percent. Used by afterDiscount.'),
+      discountValue: z.number().min(0).max(1e15).optional().describe('Discount amount in currency. Used by discountAmount.'),
+      fromValue: z.number().min(0).max(1e15).optional().describe('Starting value. Used by percentIncrease/percentDecrease/percentDifference.'),
+      toValue: z.number().min(0).max(1e15).optional().describe('Ending value. Used by percentIncrease/percentDecrease/percentDifference.'),
       finalPrice: z.number().min(0).max(1e15).optional().describe('Final/after-discount price. Used by originalPrice.'),
-      discountPct2: z.number().min(0).max(99.9999).optional().describe('Discount percent. Used by originalPrice.'),
+      finalDiscountPercent: z.number().min(0).max(99.9999).optional().describe('Discount percent that produced the final price. Used by originalPrice.'),
       currency,
     },
+    // Map the semantic AI fields onto the engine's internal field names.
+    transformInput: (args) => ({
+      mode: args.mode,
+      currency: args.currency,
+      original: args.listPrice,
+      discountPct: args.discountPercent,
+      discountAmount2: args.discountValue,
+      valueA: args.fromValue,
+      valueB: args.toValue,
+      finalPrice: args.finalPrice,
+      discountPct2: args.finalDiscountPercent,
+    }),
   },
   {
     name: 'klar_calculate_markup_margin',

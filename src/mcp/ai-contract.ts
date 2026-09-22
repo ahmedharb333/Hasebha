@@ -395,17 +395,21 @@ export const AI_META: Record<string, AIMeta> = {
   'loan-comparison': {
     category: 'loans',
     labels: {
-      monthlyA: { label: 'Option A monthly payment' },
+      monthlyA: { label: 'Option A monthly payment', note: 'One of two options — compare with monthlyB and, for the overall verdict, diffTotalCost.' },
       monthlyB: { label: 'Option B monthly payment' },
       totalInterestA: { label: 'Option A total interest' },
       totalInterestB: { label: 'Option B total interest' },
       totalCostA: { label: 'Option A total cost (payments + fees)' },
       totalCostB: { label: 'Option B total cost (payments + fees)' },
-      diffTotalCost: { label: 'Total-cost difference (A − B)' },
+      diffTotalCost: {
+        label: 'Total-cost difference (A − B)',
+        note: 'Key comparison result: positive means Option A costs more over the full term (B is cheaper); negative means A is cheaper; zero means equal total cost.',
+      },
     },
     assumptions: [
       'Both options use the same principal; each has its own rate, term, and fees.',
       'Fixed rate, fully-amortizing payments.',
+      'This is a comparison: read diffTotalCost (A − B) for the overall cheaper option, not only the Option A payment.',
     ],
     limitations: [
       'Compares exactly two options; does not judge which is "best" beyond total cost.',
@@ -672,7 +676,7 @@ export const AI_META: Record<string, AIMeta> = {
       annualEntitlement: { label: 'Annual leave entitlement', unit: 'days' },
       accrued: { label: 'Leave accrued to date', unit: 'days' },
       used: { label: 'Leave used', unit: 'days' },
-      available: { label: 'Leave available now', unit: 'days' },
+      available: { label: 'Leave available now', unit: 'days', note: 'This is the current usable leave balance — the primary figure for a "leave balance" question (the engine flags annualEntitlement/accrued as hero).' },
       remainingEntitlement: { label: 'Remaining annual entitlement', unit: 'days' },
       carryover: { label: 'Carryover applied', unit: 'days' },
       expired: { label: 'Carryover expired', unit: 'days' },
@@ -716,15 +720,35 @@ export const AI_META: Record<string, AIMeta> = {
  * the server and the tests so they behave identically.
  */
 export function runTool(tool: ToolDef, rawArgs: Record<string, unknown>): AICalculatorResult {
-  const preErr = tool.preValidate?.(rawArgs);
+  // Apply the tool's own MCP-contract defaults so a DIRECT caller (bypassing the
+  // MCP SDK, e.g. a future transport) is normalized identically to the stdio
+  // server. Defaults are read from each field's Zod schema via the public
+  // safeParse(undefined) — a `.default()` schema returns its default; required or
+  // plain-optional fields return failure/undefined and are skipped. This adds no
+  // new defaults and duplicates no schema.
+  const args = normalizeDefaults(tool, rawArgs);
+  const preErr = tool.preValidate?.(args);
   let response: CalcResponse;
   if (preErr && Object.keys(preErr).length > 0) {
     response = { success: false, error: { code: 'VALIDATION_ERROR', message: 'One or more inputs are invalid.', fields: preErr } };
   } else {
-    const engineInput = tool.transformInput ? tool.transformInput(rawArgs) : rawArgs;
+    const engineInput = tool.transformInput ? tool.transformInput(args) : args;
     response = runCalculator(tool.slug, engineInput);
   }
-  return toAIResult(tool, response, rawArgs);
+  return toAIResult(tool, response, args);
+}
+
+interface SafeParsable { safeParse: (v: unknown) => { success: boolean; data?: unknown } }
+
+/** Fill omitted fields with their Zod `.default()` value (contract defaults only). */
+export function normalizeDefaults(tool: ToolDef, rawArgs: Record<string, unknown>): Record<string, unknown> {
+  const args: Record<string, unknown> = { ...rawArgs };
+  for (const [key, schema] of Object.entries(tool.inputSchema)) {
+    if (args[key] !== undefined) continue;
+    const parsed = (schema as unknown as SafeParsable).safeParse(undefined);
+    if (parsed.success && parsed.data !== undefined) args[key] = parsed.data;
+  }
+  return args;
 }
 
 /** Turn a camelCase/snake key into a readable fallback label. */

@@ -90,8 +90,11 @@ the VAT portion.
 
 **`klar_calculate_discount`** — `mode` (`afterDiscount` \| `discountAmount` \|
 `percentIncrease` \| `percentDecrease` \| `percentDifference` \| `originalPrice`,
-default `afterDiscount`) plus the fields that mode uses: `original`, `discountPct`,
-`discountAmount2`, `valueA`, `valueB`, `finalPrice`, `discountPct2`, `currency`.
+default `afterDiscount`) plus the semantic fields that mode uses: `listPrice`,
+`discountPercent` (afterDiscount); `listPrice`, `discountValue` (discountAmount);
+`finalPrice`, `finalDiscountPercent` (originalPrice); `fromValue`, `toValue` (the three
+percent-change modes); `currency`. The MCP layer maps these to the engine's internal
+fields; the calculator is unchanged.
 
 **`klar_calculate_markup_margin`** — `cost`, `sellingPrice`. Returns profit, markup %
 (profit/cost) and margin % (profit/price). Does **not** solve price from a target
