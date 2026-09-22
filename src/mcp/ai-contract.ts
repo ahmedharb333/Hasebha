@@ -79,6 +79,8 @@ export interface JurisdictionSpec {
   legalNote: string;
   /** Input field that carries an employment-end type (end-of-service only). */
   employmentEndTypeField?: string;
+  /** For tools with a `mode` input: the note used when mode === 'manual'. */
+  manualLegalNote?: string;
 }
 
 /** Resolved jurisdiction metadata attached to a result (Phase 3A). */
@@ -642,6 +644,69 @@ export const AI_META: Record<string, AIMeta> = {
       legalNote: 'Statutory estimate for {country}; based on the rules embedded in this calculator; not legal/tax advice; verify current law.',
     },
   },
+  'end-of-service': {
+    category: 'employment-law',
+    estimate: true,
+    labels: {
+      gratuity: { label: 'End-of-service gratuity' },
+      days: { label: 'Gratuity days accrued', unit: 'days' },
+      years: { label: 'Years of service', unit: 'years' },
+    },
+    assumptions: ['Statutory end-of-service bands applied over the employment period; where the country models it, voluntary resignation may scale the amount.'],
+    limitations: [
+      'Requires employment start and end dates; based on monthly basic salary.',
+      'Does not model contract types (e.g. limited/unlimited) that the engine does not implement.',
+      'Not a monthly salary, not gross-to-net, not a notice period.',
+    ],
+    jurisdiction: {
+      calculationPeriod: 'total',
+      basis: 'statutory',
+      legalNote: 'Statutory estimate for {country}; based on the rules embedded in this calculator; not legal/tax advice; verify current law.',
+      employmentEndTypeField: 'endType',
+    },
+  },
+  'leave-balance': {
+    category: 'employment-law',
+    estimate: true,
+    labels: {
+      annualEntitlement: { label: 'Annual leave entitlement', unit: 'days' },
+      accrued: { label: 'Leave accrued to date', unit: 'days' },
+      used: { label: 'Leave used', unit: 'days' },
+      available: { label: 'Leave available now', unit: 'days' },
+      remainingEntitlement: { label: 'Remaining annual entitlement', unit: 'days' },
+      carryover: { label: 'Carryover applied', unit: 'days' },
+      expired: { label: 'Carryover expired', unit: 'days' },
+    },
+    assumptions: ['Leave accrues by the chosen method (monthly/daily/full) between the start and calculation dates.'],
+    limitations: ['Annual leave balance only; not maternity leave, not notice period, not end-of-service.'],
+    jurisdiction: {
+      calculationPeriod: 'days',
+      basis: 'statutory',
+      legalNote: 'Statutory estimate for {country}; entitlement from the rules embedded in this calculator; not legal advice; verify current law.',
+      manualLegalNote: 'Result is based on the annual entitlement and accrual you provided — not a country\'s statutory rules.',
+    },
+  },
+  'overtime-pay': {
+    category: 'employment-law',
+    estimate: true,
+    labels: {
+      baseHourly: { label: 'Base hourly rate', unit: 'per hour' },
+      overtimeRate: { label: 'Overtime hourly rate', unit: 'per hour' },
+      overtimeEarnings: { label: 'Overtime earnings (per week)', unit: 'per week' },
+      totalEarnings: { label: 'Total weekly earnings (base + overtime)', unit: 'per week' },
+    },
+    assumptions: ['Overtime earnings and total earnings are WEEKLY figures, from the weekly hours and overtime hours provided.'],
+    limitations: [
+      'Weekly overtime pay only — not a monthly or total figure, not a salary-period conversion, not employer cost, not gross-to-net.',
+      'Statutory mode uses the country overtime multipliers; manual mode uses the multiplier you provide.',
+    ],
+    jurisdiction: {
+      calculationPeriod: 'weekly',
+      basis: 'statutory',
+      legalNote: 'Statutory estimate for {country}; overtime multipliers from the rules embedded in this calculator; not legal advice; verify current law.',
+      manualLegalNote: 'Result uses the overtime multiplier you provided — not a country\'s statutory rules.',
+    },
+  },
 };
 
 /**
@@ -689,14 +754,22 @@ function formatDisplay(value: number, kind: string | undefined, unit: string | u
 export function resolveJurisdiction(spec: JurisdictionSpec, input: Record<string, unknown>): JurisdictionMeta {
   const country = typeof input.country === 'string' ? input.country : '';
   const currency = getCountryRules(country)?.currency ?? '';
+  // For tools with a mode input, manual mode is formulaic (user-provided
+  // assumptions), not a country statutory rule.
+  const manual = input.mode === 'manual';
+  const basis = manual ? 'formulaic' : spec.basis;
+  const legalNote =
+    manual && spec.manualLegalNote
+      ? spec.manualLegalNote
+      : spec.legalNote.replace('{country}', country ? country.toUpperCase() : 'the selected country');
   const meta: JurisdictionMeta = {
     country,
     supportedCountries: [...SUPPORTED_COUNTRIES],
     currency,
     calculationPeriod: spec.calculationPeriod,
-    basis: spec.basis,
+    basis,
     rulesSnapshot: true,
-    legalNote: spec.legalNote.replace('{country}', country ? country.toUpperCase() : 'the selected country'),
+    legalNote,
   };
   if (spec.employmentEndTypeField) {
     const v = input[spec.employmentEndTypeField];
@@ -734,7 +807,10 @@ export function toAIResult(tool: ToolDef, response: CalcResponse, input: Record<
   // Jurisdiction tools: currency is DERIVED from the country's rules, never a
   // user input, so monetary answers and metadata match jurisdiction.currency.
   if (meta?.jurisdiction) {
-    currency = getCountryRules(typeof input.country === 'string' ? input.country : '')?.currency ?? undefined;
+    // Derive from the country when it resolves; otherwise keep whatever the
+    // caller supplied (manual mode has no country — never invent one).
+    const derived = getCountryRules(typeof input.country === 'string' ? input.country : '')?.currency;
+    if (derived) currency = derived;
   }
 
   const base: AICalculatorResult = {

@@ -55,6 +55,9 @@ AI agent ──▶ MCP tool (src/mcp/tools.ts)
 | `klar_calculate_social_insurance` | `social-insurance` | Employee/employer social-insurance shares |
 | `klar_calculate_income_tax` | `income-tax` | Statutory annual income tax |
 | `klar_calculate_gross_to_net` | `gross-to-net` | Monthly gross → net (statutory deductions) |
+| `klar_calculate_end_of_service` | `end-of-service` | Statutory end-of-service gratuity |
+| `klar_calculate_leave_balance` | `leave-balance` | Annual leave balance (statutory or manual) |
+| `klar_calculate_overtime_pay` | `overtime-pay` | Weekly overtime pay (statutory or manual) |
 
 ### Inputs
 
@@ -230,6 +233,26 @@ never an AI input. Rules are a fixed embedded snapshot — no live legislation l
 (hero), `totalDeductions`, and each deduction (`socialInsurance`/`incomeTax`) in the
 country's order. Not a salary-period conversion, not employer cost.
 
+**`klar_calculate_end_of_service`** — `country`, `startDate`, `endDate`, `monthlyBasic`,
+`endType` (`terminated`\|`voluntary`, default `terminated`). Returns `gratuity` (hero),
+`days`, `years`. `jurisdiction.employmentEndType` echoes the branch; `calculationPeriod:
+"total"`. Contract types (limited/unlimited) are not modelled. Not a salary, not
+gross-to-net, not notice period.
+
+**`klar_calculate_leave_balance`** — `mode` (`statutory`\|`manual`). `statutory`:
+`country` + `tenureYears`; `manual`: `annualEntitlement` (no country). Plus `startDate`,
+`calcDate`, `leaveTaken` (0), `approvedCarryover` (0), `accrualMethod` (`monthly`\|`daily`
+\|`full`), `maxCarryover?`. Returns accrued/used/available/remaining/carryover/expired
+(days); `annualEntitlement` in statutory mode. `basis` is `statutory` (country) or
+`formulaic` (manual). Not maternity, not notice, not end-of-service.
+
+**`klar_calculate_overtime_pay`** — `mode` (`statutory`\|`manual`), `basis`
+(`monthly`\|`hourly`) with `monthlySalary`/`hourlyRate`, `weeklyHours` (40),
+`overtimeHours`. `statutory`: `country` + `otKind`; `manual`: `multiplier`
+(+`customMultiplier`). Returns `baseHourly`, `overtimeRate` (per hour), `overtimeEarnings`
+(hero, **per week**), `totalEarnings` (per week). Overtime figures are WEEKLY — not
+monthly/total, not a salary conversion, not employer cost, not gross-to-net.
+
 ### Output — AI-native contract
 
 Each tool returns a JSON string (MCP text content) in the canonical AI contract
@@ -324,7 +347,7 @@ Add to `claude_desktop_config.json` (Settings → Developer → Edit Config):
 ```
 
 Use the absolute path to `src/mcp/server.ts` on your machine. Restart Claude
-Desktop; the thirty-three `klar_calculate_*` tools then appear.
+Desktop; the thirty-six `klar_calculate_*` tools then appear.
 
 ### Claude Code
 
@@ -361,7 +384,7 @@ No changes to `server.ts` or `adapter.ts` are needed.
 
 ## Scope / not included
 
-- Only the thirty-three tools above.
+- Only the thirty-six tools above.
 - No public HTTP API (MCP/stdio only).
 - No persistent storage — calculations are ephemeral; no user input is stored.
 - No changes to the website, its URLs, SEO, i18n, or AdSense.

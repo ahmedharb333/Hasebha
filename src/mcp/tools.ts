@@ -645,4 +645,126 @@ export const tools: ToolDef[] = [
     },
     transformInput: deriveCountryCurrency,
   },
+  {
+    name: 'klar_calculate_end_of_service',
+    title: 'End of service',
+    slug: 'end-of-service',
+    description:
+      'Calculate the statutory end-of-service gratuity for a supported country from employment start and end dates and the monthly basic salary. Where the country models it, voluntary resignation and termination can give different amounts. Returns the gratuity, gratuity days accrued, and years of service. Use for end-of-service/severance. It is NOT a monthly salary, NOT gross-to-net, and NOT a notice period. Contract types (e.g. limited/unlimited) are not modelled. Currency is derived from the country.',
+    inputSchema: {
+      country: countryInput,
+      startDate: z.string().describe('Employment start date, ISO YYYY-MM-DD.'),
+      endDate: z.string().describe('Employment end date, ISO YYYY-MM-DD (after startDate).'),
+      monthlyBasic: z.number().min(0).max(1e12).describe('Monthly basic salary the gratuity is based on.'),
+      endType: z
+        .enum(['terminated', 'voluntary'])
+        .default('terminated')
+        .describe('How employment ended: terminated (by employer) or voluntary (resignation).'),
+    },
+    transformInput: (args) => {
+      const country = String(args.country ?? '');
+      const out: Record<string, unknown> = {
+        country,
+        startDate: args.startDate,
+        endDate: args.endDate,
+        monthlyBasic: args.monthlyBasic,
+        resignation: args.endType,
+      };
+      const rules = getCountryRules(country);
+      if (rules) out.currency = rules.currency;
+      return out;
+    },
+  },
+  {
+    name: 'klar_calculate_leave_balance',
+    title: 'Leave balance',
+    slug: 'leave-balance',
+    description:
+      'Calculate accrued and available ANNUAL leave between a start date and a calculation date. Two modes: mode="statutory" uses a supported country\'s entitlement by tenure; mode="manual" uses an annual entitlement you provide (no country). Returns accrued, used, available, remaining entitlement, carryover and expired days. Use for annual leave balance — NOT maternity leave, NOT notice period, NOT end-of-service.',
+    inputSchema: {
+      mode: z.enum(['statutory', 'manual']).describe('statutory = country entitlement by tenure; manual = you provide the annual entitlement.'),
+      country: z.string().optional().describe('Required for statutory mode — one of jo, sa, ae, kw, qa, bh, om.'),
+      tenureYears: z.number().min(0).max(60).optional().describe('Years of service (statutory mode; defaults to 0).'),
+      annualEntitlement: z.number().min(0).max(365).optional().describe('Annual leave days (required for manual mode).'),
+      startDate: z.string().describe('Employment/period start date, ISO YYYY-MM-DD.'),
+      calcDate: z.string().describe('Date to calculate the balance at, ISO YYYY-MM-DD (>= startDate).'),
+      leaveTaken: z.number().min(0).max(1000).default(0).describe('Leave days already taken (default 0).'),
+      approvedCarryover: z.number().min(0).max(1000).default(0).describe('Approved carryover days (default 0).'),
+      accrualMethod: z.enum(['monthly', 'daily', 'full']).default('monthly').describe('How leave accrues over the period.'),
+      maxCarryover: z.number().min(0).max(1000).optional().describe('Optional cap on carryover days.'),
+    },
+    preValidate: (args): Record<string, string> | null => {
+      if (args.mode === 'statutory' && !args.country) return { country: 'required' };
+      if (args.mode === 'manual' && (args.annualEntitlement === undefined || args.annualEntitlement === null)) return { annualEntitlement: 'required' };
+      return null;
+    },
+    transformInput: (args) => {
+      const out: Record<string, unknown> = {
+        startDate: args.startDate,
+        calcDate: args.calcDate,
+        leaveTaken: args.leaveTaken,
+        approvedCarryover: args.approvedCarryover,
+        accrualMethod: args.accrualMethod,
+        maxCarryover: args.maxCarryover,
+      };
+      if (args.mode === 'statutory') {
+        out.country = args.country;
+        out.tenureYears = args.tenureYears;
+      } else {
+        out.country = '';
+        out.annualEntitlement = args.annualEntitlement;
+      }
+      return out;
+    },
+  },
+  {
+    name: 'klar_calculate_overtime_pay',
+    title: 'Overtime pay',
+    slug: 'overtime-pay',
+    description:
+      'Calculate WEEKLY overtime pay from weekly hours and overtime hours. Two modes: mode="statutory" uses a supported country\'s overtime multipliers (with an overtime kind); mode="manual" uses a multiplier you provide. Pay basis is monthly salary or an hourly rate. Returns base hourly rate, overtime hourly rate, overtime earnings (PER WEEK, the primary answer) and total weekly earnings. The overtime earnings and total are WEEKLY, not monthly or total. NOT a salary-period conversion, NOT employer cost, NOT gross-to-net. Currency is derived from the country in statutory mode.',
+    inputSchema: {
+      mode: z.enum(['statutory', 'manual']).describe('statutory = country overtime multipliers; manual = you provide the multiplier.'),
+      basis: z.enum(['monthly', 'hourly']).default('monthly').describe('Whether pay is given as a monthly salary or an hourly rate.'),
+      monthlySalary: z.number().min(0).max(1e12).optional().describe('Monthly salary (basis=monthly).'),
+      hourlyRate: z.number().min(0).max(1e9).optional().describe('Hourly rate (basis=hourly).'),
+      weeklyHours: z.number().min(1).max(168).default(40).describe('Normal weekly working hours (default 40).'),
+      overtimeHours: z.number().min(0).max(168).describe('Overtime hours worked in the week.'),
+      country: z.string().optional().describe('Required for statutory mode — one of jo, sa, ae, kw, qa, bh, om.'),
+      otKind: z
+        .enum(['standard', 'night', 'rest_day', 'public_holiday'])
+        .default('standard')
+        .describe('Overtime kind (statutory mode) selecting the country multiplier.'),
+      multiplier: z
+        .enum(['1.0', '1.25', '1.5', '2.0', 'custom'])
+        .default('1.5')
+        .describe('Overtime multiplier (manual mode).'),
+      customMultiplier: z.number().min(1).max(5).optional().describe('Custom multiplier value when multiplier="custom".'),
+    },
+    preValidate: (args) => {
+      if (args.mode === 'statutory' && !args.country) return { country: 'required' };
+      return null;
+    },
+    transformInput: (args) => {
+      const out: Record<string, unknown> = {
+        basis: args.basis,
+        weeklyHours: args.weeklyHours,
+        overtimeHours: args.overtimeHours,
+      };
+      if (args.basis === 'hourly') out.hourlyRate = args.hourlyRate;
+      else out.monthlySalary = args.monthlySalary;
+      if (args.mode === 'statutory') {
+        const country = String(args.country ?? '');
+        out.country = country;
+        out.otKind = args.otKind;
+        const rules = getCountryRules(country);
+        if (rules) out.currency = rules.currency;
+      } else {
+        out.country = '';
+        out.multiplier = args.multiplier;
+        if (args.multiplier === 'custom') out.customMultiplier = args.customMultiplier;
+      }
+      return out;
+    },
+  },
 ];

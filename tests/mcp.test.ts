@@ -56,18 +56,23 @@ const AI_VALID: Record<string, Record<string, unknown>> = {
   klar_calculate_social_insurance: { country: 'jo', monthlySalary: 1500 },
   klar_calculate_income_tax: { country: 'jo', annualIncome: 24000 },
   klar_calculate_gross_to_net: { country: 'jo', monthlyGross: 2000 },
+  klar_calculate_end_of_service: { country: 'jo', startDate: '2018-01-01', endDate: '2023-01-01', monthlyBasic: 1500, endType: 'terminated' },
+  klar_calculate_leave_balance: { mode: 'statutory', country: 'jo', tenureYears: 3, startDate: '2024-01-01', calcDate: '2025-01-01', leaveTaken: 0, approvedCarryover: 0, accrualMethod: 'monthly' },
+  klar_calculate_overtime_pay: { mode: 'statutory', country: 'jo', basis: 'monthly', monthlySalary: 1000, weeklyHours: 40, overtimeHours: 6 },
 };
 
 /** Slugs whose AI_META declares specialized health metadata. */
 const HEALTH_TOOLS = ['klar_calculate_bmi', 'klar_calculate_ideal_weight', 'klar_calculate_bmr', 'klar_calculate_calorie_intake', 'klar_calculate_body_fat'];
-/** Slugs whose AI_META declares specialized jurisdiction metadata (Phase 3C-1). */
-const JURISDICTION_TOOLS = ['klar_calculate_maternity_leave', 'klar_calculate_notice_period', 'klar_calculate_social_insurance', 'klar_calculate_income_tax', 'klar_calculate_gross_to_net'];
+/** Slugs whose AI_META declares specialized jurisdiction metadata (Phase 3C-1 + 3C-2). */
+const JURISDICTION_TOOLS = ['klar_calculate_maternity_leave', 'klar_calculate_notice_period', 'klar_calculate_social_insurance', 'klar_calculate_income_tax', 'klar_calculate_gross_to_net', 'klar_calculate_end_of_service', 'klar_calculate_leave_balance', 'klar_calculate_overtime_pay'];
+/** The five simple single-mode jurisdiction tools (Phase 3C-1). */
+const JURISDICTION_3C1 = ['klar_calculate_maternity_leave', 'klar_calculate_notice_period', 'klar_calculate_social_insurance', 'klar_calculate_income_tax', 'klar_calculate_gross_to_net'];
 
 /* ------------------------------------------------------------------ */
 /* Tool registry                                                       */
 /* ------------------------------------------------------------------ */
 
-test('mcp: exposes exactly the thirty-three tools mapped to real slugs', () => {
+test('mcp: exposes exactly the thirty-six tools mapped to real slugs', () => {
   const byName = Object.fromEntries(tools.map((t) => [t.name, t.slug]));
   assert.deepEqual(byName, {
     klar_calculate_loan_payment: 'loan-payment',
@@ -103,8 +108,11 @@ test('mcp: exposes exactly the thirty-three tools mapped to real slugs', () => {
     klar_calculate_social_insurance: 'social-insurance',
     klar_calculate_income_tax: 'income-tax',
     klar_calculate_gross_to_net: 'gross-to-net',
+    klar_calculate_end_of_service: 'end-of-service',
+    klar_calculate_leave_balance: 'leave-balance',
+    klar_calculate_overtime_pay: 'overtime-pay',
   });
-  assert.equal(tools.length, 33);
+  assert.equal(tools.length, 36);
   // Every tool slug resolves to a real engine, and every tool has an input schema.
   for (const t of tools) {
     assert.ok(getMath(t.slug), `slug missing: ${t.slug}`);
@@ -585,7 +593,7 @@ test('phase3c1: jurisdiction metadata is complete and correct', () => {
     klar_calculate_income_tax: 'annual',
     klar_calculate_gross_to_net: 'monthly',
   };
-  for (const name of JURISDICTION_TOOLS) {
+  for (const name of JURISDICTION_3C1) {
     const ai = aiFor(name, AI_VALID[name]);
     assert.equal(ai.success, true, `${name} success`);
     assert.equal(ai.estimate, true, `${name} estimate`);
@@ -642,7 +650,7 @@ test('phase3c1: unsupported country returns structured country-invalid error (al
     klar_calculate_income_tax: { country: 'de', annualIncome: 24000 },
     klar_calculate_gross_to_net: { country: 'de', monthlyGross: 2000 },
   };
-  for (const name of JURISDICTION_TOOLS) {
+  for (const name of JURISDICTION_3C1) {
     const ai = aiFor(name, inputs[name]);
     assert.equal(ai.success, false, `${name} unsupported`);
     assert.equal(ai.error?.fields?.country, 'invalid', `${name} country invalid`);
@@ -658,7 +666,7 @@ test('phase3c1: missing country is rejected — no silent default', () => {
     klar_calculate_income_tax: { annualIncome: 24000 },
     klar_calculate_gross_to_net: { monthlyGross: 2000 },
   };
-  for (const name of JURISDICTION_TOOLS) {
+  for (const name of JURISDICTION_3C1) {
     const ai = aiFor(name, inputs[name]);
     assert.equal(ai.success, false, `${name} missing country`);
     assert.equal(ai.error?.fields?.country, 'required', `${name} country required`);
@@ -671,6 +679,136 @@ test('phase3c1: heroes are correct for jurisdiction tools', () => {
   assert.equal(aiFor('klar_calculate_social_insurance', AI_VALID.klar_calculate_social_insurance).answers.find((a) => a.hero)?.key, 'employeeShare');
   assert.equal(aiFor('klar_calculate_income_tax', AI_VALID.klar_calculate_income_tax).answers.find((a) => a.hero)?.key, 'taxAmount');
   assert.equal(aiFor('klar_calculate_gross_to_net', AI_VALID.klar_calculate_gross_to_net).answers.find((a) => a.hero)?.key, 'netMonthly');
+});
+
+/* ================================================================== */
+/* Phase 3C-2 — complex jurisdiction tools                             */
+/* end-of-service / leave-balance / overtime-pay                       */
+/* ================================================================== */
+
+test('phase3c2: schemas are semantic, mode is explicit, currency never exposed', () => {
+  const shape = (name: string) => Object.keys(tools.find((t) => t.name === name)!.inputSchema).sort();
+  assert.deepEqual(shape('klar_calculate_end_of_service'), ['country', 'endType', 'endDate', 'monthlyBasic', 'startDate'].sort());
+  assert.ok(shape('klar_calculate_leave_balance').includes('mode'));
+  assert.ok(shape('klar_calculate_overtime_pay').includes('mode'));
+  for (const name of ['klar_calculate_end_of_service', 'klar_calculate_leave_balance', 'klar_calculate_overtime_pay']) {
+    assert.ok(!Object.keys(tools.find((t) => t.name === name)!.inputSchema).includes('currency'), `${name} must not expose currency`);
+  }
+});
+
+test('phase3c2: end-of-service — statutory, employmentEndType, currency, dates', () => {
+  const ai = aiFor('klar_calculate_end_of_service', AI_VALID.klar_calculate_end_of_service);
+  assert.equal(ai.success, true);
+  assert.equal(ai.estimate, true);
+  assert.equal(ai.answers.find((a) => a.hero)?.key, 'gratuity');
+  const j = ai.jurisdiction!;
+  assert.equal(j.country, 'jo');
+  assert.equal(j.currency, getCountryRules('jo')!.currency);
+  assert.equal(j.calculationPeriod, 'total');
+  assert.equal(j.basis, 'statutory');
+  assert.equal(j.rulesSnapshot, true);
+  assert.equal(j.employmentEndType, 'terminated');
+  // gratuity is monetary with the derived currency.
+  const hero = ai.answers.find((a) => a.hero)!;
+  assert.equal(hero.monetary, true);
+  assert.equal(hero.currency, 'JOD');
+});
+
+test('phase3c2: end-of-service voluntary maps to employmentEndType=voluntary', () => {
+  const ai = aiFor('klar_calculate_end_of_service', { country: 'jo', startDate: '2018-01-01', endDate: '2023-01-01', monthlyBasic: 1500, endType: 'voluntary' });
+  assert.equal(ai.jurisdiction!.employmentEndType, 'voluntary');
+});
+
+test('phase3c2: end-of-service unsupported/missing country rejected', () => {
+  const unsupported = aiFor('klar_calculate_end_of_service', { country: 'de', startDate: '2018-01-01', endDate: '2023-01-01', monthlyBasic: 1500 });
+  assert.equal(unsupported.success, false);
+  assert.equal(unsupported.error?.fields?.country, 'invalid');
+  const missing = aiFor('klar_calculate_end_of_service', { startDate: '2018-01-01', endDate: '2023-01-01', monthlyBasic: 1500 });
+  assert.equal(missing.success, false);
+  assert.equal(missing.error?.fields?.country, 'required');
+});
+
+test('phase3c2: leave-balance statutory mode uses country entitlement (basis statutory)', () => {
+  const ai = aiFor('klar_calculate_leave_balance', AI_VALID.klar_calculate_leave_balance);
+  assert.equal(ai.success, true);
+  assert.equal(ai.jurisdiction!.basis, 'statutory');
+  assert.equal(ai.jurisdiction!.country, 'jo');
+  assert.equal(ai.jurisdiction!.calculationPeriod, 'days');
+  assert.ok(ai.answers.some((a) => a.key === 'available'));
+});
+
+test('phase3c2: leave-balance manual mode is formulaic with no invented country/currency', () => {
+  const ai = aiFor('klar_calculate_leave_balance', { mode: 'manual', annualEntitlement: 30, startDate: '2024-01-01', calcDate: '2025-01-01', leaveTaken: 10 });
+  assert.equal(ai.success, true);
+  assert.equal(ai.jurisdiction!.basis, 'formulaic');
+  assert.equal(ai.jurisdiction!.country, '');
+  assert.equal(ai.jurisdiction!.currency, '');
+  assert.match(ai.jurisdiction!.legalNote, /you provided/i);
+});
+
+test('phase3c2: leave-balance statutory missing country is rejected (no silent default)', () => {
+  const ai = aiFor('klar_calculate_leave_balance', { mode: 'statutory', startDate: '2024-01-01', calcDate: '2025-01-01' });
+  assert.equal(ai.success, false);
+  assert.equal(ai.error?.fields?.country, 'required');
+});
+
+test('phase3c2: leave-balance manual missing entitlement is rejected', () => {
+  const ai = aiFor('klar_calculate_leave_balance', { mode: 'manual', startDate: '2024-01-01', calcDate: '2025-01-01' });
+  assert.equal(ai.success, false);
+  assert.equal(ai.error?.fields?.annualEntitlement, 'required');
+});
+
+test('phase3c2: overtime-pay statutory — WEEKLY overtime earnings with per-week unit', () => {
+  const ai = aiFor('klar_calculate_overtime_pay', AI_VALID.klar_calculate_overtime_pay);
+  assert.equal(ai.success, true);
+  assert.equal(ai.jurisdiction!.basis, 'statutory');
+  assert.equal(ai.jurisdiction!.calculationPeriod, 'weekly');
+  const hero = ai.answers.find((a) => a.hero)!;
+  assert.equal(hero.key, 'overtimeEarnings');
+  assert.equal(hero.unit, 'per week'); // weekly semantics are explicit
+  assert.match(hero.label, /per week/i);
+  assert.equal(hero.currency, 'JOD'); // derived
+  // total earnings also weekly
+  assert.equal(ai.answers.find((a) => a.key === 'totalEarnings')?.unit, 'per week');
+});
+
+test('phase3c2: overtime-pay manual mode is formulaic, no country, weekly still explicit', () => {
+  const ai = aiFor('klar_calculate_overtime_pay', { mode: 'manual', basis: 'hourly', hourlyRate: 10, weeklyHours: 40, overtimeHours: 5, multiplier: '1.5' });
+  assert.equal(ai.success, true);
+  assert.equal(ai.jurisdiction!.basis, 'formulaic');
+  assert.equal(ai.jurisdiction!.country, '');
+  // no currency provided or invented -> monetary flagged, no code
+  const hero = ai.answers.find((a) => a.hero)!;
+  assert.equal(hero.key, 'overtimeEarnings');
+  assert.equal(hero.unit, 'per week');
+  assert.equal(hero.monetary, true);
+  assert.equal(hero.currency, undefined);
+});
+
+test('phase3c2: overtime-pay statutory missing country is rejected', () => {
+  const ai = aiFor('klar_calculate_overtime_pay', { mode: 'statutory', basis: 'monthly', monthlySalary: 1000, weeklyHours: 40, overtimeHours: 6 });
+  assert.equal(ai.success, false);
+  assert.equal(ai.error?.fields?.country, 'required');
+});
+
+test('phase3c2: exact engine parity for end-of-service / leave-balance / overtime-pay', () => {
+  const cases: Array<[string, Record<string, unknown>]> = [
+    ['klar_calculate_end_of_service', AI_VALID.klar_calculate_end_of_service],
+    ['klar_calculate_leave_balance', AI_VALID.klar_calculate_leave_balance],
+    ['klar_calculate_leave_balance', { mode: 'manual', annualEntitlement: 30, startDate: '2024-01-01', calcDate: '2025-01-01', leaveTaken: 10, approvedCarryover: 0, accrualMethod: 'monthly' }],
+    ['klar_calculate_overtime_pay', AI_VALID.klar_calculate_overtime_pay],
+    ['klar_calculate_overtime_pay', { mode: 'manual', basis: 'hourly', hourlyRate: 10, weeklyHours: 40, overtimeHours: 5, multiplier: '1.5' }],
+  ];
+  for (const [name, input] of cases) {
+    const tool = tools.find((t) => t.name === name)!;
+    const engineInput = tool.transformInput ? tool.transformInput(input) : input;
+    const engine = getMath(tool.slug).calculate(toCalcInput(engineInput));
+    const ai = aiFor(name, input);
+    assert.deepEqual((ai.raw as { results: unknown }).results, engine.results, `${name} raw parity`);
+    for (const a of ai.answers) {
+      assert.equal(a.value, engine.results.find((r) => r.key === a.key)?.value, `${name} ${a.key} value parity`);
+    }
+  }
 });
 
 /* ------------------------------------------------------------------ */
