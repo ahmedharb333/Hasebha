@@ -332,6 +332,43 @@ npm run mcp
 This starts the server on stdio. It is a **local** server — it is not publicly
 accessible and is meant to be launched by an MCP client, not hit over HTTP.
 
+## Remote MCP (Streamable HTTP)
+
+The same 36 tools are exposed over the internet by a **separate** service — a
+standalone Cloudflare Worker (`worker/index.ts` + `wrangler.toml`). The Klar/
+Hasebha website stays on its own static hosting and is **not** part of this
+deploy. Both transports share one server factory (`src/mcp/create-server.ts`),
+so stdio and HTTP expose identical tools and identical engine results.
+
+- **Endpoint:** `POST https://mcp.worldly.pro/mcp` (custom domain configured in
+  the Cloudflare dashboard once deployed).
+- **Transport:** MCP **Streamable HTTP**, stateless, `enableJsonResponse: true`
+  (`WebStandardStreamableHTTPServerTransport`). No SSE, no sessions, no database.
+  Each request is independent — no initialize handshake is required.
+- **Auth:** `Authorization: Bearer <API_KEY>`. The key is a Worker secret
+  (`MCP_API_KEY`); missing/invalid → HTTP 401 (fails closed). Never logged.
+- **Guards:** POST body capped at 64 KB; malformed JSON → 400; oversized → 413.
+  Calculator inputs/outputs are never logged.
+- **CORS:** none (server-to-server); the `Origin` header is not reflected.
+
+Local dev / test of the HTTP layer uses `src/mcp/http-handler.ts` directly (no
+Worker needed) — see `tests/mcp-http.test.ts`. Example client config:
+
+```json
+{
+  "mcpServers": {
+    "klar-remote": {
+      "url": "https://mcp.worldly.pro/mcp",
+      "headers": { "Authorization": "Bearer <YOUR_API_KEY>" }
+    }
+  }
+}
+```
+
+**Deploy (one-time, manual):** `wrangler secret put MCP_API_KEY`, then
+`wrangler deploy`, then add the `mcp.worldly.pro` custom domain to the Worker in
+the Cloudflare dashboard. **Zakat is not exposed** over stdio or HTTP.
+
 ## Connect to Claude
 
 ### Claude Desktop

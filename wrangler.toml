@@ -1,0 +1,21 @@
+# Klar Remote MCP — standalone Cloudflare Worker.
+#
+# This deploys ONLY the MCP endpoint. The Klar/Hasebha website stays on its
+# existing static hosting and is not affected by this config.
+#
+# Setup (manual, one-time):
+#   1. wrangler secret put MCP_API_KEY        # the Bearer token clients must send
+#   2. wrangler deploy
+#   3. In the Cloudflare dashboard, add the custom domain `mcp.worldly.pro`
+#      (Workers Routes / Custom Domains) pointing at this Worker.
+#
+# Endpoint after deploy:  https://mcp.worldly.pro/mcp
+name = "klar-mcp"
+main = "worker/index.ts"
+compatibility_date = "2025-09-01"
+# The MCP SDK core touches a few Node built-ins; nodejs_compat makes them available
+# on the Workers runtime. The Web-standard transport itself is pure fetch APIs.
+compatibility_flags = ["nodejs_compat"]
+
+# MCP_API_KEY is provided via `wrangler secret put MCP_API_KEY` (do NOT put the
+# real key here). A non-secret placeholder is intentionally omitted.
