@@ -1,0 +1,333 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import type { Locale } from '../../config/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ar = locale === 'ar';
+const path = '/agents/';
+const email = 'contact@worldly.pro';
+const endpoint = 'https://mcp.worldly.pro/mcp';
+
+const configSnippet = `{
+  "mcpServers": {
+    "klar": {
+      "url": "https://mcp.worldly.pro/mcp",
+      "headers": { "Authorization": "Bearer YOUR_API_KEY" }
+    }
+  }
+}`;
+
+const resultSnippet = `{
+  "calculator": { "slug": "end-of-service", "category": "employment-law" },
+  "answers": [
+    { "key": "gratuity", "label": "End-of-service gratuity",
+      "value": 7500, "displayValue": "7500 JOD", "hero": true }
+  ],
+  "estimate": true,
+  "jurisdiction": {
+    "country": "jo", "currency": "JOD",
+    "basis": "statutory", "rulesSnapshot": true,
+    "legalNote": "Statutory estimate for JO — not legal advice."
+  }
+}`;
+
+const t = ar
+  ? {
+      title: 'كلار لوكلاء الذكاء الاصطناعي',
+      metaDescription:
+        'حاسبات كلار الـ36 متاحة لوكلاء الذكاء الاصطناعي عبر بروتوكول MCP — تشمل حاسبات قانون العمل والضرائب للأردن ودول الخليج. نقطة وصول آمنة، نفس محرّك الحسابات المستخدم في الموقع.',
+      crumb: 'للوكلاء والذكاء الاصطناعي',
+      eyebrow: 'MCP · بروتوكول سياق النموذج',
+      h1: 'كلار، مبنيّ لوكلاء الذكاء الاصطناعي',
+      sub: '٣٦ حاسبة دقيقة — مالية، وتسعير، وصحة، وتعليم، إضافةً إلى حاسبات قانون العمل والضرائب للأردن ودول الخليج — يستدعيها أي وكيل ذكاء اصطناعي مباشرةً عبر نقطة وصول MCP آمنة. يحصل وكيلك على نفس المحرّك الذي يشغّل الموقع.',
+      ctaConnect: 'اربط وكيلك',
+      ctaTools: 'استعرض الحاسبات',
+      whyH: 'لماذا هذا مهم',
+      whyLead: 'تستطيع النماذج إجراء الحسابات العامة ذهنياً — لكنها لا تستطيع بموثوقية حساب الأرقام القانونية الخاصة بكل دولة. كلار يستطيع. هذا هو جوهر الفكرة.',
+      why: [
+        { tag: 'الميزة', h: 'أجور ومستحقات الأردن والخليج', p: 'مكافأة نهاية الخدمة، وضريبة الدخل، والضمان الاجتماعي، ومدة الإشعار، وإجازة الأمومة، والعمل الإضافي، وصافي الراتب — للدول: الأردن، السعودية، الإمارات، الكويت، قطر، البحرين، عُمان — وفق قواعد قانون العمل المضمّنة.' },
+        { tag: 'موثوق', h: 'مصدر واحد للحقيقة', p: 'أدوات MCP تستدعي نفس محرّكات الحساب التي يعتمدها موقع كلار. لا معادلات مكرّرة ولا اختلاف.' },
+        { tag: 'مهيّأ للوكلاء', h: 'نتائج منظّمة وواصفة لذاتها', p: 'كل نتيجة تحمل تسميات ووحدات وعملة وإجابة رئيسية وافتراضات وحدوداً — ليفهم الوكيل الرقم دون رؤية الموقع.' },
+      ],
+      connectH: 'اربط وكيلك',
+      connectLead: 'بروتوكول MCP قياسي عبر Streamable HTTP. وجّه أي عميل يدعم MCP إلى نقطة الوصول، وأرسل مفتاحك كرمز Bearer.',
+      kEndpoint: 'نقطة الوصول',
+      kTransport: 'النقل',
+      kAuth: 'المصادقة',
+      kTools: 'الأدوات',
+      vTransport: 'MCP Streamable HTTP (JSON)',
+      vTools: '٣٦ حاسبة',
+      accessNote: 'الوصول حالياً بالدعوة بينما نجمع بيانات الاستخدام. اطلب مفتاحاً مجانياً عبر البريد أدناه، وأخبرنا بما تبنيه.',
+      exampleH: 'مثال',
+      askLabel: 'اسأل وكيلك:',
+      askText: '«موظف في الأردن انتهت خدمته بعد ٥ سنوات براتب أساسي ١٥٠٠ دينار — كم مكافأة نهاية الخدمة؟»',
+      resultLabel: 'يستدعي الوكيل klar_calculate_end_of_service فيحصل على:',
+      toolsH: 'ما بالداخل',
+      toolsLead: '٣٦ أداة ضمن ست فئات. كل أداة حتمية وتُعيد نفس قيمة موقع كلار.',
+      tools: [
+        { h: 'قانون العمل · الخليج', p: 'نهاية الخدمة، ضريبة الدخل، الضمان الاجتماعي، صافي الراتب، مدة الإشعار، إجازة الأمومة، رصيد الإجازات، العمل الإضافي' },
+        { h: 'المال', p: 'قسط القرض، الرهن العقاري، مقارنة القروض، السداد المبكر، الفائدة المركبة، ادخار التقاعد، هدف الادخار، نسبة الدين إلى الدخل' },
+        { h: 'التسعير والأعمال', p: 'ضريبة القيمة المضافة، الخصم ونسبة التغير، الهامش والربح، سعر البيع من الهامش، نقطة التعادل، الجملة/التجزئة' },
+        { h: 'العمل والأجر', p: 'محوّل الراتب، تكلفة الموظف، سعر المستقل' },
+        { h: 'الصحة', p: 'مؤشر الكتلة، الأيض الأساسي، السعرات، نسبة الدهون، الوزن المثالي (تقديرات إرشادية لا نصائح طبية)' },
+        { h: 'يومي وأدوات', p: 'البقشيش، العمر، فرق التواريخ، المعدل التراكمي، متوسط الدرجات، الدرجة النهائية، تحويل الوحدات' },
+      ],
+      notesH: 'ملاحظات مهمة',
+      notes: [
+        { h: 'تقديرات لا نصائح', p: 'النتائج القانونية (قانون العمل/الضرائب) تقديرات من لقطة قواعد مضمّنة — ليست نصيحة قانونية أو ضريبية. تحقّق من القانون النافذ قبل الاعتماد عليها.' },
+        { h: 'الصحة إرشادية فقط', p: 'الأدوات الصحية تُعيد تقديرات من معادلات معروفة — ليست تشخيصاً ولا نصيحة طبية فردية.' },
+        { h: 'لا نخزّن البيانات', p: 'الحسابات لحظية. لا تُسجَّل المدخلات ولا تُحفَظ.' },
+      ],
+      footerBig: 'ابنِ شيئاً مع كلار.',
+      footerReq: 'اطلب مفتاحاً عبر',
+      footerWeb: 'تفضّل الحاسبات على الويب؟ زُر',
+    }
+  : {
+      title: 'Klar for AI agents',
+      metaDescription:
+        "Klar's 36 calculators are available to AI agents over MCP — including Jordan & GCC labour-law and tax tools. A secure endpoint running the same engine as the website.",
+      crumb: 'For AI agents',
+      eyebrow: 'MCP · Model Context Protocol',
+      h1: 'Klar, built for AI agents',
+      sub: '36 deterministic calculators — finance, pricing, health, education, plus Jordan & GCC labour-law and tax — callable directly by any AI agent over a secure MCP endpoint. Your agent gets the same engine the website uses.',
+      ctaConnect: 'Connect your agent',
+      ctaTools: 'See the tools',
+      whyH: 'Why this exists',
+      whyLead: 'Language models can do generic arithmetic in their heads — but they cannot reliably compute country-specific statutory figures. Klar can. That is the point.',
+      why: [
+        { tag: 'The wedge', h: 'GCC & Jordan statutory pay', p: 'End-of-service gratuity, income tax, social insurance, notice period, maternity leave, overtime, and gross-to-net — for jo, sa, ae, kw, qa, bh, om — from embedded labour-law rules.' },
+        { tag: 'Trustworthy', h: 'One source of truth', p: 'The MCP tools call the very same calculation engines that power the Klar website. No duplicated formulas, no drift.' },
+        { tag: 'Agent-native', h: 'Structured, self-describing', p: 'Every result carries labels, units, currency, a primary answer, assumptions, and limitations — so an agent understands the number without seeing the site.' },
+      ],
+      connectH: 'Connect your agent',
+      connectLead: 'Standard MCP over Streamable HTTP. Point any MCP-capable client at the endpoint and send your API key as a Bearer token.',
+      kEndpoint: 'Endpoint',
+      kTransport: 'Transport',
+      kAuth: 'Auth',
+      kTools: 'Tools',
+      vTransport: 'MCP Streamable HTTP (JSON)',
+      vTools: '36 calculators',
+      accessNote: 'Access is currently invite-based while we gather usage. Request a free key at the email below — tell us what you are building.',
+      exampleH: 'Example',
+      askLabel: 'Ask your agent:',
+      askText: '“An employee in Jordan ends after 5 years on a 1,500 JOD basic salary — what is the end-of-service gratuity?”',
+      resultLabel: 'The agent calls klar_calculate_end_of_service and gets:',
+      toolsH: "What's inside",
+      toolsLead: '36 tools across six categories. Each is deterministic and returns the same value as the Klar website.',
+      tools: [
+        { h: 'Employment law · GCC', p: 'end-of-service, income tax, social insurance, gross-to-net, notice period, maternity leave, leave balance, overtime pay' },
+        { h: 'Finance', p: 'loan payment, mortgage, loan comparison, early payoff, compound interest, retirement savings, savings goal, debt-to-income' },
+        { h: 'Pricing & business', p: 'VAT, discount & percent change, markup & margin, selling price from markup, break-even, wholesale/retail' },
+        { h: 'Work & pay', p: 'salary converter, employee cost, freelance rate' },
+        { h: 'Health', p: 'BMI, BMR & TDEE, calorie intake, body fat, ideal weight (screening estimates, not medical advice)' },
+        { h: 'Everyday & tools', p: 'tip, age, date difference, GPA, grade average, final grade, unit conversion' },
+      ],
+      notesH: 'Good to know',
+      notes: [
+        { h: 'Estimates, not advice', p: 'Statutory (labour-law/tax) results are estimates from an embedded rules snapshot — not legal or tax advice. Verify current law before relying on them.' },
+        { h: 'Health is screening only', p: 'Health tools return screening estimates from named formulas — not a diagnosis or individualized medical advice.' },
+        { h: 'No data stored', p: 'Calculations are ephemeral. Inputs are not logged or retained.' },
+      ],
+      footerBig: 'Build something with Klar.',
+      footerReq: 'Request a key at',
+      footerWeb: 'Prefer the web calculators? Visit',
+    };
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebAPI',
+    name: 'Klar Calculators MCP',
+    description: t.metaDescription,
+    documentation: 'https://worldly.pro/agents/',
+    provider: { '@type': 'Organization', name: 'Klar' },
+  },
+];
+---
+
+<BaseLayout locale={locale} path={path} title={t.title} description={t.metaDescription} jsonLd={jsonLd}>
+  <div class="container page agents">
+    <Breadcrumbs locale={locale} items={[{ name: t.crumb, path }]} />
+
+    <header class="page-hero page-hero--compact">
+      <span class="eyebrow">{t.eyebrow}</span>
+      <h1>{t.h1}</h1>
+      <p class="hero-sub">{t.sub}</p>
+      <div class="cta">
+        <a class="btn btn--primary" href="#connect">{t.ctaConnect}</a>
+        <a class="btn btn--ghost" href="#tools">{t.ctaTools}</a>
+      </div>
+    </header>
+
+    <section class="sec">
+      <h2>{t.whyH}</h2>
+      <p class="lead">{t.whyLead}</p>
+      <div class="grid">
+        {t.why.map((c) => (
+          <div class="card">
+            <span class="chip chip--accent">{c.tag}</span>
+            <h3>{c.h}</h3>
+            <p>{c.p}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="sec" id="connect">
+      <h2>{t.connectH}</h2>
+      <p class="lead">{t.connectLead}</p>
+      <div class="two">
+        <div>
+          <dl class="kv">
+            <dt>{t.kEndpoint}</dt><dd><code dir="ltr">{endpoint}</code></dd>
+            <dt>{t.kTransport}</dt><dd>{t.vTransport}</dd>
+            <dt>{t.kAuth}</dt><dd><code dir="ltr">Authorization: Bearer &lt;API_KEY&gt;</code></dd>
+            <dt>{t.kTools}</dt><dd>{t.vTools}</dd>
+          </dl>
+          <p class="note">{t.accessNote} <a href={`mailto:${email}?subject=Klar%20MCP%20API%20key`} dir="ltr">{email}</a></p>
+        </div>
+        <pre dir="ltr"><code>{configSnippet}</code></pre>
+      </div>
+
+      <h3 class="mt">{t.exampleH}</h3>
+      <div class="two">
+        <div>
+          <p class="muted">{t.askLabel}</p>
+          <div class="card card--quote"><p>{t.askText}</p></div>
+        </div>
+        <div>
+          <p class="muted">{t.resultLabel}</p>
+          <pre dir="ltr"><code>{resultSnippet}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="tools">
+      <h2>{t.toolsH}</h2>
+      <p class="lead">{t.toolsLead}</p>
+      <div class="grid">
+        {t.tools.map((c) => (
+          <div class="card">
+            <h3>{c.h}</h3>
+            <p>{c.p}</p>
+          </div>
+        ))}
+      </div>
+      <div class="chips">
+        <span class="chip">Streamable HTTP</span>
+        <span class="chip">Stateless</span>
+        <span class="chip">Bearer auth</span>
+        <span class="chip">Rate-limited</span>
+        <span class="chip" dir="ltr">jo · sa · ae · kw · qa · bh · om</span>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2>{t.notesH}</h2>
+      <div class="grid">
+        {t.notes.map((c) => (
+          <div class="card">
+            <h3>{c.h}</h3>
+            <p>{c.p}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <footer class="agents-foot">
+      <p class="big">{t.footerBig}</p>
+      <p>
+        {t.footerReq} <a href={`mailto:${email}?subject=Klar%20MCP%20API%20key`} dir="ltr">{email}</a>
+        · {t.footerWeb} <a href="https://worldly.pro">worldly.pro</a>.
+      </p>
+    </footer>
+  </div>
+</BaseLayout>
+
+<style>
+  .agents .eyebrow {
+    display: inline-block;
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.06em;
+    color: var(--color-accent-strong, var(--color-accent));
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-alt);
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    margin-bottom: var(--space-3);
+  }
+  .agents .hero-sub {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-lg);
+    max-width: 44rem;
+    margin: var(--space-2) 0 var(--space-4);
+  }
+  .agents .cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .agents .btn {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+  }
+  .agents .btn--primary { background: var(--color-primary); color: var(--color-on-primary); border-color: var(--color-primary); }
+  .agents .btn--ghost { background: var(--color-bg-alt); color: var(--color-text); }
+  .agents .sec { padding: var(--space-6) 0; border-top: 1px solid var(--color-border); }
+  .agents .sec h2 { margin: 0 0 var(--space-2); }
+  .agents .lead { color: var(--color-text-muted); max-width: 46rem; margin: 0 0 var(--space-4); }
+  .agents .grid { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .agents .card {
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+  }
+  .agents .card h3 { margin: 0 0 var(--space-1); font-size: var(--font-size-base); }
+  .agents .card p { margin: 0; color: var(--color-text-muted); font-size: var(--font-size-sm); }
+  .agents .card--quote p { color: var(--color-text); }
+  .agents .chip {
+    display: inline-block;
+    background: var(--color-bg-sunken);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    padding: 4px 12px;
+    font-size: var(--font-size-sm);
+  }
+  .agents .chip--accent { color: var(--color-accent-strong, var(--color-accent)); background: var(--color-accent-tint); margin-bottom: var(--space-2); }
+  .agents .chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+  .agents .two { display: grid; gap: var(--space-4); grid-template-columns: 1fr 1fr; align-items: start; }
+  .agents .kv { display: grid; grid-template-columns: 9rem 1fr; gap: var(--space-2) var(--space-3); margin: 0 0 var(--space-3); }
+  .agents .kv dt { color: var(--color-text-muted); }
+  .agents .kv dd { margin: 0; }
+  .agents .note {
+    background: var(--color-bg-sunken);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+  .agents pre {
+    background: var(--color-bg-sunken);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    overflow: auto;
+    text-align: left;
+    font-size: var(--font-size-sm);
+  }
+  .agents .mt { margin-top: var(--space-5); }
+  .agents .muted { color: var(--color-text-muted); font-size: var(--font-size-sm); }
+  .agents .agents-foot { padding: var(--space-6) 0; border-top: 1px solid var(--color-border); color: var(--color-text-muted); }
+  .agents .agents-foot .big { font-size: var(--font-size-xl); font-weight: 700; color: var(--color-text); margin: 0 0 var(--space-2); }
+  @media (max-width: 760px) {
+    .agents .two { grid-template-columns: 1fr; }
+    .agents .kv { grid-template-columns: 7rem 1fr; }
+  }
+</style>

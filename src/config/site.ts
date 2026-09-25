@@ -70,6 +70,7 @@ export const NAV = {
     { label: { ar: 'الرئيسية', en: 'Home' }, href: '/' },
     { label: { ar: 'الحاسبات', en: 'Calculators' }, href: '/calculators/' },
     { label: { ar: 'الأدلة', en: 'Guides' }, href: '/guides/' },
+    { label: { ar: 'للوكلاء', en: 'For agents' }, href: '/agents/' },
     { label: { ar: 'من نحن', en: 'About' }, href: '/about/' },
     { label: { ar: 'تواصل معنا', en: 'Contact' }, href: '/contact/' },
   ],
