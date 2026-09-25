@@ -48,6 +48,20 @@ test('http: server with no configured key fails closed -> 401', async () => {
   assert.equal(res.status, 401);
 });
 
+test('http: public demo key is accepted alongside the private key', async () => {
+  const DEMO = 'public-demo-key-xyz';
+  const req = () => post({ jsonrpc: '2.0', id: 9, method: 'tools/list' }, { authorization: `Bearer ${DEMO}` });
+  // Demo key works when configured...
+  const ok = await handleMcpRequest(req(), { apiKey: KEY, demoKey: DEMO });
+  assert.equal(ok.status, 200);
+  // ...the private key still works too...
+  const priv = await handleMcpRequest(post({ jsonrpc: '2.0', id: 9, method: 'tools/list' }), { apiKey: KEY, demoKey: DEMO });
+  assert.equal(priv.status, 200);
+  // ...and the demo key is rejected when not configured.
+  const off = await handleMcpRequest(req(), { apiKey: KEY });
+  assert.equal(off.status, 401);
+});
+
 /* ---- Discovery ---- */
 test('http: authenticated tools/list returns all 36 tools', async () => {
   const { status, json } = await rpc({ jsonrpc: '2.0', id: 2, method: 'tools/list' });

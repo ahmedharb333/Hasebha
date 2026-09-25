@@ -4,12 +4,15 @@
  * A standalone service (separate from the static Klar/Hasebha website, which is
  * NOT migrated). Serves the MCP Streamable HTTP endpoint at `/mcp`, reusing the
  * platform-neutral handler and the shared server factory. The API key is a
- * Worker secret (`MCP_API_KEY`); it is never hard-coded or logged.
+ * Worker secret (`MCP_API_KEY`); it is never hard-coded or logged. An optional
+ * public demo key (`MCP_DEMO_KEY`, a separate secret) is also accepted when set,
+ * so it can be published and rotated independently of the private key.
  */
 import { handleMcpRequest } from '../src/mcp/http-handler.ts';
 
 export interface Env {
   MCP_API_KEY?: string;
+  MCP_DEMO_KEY?: string;
 }
 
 export default {
@@ -18,6 +21,6 @@ export default {
     if (url.pathname !== '/mcp') {
       return new Response('Not found', { status: 404 });
     }
-    return handleMcpRequest(request, { apiKey: env.MCP_API_KEY });
+    return handleMcpRequest(request, { apiKey: env.MCP_API_KEY, demoKey: env.MCP_DEMO_KEY });
   },
 };

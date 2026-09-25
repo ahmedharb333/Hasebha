@@ -17,8 +17,14 @@ import { createMcpServer } from './create-server.ts';
 export const MAX_BODY_BYTES = 64 * 1024;
 
 export interface HandleOptions {
-  /** The expected API key (from an environment secret). */
+  /** The private API key (from an environment secret). */
   apiKey?: string;
+  /**
+   * Optional public demo key (separate secret). When set, it is accepted in
+   * addition to `apiKey`, so it can be published in docs/directories and
+   * rotated or revoked independently of the private key.
+   */
+  demoKey?: string;
 }
 
 /** Constant-time-ish string compare (length leak only); no node:crypto needed. */
@@ -54,17 +60,21 @@ async function freshTransport(): Promise<WebStandardStreamableHTTPServerTranspor
 }
 
 export async function handleMcpRequest(request: Request, opts: HandleOptions): Promise<Response> {
-  // --- Auth: fail closed. Require a configured key AND a matching Bearer token.
-  const expected = opts.apiKey;
-  if (!expected) {
-    // Misconfiguration (secret not set). Never reveal it; fail closed.
+  // --- Auth: fail closed. Require at least one configured key AND a matching
+  // Bearer token. The private key and the optional public demo key are both
+  // accepted.
+  const expected = [opts.apiKey, opts.demoKey].filter((k): k is string => typeof k === 'string' && k.length > 0);
+  if (expected.length === 0) {
+    // Misconfiguration (no secret set). Never reveal it; fail closed.
     // eslint-disable-next-line no-console
     console.error('[klar-mcp] MCP_API_KEY is not set — rejecting all requests.');
     return jsonRpcError(401, -32001, 'Unauthorized', { 'www-authenticate': 'Bearer' });
   }
   const auth = request.headers.get('authorization') ?? '';
   const m = /^Bearer\s+(.+)$/i.exec(auth);
-  if (!m || !safeEqual(m[1], expected)) {
+  const token = m?.[1] ?? '';
+  const authorized = token.length > 0 && expected.some((k) => safeEqual(token, k));
+  if (!authorized) {
     return jsonRpcError(401, -32001, 'Unauthorized', { 'www-authenticate': 'Bearer' });
   }
 
