@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "pro.worldly/klar",
+  "title": "Klar Calculators",
+  "description": "Deterministic financial, labour-law and tax calculators for Jordan and the GCC (jo, sa, ae, kw, qa, bh, om) plus everyday finance, business, health, education and date math. 36 tools; every result returns its assumptions and limitations.",
+  "version": "0.1.0",
+  "websiteUrl": "https://worldly.pro/agents/",
+  "repository": {
+    "url": "https://github.com/ahmedharb333/Hasebha",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.worldly.pro/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer token. Try the public demo key: 'Bearer klar-demo-ND8Qr5tHx2mv7bKf' (rate-limited). Request a production key at contact@worldly.pro.",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
