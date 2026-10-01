@@ -1,6 +1,7 @@
 import type { GuideContent } from './types';
 import type { Locale } from '../config/site';
 import labourGuides from './guides-labour';
+import socialInsuranceGuides from './guides-social-insurance';
 
 /**
  * Guides content — one entry per guide slug, localized in Arabic and English.
@@ -4511,4 +4512,4 @@ Retail price = 15 \u00d7 1.6 = **24**, and profit per unit = 24 \u2212 15 = **9*
   },
 };
 
-export default { ...guides, ...labourGuides };
+export default { ...guides, ...labourGuides, ...socialInsuranceGuides };
