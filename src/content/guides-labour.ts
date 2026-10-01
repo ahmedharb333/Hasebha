@@ -710,6 +710,129 @@ Daily wage = 700 ÷ 30 = 23.33 OMR. Days accrued = 30 × 6 = **180 days**. Gratu
       lastReviewed: REVIEWED,
     },
   },
+  /* ─────────────────── Jordan income tax ─────────────────── */
+  'income-tax-jordan': {
+    en: {
+      slug: 'income-tax-jordan',
+      locale: 'en',
+      title: 'Jordan Income Tax 2026: Brackets, Exemptions & Calculator',
+      metaDescription:
+        'How Jordan personal income tax works: a 9,000 JOD personal exemption, then progressive brackets from 5% to 30%. Worked example (24,000 JOD → 1,500 JOD) plus the family exemption most calculators miss.',
+      intro:
+        'Jordan taxes personal income progressively under Income Tax Law No. 34 of 2014 (as amended by No. 38 of 2018, effective 2019). You subtract an exemption from your annual income, then apply the brackets to what remains. This guide shows the brackets, a worked example that matches the Klar calculator, and the family exemption that makes most online figures too high for married taxpayers.',
+      sections: [
+        {
+          heading: 'Step 1: the personal exemption',
+          body: `Every resident individual gets a **9,000 JOD** personal exemption. You subtract it from your annual income to get **taxable income**, and the brackets apply only to that remainder. So on 24,000 JOD of income, taxable income is 24,000 − 9,000 = 15,000 JOD.`,
+        },
+        {
+          heading: 'Step 2: the brackets (5% to 30%)',
+          body: `The rates are **marginal** — each slice of taxable income is taxed at its own rate:
+
+- First **5,000**: 5%
+- Next **5,000** (5,000–10,000): 10%
+- Next **5,000** (10,000–15,000): 15%
+- Next **5,000** (15,000–20,000): 20%
+- Above **20,000**: 25%
+- Above **1,000,000**: 30%
+
+A separate **1% national contribution** applies to taxable income above 200,000 JOD (not included in the calculator).`,
+        },
+        {
+          heading: 'Worked example',
+          body: `Annual income **24,000 JOD**, individual exemption 9,000 → taxable **15,000 JOD**.
+
+- 5,000 × 5% = 250
+- 5,000 × 10% = 500
+- 5,000 × 15% = 750
+
+Total tax = **1,500 JOD** (an effective rate of 6.25%). This matches the Klar income-tax calculator exactly.`,
+        },
+        {
+          heading: 'The family exemption most calculators miss',
+          body: `The calculator applies the **9,000 individual** exemption. Jordanian law also grants a **9,000 family exemption** (18,000 JOD total for a household), plus limited deductions for medical, education and rent up to a capped amount. So a married taxpayer’s actual tax is usually **lower** than the individual figure — treat the calculator’s result as the single-person case and subtract the family exemption where it applies.`,
+        },
+        {
+          heading: 'Income tax is not your only deduction',
+          body: `Income tax is separate from **social security** (the SSC employee contribution) and from monthly take-home pay. To see net salary after both social security and tax, use the gross-to-net calculator rather than the income-tax figure alone.`,
+        },
+      ],
+      keyTakeaways: [
+        'Subtract the 9,000 JOD personal exemption first; brackets apply to the remainder.',
+        'Marginal rates: 5% / 10% / 15% / 20% / 25%, and 30% above 1,000,000.',
+        '24,000 JOD income → 15,000 taxable → 1,500 JOD tax (6.25% effective).',
+        'A married taxpayer also gets a 9,000 family exemption, so actual tax is often lower.',
+      ],
+      faqs: [
+        { q: 'How much is income tax in Jordan?', a: 'After a 9,000 JOD personal exemption, taxable income is taxed progressively: 5% on the first 5,000, then 10%, 15%, 20% and 25% on higher slices (30% above 1,000,000). For example, 24,000 JOD of income yields 1,500 JOD of tax.' },
+        { q: 'What is the personal exemption in Jordan?', a: 'Each resident individual gets a 9,000 JOD exemption. A married taxpayer gets an additional 9,000 JOD family exemption (18,000 total), plus limited medical, education and rent deductions.' },
+        { q: 'Does the calculator include the family exemption?', a: 'No — it applies the 9,000 individual exemption only. A married taxpayer should subtract the additional 9,000 family exemption, which lowers the tax.' },
+        { q: 'Is social security included in Jordan income tax?', a: 'No. Income tax and the social security (SSC) contribution are separate deductions. Use the gross-to-net calculator to see take-home pay after both.' },
+      ],
+      relatedCalculators: ['income-tax', 'gross-to-net', 'social-insurance'],
+      lastReviewed: REVIEWED,
+    },
+    ar: {
+      slug: 'income-tax-jordan',
+      locale: 'ar',
+      title: 'ضريبة الدخل في الأردن 2026: الشرائح والإعفاءات وحاسبة',
+      metaDescription:
+        'كيف تُحسب ضريبة الدخل الشخصي في الأردن: إعفاء شخصي 9,000 دينار ثم شرائح تصاعدية من 5% إلى 30%. مثال عملي (24,000 دينار ← 1,500 دينار) مع الإعفاء العائلي الذي تُغفله أغلب الحاسبات.',
+      intro:
+        'تفرض الأردن ضريبة دخل تصاعدية بموجب قانون ضريبة الدخل رقم 34 لسنة 2014 (المعدّل بالقانون رقم 38 لسنة 2018، نافذ من 2019). تطرح إعفاءً من دخلك السنوي ثم تطبّق الشرائح على الباقي. يوضّح هذا الدليل الشرائح بمثال مطابق لحاسبة كلار، مع الإعفاء العائلي الذي يجعل أغلب الأرقام على الإنترنت مبالغاً فيها للمتزوجين.',
+      sections: [
+        {
+          heading: 'الخطوة 1: الإعفاء الشخصي',
+          body: `يحصل كل مقيم فرد على إعفاء شخصي قدره **9,000 دينار**. تطرحه من دخلك السنوي للحصول على **الدخل الخاضع للضريبة**، وتُطبّق الشرائح على هذا الباقي فقط. فعلى دخل 24,000 دينار، يكون الخاضع للضريبة 24,000 − 9,000 = 15,000 دينار.`,
+        },
+        {
+          heading: 'الخطوة 2: الشرائح (5% إلى 30%)',
+          body: `المعدلات **تصاعدية حدّية** — كل شريحة من الدخل الخاضع تُضرَّب بمعدلها:
+
+- أول **5,000**: 5%
+- التالية **5,000** (5,000–10,000): 10%
+- التالية **5,000** (10,000–15,000): 15%
+- التالية **5,000** (15,000–20,000): 20%
+- فوق **20,000**: 25%
+- فوق **1,000,000**: 30%
+
+وتُطبّق **مساهمة وطنية 1%** منفصلة على الدخل الخاضع فوق 200,000 دينار (غير مضمّنة في الحاسبة).`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `دخل سنوي **24,000 دينار**، الإعفاء الفردي 9,000 ← الخاضع **15,000 دينار**.
+
+- 5,000 × 5% = 250
+- 5,000 × 10% = 500
+- 5,000 × 15% = 750
+
+إجمالي الضريبة = **1,500 دينار** (معدل فعلي 6.25%). وهو مطابق تماماً لحاسبة ضريبة الدخل في كلار.`,
+        },
+        {
+          heading: 'الإعفاء العائلي الذي تُغفله أغلب الحاسبات',
+          body: `تطبّق الحاسبة الإعفاء **الفردي 9,000**. ويمنح القانون الأردني أيضاً **إعفاءً عائلياً قدره 9,000** (أي 18,000 دينار للأسرة)، إضافةً إلى خصومات محدودة للعلاج والتعليم والإيجار ضمن سقف. لذا فإن ضريبة المتزوّج الفعلية عادةً **أقل** من الرقم الفردي — اعتبر نتيجة الحاسبة حالة الأعزب واطرح الإعفاء العائلي حيث ينطبق.`,
+        },
+        {
+          heading: 'ضريبة الدخل ليست خصمك الوحيد',
+          body: `ضريبة الدخل منفصلة عن **الضمان الاجتماعي** (اشتراك الموظف) وعن صافي الراتب الشهري. ولرؤية صافي الراتب بعد الضمان والضريبة معاً، استخدم حاسبة صافي الراتب بدلاً من رقم ضريبة الدخل وحده.`,
+        },
+      ],
+      keyTakeaways: [
+        'اطرح الإعفاء الشخصي 9,000 دينار أولاً؛ والشرائح تُطبّق على الباقي.',
+        'معدلات حدّية: 5% / 10% / 15% / 20% / 25%، و30% فوق 1,000,000.',
+        'دخل 24,000 دينار ← خاضع 15,000 ← ضريبة 1,500 دينار (6.25% فعلي).',
+        'المتزوّج يحصل أيضاً على إعفاء عائلي 9,000، فضريبته الفعلية أقل غالباً.',
+      ],
+      faqs: [
+        { q: 'كم ضريبة الدخل في الأردن؟', a: 'بعد إعفاء شخصي قدره 9,000 دينار، يُضرَّب الدخل الخاضع تصاعدياً: 5% على أول 5,000 ثم 10% و15% و20% و25% على الشرائح الأعلى (و30% فوق 1,000,000). فمثلاً دخل 24,000 دينار ينتج عنه 1,500 دينار ضريبة.' },
+        { q: 'ما هو الإعفاء الشخصي في الأردن؟', a: 'يحصل كل مقيم فرد على إعفاء 9,000 دينار. ويحصل المتزوّج على إعفاء عائلي إضافي قدره 9,000 دينار (18,000 إجمالاً)، إضافةً إلى خصومات محدودة للعلاج والتعليم والإيجار.' },
+        { q: 'هل تتضمّن الحاسبة الإعفاء العائلي؟', a: 'لا — تطبّق الإعفاء الفردي 9,000 فقط. وعلى المتزوّج أن يطرح الإعفاء العائلي الإضافي 9,000، وهو ما يخفّض الضريبة.' },
+        { q: 'هل الضمان الاجتماعي مشمول في ضريبة دخل الأردن؟', a: 'لا. ضريبة الدخل واشتراك الضمان الاجتماعي خصمان منفصلان. استخدم حاسبة صافي الراتب لرؤية الراتب بعدهما معاً.' },
+      ],
+      relatedCalculators: ['income-tax', 'gross-to-net', 'social-insurance'],
+      lastReviewed: REVIEWED,
+    },
+  },
 };
 
 export default labourGuides;
