@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "pro.worldly/klar",
   "title": "Klar Calculators",
-  "description": "Deterministic financial, labour-law and tax calculators for Jordan and the GCC (jo, sa, ae, kw, qa, bh, om) plus everyday finance, business, health, education and date math. 36 tools; every result returns its assumptions and limitations.",
+  "description": "Jordan & GCC labour-law, tax and finance calculators for AI agents — 36 deterministic tools.",
   "version": "0.1.0",
   "websiteUrl": "https://worldly.pro/agents/",
   "repository": {
