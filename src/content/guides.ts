@@ -2,6 +2,11 @@ import type { GuideContent } from './types';
 import type { Locale } from '../config/site';
 import labourGuides from './guides-labour';
 import socialInsuranceGuides from './guides-social-insurance';
+import maternityGuides from './guides-maternity-leave';
+import noticeGuides from './guides-notice-period';
+import annualLeaveGuides from './guides-annual-leave';
+import overtimeGuides from './guides-overtime';
+import grossToNetGuides from './guides-gross-to-net';
 
 /**
  * Guides content — one entry per guide slug, localized in Arabic and English.
@@ -4512,4 +4517,13 @@ Retail price = 15 \u00d7 1.6 = **24**, and profit per unit = 24 \u2212 15 = **9*
   },
 };
 
-export default { ...guides, ...labourGuides, ...socialInsuranceGuides };
+export default {
+  ...guides,
+  ...labourGuides,
+  ...socialInsuranceGuides,
+  ...maternityGuides,
+  ...noticeGuides,
+  ...annualLeaveGuides,
+  ...overtimeGuides,
+  ...grossToNetGuides,
+};
