@@ -424,6 +424,292 @@ For an SSC-covered employee, this employer gratuity would not apply — end of s
       lastReviewed: REVIEWED,
     },
   },
+
+  /* ───────────────────────── Kuwait ───────────────────────── */
+  'end-of-service-gratuity-kuwait': {
+    en: {
+      slug: 'end-of-service-gratuity-kuwait',
+      locale: 'en',
+      title: 'Kuwait End-of-Service Indemnity: How It’s Calculated (2026)',
+      metaDescription:
+        'Kuwait end-of-service indemnity under Labour Law Art. 51 & 53: 15 days’ wage per year for the first 5 years, a full month after, capped at 18 months, with a resignation scale (nil under 3 years, 1/2, 2/3, then full). Worked example + calculator.',
+      intro:
+        'Kuwait’s end-of-service indemnity for monthly-paid private-sector workers is set by Articles 51 and 53 of Labour Law No. 6 of 2010. Like Saudi Arabia it has a resignation scale, but the thresholds differ — Kuwait’s first step is three years, not two — and there is an 18-month cap. This guide covers both, with a worked example matching the Klar calculator.',
+      sections: [
+        {
+          heading: 'The bands and the cap',
+          body: `For monthly-paid workers the indemnity accrues on the last wage:
+
+- **First 5 years:** 15 days’ wage for each year.
+- **After 5 years:** a full month (30 days) for each additional year.
+
+The total is capped at **18 months’ wage** (1.5 years). Partial years are pro-rated; the daily wage is the monthly wage divided by 30.`,
+        },
+        {
+          heading: 'The resignation scale (Art. 53)',
+          body: `On an unlimited contract, resignation reduces the indemnity by service length:
+
+- **Under 3 years:** nothing.
+- **3 to under 5 years:** one half.
+- **5 to under 10 years:** two thirds.
+- **10 years or more:** the full indemnity.
+
+Note the first threshold is **3 years** (Saudi’s is 2). Termination by the employer pays the full indemnity.`,
+        },
+        {
+          heading: 'Worked example',
+          body: `An employee on an **800 KWD** monthly wage leaves after **7 years**.
+
+First 5 years: 15 × 5 = 75 days. Next 2 years: 30 × 2 = 60 days. Total = 135 days. Daily wage = 800 ÷ 30 = 26.67 KWD. Full indemnity = 135 × 26.67 ≈ **3,600 KWD** (below the 18-month cap of 14,400 KWD).
+
+If the employee **resigned** at 7 years, the Art. 53 scale applies two thirds: ≈ **2,400 KWD**.`,
+        },
+      ],
+      keyTakeaways: [
+        '15 days per year for the first 5 years, a full month per year after.',
+        'Total capped at 18 months’ wage.',
+        'Resignation scale: nil under 3 years, 1/2, 2/3, then full at 10.',
+        'Employer termination pays the full indemnity.',
+      ],
+      faqs: [
+        { q: 'How is Kuwait end-of-service indemnity calculated?', a: 'For monthly-paid workers: 15 days’ wage for each of the first five years and a full month for each year after, pro-rated, on the last wage, capped at 18 months.' },
+        { q: 'What happens to my Kuwait indemnity if I resign?', a: 'On an unlimited contract it is reduced by service: nothing under 3 years, one half from 3 to 5, two thirds from 5 to 10, and the full indemnity at 10 years or more.' },
+        { q: 'Is there a cap on Kuwait end-of-service?', a: 'Yes — the total is capped at 18 months’ wage (1.5 years).' },
+      ],
+      relatedCalculators: EOS_RELATED,
+      lastReviewed: REVIEWED,
+    },
+    ar: {
+      slug: 'end-of-service-gratuity-kuwait',
+      locale: 'ar',
+      title: 'مكافأة نهاية الخدمة في الكويت: كيف تُحسب (2026)',
+      metaDescription:
+        'مكافأة نهاية الخدمة في الكويت وفق المادتين 51 و53 من قانون العمل: 15 يوماً عن كل سنة في أول خمس سنوات، وشهر كامل بعدها، بحد أقصى 18 شهراً، مع مقياس تخفيض للاستقالة (لا شيء دون 3 سنوات، النصف، الثلثان، ثم الكامل). مثال عملي وحاسبة.',
+      intro:
+        'مكافأة نهاية الخدمة في الكويت للعامل الشهري في القطاع الخاص تنظّمها المادتان 51 و53 من قانون العمل رقم 6 لسنة 2010. وكما في السعودية ثمّة مقياس للاستقالة، لكن العتبات مختلفة — فأول درجة في الكويت ثلاث سنوات لا سنتان — مع سقف 18 شهراً. يشرح هذا الدليل الأمرين بمثال مطابق لحاسبة كلار.',
+      sections: [
+        {
+          heading: 'الشرائح والسقف',
+          body: `للعامل الشهري تتراكم المكافأة على الأجر الأخير:
+
+- **أول 5 سنوات:** 15 يوماً عن كل سنة.
+- **بعد 5 سنوات:** شهر كامل (30 يوماً) عن كل سنة إضافية.
+
+والإجمالي محدود بسقف **18 شهراً** (سنة ونصف). تُقسم السنوات الجزئية تناسبياً، والأجر اليومي = الأجر الشهري ÷ 30.`,
+        },
+        {
+          heading: 'مقياس الاستقالة (المادة 53)',
+          body: `في العقد غير المحدد، تُخفّض الاستقالة المكافأة بحسب المدة:
+
+- **دون 3 سنوات:** لا شيء.
+- **من 3 إلى أقل من 5:** النصف.
+- **من 5 إلى أقل من 10:** الثلثان.
+- **10 سنوات فأكثر:** المكافأة كاملة.
+
+لاحظ أن العتبة الأولى **3 سنوات** (وهي سنتان في السعودية). والإنهاء من جهة العمل يدفع المكافأة كاملة.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `موظف بأجر شهري **800 دينار كويتي** ترك العمل بعد **7 سنوات**.
+
+أول 5 سنوات: 15 × 5 = 75 يوماً. السنتان التاليتان: 30 × 2 = 60 يوماً. الإجمالي = 135 يوماً. الأجر اليومي = 800 ÷ 30 = 26.67 ديناراً. المكافأة الكاملة = 135 × 26.67 ≈ **3,600 دينار** (أقل من سقف 18 شهراً البالغ 14,400 ديناراً).
+
+ولو **استقال** عند 7 سنوات، يُطبّق مقياس المادة 53 الثلثين: ≈ **2,400 دينار**.`,
+        },
+      ],
+      keyTakeaways: [
+        '15 يوماً عن كل سنة في أول 5 سنوات، وشهر كامل بعدها.',
+        'الإجمالي محدود بسقف 18 شهراً.',
+        'مقياس الاستقالة: لا شيء دون 3 سنوات، النصف، الثلثان، ثم الكامل عند 10.',
+        'الإنهاء من جهة العمل يدفع المكافأة كاملة.',
+      ],
+      faqs: [
+        { q: 'كيف تُحسب مكافأة نهاية الخدمة في الكويت؟', a: 'للعامل الشهري: 15 يوماً عن كل سنة في أول خمس سنوات وشهر كامل عن كل سنة بعدها، مع تقسيم تناسبي، على الأجر الأخير، بحد أقصى 18 شهراً.' },
+        { q: 'ماذا يحدث لمكافأتي في الكويت إذا استقلت؟', a: 'في العقد غير المحدد تُخفّض بحسب المدة: لا شيء دون 3 سنوات، النصف من 3 إلى 5، الثلثان من 5 إلى 10، والكاملة عند 10 سنوات فأكثر.' },
+        { q: 'هل هناك حد أقصى لمكافأة الكويت؟', a: 'نعم، الإجمالي محدود بسقف 18 شهراً (سنة ونصف).' },
+      ],
+      relatedCalculators: EOS_RELATED,
+      lastReviewed: REVIEWED,
+    },
+  },
+
+  /* ───────────────────────── Bahrain ───────────────────────── */
+  'end-of-service-gratuity-bahrain': {
+    en: {
+      slug: 'end-of-service-gratuity-bahrain',
+      locale: 'en',
+      title: 'Bahrain Leaving Indemnity: How It’s Calculated (2026)',
+      metaDescription:
+        'Bahrain leaving indemnity under Labour Law Art. 116: 15 days’ wage per year for the first 3 years, a full month after, no cap, on the last basic wage. Plus the SIO expat end-of-service scheme since 2024. Worked example + calculator.',
+      intro:
+        'Bahrain’s leaving indemnity is set by Article 116 of Labour Law No. 36 of 2012. Its distinctive feature is the **three-year** step — the rate rises after three years, not five — and there is no cap. Since 2024 the indemnity for non-Bahraini workers is also funded through a SIO scheme. This guide covers both, with a worked example matching the Klar calculator.',
+      sections: [
+        {
+          heading: 'The bands: 15 days, then 30 days after 3 years',
+          body: `The indemnity accrues on the last basic wage:
+
+- **First 3 years:** 15 days’ wage (half a month) for each year.
+- **After 3 years:** a full month (30 days) for each additional year.
+
+Note the step is at **3 years**, earlier than most GCC states. There is **no cap** and no minimum-service requirement; partial years are pro-rated.`,
+        },
+        {
+          heading: 'Non-Bahraini workers: the SIO scheme',
+          body: `Since **1 March 2024**, the end-of-service benefit for non-Bahraini workers has been administered through a SIO-funded scheme (employer contributions of 4.2% of wage for the first three years, then 8.4%). Service **before** that date is still settled directly by the employer under the Article 116 formula. The calculator estimates the Article 116 indemnity.`,
+        },
+        {
+          heading: 'Worked example',
+          body: `An employee on a **600 BHD** monthly basic wage leaves after **5 years**.
+
+First 3 years: 15 × 3 = 45 days. Next 2 years: 30 × 2 = 60 days. Total = 105 days. Daily wage = 600 ÷ 30 = 20 BHD. Indemnity = 105 × 20 = **2,100 BHD** (no cap applies).`,
+        },
+      ],
+      keyTakeaways: [
+        '15 days per year for the first 3 years, a full month per year after.',
+        'The rate step is at 3 years — earlier than most GCC states.',
+        'No cap and no minimum-service requirement.',
+        'Since March 2024, non-Bahraini end-of-service is funded via a SIO scheme; pre-2024 service is settled by the employer.',
+      ],
+      faqs: [
+        { q: 'How is Bahrain leaving indemnity calculated?', a: '15 days’ wage for each of the first three years and a full month for each year after, pro-rated, on the last basic wage, with no cap.' },
+        { q: 'When does the Bahrain rate increase to a full month?', a: 'After three years of service — earlier than the five-year step used in several other Gulf states.' },
+        { q: 'How does Bahrain’s SIO scheme affect expat end-of-service?', a: 'Since 1 March 2024 the benefit for non-Bahraini workers is funded through SIO contributions (4.2% then 8.4%); service before that date is paid directly by the employer under Article 116.' },
+      ],
+      relatedCalculators: EOS_RELATED,
+      lastReviewed: REVIEWED,
+    },
+    ar: {
+      slug: 'end-of-service-gratuity-bahrain',
+      locale: 'ar',
+      title: 'مكافأة نهاية الخدمة في البحرين: كيف تُحسب (2026)',
+      metaDescription:
+        'مكافأة نهاية الخدمة في البحرين وفق المادة 116 من قانون العمل: 15 يوماً عن كل سنة في أول 3 سنوات، وشهر كامل بعدها، دون حد أقصى، على الأجر الأساسي الأخير. مع نظام الهيئة للوافدين منذ 2024. مثال عملي وحاسبة.',
+      intro:
+        'مكافأة نهاية الخدمة في البحرين تنظّمها المادة 116 من قانون العمل رقم 36 لسنة 2012. وميزتها المميّزة هي عتبة **الثلاث سنوات** — إذ يرتفع المعدل بعد ثلاث سنوات لا خمس — ودون سقف. ومنذ 2024 صارت مكافأة الوافدين تُموَّل أيضاً عبر نظام لدى الهيئة. يشرح هذا الدليل الأمرين بمثال مطابق لحاسبة كلار.',
+      sections: [
+        {
+          heading: 'الشرائح: 15 يوماً ثم 30 يوماً بعد 3 سنوات',
+          body: `تتراكم المكافأة على الأجر الأساسي الأخير:
+
+- **أول 3 سنوات:** 15 يوماً (نصف شهر) عن كل سنة.
+- **بعد 3 سنوات:** شهر كامل (30 يوماً) عن كل سنة إضافية.
+
+لاحظ أن الارتفاع عند **3 سنوات**، أبكر من أغلب دول الخليج. ولا **سقف** ولا حد أدنى للخدمة؛ وتُقسم الكسور تناسبياً.`,
+        },
+        {
+          heading: 'الوافدون: نظام الهيئة',
+          body: `منذ **1 مارس 2024**، صارت مكافأة نهاية الخدمة للوافدين تُدار عبر نظام تموّله هيئة التأمينات (اشتراكات صاحب العمل 4.2% من الأجر لأول ثلاث سنوات ثم 8.4%). أما الخدمة **قبل** ذلك التاريخ فتُسوّى مباشرةً من صاحب العمل وفق صيغة المادة 116. وتقدّر الحاسبة مكافأة المادة 116.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `موظف بأجر أساسي **600 دينار بحريني** شهرياً ترك العمل بعد **5 سنوات**.
+
+أول 3 سنوات: 15 × 3 = 45 يوماً. السنتان التاليتان: 30 × 2 = 60 يوماً. الإجمالي = 105 أيام. الأجر اليومي = 600 ÷ 30 = 20 ديناراً. المكافأة = 105 × 20 = **2,100 دينار** (لا سقف يُطبّق).`,
+        },
+      ],
+      keyTakeaways: [
+        '15 يوماً عن كل سنة في أول 3 سنوات، وشهر كامل بعدها.',
+        'ارتفاع المعدل عند 3 سنوات — أبكر من أغلب دول الخليج.',
+        'لا سقف ولا حد أدنى للخدمة.',
+        'منذ مارس 2024 تُموَّل مكافأة الوافدين عبر نظام الهيئة؛ والخدمة قبلها يسوّيها صاحب العمل.',
+      ],
+      faqs: [
+        { q: 'كيف تُحسب مكافأة نهاية الخدمة في البحرين؟', a: '15 يوماً عن كل سنة في أول ثلاث سنوات وشهر كامل عن كل سنة بعدها، مع تقسيم تناسبي، على الأجر الأساسي الأخير، دون سقف.' },
+        { q: 'متى يرتفع معدل البحرين إلى شهر كامل؟', a: 'بعد ثلاث سنوات خدمة — أبكر من عتبة الخمس سنوات المعتمدة في عدة دول خليجية أخرى.' },
+        { q: 'كيف يؤثر نظام الهيئة على مكافأة الوافدين في البحرين؟', a: 'منذ 1 مارس 2024 تُموَّل مكافأة الوافدين عبر اشتراكات الهيئة (4.2% ثم 8.4%)؛ والخدمة قبل ذلك التاريخ تُدفع مباشرةً من صاحب العمل وفق المادة 116.' },
+      ],
+      relatedCalculators: EOS_RELATED,
+      lastReviewed: REVIEWED,
+    },
+  },
+
+  /* ───────────────────────── Oman ───────────────────────── */
+  'end-of-service-gratuity-oman': {
+    en: {
+      slug: 'end-of-service-gratuity-oman',
+      locale: 'en',
+      title: 'Oman End-of-Service Gratuity: How It’s Calculated (2026)',
+      metaDescription:
+        'Oman post-service gratuity under Labour Law (RD 53/2023) Art. 61: one month’s basic wage (30 days) per year of service, no cap, no resignation reduction — for workers not covered by the Social Protection Law. Worked example + calculator.',
+      intro:
+        'Oman’s post-service gratuity was reset by the 2023 Labour Law (Royal Decree 53/2023). It is now a flat one month’s basic wage per year, with no cap and no resignation reduction — but it applies to workers **not** covered by the Social Protection Law, and service split across the 2023 reform can mix old and new rates. This guide explains all three points, with a worked example matching the Klar calculator.',
+      sections: [
+        {
+          heading: 'The rule: one month per year',
+          body: `Under Article 61, the gratuity is **30 days of the last basic wage for each year** of service, pro-rated for partial years, with **no cap** and **no resignation reduction**. The daily wage is the monthly basic wage divided by 30.`,
+        },
+        {
+          heading: 'Who gets it',
+          body: `The Article 61 gratuity is for workers who do **not** benefit from the Social Protection Law — in practice, mainly **expatriate** workers. It remains payable to them until the Social Protection Fund’s savings system for non-Omanis takes over (deferred to 2027). Omani nationals covered by social protection receive their end-of-service through that system instead.`,
+        },
+        {
+          heading: 'Service before the 2023 reform',
+          body: `The current flat rate replaced an older scale (15 days for the first three years, then a full month). Per the Ministry of Labour’s October 2024 clarification, service **before 31 July 2023** is computed under the old scale and service **from** that date under the new flat rate. The calculator uses the current flat rate; for long service spanning the reform, confirm the split with your employer.`,
+        },
+        {
+          heading: 'Worked example',
+          body: `An employee on a **700 OMR** monthly basic wage leaves after **6 years** (all under the current law).
+
+Daily wage = 700 ÷ 30 = 23.33 OMR. Days accrued = 30 × 6 = **180 days**. Gratuity = 180 × 23.33 ≈ **4,200 OMR** (no cap, no resignation reduction).`,
+        },
+      ],
+      keyTakeaways: [
+        'One month’s basic wage (30 days) per year of service.',
+        'No cap and no resignation reduction.',
+        'Applies to workers not covered by the Social Protection Law (mainly expatriates, until 2027).',
+        'Service before 31 July 2023 may use the old 15/30-day scale.',
+      ],
+      faqs: [
+        { q: 'How is Oman end-of-service gratuity calculated?', a: 'Under the 2023 Labour Law, 30 days of the last basic wage for each year of service, pro-rated, with no cap and no resignation reduction.' },
+        { q: 'Does resignation reduce end-of-service gratuity in Oman?', a: 'No. The Article 61 gratuity has no resignation reduction and no minimum-service period.' },
+        { q: 'Who is entitled to the Oman Labour Law gratuity?', a: 'Workers not covered by the Social Protection Law — mainly expatriates — until the Social Protection Fund’s savings system for non-Omanis takes over (deferred to 2027).' },
+      ],
+      relatedCalculators: EOS_RELATED,
+      lastReviewed: REVIEWED,
+    },
+    ar: {
+      slug: 'end-of-service-gratuity-oman',
+      locale: 'ar',
+      title: 'مكافأة نهاية الخدمة في عُمان: كيف تُحسب (2026)',
+      metaDescription:
+        'مكافأة نهاية الخدمة في عُمان وفق قانون العمل (مرسوم 53/2023) المادة 61: شهر كامل (30 يوماً) من الأجر الأساسي عن كل سنة خدمة، دون سقف ودون تخفيض للاستقالة — للعاملين غير المشمولين بقانون الحماية الاجتماعية. مثال عملي وحاسبة.',
+      intro:
+        'أُعيد ضبط مكافأة نهاية الخدمة في عُمان بقانون العمل لسنة 2023 (مرسوم سلطاني 53/2023). فصارت شهراً كاملاً من الأجر الأساسي عن كل سنة، دون سقف ودون تخفيض للاستقالة — لكنها تخصّ العاملين **غير المشمولين** بقانون الحماية الاجتماعية، وقد تمزج الخدمةُ الممتدّة عبر إصلاح 2023 بين المعدّلين القديم والجديد. يشرح هذا الدليل النقاط الثلاث بمثال مطابق لحاسبة كلار.',
+      sections: [
+        {
+          heading: 'القاعدة: شهر عن كل سنة',
+          body: `بموجب المادة 61، المكافأة **30 يوماً من الأجر الأساسي الأخير عن كل سنة** خدمة، مع تقسيم تناسبي للكسور، **دون سقف** و**دون تخفيض للاستقالة**. والأجر اليومي = الأجر الأساسي الشهري ÷ 30.`,
+        },
+        {
+          heading: 'لمن تُصرف',
+          body: `مكافأة المادة 61 للعاملين **غير** المشمولين بقانون الحماية الاجتماعية — وعملياً هم أساساً العمال **الوافدون**. وتبقى مستحقّة لهم حتى يحلّ محلّها نظام الادخار لغير العُمانيين في صندوق الحماية الاجتماعية (المؤجّل إلى 2027). أما العُمانيون المشمولون بالحماية الاجتماعية فيحصلون على نهاية خدمتهم عبر ذلك النظام.`,
+        },
+        {
+          heading: 'الخدمة قبل إصلاح 2023',
+          body: `حلّ المعدل الثابت الحالي محلّ شريحة أقدم (15 يوماً لأول ثلاث سنوات ثم شهر كامل). ووفق توضيح وزارة العمل في أكتوبر 2024، تُحسب الخدمة **قبل 31 يوليو 2023** بالشريحة القديمة، والخدمة **من** ذلك التاريخ بالمعدل الثابت الجديد. تستخدم الحاسبة المعدل الثابت الحالي؛ وللخدمة الطويلة الممتدّة عبر الإصلاح، تحقّق من التقسيم لدى صاحب العمل.`,
+        },
+        {
+          heading: 'مثال عملي',
+          body: `موظف بأجر أساسي **700 ريال عُماني** شهرياً ترك العمل بعد **6 سنوات** (كلها تحت القانون الحالي).
+
+الأجر اليومي = 700 ÷ 30 = 23.33 ريال. أيام الاستحقاق = 30 × 6 = **180 يوماً**. المكافأة = 180 × 23.33 ≈ **4,200 ريال عُماني** (لا سقف ولا تخفيض للاستقالة).`,
+        },
+      ],
+      keyTakeaways: [
+        'شهر كامل (30 يوماً) من الأجر الأساسي عن كل سنة خدمة.',
+        'لا سقف ولا تخفيض للاستقالة.',
+        'تخصّ غير المشمولين بقانون الحماية الاجتماعية (أساساً الوافدين، حتى 2027).',
+        'الخدمة قبل 31 يوليو 2023 قد تُحسب بالشريحة القديمة 15/30 يوماً.',
+      ],
+      faqs: [
+        { q: 'كيف تُحسب مكافأة نهاية الخدمة في عُمان؟', a: 'وفق قانون العمل 2023: 30 يوماً من الأجر الأساسي الأخير عن كل سنة خدمة، مع تقسيم تناسبي، دون سقف ودون تخفيض للاستقالة.' },
+        { q: 'هل تُخفّض الاستقالة المكافأة في عُمان؟', a: 'لا. مكافأة المادة 61 دون تخفيض للاستقالة ودون حد أدنى للخدمة.' },
+        { q: 'من يستحق مكافأة قانون العمل في عُمان؟', a: 'العاملون غير المشمولين بقانون الحماية الاجتماعية — أساساً الوافدون — حتى يحلّ محلّها نظام الادخار لغير العُمانيين في صندوق الحماية الاجتماعية (المؤجّل إلى 2027).' },
+      ],
+      relatedCalculators: EOS_RELATED,
+      lastReviewed: REVIEWED,
+    },
+  },
 };
 
 export default labourGuides;
