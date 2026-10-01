@@ -53,7 +53,7 @@ Happy to answer questions about the design — especially the choice to make eve
 
 Most calculator MCPs stop at loan payments and BMI. Klar does those too, but the reason I built it is the regional labour-law layer: statutory end-of-service, income tax, social insurance, notice periods, maternity leave, overtime — for jo/sa/ae/kw/qa/bh/om.
 
-Ask Claude "end-of-service for 7,500 JOD after 5 years in Jordan" and it usually invents a formula. Klar returns the statutory number plus the legal basis and the assumptions it used.
+Ask Claude "end-of-service gratuity for 7,500 AED after 5 years in the UAE" and it usually invents a formula. Klar returns the statutory number (26,250 AED) plus the legal basis and the assumptions it used — and for Jordan it even flags that the gratuity applies only to employees not covered by Social Security, which almost nobody gets right.
 
 36 tools, Streamable HTTP, stateless, Bearer auth. Every result includes assumptions + limitations as structured fields.
 
@@ -107,9 +107,9 @@ So we built Klar — an MCP server that answers these from statute, not vibes, f
 
 🧵
 
-2/ Ask an AI "end-of-service for 7,500 JOD after 5 years in Jordan" and it'll usually invent a formula.
+2/ Ask an AI "end-of-service gratuity for 7,500 AED after 5 years in the UAE" and it'll usually invent a formula.
 
-Klar returns the statutory number + the legal basis + the assumptions it made. Quote it and explain it.
+Klar returns the statutory number (26,250 AED) + the legal basis + the assumptions it made. Quote it and explain it.
 
 3/ It's not just labour law. 36 deterministic tools: loans, mortgages, VAT, break-even, BMI, GPA, unit conversion — the everyday math an assistant reaches for.
 

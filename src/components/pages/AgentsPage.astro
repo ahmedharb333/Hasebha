@@ -26,13 +26,15 @@ const resultSnippet = `{
   "calculator": { "slug": "end-of-service", "category": "employment-law" },
   "answers": [
     { "key": "gratuity", "label": "End-of-service gratuity",
-      "value": 7500, "displayValue": "7500 JOD", "hero": true }
+      "value": 26250, "displayValue": "26250 AED", "hero": true },
+    { "key": "days", "label": "Gratuity days accrued", "value": 105 },
+    { "key": "years", "label": "Years of service", "value": 5 }
   ],
   "estimate": true,
   "jurisdiction": {
-    "country": "jo", "currency": "JOD",
+    "country": "ae", "currency": "AED",
     "basis": "statutory", "rulesSnapshot": true,
-    "legalNote": "Statutory estimate for JO — not legal advice."
+    "legalNote": "Statutory estimate for AE — not legal advice."
   }
 }`;
 
@@ -65,7 +67,7 @@ const t = ar
       accessNote: 'الوصول حالياً بالدعوة بينما نجمع بيانات الاستخدام. اطلب مفتاحاً مجانياً عبر البريد أدناه، وأخبرنا بما تبنيه.',
       exampleH: 'مثال',
       askLabel: 'اسأل وكيلك:',
-      askText: '«موظف في الأردن انتهت خدمته بعد ٥ سنوات براتب أساسي ١٥٠٠ دينار — كم مكافأة نهاية الخدمة؟»',
+      askText: '«موظف في الإمارات انتهت خدمته بعد ٥ سنوات براتب أساسي ٧٥٠٠ درهم — كم مكافأة نهاية الخدمة؟»',
       resultLabel: 'يستدعي الوكيل klar_calculate_end_of_service فيحصل على:',
       toolsH: 'ما بالداخل',
       toolsLead: '٣٦ أداة ضمن ست فئات. كل أداة حتمية وتُعيد نفس قيمة موقع كلار.',
@@ -115,7 +117,7 @@ const t = ar
       accessNote: 'Access is currently invite-based while we gather usage. Request a free key at the email below — tell us what you are building.',
       exampleH: 'Example',
       askLabel: 'Ask your agent:',
-      askText: '“An employee in Jordan ends after 5 years on a 1,500 JOD basic salary — what is the end-of-service gratuity?”',
+      askText: '“An employee in the UAE ends after 5 years on a 7,500 AED basic salary — what is the end-of-service gratuity?”',
       resultLabel: 'The agent calls klar_calculate_end_of_service and gets:',
       toolsH: "What's inside",
       toolsLead: '36 tools across six categories. Each is deterministic and returns the same value as the Klar website.',

@@ -54,30 +54,37 @@ Requests without a valid token return `401`.
 
 ## Example
 
-Ask your agent: *"What's the end-of-service gratuity for a 7,500 JOD salary after 5 years in Jordan, on resignation?"*
+Ask your agent: *"What's the end-of-service gratuity for a 7,500 AED salary after 5 years in the UAE?"*
 
 The agent calls `klar_calculate_end_of_service` and gets back a structured result:
 
 ```json
 {
-  "calculator": { "slug": "end-of-service", "name": "End of service", "category": "jurisdiction" },
+  "calculator": { "slug": "end-of-service", "name": "End of service", "category": "employment-law" },
   "success": true,
   "answers": [
-    { "label": "Gratuity", "value": 37500, "monetary": true, "currency": "JOD" }
+    { "label": "End-of-service gratuity", "value": 26250, "monetary": true, "currency": "AED", "hero": true },
+    { "label": "Gratuity days accrued", "value": 105, "unit": "days" },
+    { "label": "Years of service", "value": 5, "unit": "years" }
   ],
-  "assumptions": ["Continuous service", "Resignation end type"],
-  "limitations": ["Statutory minimum only; contract terms may exceed it"],
+  "estimate": true,
+  "limitations": [
+    "Requires employment start and end dates; based on monthly basic salary.",
+    "Not a monthly salary, not gross-to-net, not a notice period."
+  ],
   "jurisdiction": {
-    "country": "jo",
-    "currency": "JOD",
+    "country": "ae",
+    "currency": "AED",
     "basis": "statutory",
-    "legalNote": "Based on Jordanian Labour Law end-of-service provisions",
+    "legalNote": "Statutory estimate for AE; based on the rules embedded in this calculator; not legal/tax advice; verify current law.",
     "rulesSnapshot": true
   }
 }
 ```
 
 The number *and* the reasoning — ready to quote.
+
+> Every statutory tool carries its own caveats. Ask the same for Jordan and the result adds a limitation noting that the Article 32 gratuity applies only to employees **not** covered by Social Security — SSC-covered workers receive end-of-service through the SSC, so the employer gratuity may be 0. That's the kind of nuance an LLM guessing on its own misses.
 
 ---
 
