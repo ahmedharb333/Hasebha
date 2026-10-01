@@ -1,0 +1,81 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import guides from '../../content/guides';
+import { getCalculator } from '../../config/calculators';
+import { localizedPath } from '../../lib/i18n';
+import { getCountryHub, guideSlugFor, calculatorSlugFor } from '../../content/country-hubs';
+import type { Locale } from '../../config/site';
+
+interface Props {
+  locale: Locale;
+  seg: string;
+}
+
+const { locale, seg } = Astro.props;
+const hub = getCountryHub(seg);
+if (!hub) throw new Error(`Unknown country hub: ${seg}`);
+
+const path = `/labour-law/${seg}/`;
+const name = hub.name[locale];
+const title = locale === 'ar'
+  ? `قانون العمل في ${name}: حاسبات وأدلة (2026)`
+  : `${name} Labour Law: Calculators & Guides (2026)`;
+const description = locale === 'ar'
+  ? `كل حاسبات وأدلة كلار لقانون العمل في ${name}: نهاية الخدمة، التأمينات، صافي الراتب، الإشعار، الإجازات والعمل الإضافي.`
+  : `All Klar labour-law calculators and guides for ${hub.nameThe[locale]}: end-of-service, social insurance, net salary, notice period, leave and overtime.`;
+
+// Guides that actually exist for this country, in tool order.
+const guideLinks = hub.tools
+  .map((tool) => {
+    const slug = guideSlugFor(tool, seg);
+    const g = guides[slug]?.[locale];
+    return g ? { title: g.title, intro: g.intro, href: localizedPath(locale, `/guides/${slug}/`) } : null;
+  })
+  .filter((x): x is NonNullable<typeof x> => x !== null);
+
+// Active calculators for this country's tools (dedupe by slug).
+const seen = new Set<string>();
+const calcLinks = hub.tools
+  .map((tool) => calculatorSlugFor(tool))
+  .filter((s) => (seen.has(s) ? false : (seen.add(s), true)))
+  .map((s) => getCalculator(s))
+  .filter((c): c is NonNullable<typeof c> => c !== undefined && c.active)
+  .map((c) => ({ title: c.title[locale], href: localizedPath(locale, `/calculators/${c.slug}/`) }));
+
+const t = {
+  guides: locale === 'ar' ? 'الأدلة' : 'Guides',
+  calcs: locale === 'ar' ? 'الحاسبات' : 'Calculators',
+  read: locale === 'ar' ? 'اقرأ الدليل' : 'Read the guide',
+  open: locale === 'ar' ? 'افتح الحاسبة' : 'Open the calculator',
+  all: locale === 'ar' ? 'كل الأدلة' : 'All guides',
+};
+---
+
+<PageLayout locale={locale} path={path} title={title} description={description}>
+  <p style="font-size: 1.05rem; max-width: 70ch;">{hub.intro[locale]}</p>
+
+  <h2 style="margin-top: 2rem;">{t.guides}</h2>
+  <div class="tool-grid">
+    {guideLinks.map((g) => (
+      <a class="tool-card" data-kind="guide" href={g.href}>
+        <span class="tool-card__icon" aria-hidden="true"></span>
+        <h3>{g.title}</h3>
+        <p>{g.intro}</p>
+        <span class="tool-card__meta">{t.read}</span>
+      </a>
+    ))}
+  </div>
+
+  <h2 style="margin-top: 2.5rem;">{t.calcs}</h2>
+  <div class="tool-grid">
+    {calcLinks.map((c) => (
+      <a class="tool-card" data-kind="calculator" href={c.href}>
+        <span class="tool-card__icon" aria-hidden="true"></span>
+        <h3>{c.title}</h3>
+        <span class="tool-card__meta">{t.open}</span>
+      </a>
+    ))}
+  </div>
+
+  <p style="margin-top: 2rem;"><a href={localizedPath(locale, '/guides/')}>← {t.all}</a></p>
+</PageLayout>

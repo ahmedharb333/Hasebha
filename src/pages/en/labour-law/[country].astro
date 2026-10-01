@@ -1,0 +1,11 @@
+---
+import CountryHubPage from '@/components/pages/CountryHubPage.astro';
+import { COUNTRY_HUBS } from '@/content/country-hubs';
+
+export function getStaticPaths() {
+  return COUNTRY_HUBS.map((h) => ({ params: { country: h.seg }, props: { seg: h.seg } }));
+}
+
+const { seg } = Astro.props;
+---
+<CountryHubPage locale="en" seg={seg} />

@@ -2,6 +2,7 @@
 import PageLayout from '../../layouts/PageLayout.astro';
 import guides from '../../content/guides';
 import { localizedPath } from '../../lib/i18n';
+import { COUNTRY_HUBS } from '../../content/country-hubs';
 import type { Locale } from '../../config/site';
 
 interface Props {
@@ -20,6 +21,21 @@ const list = Object.values(guides)
 ---
 
 <PageLayout locale={locale} path={path} title={title} description={description}>
+  <h2 style="margin-top: 0;">{locale === 'ar' ? 'قانون العمل حسب الدولة' : 'Labour law by country'}</h2>
+  <p style="max-width: 70ch;">{locale === 'ar'
+    ? 'كل الحاسبات والأدلة لقانون العمل في الأردن ودول الخليج، مجمّعة لكل دولة.'
+    : 'All labour-law calculators and guides for Jordan and the GCC, grouped by country.'}</p>
+  <div class="tool-grid" style="margin-bottom: 2.5rem;">
+    {COUNTRY_HUBS.map((h) => (
+      <a class="tool-card" data-kind="country" href={localizedPath(locale, `/labour-law/${h.seg}/`)}>
+        <span class="tool-card__icon" aria-hidden="true"></span>
+        <h3>{h.name[locale]}</h3>
+        <span class="tool-card__meta">{locale === 'ar' ? 'الحاسبات والأدلة' : 'Calculators & guides'}</span>
+      </a>
+    ))}
+  </div>
+
+  <h2>{locale === 'ar' ? 'كل الأدلة' : 'All guides'}</h2>
   <div class="tool-grid">
     {list.map((g) => (
       <a class="tool-card" data-kind="guide" href={localizedPath(locale, `/guides/${g.slug}/`)}>
