@@ -714,6 +714,14 @@ test('phase3c2: end-of-service — statutory, employmentEndType, currency, dates
   assert.equal(hero.currency, 'JOD');
 });
 
+test('phase3c2: end-of-service adds the Jordan SSC caveat only for jo', () => {
+  const jo = aiFor('klar_calculate_end_of_service', { country: 'jo', startDate: '2018-01-01', endDate: '2023-01-01', monthlyBasic: 1500, endType: 'terminated' });
+  assert.ok(jo.limitations.some((l) => /Social Security|SSC/i.test(l)), 'jo result must carry the SSC caveat');
+  // GCC gratuities are genuinely employer-paid — no SSC carve-out.
+  const ae = aiFor('klar_calculate_end_of_service', { country: 'ae', startDate: '2018-01-01', endDate: '2023-01-01', monthlyBasic: 1500, endType: 'terminated' });
+  assert.ok(!ae.limitations.some((l) => /Social Security|SSC/i.test(l)), 'ae result must NOT carry the SSC caveat');
+});
+
 test('phase3c2: end-of-service voluntary maps to employmentEndType=voluntary', () => {
   const ai = aiFor('klar_calculate_end_of_service', { country: 'jo', startDate: '2018-01-01', endDate: '2023-01-01', monthlyBasic: 1500, endType: 'voluntary' });
   assert.equal(ai.jurisdiction!.employmentEndType, 'voluntary');

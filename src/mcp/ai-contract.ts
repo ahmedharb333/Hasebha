@@ -859,6 +859,21 @@ export function toAIResult(tool: ToolDef, response: CalcResponse, input: Record<
   // AI_META declares these get them; the existing generic tools are unaffected.
   applySpecialized(base, meta, input);
 
+  // Jordan end-of-service caveat. Under Article 32 of the Jordanian Labour Law
+  // the end-of-service gratuity is owed by the EMPLOYER only for employees NOT
+  // covered by Social Security. SSC-covered employees — the large majority of
+  // private-sector workers — receive end-of-service through the Social Security
+  // Corporation, not this employer gratuity, so for them the employer figure may
+  // be 0. The engine computes the statutory Article 32 amount regardless, so we
+  // flag the coverage condition here rather than silently returning a number an
+  // agent would quote as owed. This is JO-specific: GCC gratuities (e.g. ae, qa,
+  // sa) are genuinely employer-paid and carry no such carve-out.
+  if (tool.slug === 'end-of-service' && base.jurisdiction?.country === 'jo') {
+    base.limitations.push(
+      'Jordan: this Article 32 gratuity is owed by the employer ONLY for employees not covered by Social Security (SSC). SSC-covered employees (the large majority) receive end-of-service through the SSC, so the employer gratuity may be 0 — verify SSC coverage before quoting this figure.',
+    );
+  }
+
   if (!response.success) {
     base.error = response.error;
     return base;
